@@ -7,6 +7,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+- `SynaxonConfig::__debugInfo()` now masks the basic-auth **user** as
+  well as the password (reported as `basic:***`). In the OAuth2
+  client-credentials flow the user half is a client identifier and
+  leaking it makes a brute-force of the paired secret easier.
+- `GuzzleHttpClient` now strips caller-supplied `Authorization` and
+  `Host` headers from request options before merging them with the
+  library-managed defaults. A resource method can no longer smuggle
+  an alternate credential through the public HTTP contract.
+- `SynaxonConfig` now rejects base URIs that are not valid http(s)
+  URLs (`ftp://`, `file://`, malformed strings).
+- Retry behaviour is hardened against pathological server responses:
+  both exponential backoff and `Retry-After` values are capped at
+  30 seconds per sleep, and total retries are bounded by a new
+  `SynaxonConfig::MAX_RETRIES` constant (10). This prevents a
+  malicious or broken server from pinning a process indefinitely.
+- Timeouts are bounded by `SynaxonConfig::MAX_TIMEOUT_SECONDS` (600 s).
+- Error response bodies attached to exception context are truncated to
+  4 KiB, preventing an oversize 5xx HTML payload from ballooning
+  the in-memory exception (and any logger that serialises it).
+- `tests/.bearer-token.cache` is now written with `LOCK_EX` and
+  `chmod 0600` so the cached bearer token is readable only by the
+  owner on filesystems that honour Unix permissions.
+- `PathBuilder::expand()` now surfaces PCRE engine failures as
+  `InvalidArgumentException` rather than silently returning an
+  empty string.
+
+### Fixed
+- `PaginationIterator` now terminates cleanly on non-array returns
+  from the fetch closure (rather than producing a cryptic TypeError),
+  validates its constructor arguments, and aborts with a clear
+  exception if a pathological server never returns a short page
+  (`MAX_PAGES = 100_000`).
+
+### Added
+- `tests/Unit/Http/GuzzleHttpClientTest` — covers bearer-header
+  injection, auth-header override protection, retry-on-429,
+  no-retry on 4xx, oversize-body truncation, header redaction, and
+  the non-JSON / JSON-scalar response wrappers.
+- `tests/Unit/Util/PaginationIteratorTest` — covers happy-path
+  walking, short-page termination, non-array fetch return, invalid
+  constructor arguments, and the MAX_PAGES circuit breaker.
+- Additional `SynaxonConfig` tests for URL validation, scheme
+  enforcement, timeout/retry caps, and non-scalar coercion in
+  `fromArray()`.
+
 ### Changed
 - Removed the `SYNAXON_INTEGRATION` master switch from the integration
   test suite. Integration tests now skip automatically when

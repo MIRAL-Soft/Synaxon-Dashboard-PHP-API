@@ -131,13 +131,21 @@ final class TokenCache
         ];
 
         $dir = dirname(self::CACHE_FILE);
-        if (!is_dir($dir)) {
-            mkdir($dir, 0o755, true);
+        if (!is_dir($dir) && !@mkdir($dir, 0o755, true) && !is_dir($dir)) {
+            throw new RuntimeException('Could not create cache directory: ' . $dir);
         }
-        file_put_contents(
-            self::CACHE_FILE,
-            json_encode($payload, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR)
-        );
+
+        $encoded = json_encode($payload, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR);
+
+        // Write with an exclusive lock so concurrent test runs don't truncate
+        // each other's payload, then lock down permissions to the owner only
+        // — the cached bearer token is a credential and must not be readable
+        // by other users on the machine.
+        $written = @file_put_contents(self::CACHE_FILE, $encoded, LOCK_EX);
+        if ($written === false) {
+            throw new RuntimeException('Could not write token cache: ' . self::CACHE_FILE);
+        }
+        @chmod(self::CACHE_FILE, 0o600);
 
         return $token;
     }

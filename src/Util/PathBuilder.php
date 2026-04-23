@@ -20,7 +20,7 @@ final class PathBuilder
      */
     public static function expand(string $template, array $params = []): string
     {
-        return (string) preg_replace_callback(
+        $expanded = preg_replace_callback(
             '/\{([A-Za-z_][A-Za-z0-9_]*)\}/',
             static function (array $m) use ($params, $template): string {
                 $name = $m[1];
@@ -44,5 +44,18 @@ final class PathBuilder
             },
             $template
         );
+
+        // preg_replace_callback returns null on PCRE engine failure (e.g.
+        // backtracking limit). Surface that loudly rather than silently
+        // emitting an empty string.
+        if ($expanded === null) {
+            throw new InvalidArgumentException(sprintf(
+                'Failed to expand path template "%s": %s',
+                $template,
+                preg_last_error_msg()
+            ));
+        }
+
+        return $expanded;
     }
 }

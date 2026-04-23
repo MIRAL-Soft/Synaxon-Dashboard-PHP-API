@@ -38,6 +38,29 @@ final class GuzzleHttpClient implements HttpClientInterface
     /** @var list<string> */
     private const REDACTED_HEADERS = ['authorization', 'cookie', 'x-api-key', 'x-api-token'];
 
+    /**
+     * Headers a caller is never allowed to override via the request options.
+     * Anything matching here (case-insensitive) is silently dropped from the
+     * caller-supplied $options['headers'] before being merged with the
+     * library-managed defaults.
+     */
+    private const RESERVED_HEADERS = ['authorization', 'host'];
+
+    /**
+     * Hard upper bound on a single backoff sleep, in seconds. Protects
+     * against pathological Retry-After values from the server and keeps
+     * exponential backoff from blowing the call wallclock at high attempt
+     * counts.
+     */
+    private const MAX_BACKOFF_SECONDS = 30;
+
+    /**
+     * Maximum number of bytes from a non-decoded error body to retain in the
+     * exception context. Prevents an oversized 5xx HTML page from balloning
+     * the in-memory exception payload (and any logger that serialises it).
+     */
+    private const MAX_ERROR_BODY_BYTES = 4096;
+
     private readonly GuzzleClientInterface $client;
 
     private readonly LoggerInterface $logger;
@@ -65,7 +88,16 @@ final class GuzzleHttpClient implements HttpClientInterface
         if (isset($options['headers']) && is_array($options['headers'])) {
             /** @var array<string, string> $extra */
             $extra = $options['headers'];
-            $headers = array_merge($headers, $extra);
+            // Strip any caller-supplied header that would override our
+            // managed defaults (Authorization, Host). The library owns
+            // authentication — a resource method must never be able to
+            // smuggle a different credential through.
+            foreach ($extra as $name => $value) {
+                if (in_array(strtolower((string) $name), self::RESERVED_HEADERS, true)) {
+                    continue;
+                }
+                $headers[$name] = $value;
+            }
         }
 
         $requestOptions = ['headers' => $headers];
@@ -208,15 +240,19 @@ final class GuzzleHttpClient implements HttpClientInterface
         if ($response !== null && $response->getStatusCode() === 429) {
             $retryAfter = $response->getHeaderLine('Retry-After');
             if ($retryAfter !== '' && is_numeric($retryAfter)) {
-                usleep((int) ((float) $retryAfter * 1_000_000));
+                $seconds = max(0.0, min((float) $retryAfter, (float) self::MAX_BACKOFF_SECONDS));
+                usleep((int) ($seconds * 1_000_000));
 
                 return;
             }
         }
 
-        $baseMs = 200 * (2 ** ($attempt - 1));
+        // Exponential backoff with jitter, capped to MAX_BACKOFF_SECONDS so
+        // the call cannot block indefinitely if maxRetries is set high.
+        $baseMs   = 200 * (2 ** min($attempt - 1, 10));
         $jitterMs = random_int(0, 100);
-        usleep(($baseMs + $jitterMs) * 1000);
+        $totalMs  = min($baseMs + $jitterMs, self::MAX_BACKOFF_SECONDS * 1000);
+        usleep($totalMs * 1000);
     }
 
     private function mapError(ResponseInterface $response, string $method, string $uri): SynaxonApiException
@@ -234,7 +270,7 @@ final class GuzzleHttpClient implements HttpClientInterface
                     $decoded = $parsed;
                 }
             } catch (JsonException) {
-                // ignore, body will be in context as raw string below
+                // ignore, truncated body will be in context as raw string below
             }
         }
 
@@ -243,11 +279,15 @@ final class GuzzleHttpClient implements HttpClientInterface
             $message .= ': ' . $decoded['message'];
         }
 
+        // Truncate raw body before stowing it in the exception context to
+        // avoid attaching a multi-megabyte 5xx HTML page to every error.
+        $bodyForContext = $decoded !== [] ? $decoded : self::truncateBody($body);
+
         $context = [
             'method'    => $method,
             'uri'       => $uri,
             'status'    => $status,
-            'body'      => $decoded !== [] ? $decoded : $body,
+            'body'      => $bodyForContext,
         ];
 
         return match (true) {
@@ -262,6 +302,14 @@ final class GuzzleHttpClient implements HttpClientInterface
             $status >= 500 && $status < 600    => new ServerException($message, $status, null, $context),
             default                            => new SynaxonApiException($message, $status, null, $context),
         };
+    }
+
+    private static function truncateBody(string $body): string
+    {
+        if (strlen($body) <= self::MAX_ERROR_BODY_BYTES) {
+            return $body;
+        }
+        return substr($body, 0, self::MAX_ERROR_BODY_BYTES) . '... [truncated]';
     }
 
     private function logAttempt(
@@ -281,6 +329,10 @@ final class GuzzleHttpClient implements HttpClientInterface
     }
 
     /**
+     * Redact sensitive headers (Authorization, Cookie, X-API-*) for any
+     * caller that wants to surface request headers in their own logs
+     * without leaking credentials.
+     *
      * @param array<string, string> $headers
      * @return array<string, string>
      */

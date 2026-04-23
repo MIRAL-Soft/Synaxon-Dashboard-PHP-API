@@ -462,11 +462,30 @@ tests/                               # see "Testing" above
 * `declare(strict_types=1);` in every source file.
 * DTOs and config objects are immutable (`readonly` properties).
 * TLS verification is always on (cannot be disabled by public API).
-* Sensitive headers are masked in logs and in `SynaxonConfig::__debugInfo()`.
-* Path parameters are URL-encoded by `PathBuilder` — no string concatenation.
-* Retries use exponential backoff with jitter and only fire on `429` / `5xx`.
-* Network errors are wrapped in `TransportException`; Guzzle internals never
-  leak out of the public API.
+* Only `http` and `https` schemes are accepted for the base URI; other
+  schemes are rejected at `SynaxonConfig` construction.
+* Sensitive headers (`Authorization`, `Cookie`, `X-API-*`) are masked in
+  logs via `GuzzleHttpClient::redactHeaders()`.
+* Both the bearer token and the basic-auth pair (user + password) are
+  completely masked in `SynaxonConfig::__debugInfo()` — the basic user
+  half of an OAuth2 client-credentials pair is a secret in its own right.
+* Callers cannot override reserved headers (`Authorization`, `Host`) via
+  request options — the library owns authentication end-to-end.
+* Error response bodies embedded in exception context are truncated to
+  4 KiB to keep an oversize 5xx HTML page from ballooning memory.
+* Path parameters are URL-encoded by `PathBuilder` — no string
+  concatenation. Path expansion surfaces PCRE failures as
+  `InvalidArgumentException` rather than silent empty strings.
+* Retries use exponential backoff with jitter, capped at 30 seconds per
+  sleep and `SynaxonConfig::MAX_RETRIES` (10) total attempts — only fires
+  on `429` / `5xx`.
+* `Retry-After` values from the server are clamped to the same cap.
+* Timeouts are bounded to `SynaxonConfig::MAX_TIMEOUT_SECONDS` (600 s).
+* Network errors are wrapped in `TransportException`; Guzzle internals
+  never leak out of the public API.
+* `tests/.bearer-token.cache` is written with an exclusive lock and
+  `chmod 0600` so the cached bearer token stays readable only by the
+  owner (best-effort on filesystems that honour Unix permissions).
 
 ---
 

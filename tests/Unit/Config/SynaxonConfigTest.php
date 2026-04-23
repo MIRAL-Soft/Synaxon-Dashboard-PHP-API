@@ -53,16 +53,55 @@ final class SynaxonConfigTest extends TestCase
         self::assertSame('bearer:***', $info['auth']);
     }
 
-    public function testDebugInfoMasksBasicPassword(): void
+    public function testDebugInfoMasksBasicCredentialsEntirely(): void
     {
         $cfg = new SynaxonConfig(basicUser: 'alice', basicPass: 'secret');
         $info = $cfg->__debugInfo();
-        self::assertSame('basic:alice:***', $info['auth']);
+        self::assertSame('basic:***', $info['auth']);
+        // Neither half of the credential pair may leak.
+        self::assertStringNotContainsString('alice',  $info['auth']);
+        self::assertStringNotContainsString('secret', $info['auth']);
     }
 
     public function testTrailingSlashIsTrimmed(): void
     {
         $cfg = new SynaxonConfig(bearerToken: 't', baseUri: 'https://example.test/');
         self::assertSame('https://example.test', $cfg->getBaseUri());
+    }
+
+    public function testRejectsInvalidBaseUri(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new SynaxonConfig(bearerToken: 't', baseUri: 'not-a-url');
+    }
+
+    public function testRejectsNonHttpScheme(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new SynaxonConfig(bearerToken: 't', baseUri: 'ftp://example.test');
+    }
+
+    public function testRejectsExcessiveTimeout(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new SynaxonConfig(bearerToken: 't', timeout: SynaxonConfig::MAX_TIMEOUT_SECONDS + 1);
+    }
+
+    public function testRejectsExcessiveMaxRetries(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new SynaxonConfig(bearerToken: 't', maxRetries: SynaxonConfig::MAX_RETRIES + 1);
+    }
+
+    public function testFromArrayIgnoresNonScalarValues(): void
+    {
+        $cfg = SynaxonConfig::fromArray([
+            'bearerToken' => 'abc',
+            'timeout'     => 'not-a-number',
+            'maxRetries'  => ['array'],
+        ]);
+        // Non-numeric strings and arrays fall back to the defaults.
+        self::assertSame(30, $cfg->getTimeout());
+        self::assertSame(3, $cfg->getMaxRetries());
     }
 }

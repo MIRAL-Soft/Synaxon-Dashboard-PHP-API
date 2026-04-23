@@ -24,14 +24,20 @@ final class SynaxonConfig
 
     public const DEFAULT_USER_AGENT = 'miralsoft-synaxon-api/1.0';
 
+    /** Upper bound for any timeout to prevent accidental indefinite hangs. */
+    public const MAX_TIMEOUT_SECONDS = 600;
+
+    /** Upper bound for retry count — exponential backoff blows up beyond this. */
+    public const MAX_RETRIES = 10;
+
     /**
      * @param string|null $bearerToken HTTP bearer token (mutually exclusive with basic credentials).
      * @param string|null $basicUser HTTP basic auth user.
      * @param string|null $basicPass HTTP basic auth password.
-     * @param string $baseUri Base URI of the API, without trailing slash.
-     * @param int $timeout Request timeout in seconds (>= 1).
-     * @param int $connectTimeout Connection timeout in seconds (>= 1).
-     * @param int $maxRetries Number of retries on 429/5xx (>= 0).
+     * @param string $baseUri Base URI of the API, without trailing slash. Must be http(s).
+     * @param int $timeout Request timeout in seconds (1..600).
+     * @param int $connectTimeout Connection timeout in seconds (1..600).
+     * @param int $maxRetries Number of retries on 429/5xx (0..10).
      * @param string $userAgent User agent string sent with each request.
      */
     public function __construct(
@@ -44,17 +50,33 @@ final class SynaxonConfig
         private readonly int $maxRetries = 3,
         private readonly string $userAgent = self::DEFAULT_USER_AGENT,
     ) {
-        if ($this->timeout < 1) {
-            throw new InvalidArgumentException('timeout must be >= 1 second');
+        if ($this->timeout < 1 || $this->timeout > self::MAX_TIMEOUT_SECONDS) {
+            throw new InvalidArgumentException(sprintf(
+                'timeout must be between 1 and %d seconds',
+                self::MAX_TIMEOUT_SECONDS
+            ));
         }
-        if ($this->connectTimeout < 1) {
-            throw new InvalidArgumentException('connectTimeout must be >= 1 second');
+        if ($this->connectTimeout < 1 || $this->connectTimeout > self::MAX_TIMEOUT_SECONDS) {
+            throw new InvalidArgumentException(sprintf(
+                'connectTimeout must be between 1 and %d seconds',
+                self::MAX_TIMEOUT_SECONDS
+            ));
         }
-        if ($this->maxRetries < 0) {
-            throw new InvalidArgumentException('maxRetries must be >= 0');
+        if ($this->maxRetries < 0 || $this->maxRetries > self::MAX_RETRIES) {
+            throw new InvalidArgumentException(sprintf(
+                'maxRetries must be between 0 and %d',
+                self::MAX_RETRIES
+            ));
         }
         if ($this->baseUri === '') {
             throw new InvalidArgumentException('baseUri must not be empty');
+        }
+        if (filter_var($this->baseUri, FILTER_VALIDATE_URL) === false) {
+            throw new InvalidArgumentException('baseUri must be a valid URL');
+        }
+        $scheme = parse_url($this->baseUri, PHP_URL_SCHEME);
+        if ($scheme !== 'http' && $scheme !== 'https') {
+            throw new InvalidArgumentException('baseUri must use http or https scheme');
         }
         if ($this->basicUser !== null && $this->basicPass === null) {
             throw new InvalidArgumentException('basicPass is required when basicUser is set');
@@ -99,15 +121,42 @@ final class SynaxonConfig
     public static function fromArray(array $cfg): self
     {
         return new self(
-            bearerToken:    isset($cfg['bearerToken'])    ? (string) $cfg['bearerToken']    : null,
-            basicUser:      isset($cfg['basicUser'])      ? (string) $cfg['basicUser']      : null,
-            basicPass:      isset($cfg['basicPass'])      ? (string) $cfg['basicPass']      : null,
-            baseUri:        isset($cfg['baseUri'])        ? (string) $cfg['baseUri']        : self::DEFAULT_BASE_URI,
-            timeout:        isset($cfg['timeout'])        ? (int)    $cfg['timeout']        : 30,
-            connectTimeout: isset($cfg['connectTimeout']) ? (int)    $cfg['connectTimeout'] : 10,
-            maxRetries:     isset($cfg['maxRetries'])     ? (int)    $cfg['maxRetries']     : 3,
-            userAgent:      isset($cfg['userAgent'])      ? (string) $cfg['userAgent']      : self::DEFAULT_USER_AGENT,
+            bearerToken:    self::cfgString($cfg, 'bearerToken'),
+            basicUser:      self::cfgString($cfg, 'basicUser'),
+            basicPass:      self::cfgString($cfg, 'basicPass'),
+            baseUri:        self::cfgString($cfg, 'baseUri')        ?? self::DEFAULT_BASE_URI,
+            timeout:        self::cfgInt($cfg, 'timeout',        30),
+            connectTimeout: self::cfgInt($cfg, 'connectTimeout', 10),
+            maxRetries:     self::cfgInt($cfg, 'maxRetries',     3),
+            userAgent:      self::cfgString($cfg, 'userAgent')      ?? self::DEFAULT_USER_AGENT,
         );
+    }
+
+    /**
+     * @param array<string, mixed> $cfg
+     */
+    private static function cfgString(array $cfg, string $key): ?string
+    {
+        if (!isset($cfg[$key])) {
+            return null;
+        }
+        $v = $cfg[$key];
+        if (!is_string($v) && !is_int($v) && !is_float($v)) {
+            return null;
+        }
+        $s = (string) $v;
+        return $s === '' ? null : $s;
+    }
+
+    /**
+     * @param array<string, mixed> $cfg
+     */
+    private static function cfgInt(array $cfg, string $key, int $default): int
+    {
+        if (!isset($cfg[$key]) || !is_numeric($cfg[$key])) {
+            return $default;
+        }
+        return (int) $cfg[$key];
     }
 
     public function getBearerToken(): ?string
@@ -166,7 +215,9 @@ final class SynaxonConfig
         if ($this->bearerToken !== null) {
             $auth = 'bearer:***';
         } elseif ($this->basicUser !== null) {
-            $auth = 'basic:' . $this->basicUser . ':***';
+            // Never expose the basic user — in an OAuth2 client-credentials
+            // setup the user IS half of the secret. Both halves stay masked.
+            $auth = 'basic:***';
         }
 
         return [
