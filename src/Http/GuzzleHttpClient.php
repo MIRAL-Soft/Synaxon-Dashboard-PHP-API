@@ -160,6 +160,19 @@ final class GuzzleHttpClient implements HttpClientInterface
             return null;
         }
 
+        // Content-Type-based fallback: for binary / textual non-JSON payloads
+        // (CSV exports, PDF documents, etc.) we wrap the raw body into an
+        // array so the resource methods keep returning array|null. Callers
+        // that expect binary output can access $result['_raw'] and
+        // $result['_contentType'].
+        $contentType = strtolower(trim(explode(';', $response->getHeaderLine('Content-Type'))[0] ?? ''));
+        if ($contentType !== '' && !str_contains($contentType, 'json')) {
+            return [
+                '_raw'         => $body,
+                '_contentType' => $contentType,
+            ];
+        }
+
         try {
             $decoded = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
@@ -170,12 +183,15 @@ final class GuzzleHttpClient implements HttpClientInterface
             return null;
         }
 
-        if (!is_array($decoded)) {
-            throw new SynaxonApiException('Unexpected JSON response: root must be object or array.');
+        if (is_array($decoded)) {
+            /** @var array<string, mixed>|list<mixed> $decoded */
+            return $decoded;
         }
 
-        /** @var array<string, mixed>|list<mixed> $decoded */
-        return $decoded;
+        // JSON scalar (bool, int, float, string) at the root — wrap it so
+        // the resource method contract stays array-shaped. Consumers can
+        // read $result['value'].
+        return ['value' => $decoded];
     }
 
     private function isRetryable(int $status): bool

@@ -365,6 +365,20 @@ Integration tests are **strictly read-only**: the base
 `IntegrationTestCase::assertReadOnly()` guard fails any test that attempts a
 non-GET HTTP verb. There is no path through the suite that mutates live data.
 
+The read-only suite under `tests/Integration/ReadOnly/` is **generated** from
+the OpenAPI spec — one test file per resource, one test method per GET
+endpoint (currently 84 methods across 20 resources). Regenerate them with:
+
+```bash
+php bin/generate-integration-read-tests.php
+```
+
+Endpoints with `{id}` path parameters automatically pull a sample ID from
+the matching list endpoint via `EndpointSamplingTrait`. When no data is
+provisioned in the tenant, those tests self-skip rather than fail. Endpoints
+that the upstream API currently returns 5xx for are marked
+`markTestIncomplete` so they stay visible without breaking the build.
+
 ### Test layout
 
 ```
@@ -380,7 +394,9 @@ tests/
 ├── Integration/
 │   ├── IntegrationTestCase.php      # base class with read-only guard
 │   ├── LiveCompatibilityTest.php    # spec ↔ implementation against live spec
-│   └── ReadOnly/                    # read-only smoke tests per resource
+│   └── ReadOnly/                    # generated read-only smoke tests per resource
+│       ├── EndpointSamplingTrait.php  # fetches sample IDs from list endpoints
+│       └── {Resource}ReadTest.php     # one test per GET endpoint (84 total)
 ├── Support/
 │   ├── MockHttpClient.php           # in-memory HTTP stub
 │   └── TokenCache.php               # Basic → Bearer exchange with on-disk cache

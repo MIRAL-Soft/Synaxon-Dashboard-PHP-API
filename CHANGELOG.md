@@ -14,6 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `Integration` test suite, the `assertReadOnly()` guard, and the
   auto-skip on missing credentials already provides sufficient defence
   in depth; the extra flag was redundant and added friction.
+- `GuzzleHttpClient::decodeBody()` now tolerates two response shapes
+  the original implementation rejected:
+  - **Non-JSON payloads** (CSV exports, PDF documents, installer
+    binaries) are wrapped as `['_raw' => string, '_contentType' => string]`
+    so the resource methods keep their `array|null` return contract.
+  - **JSON scalar payloads** (e.g. boolean `true` / `false` from the
+    alias-availability endpoint) are wrapped as `['value' => mixed]`.
 
 ### Added
 - `tests/Support/TokenCache` — test-only helper that exchanges
@@ -26,6 +33,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   a ready-to-use bearer-authenticated `SynaxonConfig`, transparently
   using a supplied bearer token or the Basic → Bearer exchange as
   appropriate.
+- `bin/generate-integration-read-tests.php` — one-shot generator that
+  emits a read-only smoke test for every GET endpoint in the spec, one
+  PHPUnit test class per resource. Endpoints with `{id}` path
+  parameters obtain a sample ID from the matching list endpoint via
+  the new `EndpointSamplingTrait`.
+- `tests/Integration/ReadOnly/EndpointSamplingTrait.php` — caches the
+  first sample ID per (test class, list endpoint) so the list call is
+  issued at most once per suite run.
+- `tests/Integration/ReadOnly/{Resource}ReadTest.php` — 84 generated
+  tests across 20 resource classes, providing live regression coverage
+  for every readable endpoint the spec exposes.
 
 
 ## [1.0.0] - 2026-04-23
