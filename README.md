@@ -326,6 +326,21 @@ The same logic is mirrored in two PHPUnit tests:
 * `tests/Integration/LiveCompatibilityTest.php` — runs only when integration
   tests are enabled (see below)
 
+## Developer diagnostic: live data dump
+
+For a quick human-readable sample of what each resource returns live,
+run `bin/live-data-dump.php`. It issues one representative read call per
+resource (whoAmI, list customers, list products, list devices, …) and
+prints the response in a compact tree so you can verify the library
+returns sensible data. Uses the credentials from `tests/.env.test`.
+
+```bash
+php bin/live-data-dump.php
+```
+
+The script is strictly a developer tool — it is not part of the test
+suite, it is not autoloaded, and it is excluded from static analysis.
+
 ---
 
 ## Testing
@@ -423,7 +438,11 @@ src/
 bin/
 ├── check-api-compat.php             # standalone compatibility checker
 ├── generate-dtos.php                # one-shot DTO generator (reproducibility)
-└── generate-resources.php           # one-shot resource generator (reproducibility)
+├── generate-resources.php           # one-shot resource generator (reproducibility)
+├── generate-integration-read-tests.php  # one-shot read-test generator
+└── live-data-dump.php               # developer diagnostic: pretty-prints one
+                                     # read response per resource (uses credentials
+                                     # from tests/.env.test)
 
 config/
 ├── api-compat.php                   # compatibility checker configuration

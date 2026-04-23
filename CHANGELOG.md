@@ -44,6 +44,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `tests/Integration/ReadOnly/{Resource}ReadTest.php` — 84 generated
   tests across 20 resource classes, providing live regression coverage
   for every readable endpoint the spec exposes.
+- `bin/live-data-dump.php` — developer diagnostic script that issues
+  one representative read call per resource and prints the response in
+  a compact tree. Uses `tests/.env.test` credentials. Not part of the
+  automated test suite; kept in `bin/` as a troubleshooting helper.
 
 
 ## [1.0.0] - 2026-04-23
