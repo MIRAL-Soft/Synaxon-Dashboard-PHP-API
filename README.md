@@ -340,17 +340,24 @@ composer test:all              # unit + integration
 
 ### Integration tests
 
-Integration tests are **disabled by default** and only run when both
-conditions are true:
+Integration tests are **skipped automatically** unless `tests/.env.test`
+contains valid credentials. There is no master switch — if you have no
+credentials configured, nothing ever touches the live API.
 
-1. The environment variable `SYNAXON_INTEGRATION` is set to `1`.
-2. `tests/.env.test` exists and contains valid credentials.
+Credentials accepted by the test suite:
 
-To enable them locally:
+- `SYNAXON_BEARER_TOKEN` — used directly if present.
+- `SYNAXON_BASIC_USER` + `SYNAXON_BASIC_PASS` — exchanged for a bearer
+  token via `POST /v1/auth/token`. The token is cached to
+  `tests/.bearer-token.cache` (gitignored) and reused on subsequent test
+  runs until it expires. This mirrors how Synaxon's own dashboard
+  authenticates — the library itself remains auth-agnostic.
+
+To enable integration tests locally:
 
 ```bash
 cp tests/.env.test.example tests/.env.test
-# then edit tests/.env.test, set SYNAXON_INTEGRATION=1 plus credentials
+# edit tests/.env.test and fill in either the bearer token or basic user + password
 composer test:integration
 ```
 
@@ -374,7 +381,9 @@ tests/
 │   ├── IntegrationTestCase.php      # base class with read-only guard
 │   ├── LiveCompatibilityTest.php    # spec ↔ implementation against live spec
 │   └── ReadOnly/                    # read-only smoke tests per resource
-├── Support/MockHttpClient.php       # in-memory HTTP stub
+├── Support/
+│   ├── MockHttpClient.php           # in-memory HTTP stub
+│   └── TokenCache.php               # Basic → Bearer exchange with on-disk cache
 ├── bootstrap.php                    # loads vendor + tests/.env.test
 ├── testConfig.php                   # central config helper
 └── .env.test.example                # template for tests/.env.test

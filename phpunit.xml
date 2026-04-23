@@ -27,6 +27,5 @@
 
     <php>
         <ini name="error_reporting" value="-1"/>
-        <env name="SYNAXON_INTEGRATION" value="0"/>
     </php>
 </phpunit>

@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Removed the `SYNAXON_INTEGRATION` master switch from the integration
+  test suite. Integration tests now skip automatically when
+  `tests/.env.test` contains no credentials. Having PHPUnit's separate
+  `Integration` test suite, the `assertReadOnly()` guard, and the
+  auto-skip on missing credentials already provides sufficient defence
+  in depth; the extra flag was redundant and added friction.
+
+### Added
+- `tests/Support/TokenCache` — test-only helper that exchanges
+  `SYNAXON_BASIC_USER` / `SYNAXON_BASIC_PASS` for a bearer token via
+  `POST /v1/auth/token` and caches the result to
+  `tests/.bearer-token.cache` (gitignored) until it expires. This mirrors
+  how Synaxon's own dashboard authenticates. The library itself stays
+  auth-agnostic — the helper is part of the test harness only.
+- `testConfig::resolveBearerConfig()` — single entry point that returns
+  a ready-to-use bearer-authenticated `SynaxonConfig`, transparently
+  using a supplied bearer token or the Basic → Bearer exchange as
+  appropriate.
+
+
 ## [1.0.0] - 2026-04-23
 
 ### Added

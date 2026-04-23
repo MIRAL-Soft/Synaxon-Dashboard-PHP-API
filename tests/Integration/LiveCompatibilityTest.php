@@ -6,6 +6,7 @@ namespace miralsoft\synaxon\api\Tests\Integration;
 
 use GuzzleHttp\Client as GuzzleClient;
 use JsonException;
+use miralsoft\synaxon\api\Tests\testConfig;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionMethod;
@@ -15,14 +16,17 @@ use Throwable;
  * Live compatibility check: fetches the latest OpenAPI spec from the upstream
  * Swagger UI bundle and diffs it against the implemented Resource methods.
  *
- * Skipped unless SYNAXON_INTEGRATION=1.
+ * Skipped automatically when no credentials are configured — this test does
+ * not authenticate (the swagger bundle is public) but it is still gated on
+ * credentials so the live integration suite has a single on/off switch
+ * governed entirely by tests/.env.test.
  */
 final class LiveCompatibilityTest extends TestCase
 {
     public function testLocalImplementationMatchesLiveSpec(): void
     {
-        if (getenv('SYNAXON_INTEGRATION') !== '1') {
-            self::markTestSkipped('Integration disabled (set SYNAXON_INTEGRATION=1 to enable).');
+        if (!testConfig::hasCredentials()) {
+            self::markTestSkipped('Integration credentials missing in tests/.env.test.');
         }
 
         $base = getenv('SYNAXON_BASE_URI');

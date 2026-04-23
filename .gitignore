@@ -20,6 +20,7 @@ phpunit.xml.dist.bak
 .env.local
 .env.*.local
 tests/.env.test
+tests/.bearer-token.cache
 
 # IDE / editor
 .idea/

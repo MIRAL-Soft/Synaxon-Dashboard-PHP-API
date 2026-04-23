@@ -12,14 +12,15 @@ use PHPUnit\Framework\TestCase;
 /**
  * Base class for live integration tests against the SYNAXON Marketplace API.
  *
- * Tests are skipped automatically unless:
- *   - SYNAXON_INTEGRATION=1 is set, AND
- *   - tests/.env.test contains valid credentials.
+ * Tests are skipped automatically unless tests/.env.test contains valid
+ * credentials (either a bearer token or basic user + password). No master
+ * switch is required — if no credentials are configured, nothing talks to
+ * the live API.
  *
- * Tests are strictly read-only. The base class records a flag at setUp time,
- * and subclasses must invoke assertReadOnly($method) before issuing any
- * non-GET request — failing to do so raises an assertion error rather than
- * silently mutating live data.
+ * Tests are strictly read-only: the base class records a flag at setUp
+ * time and subclasses must invoke assertReadOnly($method) before issuing
+ * any non-GET request. Failing to do so raises a hard assertion error
+ * rather than silently mutating live data.
  */
 abstract class IntegrationTestCase extends TestCase
 {
@@ -31,15 +32,17 @@ abstract class IntegrationTestCase extends TestCase
     {
         parent::setUp();
 
-        if (!testConfig::isIntegrationEnabled()) {
-            self::markTestSkipped('Integration disabled (set SYNAXON_INTEGRATION=1 to enable).');
-        }
         if (!testConfig::hasCredentials()) {
             self::markTestSkipped('Integration credentials missing in tests/.env.test.');
         }
 
-        $this->config = testConfig::fromEnv();
-        $this->client = new SynaxonClient($this->config);
+        $config = testConfig::resolveBearerConfig();
+        if ($config === null) {
+            self::markTestSkipped('Unable to resolve a bearer token for integration testing.');
+        }
+
+        $this->config = $config;
+        $this->client = new SynaxonClient($config);
     }
 
     /**
