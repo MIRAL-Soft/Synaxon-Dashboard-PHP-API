@@ -1,0 +1,143 @@
+<?php
+
+declare(strict_types=1);
+
+namespace miralsoft\synaxon\api\DTO;
+
+class CreateCustomerRequestDto extends AbstractDto
+{
+    /**
+     * The name of the customer
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return (string) $this->data['name'];
+    }
+
+    /**
+     * The customer number
+     *
+     * @return string
+     */
+    public function getCustomerNumber(): string
+    {
+        return (string) $this->data['customerNumber'];
+    }
+
+    /**
+     * Defines if the customer is a corporate customer
+     *
+     * @return bool
+     */
+    public function getCorporateCustomer(): bool
+    {
+        return (bool) $this->data['corporateCustomer'];
+    }
+
+    /**
+     * Some additional information about the customer
+     *
+     * @return string|null
+     */
+    public function getComment(): ?string
+    {
+        $v = $this->data['comment'] ?? null;
+        return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * The salutation of the customer
+     *
+     * @return string
+     */
+    public function getSalutation(): string
+    {
+        return (string) $this->data['salutation'];
+    }
+
+    /**
+     * The street of the customer
+     *
+     * @return string
+     */
+    public function getStreet(): string
+    {
+        return (string) $this->data['street'];
+    }
+
+    /**
+     * The postal code of the customer
+     *
+     * @return string
+     */
+    public function getPostalCode(): string
+    {
+        return (string) $this->data['postalCode'];
+    }
+
+    /**
+     * The city of the customer
+     *
+     * @return string
+     */
+    public function getCity(): string
+    {
+        return (string) $this->data['city'];
+    }
+
+    /**
+     * Country ISO 3166-1 A-2 code
+     *
+     * @return string
+     */
+    public function getCountry(): string
+    {
+        return (string) $this->data['country'];
+    }
+
+    /**
+     * The email address of the customer
+     *
+     * @return string|null
+     */
+    public function getEmail(): ?string
+    {
+        $v = $this->data['email'] ?? null;
+        return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * The fax number of the customer
+     *
+     * @return string|null
+     */
+    public function getFax(): ?string
+    {
+        $v = $this->data['fax'] ?? null;
+        return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * The mobile phone number of the customer
+     *
+     * @return string|null
+     */
+    public function getMobile(): ?string
+    {
+        $v = $this->data['mobile'] ?? null;
+        return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * The phone number of the customer
+     *
+     * @return string|null
+     */
+    public function getPhone(): ?string
+    {
+        $v = $this->data['phone'] ?? null;
+        return $v === null ? null : (string) $v;
+    }
+}

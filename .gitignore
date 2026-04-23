@@ -1,0 +1,40 @@
+# Composer
+/vendor/
+composer.lock
+
+# PHPUnit
+.phpunit.cache/
+.phpunit.result.cache
+phpunit.xml.dist.bak
+
+# PHPStan
+.phpstan-cache/
+
+# Build / coverage artefacts
+/build/
+/coverage/
+*.cache
+
+# Environment files (local secrets)
+.env
+.env.local
+.env.*.local
+tests/.env.test
+
+# IDE / editor
+.idea/
+.vscode/
+.claude/
+*.iml
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs
+*.log
