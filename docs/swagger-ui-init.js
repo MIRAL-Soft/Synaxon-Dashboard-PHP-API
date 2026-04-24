@@ -1,0 +1,30828 @@
+
+window.onload = function() {
+  // Build a system
+  let url = window.location.search.match(/url=([^&]+)/);
+  if (url && url.length > 1) {
+    url = decodeURIComponent(url[1]);
+  } else {
+    url = window.location.origin;
+  }
+  let options = {
+  "swaggerDoc": {
+    "openapi": "3.0.0",
+    "paths": {
+      "/v1/health": {},
+      "/v1/audit/plain": {},
+      "/v1/audit/logs": {
+        "get": {
+          "operationId": "FindAuditLogsHttpController_listAuditLogs",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "createdAt",
+                "type": "string",
+                "enum": [
+                  "id",
+                  "createdAt"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "entityType",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "entityId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "9fe2277f-5e4a-4798-8a05-2e82aed23f0b",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AuditLogPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "List audit logs",
+          "tags": [
+            "Audit"
+          ]
+        }
+      },
+      "/v1/audit/logs/options": {
+        "get": {
+          "description": "Returns all unique entity names for audit log filtering",
+          "operationId": "FindAuditLogOptionsHttpController_findAuditLogOptions",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Audit log options retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AuditOptionsResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get audit log options",
+          "tags": [
+            "Audit"
+          ]
+        }
+      },
+      "/v1/audit/logs/all": {},
+      "/v1/acronis/dashboard/index": {},
+      "/v1/acronis/customers": {
+        "post": {
+          "operationId": "CreateAcronisCustomerHttpController_createAcronisCustomer",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateAcronisCustomerRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AcronisCustomerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create new acronis customer",
+          "tags": [
+            "Acronis"
+          ]
+        },
+        "get": {
+          "operationId": "FindAcronisCustomersHttpController_listAcronisCustomers",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "createdAt",
+                "type": "string",
+                "enum": [
+                  "id",
+                  "name",
+                  "createdAt"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "customerId",
+              "required": false,
+              "in": "query",
+              "description": "Pass \"-1\" to get customers without reference",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AcronisCustomerPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get acronis customers",
+          "tags": [
+            "Acronis"
+          ]
+        }
+      },
+      "/v1/acronis/customers/{id}": {
+        "get": {
+          "operationId": "FindAcronisCustomerHttpController_getAcronisCustomer",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AcronisCustomerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get acronis customer by id",
+          "tags": [
+            "Acronis"
+          ]
+        },
+        "patch": {
+          "operationId": "UpdateAcronisCustomerHttpController_updateAcronisCustomer",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateAcronisCustomerRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AcronisCustomerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update acronis customer by id",
+          "tags": [
+            "Acronis"
+          ]
+        }
+      },
+      "/v1/acronis/customers/{id}/metrics": {
+        "get": {
+          "description": "Retrieves current real-time metrics for a customer and compares them with the most recent historical metric. Optionally specify a date to compare against a specific historical point.",
+          "operationId": "GetAcronisCustomerMetricsHttpController_getAcronisCustomerMetrics",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "compareDate",
+              "required": false,
+              "in": "query",
+              "description": "Optional date to compare against. If provided, retrieves the newest metric before or at this date. If not provided, retrieves the most recent metric.",
+              "schema": {
+                "format": "date-time",
+                "example": "2024-10-23T00:00:00.000Z",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Metrics retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AcronisCustomerMetricsResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Customer not found"
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get Acronis customer metrics with comparison",
+          "tags": [
+            "Acronis"
+          ]
+        }
+      },
+      "/v1/acronis/partners": {},
+      "/v1/acronis/partners/fromContext": {
+        "get": {
+          "operationId": "FindAcronisPartnerFromContextHttpController_getAcronisPartnerFromContext",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AcronisPartnerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get acronis partner from context",
+          "tags": [
+            "Acronis"
+          ]
+        }
+      },
+      "/v1/acronis/partners/{id}": {},
+      "/v1/acronis/partners/{id}/metrics": {
+        "get": {
+          "description": "Retrieves current real-time metrics for an Acronis partner and compares them with the most recent historical metric. Optionally specify a date to compare against a specific historical point.",
+          "operationId": "GetAcronisPartnerMetricsHttpController_getAcronisPartnerMetrics",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "compareDate",
+              "required": false,
+              "in": "query",
+              "description": "Optional date to compare against. If provided, retrieves the newest metric before or at this date. If not provided, retrieves the most recent metric.",
+              "schema": {
+                "format": "date-time",
+                "example": "2024-10-23T00:00:00.000Z",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Metrics retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AcronisCustomerMetricsResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Partner not found"
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get Acronis partner metrics with comparison",
+          "tags": [
+            "Acronis"
+          ]
+        }
+      },
+      "/v1/acronis/partners/{id}/index": {},
+      "/v1/acronis/partners/sync-offering-items": {},
+      "/v1/acronis/customers/{id}/index": {},
+      "/v1/acronis/devices": {
+        "get": {
+          "operationId": "FindAcronisDevicesHttpController_listAcronisDevices",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "createdAt",
+                "type": "string",
+                "enum": [
+                  "name",
+                  "createdAt",
+                  "updatedAt",
+                  "lastBackup",
+                  "nextBackup",
+                  "cyberfitScore"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "customerId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "33533c13-ca1a-4881-9f5f-cc5a6a6d709a",
+                "type": "string"
+              }
+            },
+            {
+              "name": "type",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "workstation",
+                "type": "string",
+                "enum": [
+                  "workstation",
+                  "server",
+                  "vm",
+                  "nas"
+                ]
+              }
+            },
+            {
+              "name": "osType",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "windows",
+                "type": "string",
+                "enum": [
+                  "windows",
+                  "macos",
+                  "linux"
+                ]
+              }
+            },
+            {
+              "name": "isOnline",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "status",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "idle",
+                "type": "string",
+                "enum": [
+                  "warning",
+                  "error",
+                  "critical",
+                  "noPoliciesApplied",
+                  "scheduled",
+                  "interactionRequired",
+                  "running",
+                  "cancelling",
+                  "idle"
+                ]
+              }
+            },
+            {
+              "name": "license",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "workstation",
+                "type": "string",
+                "enum": [
+                  "workstation",
+                  "server",
+                  "vm",
+                  "nas"
+                ]
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AcronisDevicePaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get acronis devices",
+          "tags": [
+            "Acronis"
+          ]
+        }
+      },
+      "/v1/acronis/devices/{id}": {
+        "get": {
+          "operationId": "FindAcronisDeviceByIdHttpController_getAcronisDevice",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AcronisDeviceResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get acronis device by id",
+          "tags": [
+            "Acronis"
+          ]
+        }
+      },
+      "/v1/acronis/report-data": {},
+      "/v1/acronis/policies": {
+        "get": {
+          "operationId": "FindAcronisPoliciesHttpController_listAcronisPolicies",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "createdAt",
+                "type": "string",
+                "enum": [
+                  "id",
+                  "name",
+                  "createdAt"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "customerId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "bde3f6a6-c25b-4f0a-8c32-adc1391834a1",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AcronisPolicyPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get acronis policies",
+          "tags": [
+            "Acronis"
+          ]
+        }
+      },
+      "/v1/acronis/policies/{id}": {
+        "get": {
+          "operationId": "FindAcronisPolicyByIdHttpController_getAcronisPolicy",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AcronisPolicyResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get acronis policy by id",
+          "tags": [
+            "Acronis"
+          ]
+        }
+      },
+      "/v1/auth/egis": {
+        "get": {
+          "operationId": "EgisAuthHttpController_auth",
+          "parameters": [
+            {
+              "name": "callbackURL",
+              "required": true,
+              "in": "query",
+              "description": "URL to redirect from SSO",
+              "schema": {
+                "example": "/dashboard",
+                "type": "string"
+              }
+            },
+            {
+              "name": "redirectUrl",
+              "required": true,
+              "in": "query",
+              "description": "URL to redirect to after authorization",
+              "schema": {
+                "example": "/dashboard",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Invokes authorization flow and redirects user to EGIS"
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "summary": "Invokes authorization flow and redirects user to EGIS",
+          "tags": [
+            "Auth"
+          ]
+        }
+      },
+      "/v1/auth/egis/callback": {
+        "get": {
+          "operationId": "EgisAuthHttpController_callback",
+          "parameters": [
+            {
+              "name": "scope",
+              "required": true,
+              "in": "path",
+              "description": "Authorization scope provided by EGIS",
+              "schema": {
+                "example": "openid offline_access",
+                "type": "string"
+              }
+            },
+            {
+              "name": "state",
+              "required": true,
+              "in": "query",
+              "description": "State parameter provided by EGIS",
+              "schema": {
+                "example": "state_from_egis",
+                "type": "string"
+              }
+            },
+            {
+              "name": "code",
+              "required": true,
+              "in": "query",
+              "description": "Authorization code provided by EGIS",
+              "schema": {
+                "example": "auth_code_from_egis",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AuthResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "summary": "EGIS authorization callback",
+          "tags": [
+            "Auth"
+          ]
+        }
+      },
+      "/v1/auth/me": {
+        "get": {
+          "operationId": "WhoAmIHttpController_whoAmI",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get current user",
+          "tags": [
+            "Auth"
+          ]
+        }
+      },
+      "/v1/auth/token": {
+        "post": {
+          "operationId": "CreateApiTokenHttpController_getApiToken",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateApiTokenRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiTokenResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "basic": []
+            }
+          ],
+          "summary": "Get API token",
+          "tags": [
+            "Auth"
+          ]
+        }
+      },
+      "/v1/auth/refresh": {
+        "post": {
+          "operationId": "RefreshTokenHttpController_refresh",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefreshTokenRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AuthResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Refresh authentication using refresh token",
+          "tags": [
+            "Auth"
+          ]
+        }
+      },
+      "/v1/users": {},
+      "/v1/users/{id}": {
+        "patch": {
+          "operationId": "UpdateUserHttpController_updateUser",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateUserRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden - insufficient permissions to update user"
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Updates user",
+          "tags": [
+            "User"
+          ]
+        }
+      },
+      "/v1/users/terms/pending": {
+        "get": {
+          "operationId": "FindPendingTermsHttpController_listPendingTerms",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/PendingTermResponseDto"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get pending terms",
+          "tags": [
+            "User"
+          ]
+        }
+      },
+      "/v1/users/terms/accept": {
+        "post": {
+          "operationId": "AcceptTermHttpController_acceptTerms",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcceptTermRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": ""
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Accept providing terms",
+          "tags": [
+            "User"
+          ]
+        }
+      },
+      "/v1/auth": {
+        "delete": {
+          "operationId": "DeleteTokenHttpController_logout",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": ""
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Logout current session",
+          "tags": [
+            "Auth"
+          ]
+        }
+      },
+      "/v1/pusher/user-auth": {
+        "post": {
+          "operationId": "PusherUserAuthHttpController_pusherUserAuth",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PusherUserAuthRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PusherUserAuthDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Pusher user authentication",
+          "tags": [
+            "Auth"
+          ]
+        }
+      },
+      "/v1/pusher/channel-auth": {
+        "post": {
+          "operationId": "PusherChannelAuthHttpController_pusherChannelAuth",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PusherChannelAuthRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PusherChannelAuthDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Pusher private channel authentication",
+          "tags": [
+            "Auth"
+          ]
+        }
+      },
+      "/v1/tenants": {},
+      "/v1/tenants/fromContext": {
+        "get": {
+          "operationId": "FindTenantHttpController_getTenantFromContext",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TenantResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get tenant of requesting user",
+          "tags": [
+            "Tenant"
+          ]
+        }
+      },
+      "/v1/tenants/{id}": {
+        "patch": {
+          "operationId": "UpdateTenantHttpController_updateTenant",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateTenantRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TenantResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update tenant by id",
+          "tags": [
+            "Tenant"
+          ]
+        }
+      },
+      "/v1/products/available": {
+        "get": {
+          "operationId": "GenerateProductOverviewHttpController_getAvailable",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ProductResponseDto"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get available managed services",
+          "tags": [
+            "Product"
+          ]
+        }
+      },
+      "/v1/tenants/{id}/logo": {
+        "get": {
+          "operationId": "GetTenantLogoHttpController_getLogo",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "content": {
+                "image/*": {
+                  "schema": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "description": ""
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get tenant logo",
+          "tags": [
+            "Tenant"
+          ]
+        },
+        "put": {
+          "operationId": "UpdateTenantLogoHttpController_updateLogo",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateTenantLogoRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": ""
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Upload tenant logo",
+          "tags": [
+            "Tenant"
+          ]
+        },
+        "delete": {
+          "operationId": "DeleteTenantLogoHttpController_removeLogo",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": ""
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Delete tenant logo",
+          "tags": [
+            "Tenant"
+          ]
+        }
+      },
+      "/v1/customers": {
+        "post": {
+          "operationId": "CreateCustomerHttpController_createCustomer",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateCustomerRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create new customer",
+          "tags": [
+            "Customer"
+          ]
+        },
+        "get": {
+          "operationId": "FindCustomersHttpController_listCustomers",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "id",
+                "type": "string",
+                "enum": [
+                  "name",
+                  "customerNumber",
+                  "email"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get customers",
+          "tags": [
+            "Customer"
+          ]
+        }
+      },
+      "/v1/customers/suggestion": {
+        "get": {
+          "operationId": "GetCustomerSuggestionHttpController_getCustomerSuggestion",
+          "parameters": [
+            {
+              "name": "query",
+              "required": true,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "system",
+              "required": true,
+              "in": "query",
+              "schema": {
+                "enum": [
+                  "n-sight",
+                  "lywand",
+                  "mailstore",
+                  "acronis",
+                  "eset-hub",
+                  "eset-protect",
+                  "sec-auditor",
+                  "unknown"
+                ],
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/CustomerSuggestionResponseDto"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "503": {
+              "description": "Customer cache is in progress"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get customer suggestion by input",
+          "tags": [
+            "Customer"
+          ]
+        }
+      },
+      "/v1/customers/{id}": {
+        "get": {
+          "operationId": "FindCustomerByIdHttpController_getCustomer",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get customer",
+          "tags": [
+            "Customer"
+          ]
+        },
+        "patch": {
+          "operationId": "UpdateCustomerHttpController_updateCustomer",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCustomerRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update customer",
+          "tags": [
+            "Customer"
+          ]
+        },
+        "delete": {
+          "operationId": "DeleteCustomerHttpController_removeCustomer",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "202": {
+              "description": ""
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Delete customer",
+          "tags": [
+            "Customer"
+          ]
+        }
+      },
+      "/v1/customers/{id}/references": {
+        "post": {
+          "operationId": "CreateCustomerReferenceHttpController_createCustomerReference",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateCustomerReferenceRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerReferenceResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create new service reference",
+          "tags": [
+            "Customer"
+          ]
+        },
+        "get": {
+          "operationId": "FindCustomerReferencesHttpController_listReferences",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/CustomerReferenceResponseDto"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get service references",
+          "tags": [
+            "Customer"
+          ]
+        }
+      },
+      "/v1/customers/{id}/references/{refId}": {
+        "delete": {
+          "operationId": "DeleteCustomerReferenceHttpController_removeCustomerReference",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "refId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": ""
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Delete service reference",
+          "tags": [
+            "Customer"
+          ]
+        }
+      },
+      "/v1/lifecycleinfos": {},
+      "/v1/lifecycleinfos/{id}": {},
+      "/v1/lifecycleinfos/import": {},
+      "/v1/reports/setting": {
+        "post": {
+          "operationId": "CreateReportSettingHttpController_createReportSetting",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateReportSettingRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ReportSettingResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create partner report setting",
+          "tags": [
+            "Report"
+          ]
+        },
+        "patch": {
+          "operationId": "UpdateReportSettingHttpController_updateReportSetting",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateReportSettingRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Report setting updated",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ReportSettingResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update partner report setting",
+          "tags": [
+            "Report"
+          ]
+        },
+        "delete": {
+          "operationId": "DeleteReportSettingHttpController_removeReportSetting",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Report setting deleted"
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Delete partner report setting",
+          "tags": [
+            "Report"
+          ]
+        },
+        "get": {
+          "operationId": "FindPartnerReportSettingHttpController_getPartnerReportSetting",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ReportSettingResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get partner report setting",
+          "tags": [
+            "Report"
+          ]
+        }
+      },
+      "/v1/customers/{id}/report": {
+        "post": {
+          "operationId": "CreateCustomerReportSettingHttpController_createCustomerReportSetting",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateCustomerReportSettingRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ReportSettingResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create customer report setting",
+          "tags": [
+            "Customer"
+          ]
+        },
+        "patch": {
+          "operationId": "UpdateCustomerReportSettingHttpController_updateCustomerReportSetting",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCustomerReportSettingRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Report setting updated",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ReportSettingResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update customer report setting",
+          "tags": [
+            "Customer"
+          ]
+        },
+        "delete": {
+          "operationId": "DeleteCustomerReportSettingHttpController_removeCustomerReportSetting",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Report setting deleted"
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Delete customer report setting",
+          "tags": [
+            "Customer"
+          ]
+        }
+      },
+      "/v1/reports/data": {},
+      "/v1/customers/{customerId}/report": {
+        "get": {
+          "operationId": "FindCustomerReportSettingHttpController_getCustomerReportSetting",
+          "parameters": [
+            {
+              "name": "customerId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ReportSettingResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get customer report setting",
+          "tags": [
+            "Customer"
+          ]
+        }
+      },
+      "/v1/reports/pdf": {
+        "get": {
+          "operationId": "GenerateReportHttpController_generatePartnerReport",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Partner report generated",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiTaskResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Generate partner report PDF",
+          "tags": [
+            "Report"
+          ]
+        }
+      },
+      "/v1/customers/{id}/report/pdf": {
+        "get": {
+          "operationId": "GenerateReportHttpController_generateCustomerReport",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Customer report generated",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiTaskResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Generate customer report PDF",
+          "tags": [
+            "Customer"
+          ]
+        }
+      },
+      "/v1/patches": {
+        "get": {
+          "operationId": "FindPatchesHttpController_listPatches",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "createdAt",
+                "type": "string",
+                "enum": [
+                  "id",
+                  "createdAt",
+                  "patchTitle",
+                  "product",
+                  "releaseDate"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "status",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": [
+                  "approved"
+                ],
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "pending",
+                    "approved",
+                    "rejected"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "severity",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "critical",
+                "type": "string",
+                "enum": [
+                  "critical",
+                  "important",
+                  "moderate",
+                  "low"
+                ]
+              }
+            },
+            {
+              "name": "classification",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "deviceType",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "workstation",
+                "type": "string",
+                "enum": [
+                  "workstation",
+                  "server"
+                ]
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PatchPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get patches",
+          "tags": [
+            "Patch"
+          ]
+        }
+      },
+      "/v1/patches/qualify": {},
+      "/v1/patches/deploy": {
+        "post": {
+          "operationId": "DeployPatchesHttpController_deployPatches",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeployPatchesRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": ""
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Deploy patches",
+          "tags": [
+            "Patch"
+          ]
+        }
+      },
+      "/v1/patches/{id}/qualify": {},
+      "/v1/n-sight/dashboards": {},
+      "/v1/n-sight/dashboards/{id}/index": {},
+      "/v1/n-sight/dashboards/{id}": {},
+      "/v1/n-sight/clients": {},
+      "/v1/n-sight/clients/{id}/index": {},
+      "/v1/n-sight/clients/{id}/index-device-modules": {},
+      "/v1/n-sight/clients/all": {},
+      "/v1/n-sight/clients/{id}": {},
+      "/v1/n-sight/clients/{id}/metrics": {
+        "get": {
+          "description": "Retrieves current real-time metrics for a client and compares them with the most recent historical metric. Optionally specify a date to compare against a specific historical point.",
+          "operationId": "GetNSightClientMetricsHttpController_getNsightClientMetrics",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "compareDate",
+              "required": false,
+              "in": "query",
+              "description": "Optional date to compare against. If provided, retrieves the newest metric before or at this date. If not provided, retrieves the most recent metric.",
+              "schema": {
+                "format": "date-time",
+                "example": "2024-10-23T00:00:00.000Z",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Metrics retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/NSightClientMetricsResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Client not found"
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get N-Sight client metrics with comparison",
+          "tags": [
+            "N-able N-sight"
+          ]
+        }
+      },
+      "/v1/n-sight/clients/{id}/failing-checks/index": {},
+      "/v1/n-sight/sites": {
+        "post": {
+          "operationId": "CreateNSightSiteHttpController_createNsightSite",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateNSightSiteRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/NSightSiteResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": ""
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create n-sight site",
+          "tags": [
+            "N-able N-sight"
+          ]
+        },
+        "get": {
+          "operationId": "FindNSightSitesHttpController_listNsightSites",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "createdAt",
+                "type": "string",
+                "enum": [
+                  "id",
+                  "name",
+                  "createdAt",
+                  "workstationCount",
+                  "serverCount"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "customerId",
+              "required": false,
+              "in": "query",
+              "description": "Pass \"-1\" to get customers without reference",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of N-Sight sites",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/NSightSitePaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Find N-Sight sites",
+          "tags": [
+            "N-able N-sight"
+          ]
+        }
+      },
+      "/v1/n-sight/sites/{id}": {
+        "patch": {
+          "operationId": "UpdateNSightSiteHttpController_updateNsightSite",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateNSightSiteRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/NSightSiteResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update n-sight site",
+          "tags": [
+            "N-able N-sight"
+          ]
+        },
+        "get": {
+          "operationId": "FindNSightSiteByIdHttpController_getNsightSite",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/NSightSiteResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get N-sight site",
+          "tags": [
+            "N-able N-sight"
+          ]
+        }
+      },
+      "/v1/n-sight/sites/{id}/index": {},
+      "/v1/n-sight/sites/{id}/installer": {
+        "get": {
+          "operationId": "CreateNSightSiteInstallerHttpController_getNsightSiteInstaller",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "os",
+              "required": true,
+              "in": "query",
+              "description": "OS platform",
+              "schema": {
+                "example": "windows",
+                "type": "string",
+                "enum": [
+                  "windows",
+                  "linux",
+                  "mac"
+                ]
+              }
+            },
+            {
+              "name": "type",
+              "required": true,
+              "in": "query",
+              "description": "The type of the installer",
+              "schema": {
+                "example": "remote_worker",
+                "type": "string",
+                "enum": [
+                  "remote_worker",
+                  "group_policy"
+                ]
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Generated installer",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/NSightSiteInstallerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": ""
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create n-sight site",
+          "tags": [
+            "N-able N-sight"
+          ]
+        }
+      },
+      "/v1/n-sight/sites/{id}/metrics": {
+        "get": {
+          "description": "Retrieves current real-time metrics for a site and compares them with the most recent historical metric. Optionally specify a date to compare against a specific historical point.",
+          "operationId": "GetNSightSiteMetricsHttpController_getNsightSiteMetrics",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "compareDate",
+              "required": false,
+              "in": "query",
+              "description": "Optional date to compare against. If provided, retrieves the newest metric before or at this date. If not provided, retrieves the most recent metric.",
+              "schema": {
+                "format": "date-time",
+                "example": "2024-10-23T00:00:00.000Z",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Metrics retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/NSightSiteMetricsResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Site not found"
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get N-Sight site metrics with comparison",
+          "tags": [
+            "N-able N-sight"
+          ]
+        }
+      },
+      "/v1/n-sight/devices/{id}/index": {},
+      "/v1/n-sight/devices/{id}/check": {},
+      "/v1/n-sight/devices/{id}/patch": {},
+      "/v1/n-sight/devices/{id}/mav": {},
+      "/v1/n-sight/devices/{id}/index-device-monitoring-details": {},
+      "/v1/n-sight/devices": {
+        "get": {
+          "operationId": "FindNSightDevicesHttpController_listNsightDevices",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "id",
+                "type": "string",
+                "enum": [
+                  "name"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "type",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "workstation",
+                "type": "string",
+                "enum": [
+                  "workstation",
+                  "server"
+                ]
+              }
+            },
+            {
+              "name": "siteId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "9ecd3172-00e9-4a68-8fc1-7f0340a95b3b",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/NSightDevicePaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get N-sight devices",
+          "tags": [
+            "N-able N-sight"
+          ]
+        }
+      },
+      "/v1/n-sight/devices/{id}": {
+        "get": {
+          "operationId": "FindNSightDeviceByIdHttpController_getNsightDevice",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/NSightDeviceResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get N-sight device",
+          "tags": [
+            "N-able N-sight"
+          ]
+        }
+      },
+      "/v1/n-sight/device-checks": {
+        "get": {
+          "operationId": "FindNSightDeviceChecksHttpController_listNsightDeviceChecks",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "createdAt",
+                "type": "string",
+                "enum": [
+                  "id",
+                  "createdAt",
+                  "consecutiveFails",
+                  "description",
+                  "formattedOutput"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "deviceId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "520d3a36-cbda-4f5a-aeef-bf2285690b84",
+                "type": "string"
+              }
+            },
+            {
+              "name": "status",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "failed",
+                "type": "string",
+                "enum": [
+                  "initial",
+                  "failed",
+                  "parked",
+                  "passed"
+                ]
+              }
+            },
+            {
+              "name": "siteId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "fd6a49b4-e070-4c96-a5ac-5961e075117a",
+                "type": "string"
+              }
+            },
+            {
+              "name": "checkId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/NSightDeviceCheckPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get N-sight device checks",
+          "tags": [
+            "N-able N-sight"
+          ]
+        }
+      },
+      "/v1/n-sight/devices/{id}/take-control": {
+        "get": {
+          "operationId": "GetDeviceTakeControlUrlHttpController_getNsightTakeControlUrl",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/NSightDeviceTakeControlUrlResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get N-sight device take control url",
+          "tags": [
+            "N-able N-sight"
+          ]
+        }
+      },
+      "/v1/n-sight/report-data": {},
+      "/v1/sales-opportunities": {
+        "get": {
+          "operationId": "GetSalesOpportunitiesHttpController_listNsightSalesOpportunities",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "id",
+                "type": "string",
+                "enum": [
+                  "id",
+                  "siteName",
+                  "name",
+                  "operatingSystem",
+                  "cpu",
+                  "msoffice",
+                  "totalMemory",
+                  "recommendations"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "siteId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "bb004a82-04b0-4443-a40c-a591693ff788",
+                "type": "string"
+              }
+            },
+            {
+              "name": "ramWarning",
+              "required": false,
+              "in": "query",
+              "description": "The warning amount for RAM",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "cpuWarning",
+              "required": false,
+              "in": "query",
+              "description": "The warning age for the CPU",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "cpuCritical",
+              "required": false,
+              "in": "query",
+              "description": "The critical age for the CPU",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "minRecommendations",
+              "required": false,
+              "in": "query",
+              "description": "The minimum number of recommendations",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of sales opportunities for tenant",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SalesOpportunityPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get sales opportunities",
+          "tags": [
+            "Sales Opportunities"
+          ]
+        }
+      },
+      "/v1/sales-opportunities/csv": {
+        "get": {
+          "operationId": "GetSalesOpportunitiesExportHttpController_exportNsightSalesOpportunitiesCSV",
+          "parameters": [
+            {
+              "name": "siteId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "f00c7964-03b1-45b3-9406-5b0a069db613",
+                "type": "string"
+              }
+            },
+            {
+              "name": "ramWarning",
+              "required": false,
+              "in": "query",
+              "description": "The warning amount for RAM",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "cpuWarning",
+              "required": false,
+              "in": "query",
+              "description": "The warning age for the CPU",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "cpuCritical",
+              "required": false,
+              "in": "query",
+              "description": "The critical age for the CPU",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "minRecommendations",
+              "required": false,
+              "in": "query",
+              "description": "The minimum number of recommendations",
+              "schema": {
+                "minimum": 0,
+                "maximum": 5,
+                "type": "number"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of sales opportunities for tenant as csv",
+              "content": {
+                "text/csv": {}
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get sales opportunities",
+          "tags": [
+            "Sales Opportunities"
+          ]
+        }
+      },
+      "/v1/sales-opportunities/pdf": {
+        "get": {
+          "operationId": "GetSalesOpportunitiesExportHttpController_exportNsightSalesOpportunitiesPDF",
+          "parameters": [
+            {
+              "name": "siteId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "f00c7964-03b1-45b3-9406-5b0a069db613",
+                "type": "string"
+              }
+            },
+            {
+              "name": "ramWarning",
+              "required": false,
+              "in": "query",
+              "description": "The warning amount for RAM",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "cpuWarning",
+              "required": false,
+              "in": "query",
+              "description": "The warning age for the CPU",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "cpuCritical",
+              "required": false,
+              "in": "query",
+              "description": "The critical age for the CPU",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "minRecommendations",
+              "required": false,
+              "in": "query",
+              "description": "The minimum number of recommendations",
+              "schema": {
+                "minimum": 0,
+                "maximum": 5,
+                "type": "number"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of sales opportunities for tenant as pdf",
+              "content": {
+                "application/pdf": {
+                  "schema": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get sales opportunities",
+          "tags": [
+            "Sales Opportunities"
+          ]
+        }
+      },
+      "/v1/lywand/dashboard/index": {},
+      "/v1/lywand/partners": {},
+      "/v1/lywand/partners/fromContext": {
+        "get": {
+          "operationId": "GetLywandPartnerFromContextHttpController_getLywandPartnerFromContext",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LywandPartnerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get lywand partner from context",
+          "tags": [
+            "Lywand"
+          ]
+        }
+      },
+      "/v1/lywand/partners/{id}": {},
+      "/v1/lywand/partners/{id}/metrics": {
+        "get": {
+          "description": "Retrieves current real-time metrics for a partner and compares them with the most recent historical metric. Optionally specify a date to compare against a specific historical point.",
+          "operationId": "GetLywandPartnerMetricsHttpController_getLywandPartnerMetrics",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "compareDate",
+              "required": false,
+              "in": "query",
+              "description": "Optional date to compare against. If provided, retrieves the newest metric before or at this date. If not provided, retrieves the most recent metric.",
+              "schema": {
+                "format": "date-time",
+                "example": "2024-10-23T00:00:00.000Z",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Metrics retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LywandMetricsResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Partner not found"
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get Lywand partner metrics with comparison",
+          "tags": [
+            "Lywand"
+          ]
+        }
+      },
+      "/v1/lywand/partners/{id}/index": {
+        "post": {
+          "operationId": "IndexLywandPartnerHttpController_indexLywandPartner",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": ""
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Index lywand partners",
+          "tags": [
+            "Lywand"
+          ]
+        }
+      },
+      "/v1/lywand/customers": {
+        "post": {
+          "operationId": "CreateLywandCustomerHttpController_createLywandCustomer",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateLywandCustomerRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LywandCustomerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create new lywand customer",
+          "tags": [
+            "Lywand"
+          ]
+        },
+        "get": {
+          "operationId": "FindLywandCustomersHttpController_listLywandCustomers",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "name",
+                "type": "string",
+                "enum": [
+                  "name",
+                  "score",
+                  "vulnerabilities.high",
+                  "vulnerabilities.medium",
+                  "vulnerabilities.low",
+                  "inScope.endpoints",
+                  "inScope.domains",
+                  "inScope.emails",
+                  "inScope.ipAddresses",
+                  "outOfScope.endpoints",
+                  "outOfScope.domains",
+                  "outOfScope.emails",
+                  "outOfScope.ipAddresses"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "customerId",
+              "required": false,
+              "in": "query",
+              "description": "Pass \"-1\" to get customers without reference",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LywandCustomerPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get lywand customers",
+          "tags": [
+            "Lywand"
+          ]
+        }
+      },
+      "/v1/lywand/customers/{id}": {
+        "get": {
+          "operationId": "FindLywandCustomerHttpController_getLywandCustomer",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LywandCustomerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get lywand customer by id",
+          "tags": [
+            "Lywand"
+          ]
+        },
+        "delete": {
+          "operationId": "DeleteLywandCustomerHttpController_removeLywandCustomer",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "202": {
+              "description": ""
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Delete lywand customer",
+          "tags": [
+            "Lywand"
+          ]
+        },
+        "patch": {
+          "operationId": "UpdateLywandCustomerHttpController_updateLywandCustomer",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateLywandCustomerRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LywandCustomerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update lywand customer by id",
+          "tags": [
+            "Lywand"
+          ]
+        }
+      },
+      "/v1/lywand/customers/{id}/metrics": {
+        "get": {
+          "description": "Retrieves current real-time metrics for a customer and compares them with the most recent historical metric. Optionally specify a date to compare against a specific historical point.",
+          "operationId": "GetLywandCustomerMetricsHttpController_getLywandCustomerMetrics",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "compareDate",
+              "required": false,
+              "in": "query",
+              "description": "Optional date to compare against. If provided, retrieves the newest metric before or at this date. If not provided, retrieves the most recent metric.",
+              "schema": {
+                "format": "date-time",
+                "example": "2024-10-23T00:00:00.000Z",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Metrics retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LywandMetricsResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Customer not found"
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get Lywand customer metrics with comparison",
+          "tags": [
+            "Lywand"
+          ]
+        }
+      },
+      "/v1/lywand/customers/{id}/token": {
+        "get": {
+          "operationId": "GetLywandCustomerInstallationTokenHttpController_getLywandInstallationToken",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LywandTokenResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get installation token for lywand customer",
+          "tags": [
+            "Lywand"
+          ]
+        }
+      },
+      "/v1/lywand/customers/{id}/index": {
+        "post": {
+          "operationId": "IndexLywandCustomerHttpController_indexLywandCustomer",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": ""
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Index lywand customer",
+          "tags": [
+            "Lywand"
+          ]
+        }
+      },
+      "/v1/lywand/customers/{id}/targets/index": {
+        "post": {
+          "operationId": "IndexLywandTargetsHttpController_indexLywandCustomerTargets",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": ""
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Index lywand customer targets",
+          "tags": [
+            "Lywand"
+          ]
+        }
+      },
+      "/v1/lywand/customers/{id}/vulnerabilities/index": {
+        "post": {
+          "operationId": "IndexLywandVulnerabilitiesHttpController_indexLywandCustomerVulnerabilities",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": ""
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Index lywand customer vulnerabilities",
+          "tags": [
+            "Lywand"
+          ]
+        }
+      },
+      "/v1/lywand/targets": {
+        "get": {
+          "operationId": "FindLywandTargetsHttpController_listLywandTargets",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "name",
+                "type": "string",
+                "enum": [
+                  "name",
+                  "vulnerabilities",
+                  "highestRisk"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "customerId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "type",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "domain",
+                "type": "string",
+                "enum": [
+                  "domain",
+                  "email",
+                  "endpoint",
+                  "ipv4",
+                  "device"
+                ]
+              }
+            },
+            {
+              "name": "inScope",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of lywand targets",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LywandTargetPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get all lywand targets",
+          "tags": [
+            "Lywand"
+          ]
+        }
+      },
+      "/v1/lywand/targets/{id}": {
+        "get": {
+          "operationId": "FindLywandTargetByIdHttpController_getLywandTarget",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LywandTargetResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get lywand target by id",
+          "tags": [
+            "Lywand"
+          ]
+        }
+      },
+      "/v1/lywand/vulnerabilities": {
+        "get": {
+          "operationId": "FindLywandVulnerabilitiesHttpController_getLywandVulnerabilities",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "createdAt",
+                "type": "string",
+                "enum": [
+                  "id",
+                  "name",
+                  "createdAt",
+                  "risk"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "customerId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "acafdf48-1937-4626-936a-2399fc5043b3",
+                "type": "string"
+              }
+            },
+            {
+              "name": "targetId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "cde6e676-a63f-4ae2-91b3-e698914cb42f",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of lywand vulnerabilities",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LywandVulnerabilityPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get all lywand vulnerabilities with optional customer ID filtering",
+          "tags": [
+            "Lywand"
+          ]
+        }
+      },
+      "/v1/lywand/report-data": {},
+      "/v1/layout/dashboards": {
+        "post": {
+          "operationId": "CreateDashboardLayoutHttpController_createDashboardLayout",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateDashboardLayoutRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/DashboardLayoutResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create a new dashboard layout",
+          "tags": [
+            "Layout"
+          ]
+        },
+        "get": {
+          "operationId": "FindDashboardLayoutsHttpController_listDashboardLayouts",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "id",
+                "type": "string",
+                "enum": [
+                  "id",
+                  "createdAt",
+                  "updatedAt"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "type",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "dashboard",
+                "type": "string",
+                "enum": [
+                  "dashboard",
+                  "customer"
+                ]
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/DashboardLayoutPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get dashboard layouts",
+          "tags": [
+            "Layout"
+          ]
+        }
+      },
+      "/v1/layout/dashboards/{id}": {
+        "patch": {
+          "operationId": "UpdateDashboardLayoutHttpController_updateDashboardLayout",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateDashboardLayoutRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/DashboardLayoutResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update dashboard layout",
+          "tags": [
+            "Layout"
+          ]
+        },
+        "get": {
+          "operationId": "FindDashboardLayoutByIdHttpController_getDashboardLayout",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/DashboardLayoutResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get dashboard layout by ID",
+          "tags": [
+            "Layout"
+          ]
+        },
+        "delete": {
+          "operationId": "DeleteDashboardLayoutHttpController_removeDashboardLayout",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": ""
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Delete dashboard layout",
+          "tags": [
+            "Layout"
+          ]
+        }
+      },
+      "/v1/notifications": {
+        "get": {
+          "operationId": "FindMessagesHttpController_listMessages",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "createdAt",
+                "type": "string",
+                "enum": [
+                  "id",
+                  "createdAt"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "showRead",
+              "required": false,
+              "in": "query",
+              "deprecated": true,
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "read",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "targetType",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "tenant",
+                "type": "string",
+                "enum": [
+                  "tenant",
+                  "user"
+                ]
+              }
+            },
+            {
+              "name": "deleted",
+              "required": false,
+              "in": "query",
+              "description": "Filter messaged by deletion status",
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "starred",
+              "required": false,
+              "in": "query",
+              "description": "Filter messaged by starred status",
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "important",
+              "required": false,
+              "in": "query",
+              "description": "Filter messaged by important status",
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "tags",
+              "required": false,
+              "in": "query",
+              "description": "Filter messages by tags",
+              "schema": {
+                "example": [
+                  "breaking_news"
+                ],
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "breaking_news",
+                    "maintenance",
+                    "security_alert",
+                    "general",
+                    "good_to_know",
+                    "monthly_newsletter",
+                    "technical_update",
+                    "marketplace",
+                    "dashboard",
+                    "community",
+                    "managed_backup_acronis",
+                    "managed_cloud_to_cloud_cloudally",
+                    "managed_endpoint_security_eset",
+                    "managed_email_archiving_mailstore",
+                    "managed_vdi_oneclick",
+                    "managed_rmm_nsight",
+                    "managed_power_apc",
+                    "managed_firewall_anqa",
+                    "managed_security_audit_lywand",
+                    "managed_isa_plus_flat",
+                    "part_managed_security_audit_lywand",
+                    "part_managed_eset",
+                    "part_managed_sec_auditor",
+                    "device_as_a_service"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/MessagePaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": ""
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get messages",
+          "tags": [
+            "Notification"
+          ]
+        }
+      },
+      "/v1/notifications/unread": {
+        "get": {
+          "operationId": "FindUnreadMessagesHttpController_listUnreadMessages",
+          "parameters": [
+            {
+              "name": "providerId",
+              "required": false,
+              "in": "query",
+              "deprecated": true,
+              "schema": {
+                "example": 1,
+                "type": "number"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/MessageResponseDto"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": ""
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get unread messages",
+          "tags": [
+            "Notification"
+          ]
+        }
+      },
+      "/v1/notifications/options": {
+        "get": {
+          "operationId": "FindMessageOptionsHttpController_getMessageOptions",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/MessageOptionsResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get message options",
+          "tags": [
+            "Notification"
+          ]
+        }
+      },
+      "/v1/notifications/targets": {},
+      "/v1/notifications/setAllRead": {
+        "post": {
+          "operationId": "SetAllReadMessageHttpController_setAllRead",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetAllReadMessageRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "204": {
+              "description": "Messages set as read"
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Set all messages as read",
+          "tags": [
+            "Notification"
+          ]
+        }
+      },
+      "/v1/notifications/{id}": {
+        "get": {
+          "operationId": "FindMessageHttpController_getMessage",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/MessageResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": ""
+            },
+            "404": {
+              "description": ""
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get message by id",
+          "tags": [
+            "Notification"
+          ]
+        },
+        "patch": {
+          "operationId": "UpdateMessageHttpController_updateMessage",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateMessageRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "default": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/MessageResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Updates a message",
+          "tags": [
+            "Notification"
+          ]
+        }
+      },
+      "/v1/notifications/bulk": {
+        "patch": {
+          "operationId": "UpdateMessageBulkHttpController_updateMessageBulk",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateMessageBulkRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "default": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/MessageResponseDto"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Updates a bulk of messages",
+          "tags": [
+            "Notification"
+          ]
+        }
+      },
+      "/v1/notifications/{id}/setRead": {
+        "post": {
+          "deprecated": true,
+          "operationId": "SetReadMessageHttpController_setRead",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Message set as read"
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Message not found"
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Set message as read",
+          "tags": [
+            "Notification"
+          ]
+        }
+      },
+      "/v1/templates": {},
+      "/v1/templates/{id}": {},
+      "/v1/templates/{id}/setRead": {},
+      "/v1/mailstore/journaling/mailboxes": {
+        "post": {
+          "operationId": "CreateJournalingMailboxHttpController_createJournalingMailbox",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateJournalingMailboxRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Journaling mailbox successfully created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/JournalingMailboxResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid request payload"
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Either the mailstore instance is not running/in safe mode, or a journaling mailbox already exists for this instance"
+            },
+            "500": {
+              "description": "An error occurred while creating the journaling mailbox"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create a new journaling mailbox",
+          "tags": [
+            "Mailstore"
+          ]
+        },
+        "get": {
+          "operationId": "FindJournalingMailboxesHttpController_listMailboxes",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "id",
+                "type": "string",
+                "enum": [
+                  "id",
+                  "name",
+                  "instanceId"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "instanceId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "96e7d62f-f2dd-4aee-939f-1690e25a62ff",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of journaling mailboxes",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/JournalingMailboxPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid request parameters"
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An error occurred while fetching journaling mailboxes"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "List journaling mailboxes",
+          "tags": [
+            "Mailstore"
+          ]
+        }
+      },
+      "/v1/mailstore/journaling/mailboxes/{id}": {
+        "get": {
+          "operationId": "FindJournalingMailboxByIdHttpController_getMailboxById",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "description": "Mailbox ID",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/JournalingMailboxResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Mailbox not found"
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Find journaling mailbox by ID",
+          "tags": [
+            "Mailstore"
+          ]
+        },
+        "delete": {
+          "operationId": "DeleteJournalingMailboxHttpController_removeJournalingMailbox",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Journaling mailbox successfully deleted"
+            },
+            "400": {
+              "description": "Invalid request payload"
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An error occurred while deleting the journaling mailbox"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Delete a journaling mailbox",
+          "tags": [
+            "Mailstore"
+          ]
+        }
+      },
+      "/v1/mailstore/journaling/mailboxes/{id}/password": {
+        "post": {
+          "operationId": "RefreshJournalingMailboxHttpController_updateJournalingMailboxPassword",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Password updated successfully"
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "You are not allowed to update this journaling mailbox"
+            },
+            "404": {
+              "description": "Journaling mailbox not found"
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An error occurred while updating the password"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update the password of a journaling mailbox",
+          "tags": [
+            "Mailstore"
+          ]
+        }
+      },
+      "/v1/mailstore/journaling/mailboxes/index": {},
+      "/v1/mailstore/configuration": {},
+      "/v1/mailstore/configuration/options": {},
+      "/v1/mailstore/instances": {
+        "post": {
+          "operationId": "CreateMailstoreInstanceHttpController_createMailstoreInstance",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateMailstoreInstanceRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "202": {
+              "description": "Creation process started",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiTaskResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid request payload"
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Alias already in use"
+            },
+            "500": {
+              "description": "An error occurred while creating the instance"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create a new mailstore instance",
+          "tags": [
+            "Mailstore"
+          ]
+        },
+        "get": {
+          "operationId": "FindMailstoreInstancesHttpController_listInstances",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "createdAt",
+                "type": "string",
+                "enum": [
+                  "id",
+                  "name",
+                  "createdAt",
+                  "displayName",
+                  "alias",
+                  "archiveCount",
+                  "messageCount",
+                  "sizeCount",
+                  "instanceId"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "customerId",
+              "required": false,
+              "in": "query",
+              "description": "Pass \"-1\" to get customers without reference",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successfully retrieved instances",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/MailstoreInstancePaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An error occurred while retrieving instances"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get all mailstore instances",
+          "tags": [
+            "Mailstore"
+          ]
+        }
+      },
+      "/v1/mailstore/instances/alias-availability": {
+        "get": {
+          "operationId": "IsMailstoreAliasAvailableHttpController_checkAliasAvailability",
+          "parameters": [
+            {
+              "name": "alias",
+              "required": true,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Alias availability",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid request payload"
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An error occurred while checking alias availability"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Check if a mailstore instance alias is available",
+          "tags": [
+            "Mailstore"
+          ]
+        }
+      },
+      "/v1/mailstore/instances/{id}": {
+        "get": {
+          "operationId": "FindMailstoreInstanceByIdHttpController_getInstanceById",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "description": "Instance ID",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successfully retrieved instance",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/MailstoreInstanceResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Instance not found"
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An error occurred while retrieving the instance"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get mailstore instance by ID",
+          "tags": [
+            "Mailstore"
+          ]
+        },
+        "patch": {
+          "operationId": "UpdateMailstoreInstanceHttpController_updateMailstoreInstance",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateMailstoreInstanceRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Instance successfully updated",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/MailstoreInstanceResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid request payload"
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Alias already in use"
+            },
+            "500": {
+              "description": "An error occurred while creating the instance"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update a mailstore instance",
+          "tags": [
+            "Mailstore"
+          ]
+        },
+        "delete": {
+          "operationId": "DeleteMailstoreInstanceHttpController_removeMailstoreInstance",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Mailstore instance successfully deleted"
+            },
+            "400": {
+              "description": "Invalid request payload"
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An error occurred while deleting the mailstore instance"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Delete a mailstore instance",
+          "tags": [
+            "Mailstore"
+          ]
+        }
+      },
+      "/v1/mailstore/instances/{id}/metrics": {
+        "get": {
+          "description": "Retrieves current real-time metrics for an instance and compares them with the most recent historical metric. Optionally specify a date to compare against a specific historical point.",
+          "operationId": "GetMailstoreInstanceMetricsHttpController_getMailstoreInstanceMetrics",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "compareDate",
+              "required": false,
+              "in": "query",
+              "description": "Optional date to compare against. If provided, retrieves the newest metric before or at this date. If not provided, retrieves the most recent metric.",
+              "schema": {
+                "format": "date-time",
+                "example": "2024-10-23T00:00:00.000Z",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Metrics retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/MailstoreInstanceMetricsResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Instance not found"
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get Mailstore instance metrics with comparison",
+          "tags": [
+            "Mailstore"
+          ]
+        }
+      },
+      "/v1/mailstore/metrics": {
+        "get": {
+          "description": "Retrieves current real-time metrics for the partner (aggregated across all instances) and compares them with the most recent historical metric. Optionally specify a date to compare against a specific historical point.",
+          "operationId": "GetMailstorePartnerMetricsHttpController_getMailstorePartnerMetrics",
+          "parameters": [
+            {
+              "name": "compareDate",
+              "required": false,
+              "in": "query",
+              "description": "Optional date to compare against. If provided, retrieves the newest metric before or at this date. If not provided, retrieves the most recent metric.",
+              "schema": {
+                "format": "date-time",
+                "example": "2024-10-23T00:00:00.000Z",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Metrics retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/MailstorePartnerMetricsResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get Mailstore partner metrics with comparison",
+          "tags": [
+            "Mailstore"
+          ]
+        }
+      },
+      "/v1/mailstore/instances/index": {},
+      "/v1/mailstore/instances/{id}/index": {},
+      "/v1/mailstore/archives": {
+        "get": {
+          "operationId": "FindMailstoreArchivesHttpController_listArchives",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "id",
+                "type": "string",
+                "enum": [
+                  "id",
+                  "name",
+                  "size",
+                  "messageCount"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "instanceId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "330e4f33-9aea-4300-b88e-6e639e5c54a4",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of mailstore archives",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/MailstoreArchivePaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid request parameters"
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An error occurred while fetching archives"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "List mailstore archives",
+          "tags": [
+            "Mailstore"
+          ]
+        }
+      },
+      "/v1/mailstore/profiles": {
+        "get": {
+          "operationId": "FindMailstoreProfilesHttpController_listProfiles",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "id",
+                "type": "string",
+                "enum": [
+                  "name",
+                  "createdAt"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "instanceId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "lastStatus",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "succeeded",
+                  "failed",
+                  "cancelled",
+                  "completedWithErrors",
+                  "completedWithWarnings"
+                ]
+              }
+            },
+            {
+              "name": "includeResults",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": false,
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/MailstoreProfilePaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get mailstore profiles",
+          "tags": [
+            "Mailstore"
+          ]
+        }
+      },
+      "/v1/mailstore/profiles/{id}": {
+        "get": {
+          "operationId": "FindMailstoreProfileByIdHttpController_getProfileById",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "description": "Profile ID",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successfully retrieved profile",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/MailstoreProfileResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get mailstore profile by ID",
+          "tags": [
+            "Mailstore"
+          ]
+        }
+      },
+      "/v1/mailstore/profiles/{id}/results": {
+        "get": {
+          "operationId": "FindMailstoreProfileResultsHttpController_listProfileResults",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "id",
+                "type": "string",
+                "enum": [
+                  "startedAt",
+                  "createdAt"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "status",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "succeeded",
+                  "failed",
+                  "cancelled",
+                  "completedWithErrors",
+                  "completedWithWarnings"
+                ]
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/MailstoreProfileResultPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "List mailstore profile results",
+          "tags": [
+            "Mailstore"
+          ]
+        }
+      },
+      "/v1/mailstore/report-data": {},
+      "/v1/mailstore/verify-store": {},
+      "/v1/schedules": {},
+      "/v1/schedules/{id}": {},
+      "/v1/schedules/{id}/execute": {},
+      "/v1/eset/dashboard/index": {},
+      "/v1/eset/protect/sync": {},
+      "/v1/eset/partners": {
+        "post": {
+          "operationId": "CreateEsetPartnerHttpController_createEsetPartner",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateEsetPartnerRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EsetPartnerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Partner with this email already exists"
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create new ESET partner (managed MSP)",
+          "tags": [
+            "ESET"
+          ]
+        },
+        "get": {
+          "operationId": "FindEsetPartnersHttpController_listEsetPartners",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "id",
+                "type": "string"
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of ESET partners",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EsetPartnerPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid request parameters"
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An error occurred while fetching ESET partners"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "List ESET partners",
+          "tags": [
+            "ESET"
+          ]
+        }
+      },
+      "/v1/eset/partners/fromContext": {
+        "get": {
+          "operationId": "FindEsetPartnerFromContextHttpController_getEsetPartnerFromContext",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EsetPartnerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get eset partner from context",
+          "tags": [
+            "ESET"
+          ]
+        }
+      },
+      "/v1/eset/partners/{id}": {},
+      "/v1/eset/partners/{id}/metrics": {
+        "get": {
+          "description": "Retrieves current real-time metrics for an ESET partner (aggregated across all customers) and compares them with the most recent historical metric. Optionally specify a date to compare against a specific historical point.",
+          "operationId": "GetEsetPartnerMetricsHttpController_getEsetPartnerMetrics",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "compareDate",
+              "required": false,
+              "in": "query",
+              "description": "Optional date to compare against. If provided, retrieves the newest metric before or at this date. If not provided, retrieves the most recent metric.",
+              "schema": {
+                "format": "date-time",
+                "example": "2024-10-23T00:00:00.000Z",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Metrics retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EsetMetricsResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Partner not found"
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get ESET partner metrics with comparison",
+          "tags": [
+            "ESET"
+          ]
+        }
+      },
+      "/v1/eset/partners/{id}/index": {},
+      "/v1/eset/customers": {
+        "post": {
+          "operationId": "CreateEsetCustomerHttpController_createEsetCustomer",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateEsetCustomerRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EsetCustomerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create new ESET customer",
+          "tags": [
+            "ESET"
+          ]
+        },
+        "get": {
+          "operationId": "FindEsetCustomersHttpController_listEsetCustomers",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "createdAt",
+                "type": "string",
+                "enum": [
+                  "id",
+                  "name",
+                  "createdAt"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "customerId",
+              "required": false,
+              "in": "query",
+              "description": "Pass \"-1\" to get customers without reference",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of ESET customers",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EsetCustomerPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid request parameters"
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An error occurred while fetching ESET customers"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "List ESET customers",
+          "tags": [
+            "ESET"
+          ]
+        }
+      },
+      "/v1/eset/customers/{id}": {
+        "get": {
+          "operationId": "FindEsetCustomerByIdHttpController_getEsetCustomer",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of ESET customers",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EsetCustomerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid request parameters"
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An error occurred while fetching ESET customers"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get ESET customer by id",
+          "tags": [
+            "ESET"
+          ]
+        },
+        "patch": {
+          "operationId": "UpdateEsetCustomerHttpController_updateEsetCustomer",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateEsetCustomerRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EsetCustomerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update ESET customer by id",
+          "tags": [
+            "ESET"
+          ]
+        }
+      },
+      "/v1/eset/customers/{id}/metrics": {
+        "get": {
+          "description": "Retrieves current real-time metrics for a customer and compares them with the most recent historical metric. Optionally specify a date to compare against a specific historical point.",
+          "operationId": "GetEsetCustomerMetricsHttpController_getEsetCustomerMetrics",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "compareDate",
+              "required": false,
+              "in": "query",
+              "description": "Optional date to compare against. If provided, retrieves the newest metric before or at this date. If not provided, retrieves the most recent metric.",
+              "schema": {
+                "format": "date-time",
+                "example": "2024-10-23T00:00:00.000Z",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Metrics retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EsetMetricsResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Customer not found"
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get ESET customer metrics with comparison",
+          "tags": [
+            "ESET"
+          ]
+        }
+      },
+      "/v1/eset/customers/{id}/index": {},
+      "/v1/eset/licenses": {
+        "get": {
+          "operationId": "FindEsetLicensesHttpController_listEsetLicenses",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "usage",
+                "type": "string",
+                "enum": [
+                  "usage",
+                  "quantity"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "customerId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "78a2e46d-42df-4270-96ab-ab0b622a388b",
+                "type": "string"
+              }
+            },
+            {
+              "name": "state",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": 1,
+                "type": "number",
+                "enum": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4
+                ]
+              }
+            },
+            {
+              "name": "trial",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "productCode",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of ESET licenses",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EsetLicensePaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "List ESET customers",
+          "tags": [
+            "ESET"
+          ]
+        },
+        "post": {
+          "operationId": "CreateEsetLicenseHttpController_createEsetLicense",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateEsetLicenseRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "202": {
+              "description": "Create ESET license accepted"
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create ESET license for a customer",
+          "tags": [
+            "ESET"
+          ]
+        }
+      },
+      "/v1/eset/licenses/{id}": {
+        "get": {
+          "operationId": "FindEsetLicenseByIdHttpController_getEsetLicense",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "ESET license details",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EsetLicenseResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get ESET license by id",
+          "tags": [
+            "ESET"
+          ]
+        },
+        "patch": {
+          "operationId": "UpdateEsetLicenseHttpController_updateEsetLicense",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateEsetLicenseRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EsetLicenseResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update ESET license by id",
+          "tags": [
+            "ESET"
+          ]
+        }
+      },
+      "/v1/eset/devices": {
+        "get": {
+          "operationId": "FindEsetDevicesHttpController_listEsetDevices",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "id",
+                "type": "string",
+                "enum": [
+                  "name",
+                  "detections",
+                  "databaseDate"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "customerId",
+              "required": false,
+              "in": "query",
+              "description": "Filter by customer (parent) id",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "moduleStatus",
+              "required": false,
+              "in": "query",
+              "description": "Filter by ESET module status string",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "updated",
+                  "notUpdated",
+                  "unknown"
+                ]
+              }
+            },
+            {
+              "name": "status",
+              "required": false,
+              "in": "query",
+              "description": "Filter by aggregated device status",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "ok",
+                  "warning",
+                  "risk",
+                  "malfunction"
+                ]
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of ESET devices",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EsetDevicePaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "List ESET devices",
+          "tags": [
+            "ESET"
+          ]
+        }
+      },
+      "/v1/eset/report-data": {},
+      "/v1/eset/device-problems": {
+        "get": {
+          "operationId": "FindEsetDeviceProblemsHttpController_listDeviceProblems",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "createdAt",
+                "type": "string",
+                "enum": [
+                  "deviceName",
+                  "severity",
+                  "createdAt"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "parentId",
+              "required": false,
+              "in": "query",
+              "description": "Filter by parent device ID",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "severity",
+              "required": false,
+              "in": "query",
+              "description": "Filter by severity",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "warning",
+                  "critical"
+                ]
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EsetDeviceProblemPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "List ESET device problems",
+          "tags": [
+            "ESET"
+          ]
+        }
+      },
+      "/v1/downloads": {
+        "get": {
+          "operationId": "FindDownloadFilesHttpController_listDownloads",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "name",
+                "type": "string",
+                "enum": [
+                  "name",
+                  "createdAt",
+                  "availableUntil"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "public",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "type",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "report",
+                "type": "string",
+                "enum": [
+                  "information",
+                  "report",
+                  "installer"
+                ]
+              }
+            },
+            {
+              "name": "product",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "managed_backup_acronis",
+                "type": "string",
+                "enum": [
+                  "managed_backup_acronis",
+                  "managed_cloud_to_cloud_cloudally",
+                  "managed_endpoint_security_eset",
+                  "managed_email_archiving_mailstore",
+                  "managed_vdi_oneclick",
+                  "managed_rmm_nsight",
+                  "managed_power_apc",
+                  "managed_firewall_anqa",
+                  "managed_security_audit_lywand",
+                  "managed_isa_plus_flat",
+                  "part_managed_security_audit_lywand",
+                  "part_managed_eset",
+                  "part_managed_sec_auditor",
+                  "device_as_a_service",
+                  "unknown"
+                ]
+              }
+            },
+            {
+              "name": "platform",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "example": "windows",
+                "type": "string",
+                "enum": [
+                  "windows",
+                  "linux",
+                  "mac"
+                ]
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Files found successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/DownloadFilePaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Find download files by tenant",
+          "tags": [
+            "Download"
+          ]
+        }
+      },
+      "/v1/downloads/{id}": {
+        "get": {
+          "operationId": "FindDownloadFileByIdHttpController_getDownload",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/DownloadFileResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "File not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get file by ID",
+          "tags": [
+            "Download"
+          ]
+        }
+      },
+      "/v1/downloads/all": {},
+      "/v1/downloads/{id}/url": {
+        "get": {
+          "operationId": "GetDownloadFileUrlHttpController_getDownloadUrl",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "description": "File ID",
+              "schema": {
+                "example": "550e8400-e29b-41d4-a716-446655440000",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "File URL retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/DownloadFileUrlResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid file ID format",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "File not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get presigned URL or direct link for a download file",
+          "tags": [
+            "Download"
+          ]
+        }
+      },
+      "/v1/downloads/{id}/upload": {},
+      "/v1/sec-auditor/partners": {},
+      "/v1/sec-auditor/customers": {
+        "post": {
+          "operationId": "CreateSecAuditorCustomerHttpController_createSecAuditorCustomer",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSecAuditorCustomerRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SecAuditorCustomerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create new SEC AUDITOR customer",
+          "tags": [
+            "Sec Auditor"
+          ]
+        },
+        "get": {
+          "operationId": "FindSecAuditorCustomersHttpController_listSecAuditorCustomers",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "id",
+                "type": "string",
+                "enum": [
+                  "name",
+                  "employees"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SecAuditorCustomerPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "List SEC AUDITOR customers",
+          "tags": [
+            "Sec Auditor"
+          ]
+        }
+      },
+      "/v1/sec-auditor/customers/{id}": {
+        "get": {
+          "operationId": "FindSecAuditorCustomerHttpController_getSecAuditorCustomer",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SecAuditorCustomerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get SEC AUDITOR customer by id",
+          "tags": [
+            "Sec Auditor"
+          ]
+        },
+        "patch": {
+          "operationId": "UpdateSecAuditorCustomerHttpController_updateSecAuditorCustomer",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateSecAuditorCustomerRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SecAuditorCustomerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update SEC AUDITOR customer",
+          "tags": [
+            "Sec Auditor"
+          ]
+        }
+      },
+      "/v1/sec-auditor/customers/{id}/installer": {
+        "get": {
+          "operationId": "CreateSecAuditorInstallerHttpController_createSecAuditorInstaller",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SecAuditorInstallerResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create SEC AUDITOR customer installer",
+          "tags": [
+            "Sec Auditor"
+          ]
+        }
+      },
+      "/v1/metrics/grouped": {},
+      "/v1/metrics/latest": {},
+      "/v1/support/queries": {
+        "post": {
+          "operationId": "CreateSupportQueryHttpController_createSupportQuery",
+          "parameters": [
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSupportQueryRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Query processed successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SupportQueryResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid thread ID",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ArgumentInvalidException"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/InternalServerErrorException"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Submit a query to the support chatbot",
+          "tags": [
+            "Support"
+          ]
+        },
+        "get": {
+          "operationId": "FindSupportQueriesHttpController_listSupportQueries",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "createdAt",
+                "type": "string",
+                "enum": [
+                  "createdAt",
+                  "queryTime"
+                ]
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "threadId",
+              "required": false,
+              "in": "query",
+              "description": "Filter by thread ID",
+              "schema": {
+                "example": "1c0f9f9a-7bb9-4a46-b5a9-6e2b8a7c27f3",
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SupportQueryPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "List support queries",
+          "tags": [
+            "Support"
+          ]
+        }
+      },
+      "/v1/support/queries/{id}": {
+        "patch": {
+          "operationId": "UpdateSupportQueryHttpController_updateSupportQuery",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateSupportQueryRequestDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Support query updated successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SupportQueryResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update a support query",
+          "tags": [
+            "Support"
+          ]
+        }
+      },
+      "/v1/support/queries/all": {},
+      "/v1/support/chats": {
+        "get": {
+          "operationId": "FindSupportChatListHttpController_listSupportChats",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of items per page",
+              "schema": {
+                "example": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Current page",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "in": "query",
+              "description": "Field to order by",
+              "schema": {
+                "example": "id",
+                "type": "string"
+              }
+            },
+            {
+              "name": "orderDirection",
+              "required": false,
+              "in": "query",
+              "description": "Order direction",
+              "schema": {
+                "example": "asc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SupportChatListPaginatedResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "List support chat threads",
+          "tags": [
+            "Support"
+          ]
+        }
+      },
+      "/v1/support/chats/{threadId}": {
+        "delete": {
+          "operationId": "DeleteSupportChatHttpController_removeSupportChat",
+          "parameters": [
+            {
+              "name": "threadId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": ""
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/NotFoundException"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Delete a support chat thread",
+          "tags": [
+            "Support"
+          ]
+        }
+      },
+      "/v1/system-tasks/{id}": {
+        "get": {
+          "operationId": "FindSystemTaskByIdHttpController_getSystemTaskById",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "required": false,
+              "description": "Language code",
+              "schema": {}
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SystemTaskResponseDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 400,
+                    "message": "Bad Request",
+                    "error": "GENERIC.BAD_REQUEST",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 401,
+                    "message": "Unauthorized",
+                    "error": "GENERIC.UNAUTHORIZED",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 403,
+                    "message": "Forbidden",
+                    "error": "GENERIC.FORBIDDEN",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 404,
+                    "message": "Not Found",
+                    "error": "GENERIC.NOT_FOUND",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 409,
+                    "message": "Conflict",
+                    "error": "GENERIC.CONFLICT",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "statusCode": 500,
+                    "message": "Internal Server Error",
+                    "error": "GENERIC.INTERNAL_SERVER_ERROR",
+                    "correlationId": "DMyg0Zzu7kjGdX2Ai0UtX"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get system task by id",
+          "tags": [
+            "System Task"
+          ]
+        }
+      },
+      "/v1/admin/system-tasks": {}
+    },
+    "info": {
+      "title": "SYNAXON Marketplace API",
+      "description": "This is the SYNAXON Marketplace API.",
+      "version": "1.9.2",
+      "contact": {}
+    },
+    "tags": [],
+    "servers": [
+      {
+        "url": "https://api.synaxon.com/marketplace",
+        "description": "Production"
+      }
+    ],
+    "components": {
+      "securitySchemes": {
+        "bearer": {
+          "scheme": "bearer",
+          "bearerFormat": "JWT",
+          "type": "http"
+        },
+        "basic": {
+          "type": "http",
+          "scheme": "basic",
+          "description": "Used for /auth/token",
+          "name": "Basic"
+        }
+      },
+      "schemas": {
+        "CreatePlainAuditLogRequestDto": {
+          "type": "object",
+          "properties": {
+            "entityType": {
+              "type": "string",
+              "description": "The name of the entity",
+              "example": "TenantEntity"
+            },
+            "entityId": {
+              "type": "string",
+              "description": "The id of the entity",
+              "example": "d066480a-a6f0-4efa-a584-51114912e1f8"
+            },
+            "action": {
+              "type": "string",
+              "description": "Action to be logged",
+              "example": "d066480a-a6f0-4efa-a584-51114912e1f8",
+              "enum": [
+                "create",
+                "update",
+                "delete",
+                "action"
+              ]
+            },
+            "subAction": {
+              "type": "string",
+              "description": "Sub-Action to be logged",
+              "example": "d066480a-a6f0-4efa-a584-51114912e1f8",
+              "enum": [
+                "logged-in"
+              ]
+            },
+            "entityRaw": {
+              "type": "object",
+              "description": "Raw properties of entity",
+              "example": {
+                "name": "Max Mustermann",
+                "email": "max.mustermann@example.com"
+              }
+            }
+          },
+          "required": [
+            "entityType",
+            "entityId",
+            "action",
+            "entityRaw"
+          ]
+        },
+        "AuditLogResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "entityType": {
+              "type": "string",
+              "description": "The entity type",
+              "example": "template"
+            },
+            "entityId": {
+              "type": "string",
+              "description": "The entity id",
+              "example": "123"
+            },
+            "action": {
+              "type": "string",
+              "enum": [
+                "create",
+                "update",
+                "delete",
+                "action"
+              ],
+              "description": "The action",
+              "example": "create"
+            },
+            "subAction": {
+              "type": "string",
+              "enum": [
+                "logged-in"
+              ],
+              "description": "The sub action",
+              "example": "logged-in"
+            },
+            "entityRaw": {
+              "type": "object",
+              "description": "The entity raw",
+              "example": {}
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "The tenant id",
+              "example": "123"
+            },
+            "userId": {
+              "type": "string",
+              "description": "The user id",
+              "example": "123"
+            },
+            "tenantName": {
+              "type": "string",
+              "description": "The tenant name",
+              "example": "tenant name"
+            },
+            "userName": {
+              "type": "string",
+              "description": "The user name",
+              "example": "user name"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "entityType",
+            "entityId",
+            "action",
+            "entityRaw",
+            "tenantId",
+            "userId",
+            "tenantName",
+            "userName"
+          ]
+        },
+        "AuditLogPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/AuditLogResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "AuditOptionsResponseDto": {
+          "type": "object",
+          "properties": {
+            "entityNames": {
+              "example": [
+                "JournalingMailboxEntity",
+                "UserEntity"
+              ],
+              "description": "List of unique entity names available in audit logs",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "entityNames"
+          ]
+        },
+        "CreateAcronisCustomerRequestDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "description": "The id of the customer",
+              "example": 1
+            },
+            "email": {
+              "type": "string",
+              "description": "The email address for first user",
+              "example": "info@example.com"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the customer",
+              "example": "customername"
+            },
+            "type": {
+              "type": "string",
+              "description": "The type of the customer",
+              "example": "workload",
+              "enum": [
+                "workload",
+                "gigabyte"
+              ]
+            },
+            "storage": {
+              "type": "string",
+              "description": "The storage location of the customer",
+              "example": "synaxon",
+              "enum": [
+                "synaxon",
+                "acronis"
+              ]
+            }
+          },
+          "required": [
+            "email",
+            "name",
+            "type",
+            "storage"
+          ]
+        },
+        "AcronisEntityMetricsResponseDto": {
+          "type": "object",
+          "properties": {
+            "local_storage": {
+              "type": "number",
+              "description": "The number of local storage",
+              "example": 1
+            },
+            "workstations": {
+              "type": "number",
+              "description": "The number of workstations",
+              "example": 1
+            },
+            "servers": {
+              "type": "number",
+              "description": "The number of servers",
+              "example": 1
+            },
+            "vms": {
+              "type": "number",
+              "description": "The number of vms",
+              "example": 1
+            },
+            "m365_seats": {
+              "type": "number",
+              "description": "The number of m365 seats",
+              "example": 1
+            },
+            "m365_mailboxes": {
+              "type": "number",
+              "description": "The number of m365 mailboxes",
+              "example": 1
+            },
+            "m365_onedrive": {
+              "type": "number",
+              "description": "The number of m365 onedrive",
+              "example": 1
+            },
+            "m365_sharepoint_sites": {
+              "type": "number",
+              "description": "The number of m365 sharepoint sites",
+              "example": 1
+            },
+            "google_mail": {
+              "type": "number",
+              "description": "The number of google mail",
+              "example": 1
+            },
+            "google_drive": {
+              "type": "number",
+              "description": "The number of google drive",
+              "example": 1
+            },
+            "google_team_drive": {
+              "type": "number",
+              "description": "The number of google team drive",
+              "example": 1
+            },
+            "m365_teams": {
+              "type": "number",
+              "description": "The number of m365 teams",
+              "example": 1
+            },
+            "storage": {
+              "type": "number",
+              "description": "The number of storage",
+              "example": 1
+            },
+            "class1_storage": {
+              "type": "number",
+              "description": "The number of class1 storage",
+              "example": 1
+            },
+            "class2_storage": {
+              "type": "number",
+              "description": "The number of class2 storage",
+              "example": 1
+            },
+            "server_storage": {
+              "type": "number",
+              "description": "The number of server storage",
+              "example": 1
+            },
+            "vm_storage": {
+              "type": "number",
+              "description": "The number of vm storage",
+              "example": 1
+            },
+            "workstation_storage": {
+              "type": "number",
+              "description": "The number of workstation storage",
+              "example": 1
+            },
+            "mailbox_storage": {
+              "type": "number",
+              "description": "The number of mailbox storage",
+              "example": 1
+            },
+            "o365_teams_storage": {
+              "type": "number",
+              "description": "The number of o365 teams storage",
+              "example": 1
+            },
+            "onedrive_storage": {
+              "type": "number",
+              "description": "The number of onedrive storage",
+              "example": 1
+            },
+            "nas": {
+              "type": "number",
+              "description": "The number of nas",
+              "example": 1
+            },
+            "nas_storage": {
+              "type": "number",
+              "description": "The number of nas storage",
+              "example": 1
+            },
+            "storage_total": {
+              "type": "number",
+              "description": "The number of storage total",
+              "example": 1
+            },
+            "immutable_storage": {
+              "type": "number",
+              "description": "The number of immutable storage",
+              "example": 1
+            },
+            "c2c_storage": {
+              "type": "number",
+              "description": "The number of c2c storage",
+              "example": 1
+            },
+            "pack_adv_backup_workstations": {
+              "type": "number",
+              "description": "The number of pack advanced backup workstations",
+              "example": 1
+            },
+            "pack_adv_backup_servers": {
+              "type": "number",
+              "description": "The number of pack advanced backup servers",
+              "example": 1
+            },
+            "pack_adv_backup_vms": {
+              "type": "number",
+              "description": "The number of pack advanced backup vms",
+              "example": 1
+            },
+            "pack_adv_management": {
+              "type": "number",
+              "description": "The number of pack advanced management",
+              "example": 1
+            },
+            "pack_adv_security": {
+              "type": "number",
+              "description": "The number of pack advanced security",
+              "example": 1
+            },
+            "pack_adv_security_mdr": {
+              "type": "number",
+              "description": "The number of pack advanced security mdr",
+              "example": 1
+            },
+            "pack_adv_security_without_edr": {
+              "type": "number",
+              "description": "The number of pack advanced security without edr",
+              "example": 1
+            },
+            "pack_adv_security_with_edr": {
+              "type": "number",
+              "description": "The number of pack advanced security with edr",
+              "example": 1
+            },
+            "pack_adv_security_edr_workloads": {
+              "type": "number",
+              "description": "The number of pack advanced security edr workloads",
+              "example": 1
+            },
+            "pack_adv_security_edr_workloads_g1": {
+              "type": "number",
+              "description": "The number of pack advanced security edr workloads g1",
+              "example": 1
+            },
+            "pack_adv_security_m365_seats": {
+              "type": "number",
+              "description": "The number of pack advanced security m365 seats",
+              "example": 1
+            },
+            "pack_adv_email_security": {
+              "type": "number",
+              "description": "The number of pack advanced email security",
+              "example": 1
+            }
+          },
+          "required": [
+            "local_storage",
+            "workstations",
+            "servers",
+            "vms",
+            "m365_seats",
+            "m365_mailboxes",
+            "m365_onedrive",
+            "m365_sharepoint_sites",
+            "google_mail",
+            "google_drive",
+            "google_team_drive",
+            "m365_teams",
+            "storage",
+            "class1_storage",
+            "class2_storage",
+            "server_storage",
+            "vm_storage",
+            "workstation_storage",
+            "mailbox_storage",
+            "o365_teams_storage",
+            "onedrive_storage",
+            "nas",
+            "nas_storage",
+            "storage_total",
+            "immutable_storage",
+            "c2c_storage",
+            "pack_adv_backup_workstations",
+            "pack_adv_backup_servers",
+            "pack_adv_backup_vms",
+            "pack_adv_management",
+            "pack_adv_security",
+            "pack_adv_security_mdr",
+            "pack_adv_security_without_edr",
+            "pack_adv_security_with_edr",
+            "pack_adv_security_edr_workloads",
+            "pack_adv_security_edr_workloads_g1",
+            "pack_adv_security_m365_seats",
+            "pack_adv_email_security"
+          ]
+        },
+        "AcronisCustomerResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "customerId": {
+              "type": "number",
+              "description": "The customer id of the customer",
+              "example": 1
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the customer",
+              "example": "Traumpartner GmbH"
+            },
+            "vendorId": {
+              "type": "string",
+              "description": "The acronis tenantId of the customer",
+              "example": "661d261e7a2b4b1255e01da2"
+            },
+            "vendorLegacyId": {
+              "type": "string",
+              "description": "The acronis legacy ID of the customer (cached from resolveId call)",
+              "example": "12345"
+            },
+            "restrictedAccess": {
+              "type": "boolean",
+              "description": "If access is enabled for the partner",
+              "example": false
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "The tenantId of the customer",
+              "example": "661d261e7a2b4b1255e01da2"
+            },
+            "parentId": {
+              "type": "string",
+              "description": "The acronis partnerId of the customer",
+              "example": "661d261e7a2b4b1255e01da2"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "workload",
+                "gigabyte"
+              ],
+              "description": "The type of the customer",
+              "example": "workload"
+            },
+            "metrics": {
+              "description": "The metrics of the customer",
+              "example": {
+                "local_storage_total": 319918144512,
+                "workstations": 4,
+                "servers": 1,
+                "vms": 13
+              },
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/AcronisEntityMetricsResponseDto"
+                }
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "customerId",
+            "name",
+            "vendorId",
+            "restrictedAccess",
+            "tenantId",
+            "parentId",
+            "type",
+            "metrics"
+          ]
+        },
+        "AcronisCustomerPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/AcronisCustomerResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "MetricValueDto": {
+          "type": "object",
+          "properties": {
+            "curr": {
+              "type": "number",
+              "example": 85,
+              "description": "Current value of the metric"
+            },
+            "prev": {
+              "type": "number",
+              "example": 78,
+              "description": "Previous value of the metric (null if no previous data)",
+              "nullable": true
+            }
+          },
+          "required": [
+            "curr",
+            "prev"
+          ]
+        },
+        "AcronisMetricsDTO": {
+          "type": "object",
+          "properties": {
+            "workstations": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "servers": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "vms": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "m365Seats": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "m365Mailboxes": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "m365Onedrive": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "m365SharepointSites": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "m365Teams": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "googleMail": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "googleDrive": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "googleTeamDrive": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "nas": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "policies": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "localStorage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "storage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "storageTotal": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "class1Storage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "class2Storage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "serverStorage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "vmStorage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "workstationStorage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "mailboxStorage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "o365TeamsStorage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "onedriveStorage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "nasStorage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "immutableStorage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "c2cStorage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "packAdvBackupWorkstations": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "packAdvBackupServers": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "packAdvBackupVms": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "packAdvManagement": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "packAdvSecurity": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "packAdvSecurityMdr": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "packAdvSecurityWithoutEdr": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "packAdvSecurityWithEdr": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "packAdvSecurityEdrWorkloads": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "packAdvSecurityEdrWorkloadsG1": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "packAdvSecurityM365Seats": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "packAdvEmailSecurity": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            }
+          },
+          "required": [
+            "workstations",
+            "servers",
+            "vms",
+            "m365Seats",
+            "m365Mailboxes",
+            "m365Onedrive",
+            "m365SharepointSites",
+            "m365Teams",
+            "googleMail",
+            "googleDrive",
+            "googleTeamDrive",
+            "nas",
+            "policies",
+            "localStorage",
+            "storage",
+            "storageTotal",
+            "class1Storage",
+            "class2Storage",
+            "serverStorage",
+            "vmStorage",
+            "workstationStorage",
+            "mailboxStorage",
+            "o365TeamsStorage",
+            "onedriveStorage",
+            "nasStorage",
+            "immutableStorage",
+            "c2cStorage",
+            "packAdvBackupWorkstations",
+            "packAdvBackupServers",
+            "packAdvBackupVms",
+            "packAdvManagement",
+            "packAdvSecurity",
+            "packAdvSecurityMdr",
+            "packAdvSecurityWithoutEdr",
+            "packAdvSecurityWithEdr",
+            "packAdvSecurityEdrWorkloads",
+            "packAdvSecurityEdrWorkloadsG1",
+            "packAdvSecurityM365Seats",
+            "packAdvEmailSecurity"
+          ]
+        },
+        "AcronisCustomerMetricsResponseDto": {
+          "type": "object",
+          "properties": {
+            "currTimestamp": {
+              "format": "date-time",
+              "type": "string",
+              "example": "2024-10-24T09:30:00.000Z",
+              "description": "Timestamp when current metrics were generated"
+            },
+            "prevTimestamp": {
+              "format": "date-time",
+              "type": "string",
+              "example": "2024-10-23T00:00:00.000Z",
+              "description": "Timestamp of previous metrics for comparison",
+              "nullable": true
+            },
+            "values": {
+              "description": "Metrics values with current and previous comparison",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/AcronisMetricsDTO"
+                }
+              ]
+            }
+          },
+          "required": [
+            "currTimestamp",
+            "prevTimestamp",
+            "values"
+          ]
+        },
+        "UpdateAcronisCustomerRequestDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "description": "Customer id of customer file",
+              "example": 123,
+              "nullable": true
+            }
+          }
+        },
+        "CreateAcronisPartnerRequestDto": {
+          "type": "object",
+          "properties": {
+            "tenantId": {
+              "type": "string",
+              "description": "The tenantId of the partner",
+              "example": "4f6aeb73-02fc-4990-9d44-1c0757e68b97"
+            },
+            "type": {
+              "type": "string",
+              "description": "The type of the partner",
+              "example": "fullManaged",
+              "enum": [
+                "fullManaged",
+                "partManaged"
+              ]
+            },
+            "email": {
+              "type": "string",
+              "description": "The email address for first user",
+              "example": "info@synaxon.de"
+            }
+          },
+          "required": [
+            "tenantId",
+            "type",
+            "email"
+          ]
+        },
+        "AcronisPartnerResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the partner",
+              "example": "Traumpartner GmbH"
+            },
+            "vendorId": {
+              "type": "string",
+              "description": "The acronis tenantId of the partner",
+              "example": "661d261e7a2b4b1255e01da2"
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "The tenantId of the partner",
+              "example": "661d261e7a2b4b1255e01da2"
+            },
+            "type": {
+              "type": "string",
+              "description": "The type of the partner",
+              "example": "fullManaged",
+              "enum": [
+                "fullManaged",
+                "partManaged"
+              ]
+            },
+            "restrictedAccess": {
+              "type": "boolean",
+              "description": "If access is enabled for the partner",
+              "example": false
+            },
+            "metrics": {
+              "description": "The metrics of the partner",
+              "example": {
+                "local_storage_total": 319918144512,
+                "workstations": 4,
+                "servers": 1,
+                "vms": 13
+              },
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/AcronisEntityMetricsResponseDto"
+                }
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "vendorId",
+            "tenantId",
+            "type",
+            "restrictedAccess",
+            "metrics"
+          ]
+        },
+        "AcronisPartnerPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/AcronisPartnerResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "AcronisDeviceResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the device",
+              "example": "Server-01"
+            },
+            "vendorId": {
+              "type": "string",
+              "description": "The Acronis ID",
+              "example": "acronis-123456"
+            },
+            "type": {
+              "type": "string",
+              "description": "Device type (determined by system attributes)",
+              "example": "workstation",
+              "enum": [
+                "workstation",
+                "server",
+                "vm"
+              ]
+            },
+            "license": {
+              "type": "string",
+              "description": "Device type based on licensing",
+              "example": "workstation",
+              "enum": [
+                "workstation",
+                "server",
+                "vm"
+              ]
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "warning",
+                "error",
+                "critical",
+                "noPoliciesApplied",
+                "scheduled",
+                "interactionRequired",
+                "running",
+                "cancelling",
+                "idle"
+              ],
+              "description": "The status of the device",
+              "example": "idle"
+            },
+            "isOnline": {
+              "type": "boolean",
+              "description": "Whether the device is online",
+              "example": true
+            },
+            "cpu": {
+              "description": "CPU information array",
+              "example": [
+                "Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "ipAddresses": {
+              "description": "IP addresses array",
+              "example": [
+                "192.168.1.100",
+                "10.0.0.50"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "lastBackup": {
+              "format": "date-time",
+              "type": "string",
+              "description": "Last backup date",
+              "example": "2024-01-15T10:30:00Z"
+            },
+            "nextBackup": {
+              "format": "date-time",
+              "type": "string",
+              "description": "Next backup date",
+              "example": "2024-01-16T10:30:00Z"
+            },
+            "lastSuccessfulBackup": {
+              "format": "date-time",
+              "type": "string",
+              "description": "Last successful backup date",
+              "example": "2024-01-15T10:30:00Z"
+            },
+            "agentVersion": {
+              "type": "string",
+              "description": "Agent version",
+              "example": "12.0.16545"
+            },
+            "osType": {
+              "type": "string",
+              "enum": [
+                "windows",
+                "macos",
+                "linux"
+              ],
+              "description": "Operating system type",
+              "example": "windows"
+            },
+            "os": {
+              "type": "string",
+              "description": "Operating system name",
+              "example": "Microsoft Windows 10 Pro"
+            },
+            "ram": {
+              "type": "number",
+              "description": "RAM size in bytes",
+              "example": 17179869184
+            },
+            "cyberfitScore": {
+              "type": "number",
+              "description": "Cyberfit security score",
+              "example": 85
+            },
+            "acronisUsername": {
+              "type": "string",
+              "example": "acronis-user-123"
+            },
+            "tenantId": {
+              "type": "string",
+              "example": "tenant-uuid-123"
+            },
+            "parentId": {
+              "type": "string",
+              "example": "customer-123"
+            },
+            "acronisPolicies": {
+              "description": "Array of Acronis policy IDs",
+              "example": [
+                "policy-id-1",
+                "policy-id-2"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "vendorId",
+            "type",
+            "license",
+            "status",
+            "isOnline",
+            "acronisUsername",
+            "tenantId",
+            "parentId",
+            "acronisPolicies"
+          ]
+        },
+        "AcronisDevicePaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/AcronisDeviceResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "AcronisStorageDto": {
+          "type": "object",
+          "properties": {
+            "local_storage": {
+              "type": "number",
+              "example": 1073741824,
+              "description": "Local storage in bytes"
+            },
+            "storage": {
+              "type": "number",
+              "example": 5368709120,
+              "description": "Cloud storage in bytes"
+            },
+            "storage_total": {
+              "type": "number",
+              "example": 6442450944,
+              "description": "Total storage in bytes"
+            },
+            "servers": {
+              "type": "number",
+              "example": 10,
+              "description": "Number of servers"
+            },
+            "workstations": {
+              "type": "number",
+              "example": 50,
+              "description": "Number of workstations"
+            },
+            "vms": {
+              "type": "number",
+              "example": 5,
+              "description": "Number of virtual machines"
+            }
+          },
+          "required": [
+            "local_storage",
+            "storage",
+            "storage_total",
+            "servers",
+            "workstations",
+            "vms"
+          ]
+        },
+        "AcronisDeviceDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "DESKTOP-ABC123",
+              "description": "Device name"
+            },
+            "type": {
+              "type": "string",
+              "example": "workstation",
+              "description": "Device type (server, workstation, vm)"
+            },
+            "status": {
+              "type": "string",
+              "example": "ok",
+              "description": "Backup status"
+            },
+            "isOnline": {
+              "type": "boolean",
+              "example": true,
+              "description": "Whether the device is online"
+            },
+            "lastBackup": {
+              "format": "date-time",
+              "type": "string",
+              "example": "2024-01-15T10:30:00Z",
+              "description": "Last backup timestamp"
+            }
+          },
+          "required": [
+            "name",
+            "type",
+            "status",
+            "isOnline"
+          ]
+        },
+        "AcronisErrorDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "SERVER-01",
+              "description": "Device name with error"
+            },
+            "type": {
+              "type": "string",
+              "example": "server",
+              "description": "Device type"
+            },
+            "status": {
+              "type": "string",
+              "example": "error",
+              "description": "Error status"
+            }
+          },
+          "required": [
+            "name",
+            "type",
+            "status"
+          ]
+        },
+        "AcronisScoreDto": {
+          "type": "object",
+          "properties": {
+            "totalDevices": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of devices"
+            },
+            "devicesWithErrors": {
+              "type": "number",
+              "example": 5,
+              "description": "Number of devices with errors"
+            },
+            "score": {
+              "type": "number",
+              "example": 0.95,
+              "description": "Score as a decimal (0-1), representing the percentage of devices without errors"
+            }
+          },
+          "required": [
+            "totalDevices",
+            "devicesWithErrors",
+            "score"
+          ]
+        },
+        "AcronisCustomerCountDto": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "number",
+              "example": 15,
+              "description": "Number of Acronis customers for this tenant"
+            }
+          },
+          "required": [
+            "count"
+          ]
+        },
+        "AcronisCustomerStatsItemDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "example": 12345,
+              "description": "Customer ID (null if not linked)",
+              "nullable": true
+            },
+            "customerName": {
+              "type": "string",
+              "example": "Acme Corp",
+              "description": "Customer name"
+            },
+            "total": {
+              "type": "number",
+              "example": 10,
+              "description": "Total number of devices for this customer"
+            },
+            "errors": {
+              "type": "number",
+              "example": 2,
+              "description": "Number of devices with errors"
+            }
+          },
+          "required": [
+            "customerId",
+            "customerName",
+            "total",
+            "errors"
+          ]
+        },
+        "AcronisReportDataResponseDto": {
+          "type": "object",
+          "properties": {
+            "storageUsage": {
+              "description": "Storage statistics",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/AcronisStorageDto"
+                }
+              ]
+            },
+            "deviceList": {
+              "description": "List of backup devices",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/AcronisDeviceDto"
+              }
+            },
+            "failuresList": {
+              "description": "List of devices with errors",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/AcronisErrorDto"
+              }
+            },
+            "score": {
+              "description": "Score calculation details",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/AcronisScoreDto"
+                }
+              ]
+            },
+            "customerCount": {
+              "description": "Customer count for partner reports",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/AcronisCustomerCountDto"
+                }
+              ]
+            },
+            "customerStats": {
+              "description": "Customer statistics for partner reports",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/AcronisCustomerStatsItemDto"
+              }
+            }
+          }
+        },
+        "AcronisPolicyResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the policy",
+              "example": "Backup Policy 1"
+            },
+            "count": {
+              "type": "number",
+              "example": 0,
+              "description": "The count associated with the policy"
+            },
+            "tenantId": {
+              "type": "string",
+              "example": "tenant-uuid-123"
+            },
+            "parentId": {
+              "type": "string",
+              "example": "customer-123"
+            },
+            "vendorId": {
+              "type": "string",
+              "description": "The Acronis ID",
+              "example": "acronis-policy-123"
+            },
+            "retention": {
+              "type": "object",
+              "description": "Retention settings for the policy",
+              "example": {
+                "daily": 7,
+                "weekly": 4,
+                "monthly": 3
+              }
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "count",
+            "tenantId",
+            "parentId",
+            "vendorId"
+          ]
+        },
+        "AcronisPolicyPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/AcronisPolicyResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "PermissionResponseDto": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "managed_backup_acronis",
+                "managed_cloud_to_cloud_cloudally",
+                "managed_endpoint_security_eset",
+                "managed_email_archiving_mailstore",
+                "managed_vdi_oneclick",
+                "managed_rmm_nsight",
+                "managed_power_apc",
+                "managed_firewall_anqa",
+                "managed_security_audit_lywand",
+                "managed_isa_plus_flat",
+                "part_managed_security_audit_lywand",
+                "part_managed_eset",
+                "part_managed_sec_auditor",
+                "device_as_a_service",
+                "unknown"
+              ],
+              "description": "Permission type",
+              "example": "managed_backup_acronis"
+            },
+            "access": {
+              "type": "string",
+              "enum": [
+                "read",
+                "write"
+              ],
+              "description": "Permission access level",
+              "example": "write"
+            }
+          },
+          "required": [
+            "type",
+            "access"
+          ]
+        },
+        "AuthResponseDto": {
+          "type": "object",
+          "properties": {
+            "tokenId": {
+              "type": "string",
+              "description": "Authorization token ID",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "userId": {
+              "type": "string",
+              "description": "User ID",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "userRole": {
+              "type": "string",
+              "description": "User role",
+              "example": "user"
+            },
+            "accessToken": {
+              "type": "string",
+              "description": "JWT access token",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+            },
+            "refreshToken": {
+              "type": "string",
+              "description": "JWT refresh token",
+              "example": "FTWjuAP8xJ6M3H8oKURI7Uh9CPd4PgI9jrbghLabjFFEqK26YfPCeGVp5JSWkg84fT3Y"
+            },
+            "expiresAt": {
+              "format": "date-time",
+              "type": "string",
+              "description": "Token expiration date",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "Tenant ID",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "partnerNo": {
+              "type": "string",
+              "description": "Partner ID",
+              "example": "SYN12345"
+            },
+            "permissions": {
+              "description": "Permissions granted to the user",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/PermissionResponseDto"
+              }
+            },
+            "redirectUrl": {
+              "type": "string",
+              "description": "Redirect URL after authentication",
+              "example": "/dashboard"
+            }
+          },
+          "required": [
+            "tokenId",
+            "userId",
+            "userRole",
+            "accessToken",
+            "refreshToken",
+            "expiresAt",
+            "tenantId",
+            "partnerNo",
+            "permissions"
+          ]
+        },
+        "UserResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "username": {
+              "type": "string",
+              "description": "Username",
+              "example": "johndoe"
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "Tenant ID",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "email": {
+              "type": "string",
+              "description": "Email",
+              "example": "john.doe@example.com"
+            },
+            "familyName": {
+              "type": "string",
+              "description": "Family Name",
+              "example": "Doe"
+            },
+            "givenName": {
+              "type": "string",
+              "description": "Given Name",
+              "example": "John"
+            },
+            "phoneNumber": {
+              "type": "string",
+              "description": "Phone Number",
+              "example": "+49 123 4567890"
+            },
+            "role": {
+              "type": "string",
+              "enum": [
+                "user",
+                "admin"
+              ],
+              "description": "Role",
+              "example": "user"
+            },
+            "permissions": {
+              "description": "Permissions granted to the user",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/PermissionResponseDto"
+              }
+            },
+            "partnerNo": {
+              "type": "string",
+              "description": "Partner Number",
+              "example": "SYN12345"
+            },
+            "lastLogin": {
+              "format": "date-time",
+              "type": "string",
+              "description": "Last Login date",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "emailNotification": {
+              "type": "string",
+              "enum": [
+                "immediately",
+                "daily"
+              ],
+              "description": "Email notification preference",
+              "example": "daily"
+            },
+            "language": {
+              "type": "string",
+              "enum": [
+                "de",
+                "en"
+              ],
+              "description": "User interface language",
+              "example": "de"
+            },
+            "completedTours": {
+              "description": "Completed tours",
+              "example": [
+                "tour1",
+                "tour2"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "tenantId",
+            "familyName",
+            "role",
+            "permissions",
+            "partnerNo",
+            "language",
+            "completedTours"
+          ]
+        },
+        "CreateApiTokenRequestDto": {
+          "type": "object",
+          "properties": {
+            "grant_type": {
+              "type": "string",
+              "description": "Grant type",
+              "example": "client_credentials",
+              "enum": [
+                "client_credentials"
+              ]
+            },
+            "scope": {
+              "type": "string",
+              "description": "Scope",
+              "example": "sys-app",
+              "enum": [
+                "sys-app",
+                "sys-app-beta"
+              ]
+            }
+          },
+          "required": [
+            "grant_type",
+            "scope"
+          ]
+        },
+        "ApiTokenResponseDto": {
+          "type": "object",
+          "properties": {
+            "access_token": {
+              "type": "string",
+              "description": "Access token",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+            },
+            "expires_in": {
+              "type": "number",
+              "description": "Access token expiration time in seconds",
+              "example": 3600
+            },
+            "scope": {
+              "type": "string",
+              "description": "Scope of the access token",
+              "example": "sys-app"
+            },
+            "token_type": {
+              "type": "string",
+              "description": "Token type",
+              "example": "bearer"
+            }
+          },
+          "required": [
+            "access_token",
+            "expires_in",
+            "scope",
+            "token_type"
+          ]
+        },
+        "RefreshTokenRequestDto": {
+          "type": "object",
+          "properties": {
+            "refreshToken": {
+              "type": "string",
+              "description": "Refresh token acquired from authentication"
+            }
+          },
+          "required": [
+            "refreshToken"
+          ]
+        },
+        "UserPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/UserResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "UpdateUserPermissions": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "managed_backup_acronis",
+                "managed_cloud_to_cloud_cloudally",
+                "managed_endpoint_security_eset",
+                "managed_email_archiving_mailstore",
+                "managed_vdi_oneclick",
+                "managed_rmm_nsight",
+                "managed_power_apc",
+                "managed_firewall_anqa",
+                "managed_security_audit_lywand",
+                "managed_isa_plus_flat",
+                "part_managed_security_audit_lywand",
+                "part_managed_eset",
+                "part_managed_sec_auditor",
+                "device_as_a_service",
+                "unknown"
+              ],
+              "description": "User permissions"
+            },
+            "access": {
+              "type": "string",
+              "enum": [
+                "read",
+                "write"
+              ],
+              "description": "User permissions access"
+            }
+          },
+          "required": [
+            "type",
+            "access"
+          ]
+        },
+        "UpdateUserRequestDto": {
+          "type": "object",
+          "properties": {
+            "role": {
+              "type": "string",
+              "enum": [
+                "user",
+                "admin"
+              ],
+              "description": "User role"
+            },
+            "permissions": {
+              "description": "User permissions",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/UpdateUserPermissions"
+              }
+            },
+            "emailNotification": {
+              "type": "string",
+              "enum": [
+                "immediately",
+                "daily"
+              ],
+              "description": "Email notification preference",
+              "nullable": true
+            },
+            "language": {
+              "type": "string",
+              "enum": [
+                "de",
+                "en"
+              ],
+              "description": "User interface language",
+              "example": "de"
+            },
+            "completedTours": {
+              "description": "Completed tours",
+              "example": [
+                "tour1",
+                "tour2"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "PendingTermResponseDto": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "TERMS_OF_USE",
+                "TERMS_AND_CONDITIONS"
+              ],
+              "example": "TERMS_OF_USE"
+            },
+            "url": {
+              "type": "string",
+              "example": "https://synaxon.com"
+            }
+          },
+          "required": [
+            "type",
+            "url"
+          ]
+        },
+        "AcceptTermRequestDto": {
+          "type": "object",
+          "properties": {
+            "terms": {
+              "type": "array",
+              "example": [
+                "TERMS_OF_USE",
+                "TERMS_AND_CONDITIONS"
+              ],
+              "items": {
+                "type": "string",
+                "enum": [
+                  "TERMS_OF_USE",
+                  "TERMS_AND_CONDITIONS"
+                ]
+              }
+            }
+          },
+          "required": [
+            "terms"
+          ]
+        },
+        "PusherUserAuthRequestDto": {
+          "type": "object",
+          "properties": {
+            "socket_id": {
+              "type": "string",
+              "description": "Socket ID",
+              "example": "1234.1234"
+            }
+          },
+          "required": [
+            "socket_id"
+          ]
+        },
+        "PusherUserAuthDto": {
+          "type": "object",
+          "properties": {}
+        },
+        "PusherChannelAuthRequestDto": {
+          "type": "object",
+          "properties": {
+            "socket_id": {
+              "type": "string",
+              "description": "Socket ID",
+              "example": "1234.1234"
+            },
+            "channel_name": {
+              "type": "string",
+              "description": "Channel name",
+              "example": "private-tenant.1234"
+            }
+          },
+          "required": [
+            "socket_id",
+            "channel_name"
+          ]
+        },
+        "PusherChannelAuthDto": {
+          "type": "object",
+          "properties": {
+            "auth": {
+              "type": "string",
+              "description": "Authentication string",
+              "example": "1234:abcdef"
+            }
+          },
+          "required": [
+            "auth"
+          ]
+        },
+        "TenantResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "name": {
+              "type": "string",
+              "description": "Tenant name",
+              "example": "MUSTERPARTNER"
+            },
+            "displayName": {
+              "type": "string",
+              "description": "Tenant display name",
+              "example": "Musterpartner GmbH"
+            },
+            "partnerNumber": {
+              "type": "string",
+              "description": "Partner number",
+              "example": "EY2045"
+            },
+            "alertEmail": {
+              "type": "string",
+              "description": "E-Mail Address for alerting",
+              "example": "support@musterpartner.example"
+            },
+            "supportEmail": {
+              "type": "string",
+              "description": "Support E-Mail Address for customers",
+              "example": "support@musterpartner.example"
+            },
+            "supportPhone": {
+              "type": "string",
+              "description": "Support phone number for customers",
+              "example": "+49 123 4567890"
+            },
+            "supportUrl": {
+              "type": "string",
+              "description": "Support URL for customers",
+              "example": "https://musterpartner.example"
+            },
+            "region": {
+              "type": "string",
+              "enum": [
+                "DE",
+                "AT",
+                "GB"
+              ],
+              "description": "Partner region",
+              "example": "DE"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "displayName",
+            "partnerNumber",
+            "alertEmail",
+            "supportEmail",
+            "supportPhone",
+            "supportUrl",
+            "region"
+          ]
+        },
+        "UpdateTenantRequestDto": {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string",
+              "description": "Tenant name",
+              "example": "MUSTERPARTNER",
+              "minLength": 3,
+              "maxLength": 40
+            },
+            "alertEmail": {
+              "type": "string",
+              "description": "E-Mail address for alerting",
+              "example": "support@musterpartner.example",
+              "nullable": true
+            },
+            "supportEmail": {
+              "type": "string",
+              "description": "Support E-Mail Address for customers",
+              "example": "support@musterpartner.example",
+              "nullable": true
+            },
+            "supportPhone": {
+              "type": "string",
+              "description": "Support phone number for customers",
+              "example": "+49 123 4567890",
+              "nullable": true,
+              "maxLength": 30
+            },
+            "supportUrl": {
+              "type": "string",
+              "description": "Support URL for customers",
+              "example": "https://musterpartner.example",
+              "nullable": true
+            }
+          }
+        },
+        "ProductConfigSetItem": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "enum": [
+                "email",
+                "function",
+                "phone",
+                "technicalPartner",
+                "egisLogin",
+                "emailDashboard",
+                "emailFailure"
+              ],
+              "description": "Config set name",
+              "example": "email"
+            },
+            "label": {
+              "type": "string",
+              "description": "Config set label",
+              "example": "E-Mail"
+            },
+            "type": {
+              "type": "string",
+              "description": "Config set type",
+              "example": "String"
+            },
+            "required": {
+              "type": "boolean",
+              "description": "Config set required",
+              "example": true
+            }
+          },
+          "required": [
+            "name",
+            "label",
+            "type",
+            "required"
+          ]
+        },
+        "ProductResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "managed_backup_acronis",
+                "managed_cloud_to_cloud_cloudally",
+                "managed_endpoint_security_eset",
+                "managed_email_archiving_mailstore",
+                "managed_vdi_oneclick",
+                "managed_rmm_nsight",
+                "managed_power_apc",
+                "managed_firewall_anqa",
+                "managed_security_audit_lywand",
+                "managed_isa_plus_flat",
+                "part_managed_security_audit_lywand",
+                "part_managed_eset",
+                "part_managed_sec_auditor",
+                "device_as_a_service",
+                "unknown"
+              ],
+              "description": "Product agreement type",
+              "example": "managed_backup_acronis"
+            },
+            "name": {
+              "type": "string",
+              "description": "Product name",
+              "example": "Acronis Managed Backup"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "activating",
+                "active",
+                "disabling",
+                "disabled"
+              ],
+              "description": "Product status",
+              "example": "active"
+            },
+            "termsUrl": {
+              "type": "string",
+              "description": "Product terms URL",
+              "example": "https://synaxon.com"
+            },
+            "confirmedBy": {
+              "type": "string",
+              "description": "Product confirmed by",
+              "example": "Max Mustermann"
+            },
+            "confirmedOn": {
+              "format": "date-time",
+              "type": "string",
+              "description": "Product confirmed on",
+              "example": "2024-01-01T00:00:00.000Z"
+            },
+            "configSet": {
+              "description": "Product config sets",
+              "example": [
+                {
+                  "name": "email",
+                  "label": "E-Mail",
+                  "type": "String",
+                  "required": true
+                }
+              ],
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ProductConfigSetItem"
+              }
+            },
+            "orderLink": {
+              "type": "string",
+              "description": "Product order link",
+              "example": "https://dashboard.synaxon.com/portfolio?order=1"
+            },
+            "landingPage": {
+              "type": "string",
+              "description": "Product landing page",
+              "example": "https://www.egis-online.de/cgi-bin/WebObjects.exe/EGIS.woa?page=WPServicesPage&postId=38030"
+            },
+            "infoUrl": {
+              "type": "string",
+              "description": "Product info URL",
+              "example": "https://synaxon.com/de/leistungen/managed-services/managed-services-portfolio/managed-backup"
+            },
+            "illustratedLogo": {
+              "type": "string",
+              "description": "Product illustrated logo",
+              "example": "https://files.synaxon.de/dl/managed_backup_acronis.svg"
+            },
+            "productLogo": {
+              "type": "string",
+              "description": "Product product logo",
+              "example": "https://files.synaxon.de/dl/SYNAXON_Managed_Backup_Acronis.png"
+            },
+            "previewImages": {
+              "description": "Product preview images",
+              "example": [
+                "https://files.synaxon.de/dl/managed_backup_acronis_1.png",
+                "https://files.synaxon.de/dl/managed_backup_acronis_2.png",
+                "https://files.synaxon.de/dl/managed_backup_acronis_3.png"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "shortDescription": {
+              "type": "string",
+              "description": "Product short description",
+              "example": "Sichere die Daten deiner Kunden mit unserer voll gemanagten Lösung in hochsicheren Rechenzentren in Deutschland ab."
+            },
+            "orderText": {
+              "type": "string",
+              "description": "Product order text",
+              "example": "Buche jetzt SYNAXON Managed Backup in Kooperation mit Acronis und erweitere dein Portfolio. Automatisierte Bereitstellung, einfache Lizenzierung mit Poolspeicher über alle deine Kunden, automatisierte Wiederherstellungstests und vieles mehr."
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "status",
+            "termsUrl",
+            "configSet",
+            "previewImages"
+          ]
+        },
+        "UpdateTenantLogoRequestDto": {
+          "type": "object",
+          "properties": {
+            "logo": {
+              "type": "string",
+              "description": "Tenant logo",
+              "format": "binary"
+            }
+          },
+          "required": [
+            "logo"
+          ]
+        },
+        "CreateCustomerRequestDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the customer",
+              "example": "Traumkunde GmbH"
+            },
+            "customerNumber": {
+              "type": "string",
+              "description": "The customer number",
+              "example": "123456"
+            },
+            "corporateCustomer": {
+              "type": "boolean",
+              "description": "Defines if the customer is a corporate customer",
+              "example": true
+            },
+            "comment": {
+              "type": "string",
+              "description": "Some additional information about the customer",
+              "example": "Entrance is hidden in the backyard"
+            },
+            "salutation": {
+              "type": "string",
+              "description": "The salutation of the customer",
+              "example": "Herr"
+            },
+            "street": {
+              "type": "string",
+              "description": "The street of the customer",
+              "example": "Musterstraße 1"
+            },
+            "postalCode": {
+              "type": "string",
+              "description": "The postal code of the customer",
+              "example": "12345"
+            },
+            "city": {
+              "type": "string",
+              "description": "The city of the customer",
+              "example": "Musterstadt"
+            },
+            "country": {
+              "type": "string",
+              "description": "Country ISO 3166-1 A-2 code",
+              "example": "DE"
+            },
+            "email": {
+              "type": "string",
+              "description": "The email address of the customer",
+              "example": "info@traumkunde.de"
+            },
+            "fax": {
+              "type": "string",
+              "description": "The fax number of the customer",
+              "example": "+49 123 456789"
+            },
+            "mobile": {
+              "type": "string",
+              "description": "The mobile phone number of the customer",
+              "example": "+49 123 456789"
+            },
+            "phone": {
+              "type": "string",
+              "description": "The phone number of the customer",
+              "example": "+49 123 456789"
+            }
+          },
+          "required": [
+            "name",
+            "customerNumber",
+            "corporateCustomer",
+            "salutation",
+            "street",
+            "postalCode",
+            "city",
+            "country"
+          ]
+        },
+        "CustomerReferenceResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "customerId": {
+              "type": "number",
+              "description": "The ID of the customer",
+              "example": 1
+            },
+            "referenceId": {
+              "type": "string",
+              "description": "The ID of the reference",
+              "example": "4414b521-9ab3-4667-9fc1-ef275c428d72"
+            },
+            "system": {
+              "type": "string",
+              "enum": [
+                "n-sight",
+                "lywand",
+                "mailstore",
+                "acronis",
+                "eset-hub",
+                "eset-protect",
+                "sec-auditor",
+                "unknown"
+              ],
+              "description": "The system of the reference",
+              "example": "n-sight"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "customerId",
+            "referenceId",
+            "system"
+          ]
+        },
+        "CustomerResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the customer",
+              "example": "Traumkunde GmbH"
+            },
+            "customerNumber": {
+              "type": "string",
+              "description": "The customer number",
+              "example": "123456"
+            },
+            "corporateCustomer": {
+              "type": "boolean",
+              "description": "Defines if the customer is a corporate customer",
+              "example": true
+            },
+            "comment": {
+              "type": "string",
+              "description": "The comment of the customer",
+              "example": "This is a comment"
+            },
+            "salutation": {
+              "type": "string",
+              "description": "The salutation of the customer",
+              "example": "company"
+            },
+            "street": {
+              "type": "string",
+              "description": "The street of the customer",
+              "example": "Musterstraße 1"
+            },
+            "postalCode": {
+              "type": "string",
+              "description": "The postal code of the customer",
+              "example": "12345"
+            },
+            "city": {
+              "type": "string",
+              "description": "The city of the customer",
+              "example": "Musterstadt"
+            },
+            "country": {
+              "type": "string",
+              "description": "The country of the customer",
+              "example": "DE"
+            },
+            "email": {
+              "type": "string",
+              "description": "The email of the customer",
+              "example": "GdHs3@example.com"
+            },
+            "fax": {
+              "type": "string",
+              "description": "The fax number of the customer",
+              "example": "0123456789"
+            },
+            "mobile": {
+              "type": "string",
+              "description": "The mobile number of the customer",
+              "example": "0123456789"
+            },
+            "phone": {
+              "type": "string",
+              "description": "The phone number of the customer",
+              "example": "0123456789"
+            },
+            "references": {
+              "description": "The references of the customer",
+              "example": [
+                {
+                  "id": 43781,
+                  "referenceId": "235126",
+                  "system": "SMS Monitoring"
+                }
+              ],
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CustomerReferenceResponseDto"
+              }
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "customerNumber",
+            "corporateCustomer",
+            "salutation",
+            "street",
+            "postalCode",
+            "city",
+            "country",
+            "references"
+          ]
+        },
+        "CustomerSuggestionResponseDto": {
+          "type": "object",
+          "properties": {
+            "customer": {
+              "$ref": "#/components/schemas/CustomerResponseDto"
+            },
+            "score": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "customer",
+            "score"
+          ]
+        },
+        "UpdateCustomerRequestDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the customer",
+              "example": "Traumkunde GmbH"
+            },
+            "customerNumber": {
+              "type": "string",
+              "description": "The customer number",
+              "example": "123456"
+            },
+            "corporateCustomer": {
+              "type": "boolean",
+              "description": "Defines if the customer is a corporate customer",
+              "example": true
+            },
+            "comment": {
+              "type": "string",
+              "description": "Some additional information about the customer",
+              "example": "Entrance is hidden in the backyard",
+              "nullable": true
+            },
+            "salutation": {
+              "type": "string",
+              "description": "The salutation of the customer",
+              "example": "Herr"
+            },
+            "street": {
+              "type": "string",
+              "description": "The street of the customer",
+              "example": "Musterstraße 1"
+            },
+            "postalCode": {
+              "type": "string",
+              "description": "The postal code of the customer",
+              "example": "12345"
+            },
+            "city": {
+              "type": "string",
+              "description": "The city of the customer",
+              "example": "Musterstadt"
+            },
+            "country": {
+              "type": "string",
+              "description": "Country ISO 3166-1 A-2 code",
+              "example": "DE"
+            },
+            "email": {
+              "type": "string",
+              "description": "The email address of the customer",
+              "example": "info@traumkunde.de",
+              "nullable": true
+            },
+            "fax": {
+              "type": "string",
+              "description": "The fax number of the customer",
+              "example": "+49 123 456789",
+              "nullable": true
+            },
+            "mobile": {
+              "type": "string",
+              "description": "The mobile phone number of the customer",
+              "example": "+49 123 456789",
+              "nullable": true
+            },
+            "phone": {
+              "type": "string",
+              "description": "The phone number of the customer",
+              "example": "+49 123 456789",
+              "nullable": true
+            }
+          }
+        },
+        "CustomerPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CustomerResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "CreateCustomerReferenceRequestDto": {
+          "type": "object",
+          "properties": {
+            "referenceId": {
+              "type": "string",
+              "description": "The reference ID",
+              "example": "9574e4ae-2a28-446c-be68-61da0b13388b"
+            },
+            "system": {
+              "type": "string",
+              "enum": [
+                "n-sight",
+                "lywand",
+                "mailstore",
+                "acronis",
+                "eset-hub",
+                "eset-protect",
+                "sec-auditor"
+              ],
+              "description": "The system of the reference",
+              "example": "n-sight"
+            }
+          },
+          "required": [
+            "referenceId",
+            "system"
+          ]
+        },
+        "ApiErrorResponse": {
+          "type": "object",
+          "properties": {
+            "statusCode": {
+              "type": "number",
+              "enum": [
+                100,
+                101,
+                102,
+                103,
+                200,
+                201,
+                202,
+                203,
+                204,
+                205,
+                206,
+                207,
+                208,
+                210,
+                300,
+                301,
+                302,
+                303,
+                304,
+                307,
+                308,
+                400,
+                401,
+                402,
+                403,
+                404,
+                405,
+                406,
+                407,
+                408,
+                409,
+                410,
+                411,
+                412,
+                413,
+                414,
+                415,
+                416,
+                417,
+                418,
+                421,
+                422,
+                423,
+                424,
+                428,
+                429,
+                456,
+                500,
+                501,
+                502,
+                503,
+                504,
+                505,
+                507,
+                508
+              ],
+              "example": 404
+            },
+            "message": {
+              "type": "string",
+              "example": "Not found"
+            },
+            "error": {
+              "type": "string",
+              "example": "GENERIC.NOT_FOUND"
+            },
+            "correlationId": {
+              "type": "string",
+              "example": "DMyg0Zzu7kjGdX2Ai0UtX"
+            },
+            "subErrors": {
+              "example": [
+                "refreshToken must be longer than or equal to 10 characters."
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "statusCode",
+            "message",
+            "error",
+            "correlationId"
+          ]
+        },
+        "CreateLifecycleInfoRequestDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the information",
+              "example": "Intel i5 8th gen"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "cpu",
+                "os",
+                "msoffice"
+              ],
+              "description": "The type of the information",
+              "example": "cpu | os | msoffice"
+            },
+            "release": {
+              "type": "string",
+              "description": "The release date of the information",
+              "example": "2000-01-01",
+              "format": "date"
+            },
+            "eol": {
+              "type": "string",
+              "description": "The end of life date of the information",
+              "example": "2100-01-01",
+              "format": "date"
+            }
+          },
+          "required": [
+            "name",
+            "type",
+            "release",
+            "eol"
+          ]
+        },
+        "LifecycleInfoResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "name": {
+              "type": "string",
+              "description": "Name of the Information",
+              "example": "Intel i5 8th gen"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "cpu",
+                "os",
+                "msoffice"
+              ],
+              "description": "Type of the Information",
+              "example": "cpu | os | msoffice"
+            },
+            "release": {
+              "format": "date-time",
+              "type": "string",
+              "description": "Release date of the Information",
+              "example": "2000-01-01"
+            },
+            "eol": {
+              "format": "date-time",
+              "type": "string",
+              "description": "End of life date of the Information",
+              "example": "2100-01-01"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "type"
+          ]
+        },
+        "LifecycleInfoPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LifecycleInfoResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "UpdateLifecycleInfoRequestDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the information",
+              "example": "Intel i5 8th gen"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "cpu",
+                "os",
+                "msoffice"
+              ],
+              "description": "The type of the information",
+              "example": "cpu | os | msoffice"
+            },
+            "release": {
+              "type": "string",
+              "description": "The release date of the information",
+              "example": "2000-01-01",
+              "format": "date",
+              "nullable": true
+            },
+            "eol": {
+              "type": "string",
+              "description": "The end of life date of the information",
+              "example": "2100-01-01",
+              "format": "date",
+              "nullable": true
+            }
+          }
+        },
+        "UploadLifecycleInfoRequestDto": {
+          "type": "object",
+          "properties": {
+            "lifecycleInfo": {
+              "type": "string",
+              "description": "Lifecycleinfo",
+              "format": "binary"
+            }
+          },
+          "required": [
+            "lifecycleInfo"
+          ]
+        },
+        "CreateReportSettingRequestDto": {
+          "type": "object",
+          "properties": {
+            "customDisplayName": {
+              "type": "string",
+              "description": "Custom display name",
+              "example": "My Partner Report"
+            },
+            "introductionText": {
+              "type": "string",
+              "description": "Introduction text",
+              "example": "Introduction text"
+            },
+            "cronExpression": {
+              "type": "string",
+              "description": "Cron expression",
+              "example": "0 7 * * *"
+            },
+            "timezone": {
+              "type": "string",
+              "enum": [
+                "Europe/Amsterdam",
+                "Europe/Andorra",
+                "Europe/Astrakhan",
+                "Europe/Athens",
+                "Europe/Belgrade",
+                "Europe/Berlin",
+                "Europe/Bratislava",
+                "Europe/Brussels",
+                "Europe/Bucharest",
+                "Europe/Budapest",
+                "Europe/Busingen",
+                "Europe/Chisinau",
+                "Europe/Copenhagen",
+                "Europe/Dublin",
+                "Europe/Gibraltar",
+                "Europe/Guernsey",
+                "Europe/Helsinki",
+                "Europe/Isle_of_Man",
+                "Europe/Istanbul",
+                "Europe/Jersey",
+                "Europe/Kaliningrad",
+                "Europe/Kirov",
+                "Europe/Kyiv",
+                "Europe/Lisbon",
+                "Europe/Ljubljana",
+                "Europe/London",
+                "Europe/Luxembourg",
+                "Europe/Madrid",
+                "Europe/Malta",
+                "Europe/Mariehamn",
+                "Europe/Minsk",
+                "Europe/Monaco",
+                "Europe/Moscow",
+                "Europe/Oslo",
+                "Europe/Paris",
+                "Europe/Podgorica",
+                "Europe/Prague",
+                "Europe/Riga",
+                "Europe/Rome",
+                "Europe/Samara",
+                "Europe/San_Marino",
+                "Europe/Sarajevo",
+                "Europe/Saratov",
+                "Europe/Simferopol",
+                "Europe/Skopje",
+                "Europe/Sofia",
+                "Europe/Stockholm",
+                "Europe/Tallinn",
+                "Europe/Tirane",
+                "Europe/Ulyanovsk",
+                "Europe/Vaduz",
+                "Europe/Vatican",
+                "Europe/Vienna",
+                "Europe/Vilnius",
+                "Europe/Volgograd",
+                "Europe/Warsaw",
+                "Europe/Zagreb",
+                "Europe/Zurich",
+                "Asia/Nicosia"
+              ],
+              "description": "Timezone for cron expression interpretation (European timezones only)",
+              "example": "Europe/Berlin"
+            },
+            "language": {
+              "type": "string",
+              "enum": [
+                "de",
+                "en"
+              ],
+              "description": "Report language",
+              "example": "de"
+            },
+            "recipients": {
+              "description": "Recipients",
+              "example": [
+                "email1@example.com",
+                "email2@example.com"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "modules": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "introduction",
+                  "overallScore",
+                  "failureOverview",
+                  "failureList",
+                  "productOverview",
+                  "customerRanking",
+                  "backupStorageUsage",
+                  "backupFailures",
+                  "emailArchivingStorage",
+                  "emailArchivingFailures",
+                  "antivirusStorage",
+                  "antivirusFailures",
+                  "rmmUsage",
+                  "rmmFailures",
+                  "rmmSiteRanking",
+                  "rmmScore",
+                  "securityAuditUsage",
+                  "securityAuditTargetList",
+                  "securityAuditVulnerabilitiesHigh",
+                  "securityAuditVulnerabilitiesMedium",
+                  "securityAuditVulnerabilitiesLow"
+                ]
+              }
+            }
+          },
+          "required": [
+            "recipients"
+          ]
+        },
+        "ReportSettingResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "Tenant ID",
+              "example": "123e4567-e89b-12d3-a456-426614174000"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "partner",
+                "customer"
+              ],
+              "description": "Report type",
+              "example": "partner"
+            },
+            "customerId": {
+              "type": "string",
+              "description": "Customer ID (only for customer reports)",
+              "example": "123e4567-e89b-12d3-a456-426614174000"
+            },
+            "customDisplayName": {
+              "type": "string",
+              "description": "Custom display name",
+              "example": "My Custom Report"
+            },
+            "introductionText": {
+              "type": "string",
+              "description": "Introduction text",
+              "example": "This is the introduction text for the report."
+            },
+            "cronExpression": {
+              "type": "string",
+              "description": "Cron expression for scheduled reports",
+              "example": "0 7 * * *"
+            },
+            "timezone": {
+              "type": "string",
+              "description": "Timezone for cron expression interpretation",
+              "example": "Europe/Berlin"
+            },
+            "language": {
+              "type": "string",
+              "enum": [
+                "de",
+                "en"
+              ],
+              "description": "Report language",
+              "example": "de"
+            },
+            "recipients": {
+              "description": "Email recipients",
+              "example": [
+                "email1@example.com",
+                "email2@example.com"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "modules": {
+              "type": "array",
+              "description": "Report modules",
+              "example": [
+                "acronisStorage",
+                "acronisDeviceList",
+                "mailstoreStorage"
+              ],
+              "items": {
+                "type": "string",
+                "enum": [
+                  "backupStorageUsage",
+                  "backupDeviceList",
+                  "backupFailures",
+                  "backupScore",
+                  "emailArchivingStorage",
+                  "emailArchivingArchiveList",
+                  "emailArchivingFailures",
+                  "emailArchivingScore",
+                  "antivirusStorage",
+                  "antivirusDeviceList",
+                  "antivirusFailures",
+                  "antivirusNoLicense",
+                  "antivirusScore",
+                  "securityAuditUsage",
+                  "securityAuditTargetList",
+                  "securityAuditVulnerabilitiesHigh",
+                  "securityAuditVulnerabilitiesMedium",
+                  "securityAuditVulnerabilitiesLow",
+                  "securityAuditScore",
+                  "rmmUsage",
+                  "rmmDeviceList",
+                  "rmmAntivirus",
+                  "rmmOutdatedAntivirus",
+                  "rmmMissingAntivirusCheck",
+                  "rmmInstalledPatches",
+                  "rmmExecutedChecks",
+                  "rmmSolvedProblems",
+                  "rmmBackupChecks",
+                  "rmmOfflineDevices",
+                  "rmmUnsupportedOs",
+                  "rmmLowStorage",
+                  "rmmFailedLogins",
+                  "rmmFailures",
+                  "rmmScore",
+                  "rmmSiteRanking",
+                  "introduction",
+                  "overallScore",
+                  "productOverview",
+                  "failureOverview",
+                  "failureList",
+                  "customerRanking"
+                ]
+              }
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "tenantId",
+            "type",
+            "timezone",
+            "language",
+            "recipients",
+            "modules"
+          ]
+        },
+        "CreateCustomerReportSettingRequestDto": {
+          "type": "object",
+          "properties": {
+            "customDisplayName": {
+              "type": "string",
+              "description": "Custom display name for customer",
+              "example": "Traumkunde"
+            },
+            "introductionText": {
+              "type": "string",
+              "description": "Introduction text",
+              "example": "Introduction text"
+            },
+            "cronExpression": {
+              "type": "string",
+              "description": "Cron expression",
+              "example": "0 7 * * *"
+            },
+            "timezone": {
+              "type": "string",
+              "enum": [
+                "Europe/Amsterdam",
+                "Europe/Andorra",
+                "Europe/Astrakhan",
+                "Europe/Athens",
+                "Europe/Belgrade",
+                "Europe/Berlin",
+                "Europe/Bratislava",
+                "Europe/Brussels",
+                "Europe/Bucharest",
+                "Europe/Budapest",
+                "Europe/Busingen",
+                "Europe/Chisinau",
+                "Europe/Copenhagen",
+                "Europe/Dublin",
+                "Europe/Gibraltar",
+                "Europe/Guernsey",
+                "Europe/Helsinki",
+                "Europe/Isle_of_Man",
+                "Europe/Istanbul",
+                "Europe/Jersey",
+                "Europe/Kaliningrad",
+                "Europe/Kirov",
+                "Europe/Kyiv",
+                "Europe/Lisbon",
+                "Europe/Ljubljana",
+                "Europe/London",
+                "Europe/Luxembourg",
+                "Europe/Madrid",
+                "Europe/Malta",
+                "Europe/Mariehamn",
+                "Europe/Minsk",
+                "Europe/Monaco",
+                "Europe/Moscow",
+                "Europe/Oslo",
+                "Europe/Paris",
+                "Europe/Podgorica",
+                "Europe/Prague",
+                "Europe/Riga",
+                "Europe/Rome",
+                "Europe/Samara",
+                "Europe/San_Marino",
+                "Europe/Sarajevo",
+                "Europe/Saratov",
+                "Europe/Simferopol",
+                "Europe/Skopje",
+                "Europe/Sofia",
+                "Europe/Stockholm",
+                "Europe/Tallinn",
+                "Europe/Tirane",
+                "Europe/Ulyanovsk",
+                "Europe/Vaduz",
+                "Europe/Vatican",
+                "Europe/Vienna",
+                "Europe/Vilnius",
+                "Europe/Volgograd",
+                "Europe/Warsaw",
+                "Europe/Zagreb",
+                "Europe/Zurich",
+                "Asia/Nicosia"
+              ],
+              "description": "Timezone for cron expression interpretation (European timezones only)",
+              "example": "Europe/Berlin"
+            },
+            "language": {
+              "type": "string",
+              "enum": [
+                "de",
+                "en"
+              ],
+              "description": "Report language",
+              "example": "de"
+            },
+            "recipients": {
+              "description": "Recipients",
+              "example": [
+                "email1@example.com",
+                "email2@example.com"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "modules": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "introduction",
+                  "overallScore",
+                  "backupStorageUsage",
+                  "backupDeviceList",
+                  "backupFailures",
+                  "backupScore",
+                  "emailArchivingStorage",
+                  "emailArchivingArchiveList",
+                  "emailArchivingFailures",
+                  "emailArchivingScore",
+                  "antivirusStorage",
+                  "antivirusDeviceList",
+                  "antivirusFailures",
+                  "antivirusNoLicense",
+                  "antivirusScore",
+                  "rmmUsage",
+                  "rmmDeviceList",
+                  "rmmFailures",
+                  "rmmScore",
+                  "rmmAntivirus",
+                  "rmmLowStorage",
+                  "rmmUnsupportedOs",
+                  "rmmOfflineDevices",
+                  "rmmOutdatedAntivirus",
+                  "rmmMissingAntivirusCheck",
+                  "rmmInstalledPatches",
+                  "rmmExecutedChecks",
+                  "rmmSolvedProblems",
+                  "rmmBackupChecks",
+                  "rmmFailedLogins",
+                  "securityAuditUsage",
+                  "securityAuditTargetList",
+                  "securityAuditVulnerabilitiesHigh",
+                  "securityAuditVulnerabilitiesMedium",
+                  "securityAuditVulnerabilitiesLow",
+                  "securityAuditScore"
+                ]
+              }
+            }
+          }
+        },
+        "UpdateReportSettingRequestDto": {
+          "type": "object",
+          "properties": {
+            "customDisplayName": {
+              "type": "string",
+              "description": "Custom display name",
+              "nullable": true
+            },
+            "introductionText": {
+              "type": "string",
+              "nullable": true
+            },
+            "cronExpression": {
+              "type": "string",
+              "description": "Cron expression, or null to clear",
+              "nullable": true
+            },
+            "timezone": {
+              "type": "string",
+              "enum": [
+                "Europe/Amsterdam",
+                "Europe/Andorra",
+                "Europe/Astrakhan",
+                "Europe/Athens",
+                "Europe/Belgrade",
+                "Europe/Berlin",
+                "Europe/Bratislava",
+                "Europe/Brussels",
+                "Europe/Bucharest",
+                "Europe/Budapest",
+                "Europe/Busingen",
+                "Europe/Chisinau",
+                "Europe/Copenhagen",
+                "Europe/Dublin",
+                "Europe/Gibraltar",
+                "Europe/Guernsey",
+                "Europe/Helsinki",
+                "Europe/Isle_of_Man",
+                "Europe/Istanbul",
+                "Europe/Jersey",
+                "Europe/Kaliningrad",
+                "Europe/Kirov",
+                "Europe/Kyiv",
+                "Europe/Lisbon",
+                "Europe/Ljubljana",
+                "Europe/London",
+                "Europe/Luxembourg",
+                "Europe/Madrid",
+                "Europe/Malta",
+                "Europe/Mariehamn",
+                "Europe/Minsk",
+                "Europe/Monaco",
+                "Europe/Moscow",
+                "Europe/Oslo",
+                "Europe/Paris",
+                "Europe/Podgorica",
+                "Europe/Prague",
+                "Europe/Riga",
+                "Europe/Rome",
+                "Europe/Samara",
+                "Europe/San_Marino",
+                "Europe/Sarajevo",
+                "Europe/Saratov",
+                "Europe/Simferopol",
+                "Europe/Skopje",
+                "Europe/Sofia",
+                "Europe/Stockholm",
+                "Europe/Tallinn",
+                "Europe/Tirane",
+                "Europe/Ulyanovsk",
+                "Europe/Vaduz",
+                "Europe/Vatican",
+                "Europe/Vienna",
+                "Europe/Vilnius",
+                "Europe/Volgograd",
+                "Europe/Warsaw",
+                "Europe/Zagreb",
+                "Europe/Zurich",
+                "Asia/Nicosia"
+              ],
+              "description": "Timezone for cron expression interpretation (European timezones only)",
+              "example": "Europe/Berlin"
+            },
+            "recipients": {
+              "description": "Recipients",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "language": {
+              "type": "string",
+              "enum": [
+                "de",
+                "en"
+              ],
+              "description": "Report language",
+              "example": "de"
+            },
+            "modules": {
+              "type": "array",
+              "description": "Modules",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "introduction",
+                  "overallScore",
+                  "failureOverview",
+                  "failureList",
+                  "productOverview",
+                  "customerRanking",
+                  "backupStorageUsage",
+                  "backupFailures",
+                  "emailArchivingStorage",
+                  "emailArchivingFailures",
+                  "antivirusStorage",
+                  "antivirusFailures",
+                  "rmmUsage",
+                  "rmmFailures",
+                  "rmmSiteRanking",
+                  "rmmScore",
+                  "securityAuditUsage",
+                  "securityAuditTargetList",
+                  "securityAuditVulnerabilitiesHigh",
+                  "securityAuditVulnerabilitiesMedium",
+                  "securityAuditVulnerabilitiesLow"
+                ]
+              }
+            }
+          }
+        },
+        "UpdateCustomerReportSettingRequestDto": {
+          "type": "object",
+          "properties": {
+            "customDisplayName": {
+              "type": "string",
+              "description": "Custom display name for customer",
+              "nullable": true
+            },
+            "introductionText": {
+              "type": "string",
+              "description": "Introduction text",
+              "nullable": true
+            },
+            "cronExpression": {
+              "type": "string",
+              "description": "Cron expression, or null to clear",
+              "nullable": true
+            },
+            "timezone": {
+              "type": "string",
+              "enum": [
+                "Europe/Amsterdam",
+                "Europe/Andorra",
+                "Europe/Astrakhan",
+                "Europe/Athens",
+                "Europe/Belgrade",
+                "Europe/Berlin",
+                "Europe/Bratislava",
+                "Europe/Brussels",
+                "Europe/Bucharest",
+                "Europe/Budapest",
+                "Europe/Busingen",
+                "Europe/Chisinau",
+                "Europe/Copenhagen",
+                "Europe/Dublin",
+                "Europe/Gibraltar",
+                "Europe/Guernsey",
+                "Europe/Helsinki",
+                "Europe/Isle_of_Man",
+                "Europe/Istanbul",
+                "Europe/Jersey",
+                "Europe/Kaliningrad",
+                "Europe/Kirov",
+                "Europe/Kyiv",
+                "Europe/Lisbon",
+                "Europe/Ljubljana",
+                "Europe/London",
+                "Europe/Luxembourg",
+                "Europe/Madrid",
+                "Europe/Malta",
+                "Europe/Mariehamn",
+                "Europe/Minsk",
+                "Europe/Monaco",
+                "Europe/Moscow",
+                "Europe/Oslo",
+                "Europe/Paris",
+                "Europe/Podgorica",
+                "Europe/Prague",
+                "Europe/Riga",
+                "Europe/Rome",
+                "Europe/Samara",
+                "Europe/San_Marino",
+                "Europe/Sarajevo",
+                "Europe/Saratov",
+                "Europe/Simferopol",
+                "Europe/Skopje",
+                "Europe/Sofia",
+                "Europe/Stockholm",
+                "Europe/Tallinn",
+                "Europe/Tirane",
+                "Europe/Ulyanovsk",
+                "Europe/Vaduz",
+                "Europe/Vatican",
+                "Europe/Vienna",
+                "Europe/Vilnius",
+                "Europe/Volgograd",
+                "Europe/Warsaw",
+                "Europe/Zagreb",
+                "Europe/Zurich",
+                "Asia/Nicosia"
+              ],
+              "description": "Timezone for cron expression interpretation (European timezones only)",
+              "example": "Europe/Berlin"
+            },
+            "language": {
+              "type": "string",
+              "enum": [
+                "de",
+                "en"
+              ],
+              "description": "Report language",
+              "example": "de"
+            },
+            "recipients": {
+              "description": "Recipients",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "modules": {
+              "type": "array",
+              "description": "Modules",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "introduction",
+                  "overallScore",
+                  "backupStorageUsage",
+                  "backupDeviceList",
+                  "backupFailures",
+                  "backupScore",
+                  "emailArchivingStorage",
+                  "emailArchivingArchiveList",
+                  "emailArchivingFailures",
+                  "emailArchivingScore",
+                  "antivirusStorage",
+                  "antivirusDeviceList",
+                  "antivirusFailures",
+                  "antivirusNoLicense",
+                  "antivirusScore",
+                  "rmmUsage",
+                  "rmmDeviceList",
+                  "rmmFailures",
+                  "rmmScore",
+                  "rmmAntivirus",
+                  "rmmLowStorage",
+                  "rmmUnsupportedOs",
+                  "rmmOfflineDevices",
+                  "rmmOutdatedAntivirus",
+                  "rmmMissingAntivirusCheck",
+                  "rmmInstalledPatches",
+                  "rmmExecutedChecks",
+                  "rmmSolvedProblems",
+                  "rmmBackupChecks",
+                  "rmmFailedLogins",
+                  "securityAuditUsage",
+                  "securityAuditTargetList",
+                  "securityAuditVulnerabilitiesHigh",
+                  "securityAuditVulnerabilitiesMedium",
+                  "securityAuditVulnerabilitiesLow",
+                  "securityAuditScore"
+                ]
+              }
+            }
+          }
+        },
+        "ProductCountItemDto": {
+          "type": "object",
+          "properties": {
+            "product": {
+              "type": "string",
+              "example": "rmm",
+              "description": "Product identifier (rmm, acronis, eset, mailstore, lywand)"
+            },
+            "count": {
+              "type": "number",
+              "example": 15,
+              "description": "Number of customers/instances for this product"
+            }
+          },
+          "required": [
+            "product",
+            "count"
+          ]
+        },
+        "ProductCountsDto": {
+          "type": "object",
+          "properties": {
+            "counts": {
+              "description": "List of customer counts for each product",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ProductCountItemDto"
+              }
+            },
+            "totalCount": {
+              "type": "number",
+              "example": 75,
+              "description": "Total count of all product customers/instances"
+            }
+          },
+          "required": [
+            "counts",
+            "totalCount"
+          ]
+        },
+        "CustomerModuleStatusDto": {
+          "type": "object",
+          "properties": {
+            "module": {
+              "type": "string",
+              "example": "managed-rmm",
+              "description": "Module identifier (managed-rmm, managed-backup, managed-endpoint-security, managed-email-archiving, managed-security-audit)"
+            },
+            "total": {
+              "type": "number",
+              "example": 10,
+              "description": "Total items (devices, sites, etc.) for this module"
+            },
+            "errors": {
+              "type": "number",
+              "example": 2,
+              "description": "Number of items with errors"
+            },
+            "score": {
+              "type": "number",
+              "example": 80,
+              "description": "Score as percentage (0-100)"
+            }
+          },
+          "required": [
+            "module",
+            "total",
+            "errors",
+            "score"
+          ]
+        },
+        "CustomerRankingItemDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "example": 12345,
+              "description": "Customer ID from the customer module (omitted if not linked)"
+            },
+            "customerName": {
+              "type": "string",
+              "example": "Acme Corp",
+              "description": "Customer name"
+            },
+            "modules": {
+              "description": "Status for each active module",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CustomerModuleStatusDto"
+              }
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 25,
+              "description": "Total items across all modules"
+            },
+            "totalErrors": {
+              "type": "number",
+              "example": 3,
+              "description": "Total errors across all modules"
+            },
+            "overallScore": {
+              "type": "number",
+              "example": 88,
+              "description": "Overall score as percentage (0-100), calculated across all modules"
+            }
+          },
+          "required": [
+            "customerName",
+            "modules",
+            "totalItems",
+            "totalErrors",
+            "overallScore"
+          ]
+        },
+        "CustomerRankingDto": {
+          "type": "object",
+          "properties": {
+            "customers": {
+              "description": "List of customers with their scores, sorted by score descending (best first)",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CustomerRankingItemDto"
+              }
+            },
+            "totalCustomers": {
+              "type": "number",
+              "example": 25,
+              "description": "Total number of customers with at least one active module"
+            }
+          },
+          "required": [
+            "customers",
+            "totalCustomers"
+          ]
+        },
+        "ReportingReportDataResponseDto": {
+          "type": "object",
+          "properties": {
+            "productOverview": {
+              "description": "Product customer counts",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ProductCountsDto"
+                }
+              ]
+            },
+            "customerRanking": {
+              "description": "Customer ranking with scores",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/CustomerRankingDto"
+                }
+              ]
+            }
+          }
+        },
+        "ApiTaskResponse": {
+          "type": "object",
+          "properties": {
+            "taskId": {
+              "type": "string",
+              "description": "The ID of the task",
+              "example": "12345678-1234-1234-1234-123456789012"
+            }
+          },
+          "required": [
+            "taskId"
+          ]
+        },
+        "PatchResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "patchId": {
+              "type": "number",
+              "description": "N-Sight Patch ID",
+              "example": 1234
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "approved",
+                "rejected"
+              ],
+              "description": "Patch qualification status",
+              "example": "approved"
+            },
+            "url": {
+              "type": "string",
+              "description": "Patch URL",
+              "example": "https://example.com"
+            },
+            "reason": {
+              "type": "string",
+              "description": "Patch qualification reason",
+              "example": "Causes bluescreens"
+            },
+            "patchUrl": {
+              "type": "string",
+              "description": "URL with further information about the patch",
+              "example": "https://example.com"
+            },
+            "patchTitle": {
+              "type": "string",
+              "description": "Name of patch",
+              "example": "Example Patch"
+            },
+            "product": {
+              "type": "string",
+              "description": "Product of patch",
+              "example": "Windows 11"
+            },
+            "severity": {
+              "type": "string",
+              "enum": [
+                "critical",
+                "important",
+                "moderate",
+                "low"
+              ],
+              "description": "Severity of patch",
+              "example": "critical"
+            },
+            "releaseDate": {
+              "format": "date-time",
+              "type": "string",
+              "description": "Release date of patch",
+              "example": "2024-11-16T23:00:00.000Z"
+            },
+            "classification": {
+              "type": "string",
+              "description": "Classification of patch",
+              "example": "Critical"
+            },
+            "deviceType": {
+              "type": "string",
+              "enum": [
+                "workstation",
+                "server"
+              ],
+              "description": "Device type of patch",
+              "example": "workstation"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "patchId",
+            "status",
+            "patchTitle",
+            "product",
+            "deviceType"
+          ]
+        },
+        "PatchPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/PatchResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "QualifyPatchBulkRequestDto": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "approved",
+                "rejected"
+              ],
+              "description": "Patch qualification status",
+              "example": "rejected"
+            },
+            "reason": {
+              "type": "string",
+              "description": "Patch qualification reason",
+              "example": "Causes bluescreens",
+              "nullable": true
+            },
+            "url": {
+              "type": "string",
+              "description": "Patch qualification url",
+              "example": "https://example.com",
+              "nullable": true
+            },
+            "patches": {
+              "description": "Patch-IDs",
+              "example": [
+                "491ba016-a373-4c8a-95d3-1c1e563539bb"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "status",
+            "patches"
+          ]
+        },
+        "DeployPatchesRequestDto": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "approve",
+                "ignore"
+              ],
+              "description": "Patch deployment status",
+              "example": "approve"
+            },
+            "siteIds": {
+              "description": "Site IDs",
+              "example": [
+                "site-1",
+                "site-2"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "patchIds": {
+              "description": "Patch IDs",
+              "example": [
+                1,
+                2
+              ],
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          "required": [
+            "status",
+            "siteIds",
+            "patchIds"
+          ]
+        },
+        "QualifyPatchRequestDto": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "approved",
+                "rejected"
+              ],
+              "description": "Patch qualification status",
+              "example": "approved"
+            },
+            "reason": {
+              "type": "string",
+              "description": "Patch qualification reason",
+              "example": "Causes bluescreens",
+              "nullable": true
+            },
+            "url": {
+              "type": "string",
+              "description": "Patch qualification url",
+              "example": "https://example.com",
+              "nullable": true
+            }
+          },
+          "required": [
+            "status"
+          ]
+        },
+        "CreateNSightDashboardRequestDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the dashboard",
+              "example": "SYS Dashboard 1"
+            },
+            "apiKey": {
+              "type": "string",
+              "description": "The dashboard API key",
+              "example": "123456"
+            },
+            "apiKeyNetwork": {
+              "type": "string",
+              "description": "The dashboard API key for network",
+              "example": "123456"
+            },
+            "default": {
+              "type": "boolean",
+              "description": "Is default dashboard",
+              "example": true
+            }
+          },
+          "required": [
+            "name",
+            "apiKey",
+            "apiKeyNetwork",
+            "default"
+          ]
+        },
+        "NSightDashboardResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "name": {
+              "type": "string",
+              "description": "Dashboard name",
+              "example": "SYS Dashboard 1"
+            },
+            "default": {
+              "type": "boolean",
+              "description": "Is default dashboard",
+              "example": true
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "default"
+          ]
+        },
+        "NSightDashboardPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NSightDashboardResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "UpdateNSightDashboardRequestDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the dashboard",
+              "example": "N-Sight Main Dahsboard"
+            },
+            "apiKey": {
+              "type": "string",
+              "description": "First API key",
+              "example": "52a50e91-cff3-45d6-86fd-12055c25d719"
+            },
+            "apiKeyNetwork": {
+              "type": "string",
+              "description": "Second API key, for network",
+              "example": "996da00e-d472-45b1-b906-52d4a28e213a"
+            },
+            "default": {
+              "type": "boolean",
+              "description": "Default status of the dashboard, boolean",
+              "example": false
+            }
+          }
+        },
+        "CreateNSightClientRequestDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the client",
+              "example": "Traumpartner"
+            }
+          }
+        },
+        "NSightClientsResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "name": {
+              "type": "string",
+              "description": "Client name",
+              "example": "EY2045 - Musterpartner"
+            },
+            "vendorId": {
+              "type": "number",
+              "description": "N-sight Client ID",
+              "example": 123456
+            },
+            "viewDashboard": {
+              "type": "string",
+              "description": "Dashboard access enabled for client",
+              "example": false
+            },
+            "viewWorkstationAssets": {
+              "type": "string",
+              "description": "Workstation (or servers only) assets access enabled for client",
+              "example": false
+            },
+            "dashboardUsername": {
+              "type": "string",
+              "description": "Dashboard username",
+              "example": "admin"
+            },
+            "timezone": {
+              "type": "string",
+              "description": "Timezone",
+              "example": "Europe/Berlin"
+            },
+            "serverCount": {
+              "type": "number",
+              "description": "Number of servers",
+              "example": 1
+            },
+            "workstationCount": {
+              "type": "number",
+              "description": "Number of workstations",
+              "example": 1
+            },
+            "mobileDeviceCount": {
+              "type": "number",
+              "description": "Number of mobile devices",
+              "example": 1
+            },
+            "deviceCount": {
+              "type": "number",
+              "description": "Number of devices",
+              "example": 3
+            },
+            "failingChecksCount": {
+              "type": "number",
+              "description": "Number of failing checks",
+              "example": 1
+            },
+            "deletedAt": {
+              "format": "date-time",
+              "type": "string",
+              "description": "Deleted at",
+              "example": "2020-04-21T17:00:00.000Z"
+            },
+            "dashboardId": {
+              "type": "string",
+              "description": "Dashboard ID",
+              "example": "9c081777-f839-43f3-b910-e1e274f0ba46"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "vendorId",
+            "viewDashboard",
+            "viewWorkstationAssets",
+            "dashboardUsername",
+            "timezone",
+            "serverCount",
+            "workstationCount",
+            "mobileDeviceCount",
+            "deviceCount",
+            "failingChecksCount",
+            "deletedAt",
+            "dashboardId"
+          ]
+        },
+        "NSightClientsPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NSightClientsResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "NSightClientMetrics": {
+          "type": "object",
+          "properties": {
+            "serverCount": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "workstationCount": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "failingChecksCount": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "sitesCount": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            }
+          },
+          "required": [
+            "serverCount",
+            "workstationCount",
+            "failingChecksCount",
+            "sitesCount"
+          ]
+        },
+        "NSightClientMetricsResponseDto": {
+          "type": "object",
+          "properties": {
+            "currTimestamp": {
+              "format": "date-time",
+              "type": "string",
+              "example": "2024-10-24T09:30:00.000Z",
+              "description": "Timestamp when current metrics were generated"
+            },
+            "prevTimestamp": {
+              "format": "date-time",
+              "type": "string",
+              "example": "2024-10-23T00:00:00.000Z",
+              "description": "Timestamp of previous metrics for comparison",
+              "nullable": true
+            },
+            "values": {
+              "description": "Metrics values with current and previous comparison",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/NSightClientMetrics"
+                }
+              ]
+            }
+          },
+          "required": [
+            "currTimestamp",
+            "prevTimestamp",
+            "values"
+          ]
+        },
+        "CreateNSightSiteRequestDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "description": "The id of the customer",
+              "example": 1
+            },
+            "clientId": {
+              "type": "string",
+              "description": "The id of the client",
+              "example": "24d6ef5b-18a0-44fc-9afb-d87708a7124b"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the site",
+              "example": "Traumkunde"
+            }
+          },
+          "required": [
+            "clientId",
+            "name"
+          ]
+        },
+        "NSightSiteResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "customerId": {
+              "type": "number",
+              "description": "The customer id of customer file",
+              "example": 123456
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the site",
+              "example": "Traumkunde GmbH"
+            },
+            "vendorId": {
+              "type": "number",
+              "description": "The site ID",
+              "example": 123456
+            },
+            "workstationCount": {
+              "type": "number",
+              "description": "The number of workstations",
+              "example": 10
+            },
+            "serverCount": {
+              "type": "number",
+              "description": "The number of servers",
+              "example": 10
+            },
+            "failingChecksCount": {
+              "type": "number",
+              "description": "The number of failing checks",
+              "example": 10
+            },
+            "deletedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of deletion",
+              "example": "2024-01-01T12:00:00.000Z"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "vendorId",
+            "workstationCount",
+            "serverCount",
+            "failingChecksCount",
+            "deletedAt"
+          ]
+        },
+        "UpdateNSightSiteRequestDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "description": "The id of the customer",
+              "example": 1,
+              "nullable": true
+            }
+          }
+        },
+        "NSightSiteInstallerResponseDto": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "URL to the installer"
+            },
+            "fileName": {
+              "type": "string",
+              "description": "Download file ID"
+            }
+          },
+          "required": [
+            "url",
+            "fileName"
+          ]
+        },
+        "NSightSitePaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NSightSiteResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "NSightSiteMetrics": {
+          "type": "object",
+          "properties": {
+            "serverCount": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "workstationCount": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "failingChecksCount": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            }
+          },
+          "required": [
+            "serverCount",
+            "workstationCount",
+            "failingChecksCount"
+          ]
+        },
+        "NSightSiteMetricsResponseDto": {
+          "type": "object",
+          "properties": {
+            "currTimestamp": {
+              "format": "date-time",
+              "type": "string",
+              "example": "2024-10-24T09:30:00.000Z",
+              "description": "Timestamp when current metrics were generated"
+            },
+            "prevTimestamp": {
+              "format": "date-time",
+              "type": "string",
+              "example": "2024-10-23T00:00:00.000Z",
+              "description": "Timestamp of previous metrics for comparison",
+              "nullable": true
+            },
+            "values": {
+              "description": "Metrics values with current and previous comparison",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/NSightSiteMetrics"
+                }
+              ]
+            }
+          },
+          "required": [
+            "currTimestamp",
+            "prevTimestamp",
+            "values"
+          ]
+        },
+        "NSightDeviceHardwareDto": {
+          "type": "object",
+          "properties": {
+            "hardwareId": {
+              "type": "number",
+              "description": "The hardware ID",
+              "example": 92690040
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the hardware",
+              "example": "AMD Ryzen 9 5950X 16-Core Processor"
+            },
+            "type": {
+              "type": "number",
+              "description": "The type of the hardware",
+              "example": 13
+            },
+            "manufacturer": {
+              "type": "string",
+              "description": "The manufacturer of the hardware",
+              "example": "AuthenticAMD"
+            },
+            "details": {
+              "type": "string",
+              "description": "The details of the hardware",
+              "example": "L2CacheSize=8192\nMaxClockSpeed=3401"
+            },
+            "status": {
+              "type": "string",
+              "description": "The status of the hardware",
+              "example": "OK"
+            },
+            "modified": {
+              "type": "number",
+              "description": "The modified status of the hardware",
+              "example": 0
+            },
+            "deleted": {
+              "type": "number",
+              "description": "The deleted status of the hardware",
+              "example": 0
+            }
+          },
+          "required": [
+            "hardwareId",
+            "name",
+            "type",
+            "manufacturer",
+            "details",
+            "status",
+            "modified",
+            "deleted"
+          ]
+        },
+        "NSightDeviceSoftwareDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the software",
+              "example": "Microsoft Visual C++ 2013 x64 Minimum Runtime - 12.0.40664"
+            },
+            "softwareId": {
+              "type": "number",
+              "description": "The software ID",
+              "example": 748492514
+            },
+            "version": {
+              "type": "string",
+              "description": "The version of the software",
+              "example": "12.0.40664"
+            },
+            "installDate": {
+              "type": "string",
+              "description": "The install date of the software",
+              "example": "2024-04-19 00:00:00"
+            },
+            "deleted": {
+              "type": "number",
+              "description": "The deleted status of the software",
+              "example": 0
+            },
+            "type": {
+              "type": "string",
+              "description": "The type of the software",
+              "example": "All"
+            },
+            "modified": {
+              "type": "number",
+              "description": "The modified status of the software",
+              "example": 0
+            }
+          },
+          "required": [
+            "name",
+            "softwareId",
+            "version",
+            "installDate",
+            "deleted",
+            "type",
+            "modified"
+          ]
+        },
+        "NSightDeviceDiskDto": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "description": "The description of the hard disk",
+              "example": "Festplattenspeicherüberprüfung - Laufwerk C:"
+            },
+            "size": {
+              "type": "number",
+              "description": "The byte value of the total disk size",
+              "example": 1000
+            },
+            "freeSpace": {
+              "type": "number",
+              "description": "The byte value of the available disk space",
+              "example": 512
+            },
+            "failing": {
+              "type": "boolean",
+              "description": "The warning status of the hard disk",
+              "example": true
+            }
+          },
+          "required": [
+            "description",
+            "size",
+            "freeSpace",
+            "failing"
+          ]
+        },
+        "NSightDeviceAntivirusDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the antivirus solution",
+              "example": "Antivirus solution"
+            },
+            "version": {
+              "type": "string",
+              "description": "The version of the antivirus solution",
+              "example": "Antivirus solution"
+            },
+            "lastCheck": {
+              "format": "date-time",
+              "type": "string",
+              "description": "The last check date of the antivirus solution",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "status": {
+              "type": "string",
+              "description": "The status of the antivirus solution",
+              "example": "passed"
+            }
+          },
+          "required": [
+            "name",
+            "version",
+            "lastCheck",
+            "status"
+          ]
+        },
+        "NSightDeviceBackupDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the backup solution",
+              "example": "Backup solution"
+            },
+            "formattedOutput": {
+              "type": "string",
+              "description": "The formatted output of the backup solution",
+              "example": "Backup solution"
+            },
+            "lastCheck": {
+              "format": "date-time",
+              "type": "string",
+              "description": "The last check date of the backup solution",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "status": {
+              "type": "string",
+              "description": "The status of the backup solution",
+              "example": "passed"
+            }
+          },
+          "required": [
+            "name",
+            "formattedOutput",
+            "lastCheck",
+            "status"
+          ]
+        },
+        "NSightDevicePatchDto": {
+          "type": "object",
+          "properties": {
+            "patchId": {
+              "type": "number",
+              "description": "The patch ID of the patch",
+              "example": 123
+            },
+            "policy": {
+              "type": "number",
+              "description": "The policy of the patch",
+              "example": 1
+            },
+            "policyLabel": {
+              "type": "string",
+              "description": "The policy label of the patch",
+              "example": "Policy"
+            },
+            "patchIcon": {
+              "type": "string",
+              "description": "The patch icon of the patch",
+              "example": "patch-icon"
+            },
+            "status": {
+              "type": "number",
+              "description": "The status of the patch",
+              "example": 1
+            },
+            "selectPatch": {
+              "type": "string",
+              "description": "The select patch of the patch",
+              "example": "select-patch"
+            },
+            "statusLabel": {
+              "type": "string",
+              "description": "The status label of the patch",
+              "example": "Status label"
+            },
+            "patchUrl": {
+              "type": "string",
+              "description": "The patch URL of the patch",
+              "example": "https://example.com/patch"
+            },
+            "patchTitle": {
+              "type": "string",
+              "description": "The patch title of the patch",
+              "example": "Patch title"
+            },
+            "product": {
+              "type": "string",
+              "description": "The product of the patch",
+              "example": "Product"
+            },
+            "severity": {
+              "type": "number",
+              "description": "The severity of the patch",
+              "example": 1
+            },
+            "severityLabel": {
+              "type": "string",
+              "description": "The severity label of the patch",
+              "example": "Severity label"
+            },
+            "releaseDate": {
+              "format": "date-time",
+              "type": "string",
+              "description": "The release date of the patch",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "releaseDateText": {
+              "type": "string",
+              "description": "The release date text of the patch",
+              "example": "Release date text"
+            },
+            "installDateText": {
+              "type": "string",
+              "description": "The install date text of the patch",
+              "example": "Install date text"
+            },
+            "deployable": {
+              "type": "number",
+              "description": "The deployable of the patch",
+              "example": 1
+            },
+            "uninstallable": {
+              "type": "number",
+              "description": "The uninstallable of the patch",
+              "example": 1
+            },
+            "classification": {
+              "type": "string",
+              "description": "The classification of the patch",
+              "example": "Classification"
+            }
+          },
+          "required": [
+            "patchId",
+            "policy",
+            "policyLabel",
+            "patchIcon",
+            "status",
+            "selectPatch",
+            "statusLabel",
+            "patchUrl",
+            "patchTitle",
+            "product",
+            "severity",
+            "severityLabel",
+            "releaseDate",
+            "releaseDateText",
+            "installDateText",
+            "deployable",
+            "uninstallable",
+            "classification"
+          ]
+        },
+        "NSightDeviceResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the device",
+              "example": "Traumkunde GmbH"
+            },
+            "vendorId": {
+              "type": "number",
+              "description": "The device ID",
+              "example": 123456
+            },
+            "type": {
+              "type": "string",
+              "description": "The type of the device",
+              "example": "server"
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "The tenant ID",
+              "example": "123456"
+            },
+            "dashboardId": {
+              "type": "string",
+              "description": "The dashboard ID",
+              "example": "123456"
+            },
+            "siteId": {
+              "type": "string",
+              "description": "The site ID",
+              "example": "123456"
+            },
+            "description": {
+              "type": "string",
+              "description": "The description of the device",
+              "example": "Description of the device"
+            },
+            "agentVersion": {
+              "type": "string",
+              "description": "The agent version of the device",
+              "example": "1.0.0"
+            },
+            "isOnline": {
+              "type": "boolean",
+              "description": "The online status of the device",
+              "example": true
+            },
+            "username": {
+              "type": "string",
+              "description": "The username of the device",
+              "example": "username"
+            },
+            "manufacturer": {
+              "type": "string",
+              "description": "The manufacturer of the device",
+              "example": "manufacturer"
+            },
+            "model": {
+              "type": "string",
+              "description": "The model of the device",
+              "example": "model"
+            },
+            "serial": {
+              "type": "string",
+              "description": "The serial of the device",
+              "example": "serial"
+            },
+            "processorCount": {
+              "type": "number",
+              "description": "The processor count of the device",
+              "example": 4
+            },
+            "totalMemory": {
+              "type": "number",
+              "description": "The total memory of the device",
+              "example": 16384
+            },
+            "operatingSystem": {
+              "type": "string",
+              "description": "The operating system of the device",
+              "example": "Windows 10"
+            },
+            "mac1": {
+              "type": "string",
+              "description": "The MAC address of the device",
+              "example": "00:11:22:33:44:55"
+            },
+            "mac2": {
+              "type": "string",
+              "description": "The MAC address of the device",
+              "example": "00:11:22:33:44:55"
+            },
+            "mac3": {
+              "type": "string",
+              "description": "The MAC address of the device",
+              "example": "00:11:22:33:44:55"
+            },
+            "cpu": {
+              "type": "string",
+              "description": "The CPU of the device",
+              "example": "Intel Core i7"
+            },
+            "cpuEOL": {
+              "format": "date-time",
+              "type": "string",
+              "description": "The CPU EOL of the device",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "cpuRelease": {
+              "format": "date-time",
+              "type": "string",
+              "description": "The CPU release date of the device",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "osEOL": {
+              "format": "date-time",
+              "type": "string",
+              "description": "The OS EOL of the device",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "msoffice": {
+              "type": "string",
+              "description": "The MS Office version of the device",
+              "example": "2019"
+            },
+            "msofficeEOL": {
+              "format": "date-time",
+              "type": "string",
+              "description": "The MS Office EOL of the device",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "hardware": {
+              "description": "The hardware of the device",
+              "example": [
+                {
+                  "hardwareid": 123,
+                  "name": "CPU",
+                  "type": 13,
+                  "manufacturer": "AuthenticAMD",
+                  "details": "L2CacheSize=8192\nMaxClockSpeed=3401",
+                  "status": "OK",
+                  "modified": 123,
+                  "deleted": 123
+                }
+              ],
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NSightDeviceHardwareDto"
+              }
+            },
+            "software": {
+              "description": "The software of the device",
+              "example": [
+                {
+                  "softwareid": 123,
+                  "name": "CPU",
+                  "version": "1.0.0",
+                  "install_date": "2024-01-01T12:00:00.000Z",
+                  "type": "CPU",
+                  "deleted": 123
+                }
+              ],
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NSightDeviceSoftwareDto"
+              }
+            },
+            "disks": {
+              "description": "The disks of the device",
+              "example": [
+                {
+                  "description": "Hard drive check",
+                  "size": 10000000,
+                  "freeSpace": 10000000,
+                  "failing": false
+                }
+              ],
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NSightDeviceDiskDto"
+              }
+            },
+            "antivirus": {
+              "description": "The antivirus of the device",
+              "example": [
+                {
+                  "name": "Antivirus solution",
+                  "version": "Antivirus solution",
+                  "lastCheck": "2024-01-01T12:00:00.000Z",
+                  "status": "passed"
+                }
+              ],
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NSightDeviceAntivirusDto"
+              }
+            },
+            "backups": {
+              "description": "The backups of the device",
+              "example": [
+                {
+                  "name": "Backup solution",
+                  "formatted_output": "Backup solution",
+                  "lastCheck": "2024-01-01T12:00:00.000Z",
+                  "status": "passed"
+                }
+              ],
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NSightDeviceBackupDto"
+              }
+            },
+            "patches": {
+              "description": "The patches of the device",
+              "example": [
+                {
+                  "patchid": 123,
+                  "policy": 1,
+                  "policyLabel": "Policy",
+                  "patchIcon": "patch-icon",
+                  "status": 1,
+                  "selectPatch": "patch",
+                  "statusLabel": "patch",
+                  "patchUrl": "https://example.com/patch",
+                  "patchTitle": "Patch",
+                  "product": "Product",
+                  "severity": 1,
+                  "severityLabel": "Severity",
+                  "releaseDate": "2024-01-01T12:00:00.000Z",
+                  "releaseDateText": "2024-01-01",
+                  "installDate": "2024-01-01T12:00:00.000Z",
+                  "installDateText": "2024-01-01",
+                  "deployable": 1,
+                  "uninstallable": 1,
+                  "classification": "Classification"
+                }
+              ],
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NSightDevicePatchDto"
+              }
+            },
+            "takeControl": {
+              "type": "boolean",
+              "description": "Whether take control module is enabled",
+              "example": true
+            },
+            "patchManagement": {
+              "type": "boolean",
+              "description": "Whether patch management module is enabled",
+              "example": true
+            },
+            "mav": {
+              "type": "boolean",
+              "description": "Whether MAV (Managed Antivirus) module is enabled",
+              "example": true
+            },
+            "mavThreats": {
+              "description": "MAV threat items for the device",
+              "example": [
+                {
+                  "quarantineGuid": "guid-123-456-789",
+                  "date": "2024-01-01T12:00:00.000Z",
+                  "status": "quarantined",
+                  "name": "Trojan.Win32.Example",
+                  "type": "active-protection"
+                }
+              ],
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "lastSeen": {
+              "format": "date-time",
+              "type": "string",
+              "description": "The last time the device was seen",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "deletedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of deletion",
+              "example": "2024-01-01T12:00:00.000Z"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "vendorId",
+            "type",
+            "tenantId",
+            "dashboardId",
+            "siteId",
+            "description",
+            "agentVersion",
+            "isOnline",
+            "username",
+            "manufacturer",
+            "model",
+            "serial",
+            "processorCount",
+            "totalMemory",
+            "operatingSystem",
+            "mac1",
+            "mac2",
+            "mac3",
+            "cpu",
+            "cpuEOL",
+            "cpuRelease",
+            "osEOL",
+            "msoffice",
+            "msofficeEOL",
+            "hardware",
+            "software",
+            "disks",
+            "antivirus",
+            "backups",
+            "patches",
+            "takeControl",
+            "patchManagement",
+            "mav",
+            "mavThreats",
+            "lastSeen",
+            "deletedAt"
+          ]
+        },
+        "NSightDevicePaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NSightDeviceResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "NSightDeviceCheckResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "deviceId": {
+              "type": "string",
+              "description": "The device ID associated with this check",
+              "example": "123e4567-e89b-12d3-a456-426614174000"
+            },
+            "deviceName": {
+              "type": "string",
+              "description": "The name of the device associated with this check",
+              "example": "SERVER-001"
+            },
+            "siteName": {
+              "type": "string",
+              "description": "The name of the site associated with this check",
+              "example": "SITE-001"
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "The tenant ID associated with this check",
+              "example": "123e4567-e89b-12d3-a456-426614174001"
+            },
+            "siteId": {
+              "type": "string",
+              "description": "The site ID associated with this check",
+              "example": "123e4567-e89b-12d3-a456-426614174003"
+            },
+            "vendorId": {
+              "type": "number",
+              "description": "The check ID for this device check",
+              "example": 123
+            },
+            "description": {
+              "type": "string",
+              "description": "The description of this device check",
+              "example": "Disk space check"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "initial",
+                "failed",
+                "parked",
+                "passed"
+              ],
+              "description": "The status of this device check",
+              "example": "passed"
+            },
+            "utcRun": {
+              "format": "date-time",
+              "type": "string",
+              "description": "The UTC time when this check was run",
+              "example": "2025-06-24T05:45:59Z"
+            },
+            "checkType": {
+              "type": "number",
+              "description": "The type of check being performed",
+              "example": 1004
+            },
+            "consecutiveFails": {
+              "type": "number",
+              "description": "Consecutive failure count for this check",
+              "example": 0
+            },
+            "dsc247": {
+              "type": "number",
+              "description": "DSC 247 value for this check",
+              "example": 1
+            },
+            "formattedOutput": {
+              "type": "string",
+              "description": "Formatted output from the check execution",
+              "example": "C: Drive - 120GB total, 85GB free (71% free)"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "deviceId",
+            "tenantId",
+            "siteId",
+            "vendorId",
+            "status",
+            "checkType",
+            "consecutiveFails",
+            "dsc247"
+          ]
+        },
+        "NSightDeviceCheckPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NSightDeviceCheckResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "NSightDeviceTakeControlUrlResponseDto": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "URL to take control of the device"
+            }
+          },
+          "required": [
+            "url"
+          ]
+        },
+        "DeviceDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "123e4567-e89b-12d3-a456-426614174000"
+            },
+            "name": {
+              "type": "string",
+              "example": "DESKTOP-ABC123"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "workstation",
+                "server"
+              ],
+              "example": "workstation"
+            },
+            "operatingSystem": {
+              "type": "string",
+              "example": "Windows 11 Pro"
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "type"
+          ]
+        },
+        "DevicesDto": {
+          "type": "object",
+          "properties": {
+            "devices": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/DeviceDto"
+              }
+            },
+            "workstations": {
+              "type": "number",
+              "example": 50
+            },
+            "servers": {
+              "type": "number",
+              "example": 10
+            }
+          },
+          "required": [
+            "devices",
+            "workstations",
+            "servers"
+          ]
+        },
+        "UsedAntivirusDeviceDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "123e4567-e89b-12d3-a456-426614174000"
+            },
+            "name": {
+              "type": "string",
+              "example": "DESKTOP-ABC123"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "workstation",
+                "server"
+              ],
+              "example": "workstation"
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "type"
+          ]
+        },
+        "UsedAntivirusDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Windows Defender"
+            },
+            "count": {
+              "type": "number",
+              "example": 25
+            },
+            "devices": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/UsedAntivirusDeviceDto"
+              }
+            }
+          },
+          "required": [
+            "name",
+            "count",
+            "devices"
+          ]
+        },
+        "AntivirusCheckDeviceDto": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "123e4567-e89b-12d3-a456-426614174000"
+            },
+            "name": {
+              "type": "string",
+              "example": "DESKTOP-ABC123"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "workstation",
+                "server"
+              ],
+              "example": "workstation"
+            }
+          },
+          "required": [
+            "_id",
+            "name",
+            "type"
+          ]
+        },
+        "BackupCheckDeviceDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "123e4567-e89b-12d3-a456-426614174000"
+            },
+            "name": {
+              "type": "string",
+              "example": "DESKTOP-ABC123"
+            },
+            "checkName": {
+              "type": "string",
+              "example": "Veeam Backup"
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "checkName"
+          ]
+        },
+        "BackupCheckTypeDto": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "number",
+              "example": 50
+            },
+            "withChecks": {
+              "type": "number",
+              "example": 45
+            },
+            "devices": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/BackupCheckDeviceDto"
+              }
+            }
+          },
+          "required": [
+            "total",
+            "withChecks",
+            "devices"
+          ]
+        },
+        "BackupChecksDto": {
+          "type": "object",
+          "properties": {
+            "workstation": {
+              "$ref": "#/components/schemas/BackupCheckTypeDto"
+            },
+            "server": {
+              "$ref": "#/components/schemas/BackupCheckTypeDto"
+            }
+          },
+          "required": [
+            "workstation",
+            "server"
+          ]
+        },
+        "OfflineDevicesDto": {
+          "type": "object",
+          "properties": {
+            "workstation": {
+              "type": "number",
+              "example": 5
+            },
+            "server": {
+              "type": "number",
+              "example": 2
+            }
+          },
+          "required": [
+            "workstation",
+            "server"
+          ]
+        },
+        "UnsupportedOSDeviceDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "123e4567-e89b-12d3-a456-426614174000"
+            },
+            "name": {
+              "type": "string",
+              "example": "DESKTOP-ABC123"
+            },
+            "operatingSystem": {
+              "type": "string",
+              "example": "Windows 7 Professional"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "workstation",
+                "server"
+              ],
+              "example": "workstation"
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "operatingSystem",
+            "type"
+          ]
+        },
+        "DiskDto": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "example": "C:"
+            },
+            "freeSpace": {
+              "type": "number",
+              "example": 10737418240
+            },
+            "size": {
+              "type": "number",
+              "example": 107374182400
+            }
+          },
+          "required": [
+            "description",
+            "freeSpace",
+            "size"
+          ]
+        },
+        "LowDiskCapacityDeviceDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "123e4567-e89b-12d3-a456-426614174000"
+            },
+            "name": {
+              "type": "string",
+              "example": "DESKTOP-ABC123"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "workstation",
+                "server"
+              ],
+              "example": "workstation"
+            },
+            "disks": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/DiskDto"
+              }
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "type",
+            "disks"
+          ]
+        },
+        "FailedLoginDeviceDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "123e4567-e89b-12d3-a456-426614174000"
+            },
+            "name": {
+              "type": "string",
+              "example": "DESKTOP-ABC123"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "workstation",
+                "server"
+              ],
+              "example": "workstation"
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "type"
+          ]
+        },
+        "FailingCheckDeviceDto": {
+          "type": "object",
+          "properties": {
+            "deviceId": {
+              "type": "string",
+              "example": "123e4567-e89b-12d3-a456-426614174000"
+            },
+            "siteName": {
+              "type": "string",
+              "example": "Acme Corp"
+            },
+            "deviceName": {
+              "type": "string",
+              "example": "DESKTOP-ABC123"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "workstation",
+                "server"
+              ],
+              "example": "workstation"
+            },
+            "errors": {
+              "example": [
+                "Disk Space Check Failed",
+                "Antivirus Outdated"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "deviceId",
+            "siteName",
+            "deviceName",
+            "type",
+            "errors"
+          ]
+        },
+        "ScoreDto": {
+          "type": "object",
+          "properties": {
+            "totalDevices": {
+              "type": "number",
+              "example": 100
+            },
+            "devicesWithErrors": {
+              "type": "number",
+              "example": 5
+            },
+            "score": {
+              "type": "number",
+              "example": 0.95,
+              "description": "Score as a decimal (0-1), representing the percentage of devices without errors"
+            }
+          },
+          "required": [
+            "totalDevices",
+            "devicesWithErrors",
+            "score"
+          ]
+        },
+        "SiteRankingItemDto": {
+          "type": "object",
+          "properties": {
+            "rank": {
+              "type": "number",
+              "example": 1
+            },
+            "siteId": {
+              "type": "string",
+              "example": "123e4567-e89b-12d3-a456-426614174000"
+            },
+            "siteName": {
+              "type": "string",
+              "example": "Acme Corp"
+            },
+            "score": {
+              "type": "number",
+              "example": 95,
+              "description": "Score as percentage (0-100)"
+            }
+          },
+          "required": [
+            "rank",
+            "siteId",
+            "siteName",
+            "score"
+          ]
+        },
+        "CustomerCountDto": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "number",
+              "example": 15,
+              "description": "Number of sites for this tenant"
+            }
+          },
+          "required": [
+            "count"
+          ]
+        },
+        "CustomerStatsItemDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "example": 12345,
+              "description": "Customer ID (null if not linked)",
+              "nullable": true
+            },
+            "customerName": {
+              "type": "string",
+              "example": "Acme Corp",
+              "description": "Customer name (from site name)"
+            },
+            "total": {
+              "type": "number",
+              "example": 5,
+              "description": "Total number of sites for this customer"
+            },
+            "errors": {
+              "type": "number",
+              "example": 1,
+              "description": "Number of sites with failing checks"
+            }
+          },
+          "required": [
+            "customerId",
+            "customerName",
+            "total",
+            "errors"
+          ]
+        },
+        "NSightReportDataResponseDto": {
+          "type": "object",
+          "properties": {
+            "devices": {
+              "$ref": "#/components/schemas/DevicesDto"
+            },
+            "antivirus": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/UsedAntivirusDto"
+              }
+            },
+            "outdatedAntivirus": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/AntivirusCheckDeviceDto"
+              }
+            },
+            "missingAntivirusCheck": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/AntivirusCheckDeviceDto"
+              }
+            },
+            "installedPatches": {
+              "type": "number",
+              "example": 250
+            },
+            "executedChecks": {
+              "type": "number",
+              "example": 1500
+            },
+            "problemCount": {
+              "type": "number",
+              "example": 150
+            },
+            "solvedProblems": {
+              "type": "number",
+              "example": 120
+            },
+            "backupChecks": {
+              "$ref": "#/components/schemas/BackupChecksDto"
+            },
+            "offlineDevices": {
+              "$ref": "#/components/schemas/OfflineDevicesDto"
+            },
+            "unsupportedOperatingSystemDevices": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/UnsupportedOSDeviceDto"
+              }
+            },
+            "lowStorageDevices": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LowDiskCapacityDeviceDto"
+              }
+            },
+            "failedLogins": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/FailedLoginDeviceDto"
+              }
+            },
+            "failures": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/FailingCheckDeviceDto"
+              }
+            },
+            "score": {
+              "$ref": "#/components/schemas/ScoreDto"
+            },
+            "siteRanking": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SiteRankingItemDto"
+              }
+            },
+            "customerCount": {
+              "$ref": "#/components/schemas/CustomerCountDto"
+            },
+            "customerStats": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CustomerStatsItemDto"
+              }
+            }
+          }
+        },
+        "SalesOpportunityResponseDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the device",
+              "example": "MacBook Pro"
+            },
+            "siteName": {
+              "type": "string",
+              "description": "The name of the site",
+              "example": "Traumkunde GmbH"
+            },
+            "username": {
+              "type": "string",
+              "description": "The user who logged in the device",
+              "example": "Max Mustermann"
+            },
+            "operatingSystem": {
+              "type": "string",
+              "description": "The operating system of the device",
+              "example": "Windows"
+            },
+            "osEOL": {
+              "type": "string",
+              "description": "The end of life (EOL) of the operating system",
+              "example": "2025-01-01"
+            },
+            "cpu": {
+              "type": "string",
+              "description": "The name of the CPU",
+              "example": "Amd Ryzen 9 7950X"
+            },
+            "cpuEOL": {
+              "type": "string",
+              "description": "The end of life (EOL) of the CPU",
+              "example": "2025-01-01"
+            },
+            "cpuRelease": {
+              "type": "string",
+              "description": "The release of the CPU",
+              "example": "2025-01-01"
+            },
+            "totalMemory": {
+              "type": "string",
+              "description": "The amount of RAM of the device",
+              "example": "16GB"
+            },
+            "disks": {
+              "description": "The amount of hard disk space of the device",
+              "example": [
+                {
+                  "description": "Laufwerk C:",
+                  "size": 1000,
+                  "freeSpace": 512,
+                  "failing": true
+                }
+              ],
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NSightDeviceDiskDto"
+              }
+            },
+            "msoffice": {
+              "type": "string",
+              "description": "The Microsoft System of the device",
+              "example": "2025-01-01"
+            },
+            "msofficeEOL": {
+              "type": "string",
+              "description": "The end of life (EOL) of the Microsoft System",
+              "example": "2025-01-01"
+            },
+            "recommendations": {
+              "type": "array",
+              "description": "The recommendations for the device",
+              "example": [
+                "cpu-warning",
+                "ram-warning"
+              ],
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ram-warning",
+                  "cpu-warning",
+                  "cpu-critical",
+                  "disk-warning",
+                  "msoffice-warning",
+                  "msoffice-critical",
+                  "os-warning",
+                  "os-critical"
+                ]
+              }
+            }
+          },
+          "required": [
+            "name",
+            "siteName",
+            "osEOL",
+            "disks",
+            "recommendations"
+          ]
+        },
+        "SalesOpportunityRecommendationStatsDto": {
+          "type": "object",
+          "properties": {
+            "recommendation": {
+              "type": "string",
+              "enum": [
+                "ram-warning",
+                "cpu-warning",
+                "cpu-critical",
+                "disk-warning",
+                "msoffice-warning",
+                "msoffice-critical",
+                "os-warning",
+                "os-critical"
+              ],
+              "description": "The recommendation for the device",
+              "example": "cpu-warning"
+            },
+            "count": {
+              "type": "number",
+              "description": "The count of the recommendation",
+              "example": 1
+            }
+          },
+          "required": [
+            "recommendation",
+            "count"
+          ]
+        },
+        "SalesOpportunityPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SalesOpportunityResponseDto"
+              }
+            },
+            "recommendationStats": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SalesOpportunityRecommendationStatsDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data",
+            "recommendationStats"
+          ]
+        },
+        "CreateLywandPartnerRequestDto": {
+          "type": "object",
+          "properties": {
+            "tenantId": {
+              "type": "string",
+              "description": "The tenantId of the partner",
+              "example": "3a0d9db7-e43d-4c66-8914-f8b7a86448e6"
+            },
+            "type": {
+              "type": "string",
+              "description": "The type of the partner",
+              "example": "fullManaged",
+              "enum": [
+                "fullManaged",
+                "partManaged"
+              ]
+            },
+            "email": {
+              "type": "string",
+              "description": "The email address for first user",
+              "example": "info@synaxon.de"
+            }
+          },
+          "required": [
+            "tenantId",
+            "type",
+            "email"
+          ]
+        },
+        "LywandCustomerScopeProperties": {
+          "type": "object",
+          "properties": {
+            "endpoints": {
+              "type": "number",
+              "description": "The number of endpoints",
+              "example": 10
+            },
+            "domains": {
+              "type": "number",
+              "description": "The number of domains",
+              "example": 5
+            },
+            "emails": {
+              "type": "number",
+              "description": "The number of emails",
+              "example": 2
+            },
+            "ipAddresses": {
+              "type": "number",
+              "description": "The number of IP addresses",
+              "example": 1
+            }
+          },
+          "required": [
+            "endpoints",
+            "domains",
+            "emails",
+            "ipAddresses"
+          ]
+        },
+        "LywandCustomerVulnerabilityProperties": {
+          "type": "object",
+          "properties": {
+            "high": {
+              "type": "number",
+              "description": "The number of high severity vulnerabilities",
+              "example": 5
+            },
+            "medium": {
+              "type": "number",
+              "description": "The number of medium severity vulnerabilities",
+              "example": 3
+            },
+            "low": {
+              "type": "number",
+              "description": "The number of low severity vulnerabilities",
+              "example": 2
+            }
+          },
+          "required": [
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "LywandPartnerResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the partner",
+              "example": "Traumpartner GmbH"
+            },
+            "vendorId": {
+              "type": "string",
+              "description": "The lywand tenantId of the partner",
+              "example": "661d261e7a2b4b1255e01da2"
+            },
+            "score": {
+              "type": "number",
+              "description": "The score of the partner",
+              "example": 5
+            },
+            "inScope": {
+              "description": "The number of in scope targets",
+              "example": {
+                "endpoints": 10,
+                "domains": 5,
+                "emails": 2,
+                "ipAddresses": 1
+              },
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/LywandCustomerScopeProperties"
+                }
+              ]
+            },
+            "outOfScope": {
+              "description": "The number of out of scope targets",
+              "example": {
+                "endpoints": 10,
+                "domains": 5,
+                "emails": 2,
+                "ipAddresses": 1
+              },
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/LywandCustomerScopeProperties"
+                }
+              ]
+            },
+            "vulnerabilities": {
+              "description": "The number of vulnerabilities",
+              "example": {
+                "high": 5,
+                "medium": 3,
+                "low": 2
+              },
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/LywandCustomerVulnerabilityProperties"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "description": "The type of the partner",
+              "example": "fullManaged",
+              "enum": [
+                "fullManaged",
+                "partManaged"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "vendorId",
+            "score",
+            "inScope",
+            "outOfScope",
+            "vulnerabilities",
+            "type"
+          ]
+        },
+        "LywandPartnerPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LywandPartnerResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "LywandMetrics": {
+          "type": "object",
+          "properties": {
+            "score": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "vulnerabilitiesHigh": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "vulnerabilitiesMedium": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "vulnerabilitiesLow": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "inScopeEndpoints": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "inScopeDomains": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "inScopeEmails": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "inScopeIpAddresses": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "outOfScopeEndpoints": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "outOfScopeDomains": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "outOfScopeEmails": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "outOfScopeIpAddresses": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            }
+          },
+          "required": [
+            "score",
+            "vulnerabilitiesHigh",
+            "vulnerabilitiesMedium",
+            "vulnerabilitiesLow",
+            "inScopeEndpoints",
+            "inScopeDomains",
+            "inScopeEmails",
+            "inScopeIpAddresses",
+            "outOfScopeEndpoints",
+            "outOfScopeDomains",
+            "outOfScopeEmails",
+            "outOfScopeIpAddresses"
+          ]
+        },
+        "LywandMetricsResponseDto": {
+          "type": "object",
+          "properties": {
+            "currTimestamp": {
+              "format": "date-time",
+              "type": "string",
+              "example": "2024-10-24T09:30:00.000Z",
+              "description": "Timestamp when current metrics were generated"
+            },
+            "prevTimestamp": {
+              "format": "date-time",
+              "type": "string",
+              "example": "2024-10-23T00:00:00.000Z",
+              "description": "Timestamp of previous metrics for comparison",
+              "nullable": true
+            },
+            "values": {
+              "description": "Metrics values with current and previous comparison",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/LywandMetrics"
+                }
+              ]
+            }
+          },
+          "required": [
+            "currTimestamp",
+            "prevTimestamp",
+            "values"
+          ]
+        },
+        "UpdateLywandPartnerRequestDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Lywand Partner name",
+              "example": "MUSTERPARTNER"
+            }
+          }
+        },
+        "CreateLywandCustomerRequestDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "description": "The id of the customer",
+              "example": 1
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the customer",
+              "example": "Traumkunde GmbH"
+            }
+          },
+          "required": [
+            "name"
+          ]
+        },
+        "LywandCustomerResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "customerId": {
+              "type": "number",
+              "description": "The customer id of customer file",
+              "example": 1
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the customer",
+              "example": "Traumkunde GmbH"
+            },
+            "vendorId": {
+              "type": "string",
+              "description": "The lywand tenantId of the customer",
+              "example": "ObjectId"
+            },
+            "rating": {
+              "type": "string",
+              "description": "The rating of the customer (A-F)",
+              "example": "A"
+            },
+            "score": {
+              "type": "number",
+              "description": "The score of the customer",
+              "example": 10
+            },
+            "targets": {
+              "type": "number",
+              "description": "The number of total targets",
+              "example": 10
+            },
+            "scanCoverage": {
+              "type": "number",
+              "description": "The number of scanned targets",
+              "example": 50
+            },
+            "inScope": {
+              "description": "The number of in scope targets",
+              "example": {
+                "endpoints": 10,
+                "domains": 5,
+                "emails": 2,
+                "ipAddresses": 1
+              },
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/LywandCustomerScopeProperties"
+                }
+              ]
+            },
+            "outOfScope": {
+              "description": "The number of out of scope targets",
+              "example": {
+                "endpoints": 10,
+                "domains": 5,
+                "emails": 2,
+                "ipAddresses": 1
+              },
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/LywandCustomerScopeProperties"
+                }
+              ]
+            },
+            "vulnerabilities": {
+              "description": "The number of vulnerabilities",
+              "example": {
+                "high": 5,
+                "medium": 3,
+                "low": 2
+              },
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/LywandCustomerVulnerabilityProperties"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "description": "The type of the customer",
+              "example": "fullManaged",
+              "enum": [
+                "fullManaged",
+                "partManaged"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "vendorId",
+            "rating",
+            "score",
+            "targets",
+            "scanCoverage",
+            "inScope",
+            "outOfScope",
+            "vulnerabilities",
+            "type"
+          ]
+        },
+        "LywandCustomerPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LywandCustomerResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "UpdateLywandCustomerRequestDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Lywand Partner name",
+              "example": "MUSTERPARTNER"
+            },
+            "customerId": {
+              "type": "number",
+              "description": "Customer id of customer file",
+              "example": 123,
+              "nullable": true
+            }
+          }
+        },
+        "LywandTokenResponseDto": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "description": "The installation token",
+              "example": "UyR94ErBt15mVKUxKLUc3M8ilfWtJLRKQWiaAlIITX7YiyJiIxsu7cslU0mkh3SUpggdQlKpHeBd7CzFPmXSxhyJ0lX47VYMEV"
+            }
+          },
+          "required": [
+            "token"
+          ]
+        },
+        "ExtendedLywandTargetResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "parentId": {
+              "type": "string",
+              "description": "The lywand customer id this target belongs to",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "The tenant id of the target",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "vendorId": {
+              "type": "string",
+              "description": "The lywand id of the target",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the target",
+              "example": "example.com"
+            },
+            "type": {
+              "type": "string",
+              "description": "The type of the target",
+              "example": "domain"
+            },
+            "lywandIdentifier": {
+              "type": "string",
+              "description": "The identifier of the target in Lywand system",
+              "example": "LYID-12345"
+            },
+            "inScope": {
+              "type": "boolean",
+              "description": "Whether the target is in scope",
+              "example": true
+            },
+            "vulnerabilities": {
+              "type": "number",
+              "description": "The number of vulnerabilities",
+              "example": 10
+            },
+            "highestRisk": {
+              "type": "number",
+              "description": "The highest risk of the target",
+              "example": 1
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "parentId",
+            "tenantId",
+            "vendorId",
+            "name",
+            "type",
+            "lywandIdentifier",
+            "inScope",
+            "vulnerabilities"
+          ]
+        },
+        "LywandTargetPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ExtendedLywandTargetResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "LywandTargetResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "parentId": {
+              "type": "string",
+              "description": "The lywand customer id this target belongs to",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "The tenant id of the target",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "vendorId": {
+              "type": "string",
+              "description": "The lywand id of the target",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the target",
+              "example": "example.com"
+            },
+            "type": {
+              "type": "string",
+              "description": "The type of the target",
+              "example": "domain"
+            },
+            "lywandIdentifier": {
+              "type": "string",
+              "description": "The identifier of the target in Lywand system",
+              "example": "LYID-12345"
+            },
+            "inScope": {
+              "type": "boolean",
+              "description": "Whether the target is in scope",
+              "example": true
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "parentId",
+            "tenantId",
+            "vendorId",
+            "name",
+            "type",
+            "lywandIdentifier",
+            "inScope"
+          ]
+        },
+        "LywandVulnerabilityResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the vulnerability",
+              "example": "SQL Injection Vulnerability"
+            },
+            "summary": {
+              "type": "string",
+              "description": "Summary of the vulnerability",
+              "example": "Application is vulnerable to SQL injection attacks"
+            },
+            "proof": {
+              "type": "string",
+              "description": "Proof of the vulnerability",
+              "example": "By submitting ' OR 1=1 -- in the search field, all database records are returned"
+            },
+            "parentId": {
+              "type": "string",
+              "description": "The lywand target id this vulnerability belongs to",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "lywandCustomerId": {
+              "type": "string",
+              "description": "The lywand customer id this vulnerability belongs to",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "vendorId": {
+              "type": "string",
+              "description": "The lywand id of the vulnerability",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "The tenant id of the vulnerability",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "risk": {
+              "type": "number",
+              "description": "Risk level of the vulnerability (1-10)",
+              "example": 8
+            },
+            "targetName": {
+              "type": "string",
+              "description": "The display name of the target this vulnerability belongs to",
+              "example": "Web Server 01"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "summary",
+            "parentId",
+            "lywandCustomerId",
+            "vendorId",
+            "tenantId",
+            "risk",
+            "targetName"
+          ]
+        },
+        "LywandVulnerabilityPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LywandVulnerabilityResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "LywandStatsDto": {
+          "type": "object",
+          "properties": {
+            "score": {
+              "type": "number",
+              "example": 85,
+              "description": "Overall security score (0-100)"
+            },
+            "vulnerabilitiesHigh": {
+              "type": "number",
+              "example": 3,
+              "description": "Number of high severity vulnerabilities"
+            },
+            "vulnerabilitiesMedium": {
+              "type": "number",
+              "example": 12,
+              "description": "Number of medium severity vulnerabilities"
+            },
+            "vulnerabilitiesLow": {
+              "type": "number",
+              "example": 25,
+              "description": "Number of low severity vulnerabilities"
+            },
+            "inScopeEndpoints": {
+              "type": "number",
+              "example": 15,
+              "description": "Number of endpoints in scope"
+            },
+            "inScopeDomains": {
+              "type": "number",
+              "example": 5,
+              "description": "Number of domains in scope"
+            },
+            "inScopeEmails": {
+              "type": "number",
+              "example": 10,
+              "description": "Number of emails in scope"
+            },
+            "inScopeIpAddresses": {
+              "type": "number",
+              "example": 8,
+              "description": "Number of IP addresses in scope"
+            },
+            "outOfScopeEndpoints": {
+              "type": "number",
+              "example": 2,
+              "description": "Number of endpoints out of scope"
+            },
+            "outOfScopeDomains": {
+              "type": "number",
+              "example": 1,
+              "description": "Number of domains out of scope"
+            },
+            "outOfScopeEmails": {
+              "type": "number",
+              "example": 3,
+              "description": "Number of emails out of scope"
+            },
+            "outOfScopeIpAddresses": {
+              "type": "number",
+              "example": 0,
+              "description": "Number of IP addresses out of scope"
+            }
+          },
+          "required": [
+            "score",
+            "vulnerabilitiesHigh",
+            "vulnerabilitiesMedium",
+            "vulnerabilitiesLow",
+            "inScopeEndpoints",
+            "inScopeDomains",
+            "inScopeEmails",
+            "inScopeIpAddresses",
+            "outOfScopeEndpoints",
+            "outOfScopeDomains",
+            "outOfScopeEmails",
+            "outOfScopeIpAddresses"
+          ]
+        },
+        "LywandTargetDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "server.example.com",
+              "description": "Target name"
+            },
+            "type": {
+              "type": "string",
+              "example": "endpoint",
+              "description": "Target type (endpoint, domain, email, ip)"
+            },
+            "inScope": {
+              "type": "boolean",
+              "example": true,
+              "description": "Whether the target is in scope"
+            },
+            "lywandIdentifier": {
+              "type": "string",
+              "example": "lyw-12345",
+              "description": "Lywand identifier"
+            }
+          },
+          "required": [
+            "name",
+            "type",
+            "inScope",
+            "lywandIdentifier"
+          ]
+        },
+        "LywandVulnerabilityDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "CVE-2023-1234",
+              "description": "Vulnerability name or CVE identifier"
+            },
+            "risk": {
+              "type": "number",
+              "example": 8.5,
+              "description": "Risk score (0-10)"
+            },
+            "targetName": {
+              "type": "string",
+              "example": "server.example.com",
+              "description": "Name of the affected target"
+            },
+            "summary": {
+              "type": "string",
+              "example": "Remote code execution vulnerability in OpenSSL",
+              "description": "Summary of the vulnerability"
+            },
+            "proof": {
+              "type": "string",
+              "example": "Port 443 is open and vulnerable",
+              "description": "Proof of vulnerability"
+            }
+          },
+          "required": [
+            "name",
+            "risk",
+            "summary"
+          ]
+        },
+        "LywandScoreDto": {
+          "type": "object",
+          "properties": {
+            "totalTargets": {
+              "type": "number",
+              "example": 50,
+              "description": "Total number of targets"
+            },
+            "targetsWithVulnerabilities": {
+              "type": "number",
+              "example": 5,
+              "description": "Number of targets with vulnerabilities"
+            },
+            "score": {
+              "type": "number",
+              "example": 0.9,
+              "description": "Score as a decimal (0-1), representing the percentage of targets without vulnerabilities"
+            }
+          },
+          "required": [
+            "totalTargets",
+            "targetsWithVulnerabilities",
+            "score"
+          ]
+        },
+        "LywandCustomerCountDto": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "number",
+              "example": 15,
+              "description": "Number of Lywand customers for this tenant"
+            }
+          },
+          "required": [
+            "count"
+          ]
+        },
+        "LywandCustomerStatsItemDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "example": 12345,
+              "description": "Customer ID (null if not linked)",
+              "nullable": true
+            },
+            "customerName": {
+              "type": "string",
+              "example": "Acme Corp",
+              "description": "Customer name"
+            },
+            "total": {
+              "type": "number",
+              "example": 1,
+              "description": "Total number of customers (always 1 per entry)"
+            },
+            "errors": {
+              "type": "number",
+              "example": 1,
+              "description": "Number of customers with high vulnerabilities"
+            }
+          },
+          "required": [
+            "customerId",
+            "customerName",
+            "total",
+            "errors"
+          ]
+        },
+        "LywandReportDataResponseDto": {
+          "type": "object",
+          "properties": {
+            "metrics": {
+              "description": "Aggregated metrics and statistics",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/LywandStatsDto"
+                }
+              ]
+            },
+            "targetList": {
+              "description": "List of scan targets",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LywandTargetDto"
+              }
+            },
+            "vulnerabilitiesHigh": {
+              "description": "List of high severity vulnerabilities (risk >= 7.0)",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LywandVulnerabilityDto"
+              }
+            },
+            "vulnerabilitiesMedium": {
+              "description": "List of medium severity vulnerabilities (4.0 <= risk < 7.0)",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LywandVulnerabilityDto"
+              }
+            },
+            "vulnerabilitiesLow": {
+              "description": "List of low severity vulnerabilities (risk < 4.0)",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LywandVulnerabilityDto"
+              }
+            },
+            "score": {
+              "description": "Score calculation details",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/LywandScoreDto"
+                }
+              ]
+            },
+            "customerCount": {
+              "description": "Customer count for partner reports",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/LywandCustomerCountDto"
+                }
+              ]
+            },
+            "customerStats": {
+              "description": "Customer statistics for partner reports",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LywandCustomerStatsItemDto"
+              }
+            }
+          }
+        },
+        "CreateLayoutItemDto": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "X coordinate position in the grid",
+              "example": 0
+            },
+            "y": {
+              "type": "number",
+              "description": "Y coordinate position in the grid",
+              "example": 0
+            },
+            "cols": {
+              "type": "number",
+              "description": "Number of columns the widget spans",
+              "example": 12
+            },
+            "rows": {
+              "type": "number",
+              "description": "Number of height the widget spans",
+              "example": 1
+            },
+            "type": {
+              "type": "string",
+              "description": "Type of widget to display",
+              "example": "size"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "cols",
+            "rows",
+            "type"
+          ]
+        },
+        "CreateDashboardLayoutRequestDto": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "string",
+              "description": "User ID for user-specific layouts (optional)",
+              "example": "dba06aac-5b31-4628-9398-329ddab0b67a"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the dashboard layout",
+              "example": "My Custom Dashboard"
+            },
+            "layout": {
+              "type": "array",
+              "description": "Order of layout categories to display",
+              "example": [
+                "meaLayout",
+                "rmmLayout",
+                "msaLayout",
+                "mesLayout",
+                "mbLayout"
+              ],
+              "items": {
+                "type": "string",
+                "enum": [
+                  "meaLayout",
+                  "rmmLayout",
+                  "msaLayout",
+                  "mesLayout",
+                  "mbLayout"
+                ]
+              }
+            },
+            "meaLayout": {
+              "description": "Managed Email Archiving layout items",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CreateLayoutItemDto"
+              }
+            },
+            "rmmLayout": {
+              "description": "Remote Monitoring & Management layout items",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CreateLayoutItemDto"
+              }
+            },
+            "msaLayout": {
+              "description": "Managed Security Audit layout items",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CreateLayoutItemDto"
+              }
+            },
+            "mesLayout": {
+              "description": "Managed Endpoint Security layout items",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CreateLayoutItemDto"
+              }
+            },
+            "mbLayout": {
+              "description": "Managed Backup layout items",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CreateLayoutItemDto"
+              }
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "dashboard",
+                "customer"
+              ],
+              "description": "Type of dashboard layout",
+              "example": "dashboard"
+            }
+          },
+          "required": [
+            "name",
+            "layout",
+            "type"
+          ]
+        },
+        "LayoutItemResponseDto": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "X coordinate position in the grid",
+              "example": 0
+            },
+            "y": {
+              "type": "number",
+              "description": "Y coordinate position in the grid",
+              "example": 0
+            },
+            "cols": {
+              "type": "number",
+              "description": "Number of columns the widget spans",
+              "example": 12
+            },
+            "rows": {
+              "type": "number",
+              "description": "Number of height the widget spans",
+              "example": 1
+            },
+            "type": {
+              "type": "string",
+              "description": "Type of widget to display",
+              "example": "messages"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "cols",
+            "rows",
+            "type"
+          ]
+        },
+        "DashboardLayoutResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "The tenant ID that owns this layout",
+              "example": "123e4567-e89b-12d3-a456-426614174000"
+            },
+            "userId": {
+              "type": "string",
+              "description": "The user ID for user-specific layouts (optional)",
+              "example": "123e4567-e89b-12d3-a456-426614174001"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the dashboard layout",
+              "example": "My Custom Dashboard"
+            },
+            "default": {
+              "type": "boolean",
+              "description": "Whether this is a default layout",
+              "example": false
+            },
+            "layout": {
+              "type": "array",
+              "description": "Order of layout categories to display",
+              "example": [
+                "meaLayout",
+                "rmmLayout",
+                "msaLayout",
+                "mesLayout",
+                "mbLayout"
+              ],
+              "items": {
+                "type": "string",
+                "enum": [
+                  "meaLayout",
+                  "rmmLayout",
+                  "msaLayout",
+                  "mesLayout",
+                  "mbLayout"
+                ]
+              }
+            },
+            "meaLayout": {
+              "description": "Managed Email Archiving layout items",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LayoutItemResponseDto"
+              }
+            },
+            "rmmLayout": {
+              "description": "Remote Monitoring & Management layout items",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LayoutItemResponseDto"
+              }
+            },
+            "msaLayout": {
+              "description": "Managed Security Audit layout items",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LayoutItemResponseDto"
+              }
+            },
+            "mesLayout": {
+              "description": "Managed Endpoint Security layout items",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LayoutItemResponseDto"
+              }
+            },
+            "mbLayout": {
+              "description": "Managed Backup layout items",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LayoutItemResponseDto"
+              }
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "dashboard",
+                "customer"
+              ],
+              "description": "Type of dashboard layout",
+              "example": "dashboard"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "tenantId",
+            "name",
+            "default",
+            "layout",
+            "meaLayout",
+            "rmmLayout",
+            "msaLayout",
+            "mesLayout",
+            "mbLayout",
+            "type"
+          ]
+        },
+        "UpdateLayoutItemDto": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "X coordinate position in the grid",
+              "example": 0
+            },
+            "y": {
+              "type": "number",
+              "description": "Y coordinate position in the grid",
+              "example": 0
+            },
+            "cols": {
+              "type": "number",
+              "description": "Number of columns the widget spans",
+              "example": 12
+            },
+            "rows": {
+              "type": "number",
+              "description": "Number of height the widget spans",
+              "example": 1
+            },
+            "type": {
+              "type": "string",
+              "description": "Type of widget to display",
+              "example": "messages"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "cols",
+            "rows",
+            "type"
+          ]
+        },
+        "UpdateDashboardLayoutRequestDto": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "string",
+              "description": "User ID for user-specific layouts (optional, set to null to remove)",
+              "example": "069024a7-e73d-4e9a-91c0-108a9caac3dc",
+              "nullable": true
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the dashboard layout",
+              "example": "My Custom Dashboard"
+            },
+            "layout": {
+              "type": "array",
+              "description": "Order of layout categories to display",
+              "example": [
+                "meaLayout",
+                "rmmLayout",
+                "msaLayout",
+                "mesLayout",
+                "mbLayout"
+              ],
+              "items": {
+                "type": "string",
+                "enum": [
+                  "meaLayout",
+                  "rmmLayout",
+                  "msaLayout",
+                  "mesLayout",
+                  "mbLayout"
+                ]
+              }
+            },
+            "meaLayout": {
+              "description": "Managed Email Archiving layout items",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/UpdateLayoutItemDto"
+              }
+            },
+            "rmmLayout": {
+              "description": "Remote Monitoring & Management layout items",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/UpdateLayoutItemDto"
+              }
+            },
+            "msaLayout": {
+              "description": "Managed Security Audit layout items",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/UpdateLayoutItemDto"
+              }
+            },
+            "mesLayout": {
+              "description": "Managed Endpoint Security layout items",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/UpdateLayoutItemDto"
+              }
+            },
+            "mbLayout": {
+              "description": "Managed Backup layout items",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/UpdateLayoutItemDto"
+              }
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "dashboard",
+                "customer"
+              ],
+              "description": "Type of dashboard layout",
+              "example": "dashboard"
+            }
+          }
+        },
+        "DashboardLayoutPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "description": "Array of dashboard layouts",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/DashboardLayoutResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "CreateMessageRequestDto": {
+          "type": "object",
+          "properties": {
+            "messageDe": {
+              "type": "string",
+              "description": "The content of the message in german",
+              "example": "Ihr Bestellung wurde bestätigt"
+            },
+            "messageEn": {
+              "type": "string",
+              "description": "The content of the message in english",
+              "example": "Your order has been confirmed"
+            },
+            "subject": {
+              "type": "string",
+              "description": "The subject line of the message",
+              "example": "Order Confirmation"
+            },
+            "link": {
+              "type": "string",
+              "description": "Optional URL link associated with the message",
+              "example": "https://example.com/order/123"
+            },
+            "tags": {
+              "type": "array",
+              "description": "Tags for categorizing the message (e.g., products, breaking news)",
+              "example": [
+                "managed_backup_acronis",
+                "breaking_news"
+              ],
+              "items": {
+                "type": "string",
+                "enum": [
+                  "breaking_news",
+                  "maintenance",
+                  "security_alert",
+                  "general",
+                  "good_to_know",
+                  "monthly_newsletter",
+                  "technical_update",
+                  "marketplace",
+                  "dashboard",
+                  "community",
+                  "managed_backup_acronis",
+                  "managed_cloud_to_cloud_cloudally",
+                  "managed_endpoint_security_eset",
+                  "managed_email_archiving_mailstore",
+                  "managed_vdi_oneclick",
+                  "managed_rmm_nsight",
+                  "managed_power_apc",
+                  "managed_firewall_anqa",
+                  "managed_security_audit_lywand",
+                  "managed_isa_plus_flat",
+                  "part_managed_security_audit_lywand",
+                  "part_managed_eset",
+                  "part_managed_sec_auditor",
+                  "device_as_a_service"
+                ]
+              }
+            },
+            "target": {
+              "description": "The target of the message. For USER_BY_PROVIDER_ID target type, use numeric provider IDs. For other target types, use appropriate string identifiers (UUIDs)",
+              "example": "41362dad-f05c-473f-a19d-739c8250cf8f",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "number"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "targetType": {
+              "type": "string",
+              "description": "The target type of the message",
+              "enum": [
+                "tenant",
+                "user",
+                "user_by_provider_id",
+                "agreement",
+                "all_tenants",
+                "all_users"
+              ],
+              "example": "tenant"
+            }
+          },
+          "required": [
+            "messageDe",
+            "subject",
+            "target",
+            "targetType"
+          ]
+        },
+        "NotFoundException": {
+          "type": "object",
+          "properties": {}
+        },
+        "MessageResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "message": {
+              "type": "string",
+              "description": "The content of the message",
+              "example": "Your order has been confirmed"
+            },
+            "subject": {
+              "type": "string",
+              "description": "The subject line of the message",
+              "example": "Order Confirmation"
+            },
+            "link": {
+              "type": "string",
+              "description": "Optional URL link associated with the message",
+              "example": "https://example.com/order/123"
+            },
+            "tags": {
+              "type": "array",
+              "description": "Tags for categorizing the message",
+              "example": [
+                "managed_backup_acronis",
+                "breaking_news"
+              ],
+              "items": {
+                "type": "string",
+                "enum": [
+                  "breaking_news",
+                  "maintenance",
+                  "security_alert",
+                  "general",
+                  "good_to_know",
+                  "monthly_newsletter",
+                  "technical_update",
+                  "marketplace",
+                  "dashboard",
+                  "community",
+                  "managed_backup_acronis",
+                  "managed_cloud_to_cloud_cloudally",
+                  "managed_endpoint_security_eset",
+                  "managed_email_archiving_mailstore",
+                  "managed_vdi_oneclick",
+                  "managed_rmm_nsight",
+                  "managed_power_apc",
+                  "managed_firewall_anqa",
+                  "managed_security_audit_lywand",
+                  "managed_isa_plus_flat",
+                  "part_managed_security_audit_lywand",
+                  "part_managed_eset",
+                  "part_managed_sec_auditor",
+                  "device_as_a_service"
+                ]
+              }
+            },
+            "markedAsRead": {
+              "type": "boolean",
+              "description": "Indicates whether the message has been read by the recipient",
+              "example": false
+            },
+            "starred": {
+              "type": "boolean",
+              "description": "Indicates whether the message is marked as starred",
+              "example": false
+            },
+            "important": {
+              "type": "boolean",
+              "description": "Indicates whether the message is marked as important",
+              "example": false
+            },
+            "targetType": {
+              "type": "string",
+              "description": "The type of message",
+              "enum": [
+                "tenant",
+                "user"
+              ],
+              "example": "tenant"
+            },
+            "deleted": {
+              "type": "boolean",
+              "description": "Indicates whether the message is marked as deleted",
+              "example": false
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "message",
+            "link",
+            "tags",
+            "markedAsRead",
+            "starred",
+            "important",
+            "targetType",
+            "deleted"
+          ]
+        },
+        "MessageOptionsResponseDto": {
+          "type": "object",
+          "properties": {
+            "tags": {
+              "type": "array",
+              "description": "Available tags",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "breaking_news",
+                  "maintenance",
+                  "security_alert",
+                  "general",
+                  "good_to_know",
+                  "monthly_newsletter",
+                  "technical_update",
+                  "marketplace",
+                  "dashboard",
+                  "community",
+                  "managed_backup_acronis",
+                  "managed_cloud_to_cloud_cloudally",
+                  "managed_endpoint_security_eset",
+                  "managed_email_archiving_mailstore",
+                  "managed_vdi_oneclick",
+                  "managed_rmm_nsight",
+                  "managed_power_apc",
+                  "managed_firewall_anqa",
+                  "managed_security_audit_lywand",
+                  "managed_isa_plus_flat",
+                  "part_managed_security_audit_lywand",
+                  "part_managed_eset",
+                  "part_managed_sec_auditor",
+                  "device_as_a_service"
+                ]
+              }
+            }
+          },
+          "required": [
+            "tags"
+          ]
+        },
+        "FindMessageTargetsRequestDto": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "description": "The target of the message",
+              "example": "f426352a-cfce-410c-8c39-91a598e7bddc",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            },
+            "targetType": {
+              "type": "string",
+              "description": "The target type of the message",
+              "enum": [
+                "tenant",
+                "user",
+                "user_by_provider_id",
+                "agreement",
+                "all_tenants",
+                "all_users"
+              ],
+              "example": "tenant"
+            },
+            "sendToAllUsersOfTenants": {
+              "type": "boolean",
+              "description": "Send message to all users of tenants (Has been disabled)",
+              "example": false,
+              "deprecated": true
+            }
+          },
+          "required": [
+            "target",
+            "targetType"
+          ]
+        },
+        "SetAllReadMessageRequestDto": {
+          "type": "object",
+          "properties": {
+            "messageTargetType": {
+              "type": "string",
+              "description": "Message target type",
+              "enum": [
+                "tenant",
+                "user"
+              ],
+              "example": "tenant"
+            }
+          }
+        },
+        "MessagePaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/MessageResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "UpdateMessageBulkRequestDto": {
+          "type": "object",
+          "properties": {
+            "ids": {
+              "description": "List of message ids",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "markedAsRead": {
+              "type": "boolean",
+              "description": "Mark message as read"
+            },
+            "starred": {
+              "type": "boolean",
+              "description": "Stares the message"
+            },
+            "important": {
+              "type": "boolean",
+              "description": "Marks the message as important"
+            },
+            "deleted": {
+              "type": "boolean",
+              "description": "Marks the message as deleted"
+            }
+          },
+          "required": [
+            "ids"
+          ]
+        },
+        "UpdateMessageRequestDto": {
+          "type": "object",
+          "properties": {
+            "markedAsRead": {
+              "type": "boolean",
+              "description": "Mark message as read"
+            },
+            "starred": {
+              "type": "boolean",
+              "description": "Stares the message"
+            },
+            "important": {
+              "type": "boolean",
+              "description": "Marks the message as important"
+            },
+            "deleted": {
+              "type": "boolean",
+              "description": "Marks the message as deleted"
+            }
+          }
+        },
+        "CreateMessageTemplateRequestDto": {
+          "type": "object",
+          "properties": {
+            "messageDe": {
+              "type": "string",
+              "description": "The content of the message in german",
+              "example": "Deine Bestellung wurde bestätigt"
+            },
+            "messageEn": {
+              "type": "string",
+              "description": "The content of the message in english",
+              "example": "Your order has been confirmed"
+            },
+            "subject": {
+              "type": "string",
+              "description": "The subject line of the message",
+              "example": "Important Update"
+            },
+            "link": {
+              "type": "string",
+              "description": "Optional URL link associated with the message",
+              "example": "https://example.com/order/123"
+            },
+            "tags": {
+              "type": "array",
+              "description": "Tags for categorizing the message (e.g., products, breaking news)",
+              "example": [
+                "managed_backup_acronis",
+                "breaking_news"
+              ],
+              "items": {
+                "type": "string",
+                "enum": [
+                  "breaking_news",
+                  "maintenance",
+                  "security_alert",
+                  "general",
+                  "good_to_know",
+                  "monthly_newsletter",
+                  "technical_update",
+                  "marketplace",
+                  "dashboard",
+                  "community",
+                  "managed_backup_acronis",
+                  "managed_cloud_to_cloud_cloudally",
+                  "managed_endpoint_security_eset",
+                  "managed_email_archiving_mailstore",
+                  "managed_vdi_oneclick",
+                  "managed_rmm_nsight",
+                  "managed_power_apc",
+                  "managed_firewall_anqa",
+                  "managed_security_audit_lywand",
+                  "managed_isa_plus_flat",
+                  "part_managed_security_audit_lywand",
+                  "part_managed_eset",
+                  "part_managed_sec_auditor",
+                  "device_as_a_service"
+                ]
+              }
+            },
+            "target": {
+              "description": "The target of the message",
+              "example": "b51c7a69-4e53-44f6-aece-95179977b046",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            },
+            "targetType": {
+              "type": "string",
+              "description": "The target type of the message",
+              "enum": [
+                "tenant",
+                "user",
+                "user_by_provider_id",
+                "agreement",
+                "all_tenants",
+                "all_users"
+              ],
+              "example": "tenant"
+            },
+            "scheduledAt": {
+              "type": "string",
+              "description": "The scheduled date and time for sending the message",
+              "example": "2026-12-01T10:00:00Z"
+            }
+          },
+          "required": [
+            "messageDe",
+            "subject",
+            "target",
+            "targetType"
+          ]
+        },
+        "MessageTemplateResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "message": {
+              "type": "string",
+              "description": "The content of the message template",
+              "example": "Welcome to our platform!"
+            },
+            "messageEn": {
+              "type": "string",
+              "description": "The English version of the message template",
+              "example": "Welcome to our platform!"
+            },
+            "subject": {
+              "type": "string",
+              "description": "The subject line of the message",
+              "example": "Important Update"
+            },
+            "link": {
+              "type": "string",
+              "description": "Optional URL link associated with the message",
+              "example": "https://example.com/welcome"
+            },
+            "tags": {
+              "type": "array",
+              "description": "Tags for categorizing the message",
+              "example": [
+                "breaking_news",
+                "maintenance"
+              ],
+              "items": {
+                "type": "string",
+                "enum": [
+                  "breaking_news",
+                  "maintenance",
+                  "security_alert",
+                  "general",
+                  "good_to_know",
+                  "monthly_newsletter",
+                  "technical_update",
+                  "marketplace",
+                  "dashboard",
+                  "community",
+                  "managed_backup_acronis",
+                  "managed_cloud_to_cloud_cloudally",
+                  "managed_endpoint_security_eset",
+                  "managed_email_archiving_mailstore",
+                  "managed_vdi_oneclick",
+                  "managed_rmm_nsight",
+                  "managed_power_apc",
+                  "managed_firewall_anqa",
+                  "managed_security_audit_lywand",
+                  "managed_isa_plus_flat",
+                  "part_managed_security_audit_lywand",
+                  "part_managed_eset",
+                  "part_managed_sec_auditor",
+                  "device_as_a_service"
+                ]
+              }
+            },
+            "target": {
+              "description": "The target of the message template",
+              "example": [
+                "791ecf87-331c-40f8-9f28-a57c7588a95d"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "targetType": {
+              "type": "string",
+              "description": "The type of target for message creation",
+              "enum": [
+                "tenant",
+                "user",
+                "user_by_provider_id",
+                "agreement",
+                "all_tenants",
+                "all_users"
+              ],
+              "example": "all_users"
+            },
+            "scheduledAt": {
+              "format": "date-time",
+              "type": "string",
+              "description": "The scheduled date and time for sending the message"
+            },
+            "isSent": {
+              "type": "boolean",
+              "description": "Indicates whether the template has been sent",
+              "example": false
+            },
+            "markedAsRead": {
+              "type": "boolean",
+              "description": "Indicates whether all messages from this template have been marked as read",
+              "example": false
+            },
+            "deletedAt": {
+              "format": "date-time",
+              "type": "string",
+              "description": "Date and time of deletion"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "message",
+            "subject",
+            "tags",
+            "target",
+            "targetType",
+            "isSent",
+            "markedAsRead"
+          ]
+        },
+        "UpdateMessageTemplateRequestDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name identifier of the message template",
+              "example": "Welcome Message Template"
+            },
+            "messageDe": {
+              "type": "string",
+              "description": "The content of the message in german",
+              "example": "Deine Bestellung wurde bestätigt"
+            },
+            "messageEn": {
+              "type": "string",
+              "description": "The content of the message in english",
+              "example": "Your order has been confirmed"
+            },
+            "subject": {
+              "type": "string",
+              "description": "The subject line of the message",
+              "example": "Important Update"
+            },
+            "link": {
+              "type": "string",
+              "description": "Optional URL link associated with the message",
+              "example": "https://example.com/order/123"
+            },
+            "tags": {
+              "type": "array",
+              "description": "Tags for categorizing the message (e.g., products, breaking news)",
+              "example": [
+                "managed_backup_acronis",
+                "breaking_news"
+              ],
+              "items": {
+                "type": "string",
+                "enum": [
+                  "breaking_news",
+                  "maintenance",
+                  "security_alert",
+                  "general",
+                  "good_to_know",
+                  "monthly_newsletter",
+                  "technical_update",
+                  "marketplace",
+                  "dashboard",
+                  "community",
+                  "managed_backup_acronis",
+                  "managed_cloud_to_cloud_cloudally",
+                  "managed_endpoint_security_eset",
+                  "managed_email_archiving_mailstore",
+                  "managed_vdi_oneclick",
+                  "managed_rmm_nsight",
+                  "managed_power_apc",
+                  "managed_firewall_anqa",
+                  "managed_security_audit_lywand",
+                  "managed_isa_plus_flat",
+                  "part_managed_security_audit_lywand",
+                  "part_managed_eset",
+                  "part_managed_sec_auditor",
+                  "device_as_a_service"
+                ]
+              }
+            },
+            "target": {
+              "description": "The target of the message",
+              "example": "4dadd5c3-1b62-43a7-9e2a-8c7ae7909877",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            },
+            "targetType": {
+              "type": "string",
+              "description": "The target type of the message",
+              "enum": [
+                "tenant",
+                "user",
+                "user_by_provider_id",
+                "agreement",
+                "all_tenants",
+                "all_users"
+              ],
+              "example": "tenant"
+            },
+            "scheduledAt": {
+              "type": "string",
+              "description": "The scheduled date and time for sending the message",
+              "example": "2026-12-01T10:00:00Z"
+            }
+          }
+        },
+        "MessageTemplatePaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/MessageTemplateResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "CreateJournalingMailboxRequestDto": {
+          "type": "object",
+          "properties": {
+            "instanceId": {
+              "type": "string",
+              "description": "Instance ID",
+              "example": "98657588-25db-476b-896d-f654b4d29e8e"
+            }
+          },
+          "required": [
+            "instanceId"
+          ]
+        },
+        "JournalingMailboxResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "customerName": {
+              "type": "string",
+              "description": "Customer name",
+              "example": "Customer Name"
+            },
+            "instanceId": {
+              "type": "string",
+              "description": "Instance ID",
+              "example": "59733ab3-0a8c-4c51-8c22-1ed3c522144b"
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "Tenant ID",
+              "example": "836c90f2-6f63-4cac-af62-96c17cedd65d"
+            },
+            "domain": {
+              "type": "string",
+              "description": "Domain of the journaling mailbox",
+              "example": "example.com"
+            },
+            "quota": {
+              "type": "number",
+              "description": "Quota of the journaling mailbox",
+              "example": 1024
+            },
+            "quotaUsed": {
+              "type": "number",
+              "description": "Quota used of the journaling mailbox",
+              "example": 512
+            },
+            "email": {
+              "type": "string",
+              "description": "E-Mail address of the mailbox",
+              "example": "mbx-59733ab3-0a8c-4c51-8c22-1ed3c522144b@email-archive.cloud"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "instanceId",
+            "tenantId",
+            "domain",
+            "quota",
+            "quotaUsed",
+            "email"
+          ]
+        },
+        "JournalingMailboxPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/JournalingMailboxResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "MailstoreConfigurationPlacementRuleDto": {
+          "type": "object",
+          "properties": {
+            "tenantId": {
+              "type": "string",
+              "description": "Tenant ID",
+              "example": "12345678-1234-1234-1234-123456789012"
+            },
+            "host": {
+              "type": "string",
+              "description": "Host",
+              "example": "mailstore-ih01"
+            }
+          },
+          "required": [
+            "tenantId",
+            "host"
+          ]
+        },
+        "MailstoreConfigurationResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "defaultHost": {
+              "type": "string",
+              "description": "Default instance host",
+              "example": "mailstore-ih01"
+            },
+            "baseDirectory": {
+              "type": "string",
+              "description": "Default base directory",
+              "example": "C:\\Mailstore"
+            },
+            "attachmentIndex": {
+              "type": "string",
+              "description": "Attachment index",
+              "example": "doc docx xls xlsx pdf txt htm html jpg png zip"
+            },
+            "smtpHostname": {
+              "type": "string",
+              "description": "SMTP hostname",
+              "example": "smtp.gmail.com"
+            },
+            "smtpPort": {
+              "type": "number",
+              "description": "SMTP port",
+              "example": 587
+            },
+            "smtpProtocol": {
+              "type": "string",
+              "description": "SMTP protocol",
+              "example": "SMTP-TLS"
+            },
+            "smtpIgnoreSslPolicyErrors": {
+              "type": "boolean",
+              "description": "SMTP ignore SSL policy errors",
+              "example": false
+            },
+            "smtpAuthenticationRequired": {
+              "type": "boolean",
+              "description": "SMTP authentication required",
+              "example": true
+            },
+            "smtpUsername": {
+              "type": "string",
+              "description": "SMTP username",
+              "example": "username"
+            },
+            "smtpFromDisplayName": {
+              "type": "string",
+              "description": "SMTP from display name",
+              "example": "SMS Mail-Archiv"
+            },
+            "smtpFromEmailAddress": {
+              "type": "string",
+              "description": "SMTP from email address",
+              "example": "sms@synaxon.de"
+            },
+            "smtpRecipientEmailAddress": {
+              "type": "string",
+              "description": "SMTP recipient email address",
+              "example": "sms@synaxon.de"
+            },
+            "placementRules": {
+              "description": "Placement rules",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/MailstoreConfigurationPlacementRuleDto"
+              }
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "defaultHost",
+            "baseDirectory",
+            "attachmentIndex",
+            "smtpHostname",
+            "smtpPort",
+            "smtpProtocol",
+            "smtpIgnoreSslPolicyErrors",
+            "smtpAuthenticationRequired",
+            "smtpUsername",
+            "smtpFromDisplayName",
+            "smtpFromEmailAddress",
+            "smtpRecipientEmailAddress",
+            "placementRules"
+          ]
+        },
+        "MailstoreConfigurationOptionsResponseDto": {
+          "type": "object",
+          "properties": {
+            "hosts": {
+              "description": "List of available hosts",
+              "example": [
+                "mailstore-ih01",
+                "mailstore-ih02"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "hosts"
+          ]
+        },
+        "UpdateMailstoreConfigurationRequestDto": {
+          "type": "object",
+          "properties": {
+            "defaultHost": {
+              "type": "string",
+              "description": "Default instance host",
+              "example": "fsn-ih22.sys-mailstore.local"
+            },
+            "baseDirectory": {
+              "type": "string",
+              "description": "Default base directory",
+              "example": "C:\\Mailstore"
+            },
+            "attachmentIndex": {
+              "type": "string",
+              "description": "Attachment index",
+              "example": "doc docx xls xlsx pdf txt htm html jpg png zip"
+            },
+            "smtpHostname": {
+              "type": "string",
+              "description": "SMTP hostname",
+              "example": "smtp.gmail.com"
+            },
+            "smtpPort": {
+              "type": "number",
+              "description": "SMTP port",
+              "example": 587
+            },
+            "smtpProtocol": {
+              "type": "string",
+              "description": "SMTP protocol",
+              "example": "SMTP-TLS"
+            },
+            "smtpIgnoreSslPolicyErrors": {
+              "type": "boolean",
+              "description": "SMTP ignore SSL policy errors",
+              "example": false
+            },
+            "smtpAuthenticationRequired": {
+              "type": "boolean",
+              "description": "SMTP authentication required",
+              "example": true
+            },
+            "smtpUsername": {
+              "type": "string",
+              "description": "SMTP username",
+              "example": "username"
+            },
+            "smtpPassword": {
+              "type": "string",
+              "description": "SMTP password",
+              "example": "password"
+            },
+            "smtpFromDisplayName": {
+              "type": "string",
+              "description": "SMTP from display name",
+              "example": "SMS Mail-Archiv"
+            },
+            "smtpFromEmailAddress": {
+              "type": "string",
+              "description": "SMTP from email address",
+              "example": "sms@synaxon.de"
+            },
+            "smtpRecipientEmailAddress": {
+              "type": "string",
+              "description": "SMTP recipient email address",
+              "example": "sms@synaxon.de"
+            },
+            "placementRules": {
+              "description": "Placement rules",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/MailstoreConfigurationPlacementRuleDto"
+              }
+            }
+          },
+          "required": [
+            "defaultHost",
+            "baseDirectory",
+            "attachmentIndex",
+            "smtpHostname",
+            "smtpPort",
+            "smtpProtocol",
+            "smtpIgnoreSslPolicyErrors",
+            "smtpAuthenticationRequired",
+            "smtpUsername",
+            "smtpFromDisplayName",
+            "smtpFromEmailAddress",
+            "smtpRecipientEmailAddress",
+            "placementRules"
+          ]
+        },
+        "CreateMailstoreInstanceRequestDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "description": "Customer ID",
+              "example": 1
+            },
+            "alias": {
+              "type": "string",
+              "description": "Instance alias",
+              "example": "meier",
+              "minLength": 3,
+              "maxLength": 32
+            },
+            "displayName": {
+              "type": "string",
+              "description": "Instance display name",
+              "example": "Test GmbH & Co. KG",
+              "minLength": 3,
+              "maxLength": 64
+            },
+            "password": {
+              "type": "string",
+              "description": "Instance admin password",
+              "example": "?P8[R9AtyfK8^10|"
+            }
+          },
+          "required": [
+            "displayName",
+            "password"
+          ]
+        },
+        "MailstoreArchiveResponseDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Archive name",
+              "example": "Example Company"
+            },
+            "size": {
+              "type": "number",
+              "description": "Archive size",
+              "example": 926992859
+            },
+            "messageCount": {
+              "type": "number",
+              "description": "Number of messages in the archive",
+              "example": 5323
+            }
+          },
+          "required": [
+            "name",
+            "size",
+            "messageCount"
+          ]
+        },
+        "MailstoreInstanceResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "instanceId": {
+              "type": "string",
+              "description": "Instance ID",
+              "example": "41835116-1510-49c6-b763-3873c98e8ffe"
+            },
+            "customerId": {
+              "type": "number",
+              "description": "Customer ID",
+              "example": "123"
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "Tenant ID",
+              "example": "0deb18bd-a0db-441c-b2b1-8faa2f7883f8"
+            },
+            "name": {
+              "type": "string",
+              "description": "Instance name",
+              "example": "Example Company"
+            },
+            "alias": {
+              "type": "string",
+              "description": "Instance alias",
+              "example": "Example Company"
+            },
+            "instanceHost": {
+              "type": "string",
+              "description": "Instance host",
+              "example": "fsn-ih22.sys-mailstore.local"
+            },
+            "status": {
+              "type": "string",
+              "description": "Instance status",
+              "example": "running"
+            },
+            "archiveCount": {
+              "type": "number",
+              "description": "Number of mailboxes in the instance",
+              "example": 10
+            },
+            "messageCount": {
+              "type": "number",
+              "description": "Number of messages in the instance",
+              "example": 150331
+            },
+            "sizeCount": {
+              "type": "number",
+              "description": "Size of the instance",
+              "example": 83653753957
+            },
+            "additionalUsers": {
+              "type": "number",
+              "description": "Number of additional users in the instance",
+              "example": 1
+            },
+            "additionalStorage": {
+              "type": "number",
+              "description": "Number of additional storage in the instance",
+              "example": 1
+            },
+            "archives": {
+              "description": "Archives of the instance",
+              "example": [
+                {
+                  "name": "Example Company",
+                  "size": 926992859,
+                  "messageCount": 5323
+                }
+              ],
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/MailstoreArchiveResponseDto"
+              }
+            },
+            "journalingMailbox": {
+              "description": "Journaling mailbox of the instance",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/JournalingMailboxResponseDto"
+                }
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "instanceId",
+            "tenantId",
+            "name",
+            "instanceHost",
+            "status",
+            "archiveCount",
+            "messageCount",
+            "sizeCount",
+            "additionalUsers",
+            "additionalStorage"
+          ]
+        },
+        "MailstoreInstancePaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/MailstoreInstanceResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "MailstoreInstanceMetrics": {
+          "type": "object",
+          "properties": {
+            "archiveCount": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "messageCount": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "sizeCount": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "additionalUsers": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "additionalStorage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            }
+          },
+          "required": [
+            "archiveCount",
+            "messageCount",
+            "sizeCount",
+            "additionalUsers",
+            "additionalStorage"
+          ]
+        },
+        "MailstoreInstanceMetricsResponseDto": {
+          "type": "object",
+          "properties": {
+            "currTimestamp": {
+              "format": "date-time",
+              "type": "string",
+              "example": "2024-10-24T09:30:00.000Z",
+              "description": "Timestamp when current metrics were generated"
+            },
+            "prevTimestamp": {
+              "format": "date-time",
+              "type": "string",
+              "example": "2024-10-23T00:00:00.000Z",
+              "description": "Timestamp of previous metrics for comparison",
+              "nullable": true
+            },
+            "values": {
+              "description": "Metrics values with current and previous comparison",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/MailstoreInstanceMetrics"
+                }
+              ]
+            }
+          },
+          "required": [
+            "currTimestamp",
+            "prevTimestamp",
+            "values"
+          ]
+        },
+        "MailstorePartnerMetrics": {
+          "type": "object",
+          "properties": {
+            "instanceCount": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "archiveCount": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "messageCount": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "sizeCount": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "additionalUsers": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "additionalStorage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            }
+          },
+          "required": [
+            "instanceCount",
+            "archiveCount",
+            "messageCount",
+            "sizeCount",
+            "additionalUsers",
+            "additionalStorage"
+          ]
+        },
+        "MailstorePartnerMetricsResponseDto": {
+          "type": "object",
+          "properties": {
+            "currTimestamp": {
+              "format": "date-time",
+              "type": "string",
+              "example": "2024-10-24T09:30:00.000Z",
+              "description": "Timestamp when current metrics were generated"
+            },
+            "prevTimestamp": {
+              "format": "date-time",
+              "type": "string",
+              "example": "2024-10-23T00:00:00.000Z",
+              "description": "Timestamp of previous metrics for comparison",
+              "nullable": true
+            },
+            "values": {
+              "description": "Metrics values with current and previous comparison",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/MailstorePartnerMetrics"
+                }
+              ]
+            }
+          },
+          "required": [
+            "currTimestamp",
+            "prevTimestamp",
+            "values"
+          ]
+        },
+        "UpdateMailstoreInstanceRequestDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "description": "Customer ID of customer file",
+              "nullable": true
+            },
+            "displayName": {
+              "type": "string",
+              "description": "Customer name",
+              "example": "Test GmbH & Co. KG"
+            },
+            "alias": {
+              "type": "string",
+              "description": "Alias of mailstore instance",
+              "example": "meier",
+              "nullable": true
+            },
+            "password": {
+              "type": "string",
+              "description": "Instance admin password",
+              "example": "4y=_mWC5WW7WoUN="
+            }
+          }
+        },
+        "MailstoreArchivePaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/MailstoreArchiveResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "MailstoreProfileResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "instanceId": {
+              "type": "string",
+              "description": "Mailstore instance ID",
+              "example": "41835116-1510-49c6-b763-3873c98e8ffe"
+            },
+            "profileId": {
+              "type": "number",
+              "description": "Mailstore profile ID",
+              "example": 77
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "Tenant ID",
+              "example": "0deb18bd-a0db-441c-b2b1-8faa2f7883f8"
+            },
+            "name": {
+              "type": "string",
+              "description": "Profile display name",
+              "example": "Journaling Profile"
+            },
+            "lastStatus": {
+              "type": "string",
+              "description": "Last known status of the profile",
+              "example": "succeeded",
+              "enum": [
+                "succeeded",
+                "failed",
+                "cancelled",
+                "completedWithErrors",
+                "completedWithWarnings"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "instanceId",
+            "profileId",
+            "tenantId",
+            "name",
+            "lastStatus"
+          ]
+        },
+        "MailstoreProfilePaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/MailstoreProfileResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "MailstoreProfileResultResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "startedAt": {
+              "format": "date-time",
+              "type": "string",
+              "description": "When the archiving run started",
+              "example": "2025-09-28T12:34:56.000Z"
+            },
+            "completedAt": {
+              "format": "date-time",
+              "type": "string",
+              "description": "When the archiving run completed",
+              "example": "2025-09-28T12:44:56.000Z"
+            },
+            "status": {
+              "type": "string",
+              "description": "Result status of the run",
+              "example": "succeeded",
+              "enum": [
+                "succeeded",
+                "failed",
+                "cancelled",
+                "completedWithErrors",
+                "completedWithWarnings"
+              ]
+            },
+            "messagesArchived": {
+              "type": "number",
+              "description": "Number of messages archived during the run",
+              "example": 1234
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "startedAt",
+            "status",
+            "messagesArchived"
+          ]
+        },
+        "MailstoreProfileResultPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/MailstoreProfileResultResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "MailstoreStorageDto": {
+          "type": "object",
+          "properties": {
+            "totalArchives": {
+              "type": "number",
+              "example": 25,
+              "description": "Total number of archives"
+            },
+            "totalMessages": {
+              "type": "number",
+              "example": 150000,
+              "description": "Total number of archived messages"
+            },
+            "totalSize": {
+              "type": "number",
+              "example": 10737418240,
+              "description": "Total storage size in bytes"
+            },
+            "totalAdditionalUsers": {
+              "type": "number",
+              "example": 5,
+              "description": "Total number of additional users"
+            },
+            "totalAdditionalStorage": {
+              "type": "number",
+              "example": 2147483648,
+              "description": "Total additional storage in bytes"
+            }
+          },
+          "required": [
+            "totalArchives",
+            "totalMessages",
+            "totalSize",
+            "totalAdditionalUsers",
+            "totalAdditionalStorage"
+          ]
+        },
+        "MailstoreArchiveDto": {
+          "type": "object",
+          "properties": {
+            "instanceName": {
+              "type": "string",
+              "example": "mailstore-server-01",
+              "description": "Instance name"
+            },
+            "archiveName": {
+              "type": "string",
+              "example": "john.doe@example.com",
+              "description": "Archive name"
+            }
+          },
+          "required": [
+            "instanceName",
+            "archiveName"
+          ]
+        },
+        "MailstoreErrorDto": {
+          "type": "object",
+          "properties": {
+            "instanceId": {
+              "type": "string",
+              "example": "inst-12345",
+              "description": "Instance ID"
+            },
+            "displayName": {
+              "type": "string",
+              "example": "Mailstore Server 01",
+              "description": "Display name"
+            },
+            "status": {
+              "type": "string",
+              "example": "error",
+              "description": "Error status"
+            }
+          },
+          "required": [
+            "instanceId",
+            "displayName",
+            "status"
+          ]
+        },
+        "MailstoreScoreDto": {
+          "type": "object",
+          "properties": {
+            "totalInstances": {
+              "type": "number",
+              "example": 10,
+              "description": "Total number of instances"
+            },
+            "instancesWithErrors": {
+              "type": "number",
+              "example": 1,
+              "description": "Number of instances with errors"
+            },
+            "score": {
+              "type": "number",
+              "example": 0.9,
+              "description": "Score as a decimal (0-1), representing the percentage of instances without errors"
+            }
+          },
+          "required": [
+            "totalInstances",
+            "instancesWithErrors",
+            "score"
+          ]
+        },
+        "MailstoreCustomerCountDto": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "number",
+              "example": 15,
+              "description": "Number of Mailstore instances for this tenant"
+            }
+          },
+          "required": [
+            "count"
+          ]
+        },
+        "MailstoreCustomerStatsItemDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "example": 12345,
+              "description": "Customer ID (null if not linked)",
+              "nullable": true
+            },
+            "customerName": {
+              "type": "string",
+              "example": "Acme Corp",
+              "description": "Customer name"
+            },
+            "total": {
+              "type": "number",
+              "example": 3,
+              "description": "Total number of instances for this customer"
+            },
+            "errors": {
+              "type": "number",
+              "example": 1,
+              "description": "Number of instances with errors"
+            }
+          },
+          "required": [
+            "customerId",
+            "customerName",
+            "total",
+            "errors"
+          ]
+        },
+        "MailstoreReportDataResponseDto": {
+          "type": "object",
+          "properties": {
+            "storage": {
+              "description": "Storage statistics",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/MailstoreStorageDto"
+                }
+              ]
+            },
+            "archiveList": {
+              "description": "List of archives",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/MailstoreArchiveDto"
+              }
+            },
+            "failuresList": {
+              "description": "List of instances with errors",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/MailstoreErrorDto"
+              }
+            },
+            "score": {
+              "description": "Score calculation details",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/MailstoreScoreDto"
+                }
+              ]
+            },
+            "customerCount": {
+              "description": "Customer count for partner reports",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/MailstoreCustomerCountDto"
+                }
+              ]
+            },
+            "customerStats": {
+              "description": "Customer statistics for partner reports",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/MailstoreCustomerStatsItemDto"
+              }
+            }
+          }
+        },
+        "VerifyMailstoreStoreRequestDto": {
+          "type": "object",
+          "properties": {
+            "instanceId": {
+              "type": "string",
+              "description": "Instance ID",
+              "example": "7844cdaf-0ebe-44e8-90d5-9a9671529853"
+            },
+            "storeId": {
+              "type": "string",
+              "description": "Store ID",
+              "example": "2"
+            },
+            "includeIndexes": {
+              "type": "boolean",
+              "description": "Include indexes",
+              "example": false
+            }
+          },
+          "required": [
+            "instanceId",
+            "storeId",
+            "includeIndexes"
+          ]
+        },
+        "ScheduleResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the schedule",
+              "example": "IndexNSightFailedChecks"
+            },
+            "timeZone": {
+              "type": "string",
+              "description": "The time zone of the schedule",
+              "example": "UTC"
+            },
+            "disabled": {
+              "type": "boolean",
+              "description": "The disabled status of the schedule",
+              "example": false
+            },
+            "cronExpression": {
+              "type": "string",
+              "description": "The cron expression of the schedule",
+              "example": "*/5 * * * *"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "disabled",
+            "cronExpression"
+          ]
+        },
+        "CreateScheduleRequestDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Schedule name",
+              "example": "IndexNSightFailingChecks"
+            },
+            "timeZone": {
+              "type": "string",
+              "description": "Schedule time zone",
+              "example": "Europe/Berlin"
+            },
+            "disabled": {
+              "type": "boolean",
+              "description": "Schedule disabled",
+              "example": false
+            },
+            "cronExpression": {
+              "type": "string",
+              "description": "Schedule cron expression",
+              "example": "*/5 * * * *"
+            }
+          },
+          "required": [
+            "name",
+            "disabled",
+            "cronExpression"
+          ]
+        },
+        "UpdateScheduleRequestDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Schedule name",
+              "example": "IndexNSightFailingChecks"
+            },
+            "timeZone": {
+              "type": "string",
+              "description": "Schedule time zone",
+              "example": "Europe/Berlin",
+              "nullable": true
+            },
+            "disabled": {
+              "type": "boolean",
+              "description": "Schedule disabled",
+              "example": false
+            },
+            "cronExpression": {
+              "type": "string",
+              "description": "Schedule cron expression",
+              "example": "*/5 * * * *"
+            }
+          }
+        },
+        "SyncEsetProtectLicensesRequestDto": {
+          "type": "object",
+          "properties": {
+            "region": {
+              "type": "string",
+              "description": "ESET PROTECT region",
+              "example": "de"
+            },
+            "force": {
+              "type": "boolean",
+              "description": "Force sync",
+              "example": false
+            }
+          },
+          "required": [
+            "region"
+          ]
+        },
+        "CreateEsetPartnerRequestDto": {
+          "type": "object",
+          "properties": {
+            "tenantId": {
+              "type": "string",
+              "description": "Tenant ID",
+              "example": "fd476314-4870-45f7-8ed9-bf432f341d49"
+            },
+            "email": {
+              "type": "string",
+              "description": "Partner email",
+              "example": "partner@example.com"
+            },
+            "managementType": {
+              "type": "string",
+              "description": "Management type (defaults to fullManaged)",
+              "enum": [
+                "fullManaged",
+                "partManaged"
+              ],
+              "example": "fullManaged"
+            }
+          },
+          "required": [
+            "tenantId",
+            "email"
+          ]
+        },
+        "EsetLicenseStat": {
+          "type": "object",
+          "properties": {
+            "productCode": {
+              "type": "string",
+              "description": "The product code of the license",
+              "example": "2018"
+            },
+            "productName": {
+              "type": "string",
+              "description": "The product name of the license",
+              "example": "ESET PROTECT Complete"
+            },
+            "quantity": {
+              "type": "number",
+              "description": "The quantity of the license",
+              "example": 1
+            },
+            "usage": {
+              "type": "number",
+              "description": "The usage of the license",
+              "example": 1
+            }
+          },
+          "required": [
+            "productCode",
+            "productName",
+            "quantity",
+            "usage"
+          ]
+        },
+        "EsetPartnerResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the partner",
+              "example": "Traumkunde GmbH"
+            },
+            "vendorId": {
+              "type": "string",
+              "description": "The eset id of the partner",
+              "example": "5eee60d2-c670-4c14-ba43-2b9b7cc28bca"
+            },
+            "type": {
+              "type": "number",
+              "description": "The type of the partner",
+              "example": 1006
+            },
+            "status": {
+              "type": "number",
+              "description": "The status of the partner",
+              "example": 1
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "The tenant id of the partner",
+              "example": "ab3da639-1c07-4180-8067-902238b15b40"
+            },
+            "email": {
+              "type": "string",
+              "description": "The email of the partner",
+              "example": "partner@example.com"
+            },
+            "protectRegion": {
+              "type": "string",
+              "enum": [
+                "de",
+                "en"
+              ],
+              "description": "The protect region of the partner",
+              "example": "de"
+            },
+            "managementType": {
+              "type": "string",
+              "enum": [
+                "fullManaged",
+                "partManaged"
+              ],
+              "description": "The management type of the partner",
+              "example": "fullManaged"
+            },
+            "licenseStats": {
+              "description": "The license statistics of the partner",
+              "example": [],
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/EsetLicenseStat"
+              }
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "vendorId",
+            "type",
+            "status",
+            "tenantId",
+            "email",
+            "protectRegion",
+            "managementType",
+            "licenseStats"
+          ]
+        },
+        "EsetPartnerPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/EsetPartnerResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "EsetMetrics": {
+          "type": "object",
+          "properties": {
+            "activeLicenses": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "productProtectEntryOnPremQuantity": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "productProtectEntryOnPremUsage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "productProtectAdvancedQuantity": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "productProtectAdvancedUsage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "productProtectCompleteQuantity": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            },
+            "productProtectCompleteUsage": {
+              "$ref": "#/components/schemas/MetricValueDto"
+            }
+          },
+          "required": [
+            "activeLicenses",
+            "productProtectEntryOnPremQuantity",
+            "productProtectEntryOnPremUsage",
+            "productProtectAdvancedQuantity",
+            "productProtectAdvancedUsage",
+            "productProtectCompleteQuantity",
+            "productProtectCompleteUsage"
+          ]
+        },
+        "EsetMetricsResponseDto": {
+          "type": "object",
+          "properties": {
+            "currTimestamp": {
+              "format": "date-time",
+              "type": "string",
+              "example": "2024-10-24T09:30:00.000Z",
+              "description": "Timestamp when current metrics were generated"
+            },
+            "prevTimestamp": {
+              "format": "date-time",
+              "type": "string",
+              "example": "2024-10-23T00:00:00.000Z",
+              "description": "Timestamp of previous metrics for comparison",
+              "nullable": true
+            },
+            "values": {
+              "description": "Metrics values with current and previous comparison",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/EsetMetrics"
+                }
+              ]
+            }
+          },
+          "required": [
+            "currTimestamp",
+            "prevTimestamp",
+            "values"
+          ]
+        },
+        "UpdateEsetPartnerRequestDto": {
+          "type": "object",
+          "properties": {
+            "protectRegion": {
+              "type": "string",
+              "enum": [
+                "de",
+                "en"
+              ],
+              "description": "ESET PROTECT region",
+              "example": "de"
+            },
+            "managementType": {
+              "type": "string",
+              "enum": [
+                "fullManaged",
+                "partManaged"
+              ],
+              "description": "Management type of the partner",
+              "example": "fullManaged"
+            }
+          }
+        },
+        "CreateEsetCustomerRequestDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "description": "The id of the customer",
+              "example": 1
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the customer",
+              "example": "customername"
+            },
+            "email": {
+              "type": "string",
+              "description": "The email address",
+              "example": "info@example.com"
+            }
+          },
+          "required": [
+            "name"
+          ]
+        },
+        "EsetLicenseResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "The tenant id of the license",
+              "example": "e2901e08-5737-4c85-b7ea-6b3837db89ce"
+            },
+            "customerId": {
+              "type": "string",
+              "description": "The customer id of the license",
+              "example": "de31fc1d-173e-48d9-993c-be2931d9a76b"
+            },
+            "parentId": {
+              "type": "string",
+              "description": "The eset customer id of the license",
+              "example": "e2a4fd2a-1759-4047-8251-7ad0a89452a4"
+            },
+            "publicLicenseKey": {
+              "type": "string",
+              "description": "The public license key of the license",
+              "example": "3A6-PXT-P3J"
+            },
+            "productCode": {
+              "type": "string",
+              "description": "The product code of the license",
+              "example": "2018"
+            },
+            "productName": {
+              "type": "string",
+              "description": "The product name of the license",
+              "example": "ESET PROTECT Complete"
+            },
+            "quantity": {
+              "type": "number",
+              "description": "The quantity of the license",
+              "example": 1
+            },
+            "usage": {
+              "type": "number",
+              "description": "The usage of the license",
+              "example": 1
+            },
+            "state": {
+              "type": "number",
+              "enum": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "description": "The state of the license",
+              "example": 1
+            },
+            "trial": {
+              "type": "boolean",
+              "description": "If the license is trial",
+              "example": true
+            },
+            "trialExpiration": {
+              "format": "date-time",
+              "type": "string",
+              "description": "The trial expiration of the license",
+              "example": "2025-09-16T07:07:08.000Z"
+            },
+            "bundleProducts": {
+              "description": "The bundle products of the license",
+              "example": [],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "customerName": {
+              "type": "string",
+              "description": "Customer name",
+              "example": "Customer Name"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "tenantId",
+            "customerId",
+            "parentId",
+            "publicLicenseKey",
+            "productCode",
+            "productName",
+            "quantity",
+            "usage",
+            "state",
+            "trial",
+            "bundleProducts"
+          ]
+        },
+        "EsetCustomerResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the customer",
+              "example": "Traumkunde GmbH"
+            },
+            "customerId": {
+              "type": "number",
+              "description": "The customer id of the customer",
+              "example": 1234567890
+            },
+            "parentId": {
+              "type": "string",
+              "description": "The eset partner id of the customer",
+              "example": "496b386c-d803-4f98-a748-41604352835a"
+            },
+            "vendorId": {
+              "type": "string",
+              "description": "The eset id of the customer",
+              "example": "b2177370-80fb-442d-86e9-a72b4817e660"
+            },
+            "type": {
+              "type": "number",
+              "description": "The type of the customer",
+              "example": 1007
+            },
+            "status": {
+              "type": "number",
+              "description": "The status of the customer",
+              "example": 1
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "The tenant id of the customer",
+              "example": "885b5f3f-838c-467d-935a-9e4a431fa7ef"
+            },
+            "email": {
+              "type": "string",
+              "description": "The email of the customer",
+              "example": "customer@example.com"
+            },
+            "managementType": {
+              "type": "string",
+              "enum": [
+                "fullManaged",
+                "partManaged"
+              ],
+              "description": "The management type of the customer",
+              "example": "fullManaged"
+            },
+            "licenses": {
+              "description": "The licenses of the customer",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/EsetLicenseResponseDto"
+              }
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "parentId",
+            "vendorId",
+            "type",
+            "status",
+            "tenantId",
+            "managementType"
+          ]
+        },
+        "EsetCustomerPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/EsetCustomerResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "UpdateEsetCustomerRequestDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "description": "Customer id of customer file",
+              "example": 123,
+              "nullable": true
+            }
+          }
+        },
+        "EsetLicensePaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/EsetLicenseResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "UpdateEsetLicenseRequestDto": {
+          "type": "object",
+          "properties": {
+            "quantity": {
+              "type": "number",
+              "description": "Quantity",
+              "example": 1
+            }
+          },
+          "required": [
+            "quantity"
+          ]
+        },
+        "CreateEsetLicenseRequestDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "string",
+              "description": "Customer id",
+              "example": "fd476314-4870-45f7-8ed9-bf432f341d49"
+            },
+            "productCode": {
+              "type": "string",
+              "enum": [
+                "2001",
+                "2013",
+                "2015",
+                "2017",
+                "2018",
+                "2019",
+                "2021",
+                "2023",
+                "2025",
+                "2050",
+                "220",
+                "310",
+                "311",
+                "313",
+                "316",
+                "350",
+                "6013",
+                "710",
+                "756"
+              ],
+              "description": "Product code",
+              "example": "2001"
+            },
+            "quantity": {
+              "type": "number",
+              "description": "Quantity",
+              "example": 1
+            }
+          },
+          "required": [
+            "customerId",
+            "productCode",
+            "quantity"
+          ]
+        },
+        "EsetDeviceResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "name": {
+              "type": "string",
+              "description": "Device name",
+              "example": "DESKTOP-01"
+            },
+            "parentId": {
+              "type": "string",
+              "description": "Parent ID of the device",
+              "example": "c927a32a-3b97-464c-a346-608c9654b432"
+            },
+            "vendorId": {
+              "type": "string",
+              "description": "Vendor ID of the device",
+              "example": "c927a32a-3b97-464c-a346-608c9654b432"
+            },
+            "detections": {
+              "type": "number",
+              "description": "Number of detections on the device",
+              "example": 0
+            },
+            "securityProductName": {
+              "type": "string",
+              "description": "Security product name",
+              "example": "ESET Endpoint Security"
+            },
+            "securityProductVersion": {
+              "type": "string",
+              "description": "Security product version",
+              "example": "11.0.2032.0"
+            },
+            "moduleStatus": {
+              "type": "string",
+              "enum": [
+                "updated",
+                "notUpdated",
+                "unknown"
+              ],
+              "description": "Module status",
+              "example": "updated"
+            },
+            "osName": {
+              "type": "string",
+              "description": "Operating system name",
+              "example": "Windows"
+            },
+            "osVersion": {
+              "type": "string",
+              "description": "Operating system version",
+              "example": "10.0.19044.1826"
+            },
+            "osBuildNumber": {
+              "type": "string",
+              "description": "Operating system build number",
+              "example": "1826"
+            },
+            "databaseDate": {
+              "format": "date-time",
+              "type": "string",
+              "description": "Date of the last database update on the device",
+              "example": "2025-09-16T07:07:08.000Z"
+            },
+            "status": {
+              "type": "string",
+              "description": "Aggregated status of the device",
+              "example": "ok",
+              "enum": [
+                "ok",
+                "warning",
+                "risk",
+                "malfunction"
+              ]
+            },
+            "licensePublicId": {
+              "type": "string",
+              "description": "License public ID of the device",
+              "example": "XXX-XXX-XXX"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "name",
+            "parentId",
+            "vendorId",
+            "detections",
+            "securityProductName",
+            "securityProductVersion",
+            "moduleStatus",
+            "osName",
+            "osVersion",
+            "osBuildNumber",
+            "databaseDate",
+            "status",
+            "licensePublicId"
+          ]
+        },
+        "EsetDevicePaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/EsetDeviceResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "EsetLicenseDto": {
+          "type": "object",
+          "properties": {
+            "activeLicenses": {
+              "type": "number",
+              "example": 100,
+              "description": "Number of active licenses"
+            },
+            "productProtectEntryOnPremQuantity": {
+              "type": "number",
+              "example": 50,
+              "description": "Protect Entry On-Prem license quantity"
+            },
+            "productProtectEntryOnPremUsage": {
+              "type": "number",
+              "example": 45,
+              "description": "Protect Entry On-Prem license usage"
+            },
+            "productProtectAdvancedQuantity": {
+              "type": "number",
+              "example": 30,
+              "description": "Protect Advanced license quantity"
+            },
+            "productProtectAdvancedUsage": {
+              "type": "number",
+              "example": 28,
+              "description": "Protect Advanced license usage"
+            },
+            "productProtectCompleteQuantity": {
+              "type": "number",
+              "example": 20,
+              "description": "Protect Complete license quantity"
+            },
+            "productProtectCompleteUsage": {
+              "type": "number",
+              "example": 18,
+              "description": "Protect Complete license usage"
+            }
+          },
+          "required": [
+            "activeLicenses",
+            "productProtectEntryOnPremQuantity",
+            "productProtectEntryOnPremUsage",
+            "productProtectAdvancedQuantity",
+            "productProtectAdvancedUsage",
+            "productProtectCompleteQuantity",
+            "productProtectCompleteUsage"
+          ]
+        },
+        "EsetDeviceDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "DESKTOP-ABC123",
+              "description": "Device name"
+            },
+            "status": {
+              "type": "string",
+              "example": "ok",
+              "description": "Device status"
+            },
+            "moduleStatus": {
+              "type": "string",
+              "example": "protected",
+              "description": "Module status"
+            },
+            "securityProductName": {
+              "type": "string",
+              "example": "ESET Endpoint Security",
+              "description": "Security product name"
+            },
+            "securityProductVersion": {
+              "type": "string",
+              "example": "10.0.2045.0",
+              "description": "Security product version"
+            },
+            "osName": {
+              "type": "string",
+              "example": "Windows 11 Pro",
+              "description": "Operating system name"
+            },
+            "licensePublicId": {
+              "type": "string",
+              "example": "ABC-123-DEF",
+              "description": "License public ID"
+            }
+          },
+          "required": [
+            "name",
+            "status",
+            "moduleStatus"
+          ]
+        },
+        "EsetScoreDto": {
+          "type": "object",
+          "properties": {
+            "totalDevices": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of devices"
+            },
+            "devicesWithErrors": {
+              "type": "number",
+              "example": 5,
+              "description": "Number of devices with errors"
+            },
+            "score": {
+              "type": "number",
+              "example": 0.95,
+              "description": "Score as a decimal (0-1), representing the percentage of devices without errors"
+            }
+          },
+          "required": [
+            "totalDevices",
+            "devicesWithErrors",
+            "score"
+          ]
+        },
+        "EsetCustomerCountDto": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "number",
+              "example": 15,
+              "description": "Number of ESET customers for this tenant"
+            }
+          },
+          "required": [
+            "count"
+          ]
+        },
+        "EsetCustomerStatsItemDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "example": 12345,
+              "description": "Customer ID (null if not linked)",
+              "nullable": true
+            },
+            "customerName": {
+              "type": "string",
+              "example": "Acme Corp",
+              "description": "Customer name"
+            },
+            "total": {
+              "type": "number",
+              "example": 10,
+              "description": "Total number of devices for this customer"
+            },
+            "errors": {
+              "type": "number",
+              "example": 2,
+              "description": "Number of devices with errors"
+            }
+          },
+          "required": [
+            "customerId",
+            "customerName",
+            "total",
+            "errors"
+          ]
+        },
+        "EsetReportDataResponseDto": {
+          "type": "object",
+          "properties": {
+            "storage": {
+              "description": "License information",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/EsetLicenseDto"
+                }
+              ]
+            },
+            "deviceList": {
+              "description": "List of protected devices",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/EsetDeviceDto"
+              }
+            },
+            "failuresList": {
+              "description": "List of devices with errors",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/EsetDeviceDto"
+              }
+            },
+            "noLicenseList": {
+              "description": "List of devices without licenses",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/EsetDeviceDto"
+              }
+            },
+            "score": {
+              "description": "Score calculation details",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/EsetScoreDto"
+                }
+              ]
+            },
+            "customerCount": {
+              "description": "Customer count for partner reports",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/EsetCustomerCountDto"
+                }
+              ]
+            },
+            "customerStats": {
+              "description": "Customer statistics for partner reports",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/EsetCustomerStatsItemDto"
+              }
+            }
+          }
+        },
+        "EsetDeviceProblemResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "Tenant ID owning the device problem",
+              "example": "885b5f3f-838c-467d-935a-9e4a431fa7ef"
+            },
+            "parentId": {
+              "type": "string",
+              "description": "Parent ESET device ID",
+              "example": "c927a32a-3b97-464c-a346-608c9654b432"
+            },
+            "deviceName": {
+              "type": "string",
+              "description": "Name of the device",
+              "example": "DESKTOP-01"
+            },
+            "problem": {
+              "type": "string",
+              "description": "Problem summary reported by ESET Protect",
+              "example": "Antivirus protection is disabled"
+            },
+            "problemDetail": {
+              "type": "string",
+              "description": "Detailed description of the problem",
+              "example": "Real-time file system protection is turned off"
+            },
+            "severity": {
+              "type": "string",
+              "enum": [
+                "warning",
+                "critical"
+              ],
+              "description": "Severity of the problem",
+              "example": "warning"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "tenantId",
+            "parentId",
+            "deviceName",
+            "problem",
+            "problemDetail",
+            "severity"
+          ]
+        },
+        "EsetDeviceProblemPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/EsetDeviceProblemResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "CreateDownloadFileRequestDto": {
+          "type": "object",
+          "properties": {
+            "public": {
+              "type": "boolean",
+              "description": "Indicates if the document is public for everyone",
+              "example": false,
+              "default": false
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "Indicates which tenant the document belongs to. Must be undefined when public is true.",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "url": {
+              "type": "string",
+              "description": "The actual download URL or storage path",
+              "example": "https://example.com/files/document.pdf"
+            },
+            "name": {
+              "type": "string",
+              "description": "Display name of the link",
+              "example": "Monthly Security Report"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "information",
+                "report",
+                "installer"
+              ],
+              "description": "Type of the file",
+              "example": "report"
+            },
+            "product": {
+              "type": "string",
+              "enum": [
+                "managed_backup_acronis",
+                "managed_cloud_to_cloud_cloudally",
+                "managed_endpoint_security_eset",
+                "managed_email_archiving_mailstore",
+                "managed_vdi_oneclick",
+                "managed_rmm_nsight",
+                "managed_power_apc",
+                "managed_firewall_anqa",
+                "managed_security_audit_lywand",
+                "managed_isa_plus_flat",
+                "part_managed_security_audit_lywand",
+                "part_managed_eset",
+                "part_managed_sec_auditor",
+                "device_as_a_service",
+                "unknown"
+              ],
+              "description": "Describes which product the document belongs to (based on ProductAgreementType). Can be empty, meaning \"general\".",
+              "example": "managed_backup_acronis"
+            },
+            "platform": {
+              "type": "string",
+              "enum": [
+                "windows",
+                "linux",
+                "mac"
+              ],
+              "description": "Target platform for the download file",
+              "example": "windows"
+            },
+            "availableUntil": {
+              "format": "date-time",
+              "type": "string",
+              "description": "Date until when the file is available for download",
+              "example": "2024-12-31T23:59:59.000Z"
+            },
+            "fileName": {
+              "type": "string",
+              "description": "Original file name",
+              "example": "document.pdf"
+            },
+            "hidden": {
+              "type": "boolean",
+              "description": "Indicates if the document is hidden",
+              "example": false
+            }
+          },
+          "required": [
+            "public",
+            "url",
+            "name",
+            "type"
+          ]
+        },
+        "DownloadFileResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "public": {
+              "type": "boolean",
+              "description": "Indicates if the document is public for everyone",
+              "example": false
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "Indicates which tenant the document belongs to",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "url": {
+              "type": "string",
+              "description": "The actual download URL",
+              "example": "https://example.com/files/document.pdf"
+            },
+            "downloads": {
+              "type": "number",
+              "description": "Number of times the URL was accessed",
+              "example": 42
+            },
+            "name": {
+              "type": "string",
+              "description": "Display name of the link",
+              "example": "Monthly Security Report"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "information",
+                "report",
+                "installer"
+              ],
+              "description": "Type of the file",
+              "example": "report"
+            },
+            "product": {
+              "type": "string",
+              "description": "Describes which product the document belongs to",
+              "example": "managed_backup_acronis",
+              "enum": [
+                "managed_backup_acronis",
+                "managed_cloud_to_cloud_cloudally",
+                "managed_endpoint_security_eset",
+                "managed_email_archiving_mailstore",
+                "managed_vdi_oneclick",
+                "managed_rmm_nsight",
+                "managed_power_apc",
+                "managed_firewall_anqa",
+                "managed_security_audit_lywand",
+                "managed_isa_plus_flat",
+                "part_managed_security_audit_lywand",
+                "part_managed_eset",
+                "part_managed_sec_auditor",
+                "device_as_a_service",
+                "unknown"
+              ]
+            },
+            "platform": {
+              "type": "string",
+              "enum": [
+                "windows",
+                "linux",
+                "mac"
+              ],
+              "description": "Target platform for the download file",
+              "example": "windows"
+            },
+            "availableUntil": {
+              "format": "date-time",
+              "type": "string",
+              "description": "Date until when the file is available for download",
+              "example": "2024-12-31T23:59:59.000Z"
+            },
+            "hidden": {
+              "type": "boolean",
+              "description": "Indicates if the document is hidden",
+              "example": false
+            },
+            "fileName": {
+              "type": "string",
+              "description": "Original file name",
+              "example": "document.pdf"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "public",
+            "name",
+            "type"
+          ]
+        },
+        "UpdateDownloadFileRequestDto": {
+          "type": "object",
+          "properties": {
+            "public": {
+              "type": "boolean",
+              "description": "Indicates if the document is public for everyone",
+              "example": false
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "Indicates which tenant the document belongs to. Must be undefined when public is true.",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "url": {
+              "type": "string",
+              "description": "The actual download URL",
+              "example": "https://example.com/files/document.pdf"
+            },
+            "count": {
+              "type": "number",
+              "description": "Number of times the URL was accessed",
+              "example": 42
+            },
+            "name": {
+              "type": "string",
+              "description": "Display name of the link",
+              "example": "Monthly Security Report"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "information",
+                "report",
+                "installer"
+              ],
+              "description": "Type of the file",
+              "example": "report"
+            },
+            "product": {
+              "type": "string",
+              "description": "Describes which product the document belongs to (based on ProductAgreementType). Can be empty, meaning \"general\".",
+              "example": "managed_backup_acronis"
+            },
+            "platform": {
+              "type": "string",
+              "enum": [
+                "windows",
+                "linux",
+                "mac"
+              ],
+              "description": "Target platform for the download file",
+              "example": "windows"
+            },
+            "availableUntil": {
+              "format": "date-time",
+              "type": "string",
+              "description": "Date until when the file is available for download",
+              "example": "2024-12-31T23:59:59.000Z"
+            },
+            "fileName": {
+              "type": "string",
+              "description": "Original file name",
+              "example": "document.pdf"
+            },
+            "hidden": {
+              "type": "boolean",
+              "description": "Indicates if the document is hidden",
+              "example": false
+            }
+          }
+        },
+        "DownloadFilePaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/DownloadFileResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "DownloadFileUrlResponseDto": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "The presigned URL or direct link to access the file",
+              "example": "https://s3.amazonaws.com/bucket/file.zip?X-Amz-Algorithm=..."
+            },
+            "fileName": {
+              "type": "string",
+              "description": "The file name",
+              "example": "file.zip"
+            }
+          },
+          "required": [
+            "url",
+            "fileName"
+          ]
+        },
+        "DownloadFileUploadUrlResponseDto": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "The presigned URL or direct link to upload the file to",
+              "example": "https://s3.amazonaws.com/bucket/file.zip?X-Amz-Algorithm=..."
+            }
+          },
+          "required": [
+            "url"
+          ]
+        },
+        "CreateSecAuditorPartnerRequestDto": {
+          "type": "object",
+          "properties": {
+            "tenantId": {
+              "type": "string",
+              "description": "The tenantId of the partner",
+              "example": "98e6256d-a069-4bd2-987f-7b25b3527f08"
+            },
+            "type": {
+              "type": "string",
+              "description": "The type of the partner",
+              "example": "fullManaged",
+              "enum": [
+                "fullManaged",
+                "partManaged"
+              ]
+            },
+            "email": {
+              "type": "string",
+              "description": "The email address for first user",
+              "example": "info@synaxon.de"
+            },
+            "firstname": {
+              "type": "string",
+              "description": "The firstname of the first user",
+              "example": "John"
+            },
+            "lastname": {
+              "type": "string",
+              "description": "The lastname of the first user",
+              "example": "Doe"
+            }
+          },
+          "required": [
+            "tenantId",
+            "type",
+            "email",
+            "firstname",
+            "lastname"
+          ]
+        },
+        "SecAuditorPartnerResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "The tenant id of the partner",
+              "example": "ab3da639-1c07-4180-8067-902238b15b40"
+            },
+            "vendorId": {
+              "type": "string",
+              "description": "The vendor id of the partner in Sec Auditor",
+              "example": "ab3da639-1c07-4180-8067-902238b15b40"
+            },
+            "name": {
+              "type": "string",
+              "description": "The display name of the partner",
+              "example": "Musterpartner"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "fullManaged",
+                "partManaged"
+              ],
+              "description": "The management type of the partner",
+              "example": "partManaged"
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "tenantId",
+            "vendorId",
+            "name",
+            "type"
+          ]
+        },
+        "SecAuditorPartnerPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SecAuditorPartnerResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "CreateSecAuditorCustomerRequestDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "description": "The customer file id of the customer",
+              "example": 12345
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the customer",
+              "example": "Muster GmbH"
+            },
+            "employees": {
+              "type": "number",
+              "description": "This value is ignored",
+              "example": 42,
+              "minimum": 1,
+              "maximum": 999999,
+              "deprecated": true
+            },
+            "billingCycle": {
+              "type": "string",
+              "enum": [
+                "none",
+                "year",
+                "month",
+                "instant"
+              ],
+              "example": "month",
+              "description": "Billing cycle of customer"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "monitoring",
+                "audit"
+              ],
+              "example": "monitoring",
+              "description": "Operating mode of the customer in Sec Auditor"
+            }
+          },
+          "required": [
+            "name",
+            "employees",
+            "billingCycle",
+            "mode"
+          ]
+        },
+        "SecAuditorCustomerResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "tenantId": {
+              "type": "string",
+              "description": "The tenant id of the customer",
+              "example": "ab3da639-1c07-4180-8067-902238b15b40"
+            },
+            "vendorId": {
+              "type": "string",
+              "description": "The vendor id of the customer in Sec Auditor",
+              "example": "ab3da639-1c07-4180-8067-902238b15b40"
+            },
+            "name": {
+              "type": "string",
+              "description": "The display name of the customer",
+              "example": "Muster GmbH"
+            },
+            "customerId": {
+              "type": "number",
+              "description": "Customer file id",
+              "example": 1234
+            },
+            "employees": {
+              "type": "number",
+              "description": "The number of employees at the customer",
+              "example": 42
+            },
+            "parentId": {
+              "type": "string",
+              "description": "Parent identifier in Sec Auditor hierarchy",
+              "example": "ab3da639-1c07-4180-8067-902238b15b40"
+            },
+            "creationStatus": {
+              "type": "string",
+              "enum": [
+                "running",
+                "completed",
+                "failed"
+              ],
+              "description": "Creation status of the customer in Sec Auditor",
+              "example": "running"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "monitoring",
+                "audit"
+              ],
+              "description": "Operating mode of the customer in Sec Auditor",
+              "example": "monitoring"
+            },
+            "billingCycle": {
+              "type": "string",
+              "enum": [
+                "none",
+                "year",
+                "month",
+                "instant"
+              ],
+              "description": "Billing mode for the Sec Auditor customer",
+              "example": "month"
+            },
+            "nfr": {
+              "type": "boolean",
+              "description": "Indicates if this is an NFR (not-for-resale) customer",
+              "example": false
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "tenantId",
+            "vendorId",
+            "name",
+            "customerId",
+            "employees",
+            "parentId",
+            "creationStatus",
+            "mode",
+            "billingCycle",
+            "nfr"
+          ]
+        },
+        "SecAuditorCustomerPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SecAuditorCustomerResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "SecAuditorInstallerResponseDto": {
+          "type": "object",
+          "properties": {}
+        },
+        "UpdateSecAuditorCustomerRequestDto": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "number",
+              "description": "Customer file id",
+              "nullable": true
+            }
+          }
+        },
+        "MetricStatisticsDto": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number",
+              "description": "Minimum value in the period",
+              "example": 10
+            },
+            "avg": {
+              "type": "number",
+              "description": "Average value in the period",
+              "example": 15.5
+            },
+            "max": {
+              "type": "number",
+              "description": "Maximum value in the period",
+              "example": 20
+            }
+          },
+          "required": [
+            "min",
+            "avg",
+            "max"
+          ]
+        },
+        "GroupedMetricMetadataDto": {
+          "type": "object",
+          "properties": {
+            "entityType": {
+              "type": "string",
+              "description": "Entity type (optional, only present when filtering by entityType)",
+              "example": "lywandPartner"
+            },
+            "entityId": {
+              "type": "string",
+              "description": "Entity ID (optional, only present when filtering by entityId)",
+              "example": "123e4567-e89b-12d3-a456-426614174000"
+            }
+          }
+        },
+        "MetricsGroupedResponseDto": {
+          "type": "object",
+          "properties": {
+            "period": {
+              "type": "string",
+              "description": "Time period in YYYY-MM-DD (daily) or YYYY-MM (monthly) format",
+              "example": "2024-01-15"
+            },
+            "metadata": {
+              "description": "Metadata about the grouped metrics",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/GroupedMetricMetadataDto"
+                }
+              ]
+            },
+            "value": {
+              "type": "object",
+              "description": "Metrics with statistics for each field. Each field contains min, avg, and max statistics.",
+              "additionalProperties": {
+                "$ref": "#/components/schemas/MetricStatisticsDto"
+              }
+            }
+          },
+          "required": [
+            "period",
+            "metadata",
+            "value"
+          ]
+        },
+        "LatestMetricMetadataDto": {
+          "type": "object",
+          "properties": {
+            "entityType": {
+              "type": "string",
+              "description": "Entity type",
+              "example": "lywandPartner"
+            },
+            "entityId": {
+              "type": "string",
+              "description": "Entity ID",
+              "example": "123e4567-e89b-12d3-a456-426614174000"
+            }
+          },
+          "required": [
+            "entityType",
+            "entityId"
+          ]
+        },
+        "MetricsLatestResponseDto": {
+          "type": "object",
+          "properties": {
+            "metadata": {
+              "description": "Metadata about the metric",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/LatestMetricMetadataDto"
+                }
+              ]
+            },
+            "value": {
+              "type": "object",
+              "description": "Metric values - object with numeric properties for the specific metric type"
+            },
+            "timestamp": {
+              "type": "string",
+              "description": "Timestamp when the metric was recorded",
+              "example": "2024-01-15T10:30:00.000Z",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "metadata",
+            "value",
+            "timestamp"
+          ]
+        },
+        "CreateSupportQueryRequestDto": {
+          "type": "object",
+          "properties": {
+            "threadId": {
+              "type": "string",
+              "description": "The conversation thread ID.",
+              "example": "1c0f9f9a-7bb9-4a46-b5a9-6e2b8a7c27f3"
+            },
+            "query": {
+              "type": "string",
+              "description": "The question or query to send to the support chatbot",
+              "example": "How do I configure email archiving?"
+            }
+          },
+          "required": [
+            "threadId",
+            "query"
+          ]
+        },
+        "SupportQueryResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "threadId": {
+              "type": "string",
+              "description": "The conversation thread ID",
+              "example": "1c0f9f9a-7bb9-4a46-b5a9-6e2b8a7c27f3"
+            },
+            "query": {
+              "type": "string",
+              "description": "The user query sent to the chatbot",
+              "example": "How do I configure email archiving?"
+            },
+            "response": {
+              "type": "string",
+              "description": "The HTML formatted response from the chatbot",
+              "example": "<p>Um dir genau helfen zu können, benötige ich weitere Informationen...</p>"
+            },
+            "responseMarkdown": {
+              "type": "string",
+              "description": "The original markdown response from the chatbot",
+              "example": "Um dir genau helfen zu können, benötige ich weitere Informationen..."
+            },
+            "queryTime": {
+              "type": "number",
+              "description": "The duration of the query processing in milliseconds",
+              "example": 1523
+            },
+            "userId": {
+              "type": "string",
+              "description": "The ID of the user who submitted the query",
+              "example": "791ecf87-331c-40f8-9f28-a57c7588a95d"
+            },
+            "rating": {
+              "type": "string",
+              "description": "The rating of the chatbot response",
+              "enum": [
+                "positive",
+                "negative"
+              ],
+              "example": "positive"
+            },
+            "ratingReason": {
+              "type": "string",
+              "description": "The reason for a negative rating",
+              "enum": [
+                "incorrect_or_incomplete",
+                "not_what_i_wanted",
+                "slow_or_error_prone",
+                "style_or_tone",
+                "security_or_legal_concerns",
+                "other"
+              ],
+              "example": "incorrect_or_incomplete"
+            },
+            "ratingComment": {
+              "type": "string",
+              "description": "Optional free text comment for the rating",
+              "example": "The answer was missing important details about configuration."
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "threadId",
+            "query",
+            "response",
+            "responseMarkdown",
+            "queryTime",
+            "userId"
+          ]
+        },
+        "ArgumentInvalidException": {
+          "type": "object",
+          "properties": {}
+        },
+        "InternalServerErrorException": {
+          "type": "object",
+          "properties": {}
+        },
+        "UpdateSupportQueryRequestDto": {
+          "type": "object",
+          "properties": {
+            "rating": {
+              "type": "string",
+              "description": "The rating of the chatbot response",
+              "enum": [
+                "positive",
+                "negative"
+              ],
+              "example": "positive"
+            },
+            "ratingReason": {
+              "type": "string",
+              "description": "The reason for a negative rating (required when rating is negative)",
+              "enum": [
+                "incorrect_or_incomplete",
+                "not_what_i_wanted",
+                "slow_or_error_prone",
+                "style_or_tone",
+                "security_or_legal_concerns",
+                "other"
+              ],
+              "example": "incorrect_or_incomplete"
+            },
+            "ratingComment": {
+              "type": "string",
+              "description": "Optional free text comment for the rating",
+              "example": "The answer was missing important details about configuration."
+            }
+          }
+        },
+        "SupportQueryPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SupportQueryResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "SupportChatListItemResponseDto": {
+          "type": "object",
+          "properties": {
+            "threadId": {
+              "type": "string",
+              "description": "The conversation thread ID",
+              "example": "1c0f9f9a-7bb9-4a46-b5a9-6e2b8a7c27f3"
+            },
+            "query": {
+              "type": "string",
+              "description": "Trimmed preview of the first query in the chat thread",
+              "example": "How do I configure email archiv..."
+            }
+          },
+          "required": [
+            "threadId",
+            "query"
+          ]
+        },
+        "SupportChatListPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SupportChatListItemResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        },
+        "SystemTaskResponseDto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Entity unique identifier",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Entity creation date and time",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time of last update",
+              "example": "2024-01-01T12:00:00.000Z"
+            },
+            "label": {
+              "type": "string",
+              "description": "The label/description of the system task",
+              "example": "Import customer data"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "queued",
+                "started",
+                "completed",
+                "failed"
+              ],
+              "description": "The current status of the system task",
+              "example": "queued"
+            },
+            "result": {
+              "type": "object",
+              "description": "The result of the system task",
+              "example": {}
+            }
+          },
+          "required": [
+            "id",
+            "createdAt",
+            "updatedAt",
+            "label",
+            "status"
+          ]
+        },
+        "SystemTaskPaginatedResponseDto": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number",
+              "example": 20,
+              "description": "Number of items per page"
+            },
+            "page": {
+              "type": "number",
+              "example": 1,
+              "description": "Current page"
+            },
+            "totalItems": {
+              "type": "number",
+              "example": 100,
+              "description": "Total number of items"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SystemTaskResponseDto"
+              }
+            }
+          },
+          "required": [
+            "limit",
+            "page",
+            "totalItems",
+            "data"
+          ]
+        }
+      }
+    }
+  },
+  "customOptions": {
+    "docExpansion": "none"
+  }
+};
+  url = options.swaggerUrl || url
+  let urls = options.swaggerUrls
+  let customOptions = options.customOptions
+  let spec1 = options.swaggerDoc
+  let swaggerOptions = {
+    spec: spec1,
+    url: url,
+    urls: urls,
+    dom_id: '#swagger-ui',
+    deepLinking: true,
+    presets: [
+      SwaggerUIBundle.presets.apis,
+      SwaggerUIStandalonePreset
+    ],
+    plugins: [
+      SwaggerUIBundle.plugins.DownloadUrl
+    ],
+    layout: "StandaloneLayout"
+  }
+  for (let attrname in customOptions) {
+    swaggerOptions[attrname] = customOptions[attrname];
+  }
+  let ui = SwaggerUIBundle(swaggerOptions)
+
+  if (customOptions.initOAuth) {
+    ui.initOAuth(customOptions.initOAuth)
+  }
+
+  if (customOptions.authAction) {
+    ui.authActions.authorize(customOptions.authAction)
+  }
+  
+  window.ui = ui
+}
