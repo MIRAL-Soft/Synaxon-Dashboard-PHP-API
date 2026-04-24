@@ -18,6 +18,17 @@ class UpdateMessageRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "markedAsRead" field. Mark message as read
+     *
+     * @return static
+     */
+    public function withMarkedAsRead(?bool $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('markedAsRead', $value);
+    }
+
+    /**
      * Stares the message
      *
      * @return bool|null
@@ -26,6 +37,17 @@ class UpdateMessageRequestDto extends AbstractDto
     {
         $v = $this->data['starred'] ?? null;
         return $v === null ? null : (bool) $v;
+    }
+
+    /**
+     * Set the "starred" field. Stares the message
+     *
+     * @return static
+     */
+    public function withStarred(?bool $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('starred', $value);
     }
 
     /**
@@ -40,6 +62,17 @@ class UpdateMessageRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "important" field. Marks the message as important
+     *
+     * @return static
+     */
+    public function withImportant(?bool $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('important', $value);
+    }
+
+    /**
      * Marks the message as deleted
      *
      * @return bool|null
@@ -48,5 +81,16 @@ class UpdateMessageRequestDto extends AbstractDto
     {
         $v = $this->data['deleted'] ?? null;
         return $v === null ? null : (bool) $v;
+    }
+
+    /**
+     * Set the "deleted" field. Marks the message as deleted
+     *
+     * @return static
+     */
+    public function withDeleted(?bool $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('deleted', $value);
     }
 }

@@ -13,9 +13,9 @@ declare(strict_types=1);
  *   php bin/generate-dtos.php
  */
 
-$root    = dirname(__DIR__);
+$root = dirname(__DIR__);
 $specPath = $root . '/docs/openapi.json';
-$outDir   = $root . '/src/DTO';
+$outDir = $root . '/src/DTO';
 
 if (!is_file($specPath)) {
     fwrite(STDERR, "Spec not found: {$specPath}\n");
@@ -49,10 +49,11 @@ fwrite(STDOUT, "Generated {$generated} DTO classes in src/DTO/\n");
  */
 function renderDto(string $name, array $schema): string
 {
-    $required  = array_flip((array) ($schema['required'] ?? []));
-    $props     = (array)  ($schema['properties'] ?? []);
-    $docLines  = [];
-    $methods   = [];
+    $required = array_flip((array) ($schema['required'] ?? []));
+    $props = (array)  ($schema['properties'] ?? []);
+    $docLines = [];
+    $methods = [];
+    $isRequestDto = str_ends_with($name, 'RequestDto') || str_ends_with($name, 'Request');
 
     if (isset($schema['description']) && is_string($schema['description'])) {
         $docLines[] = wordwrap(trim($schema['description']), 100, "\n * ");
@@ -66,15 +67,15 @@ function renderDto(string $name, array $schema): string
         $isRequired = isset($required[$propName]);
         [$phpType, $docType] = mapType($propSchema, $isRequired);
 
-        $getter  = 'get' . studly($propName);
+        $getter = 'get' . studly($propName);
         $comment = '';
         if (isset($propSchema['description']) && is_string($propSchema['description'])) {
             $comment = trim($propSchema['description']);
         }
 
-        $docBlock  = "    /**\n";
+        $docBlock = "    /**\n";
         if ($comment !== '') {
-            $docBlock .= "     * " . str_replace("\n", "\n     * ", $comment) . "\n     *\n";
+            $docBlock .= '     * ' . str_replace("\n", "\n     * ", $comment) . "\n     *\n";
         }
         $docBlock .= "     * @return {$docType}\n";
         $docBlock .= "     */\n";
@@ -85,7 +86,11 @@ function renderDto(string $name, array $schema): string
             . "    public function {$getter}(): {$phpType}\n"
             . "    {\n"
             . $body
-            . "    }";
+            . '    }';
+
+        if ($isRequestDto) {
+            $methods[] = renderWithSetter($propName, $propSchema, $isRequired, $comment);
+        }
     }
 
     $classDoc = '';
@@ -108,6 +113,7 @@ function renderDto(string $name, array $schema): string
 
 /**
  * @param array<string, mixed> $schema
+ *
  * @return array{0: string, 1: string} [phpType, phpDocType]
  */
 function mapType(array $schema, bool $required): array
@@ -145,11 +151,11 @@ function mapType(array $schema, bool $required): array
             }
             if (is_array($items) && isset($items['type']) && is_string($items['type'])) {
                 $inner = match ($items['type']) {
-                    'string'  => 'string',
+                    'string' => 'string',
                     'integer' => 'int',
-                    'number'  => 'float',
+                    'number' => 'float',
                     'boolean' => 'bool',
-                    default   => 'mixed',
+                    default => 'mixed',
                 };
                 return ['array', "list<{$inner}>"];
             }
@@ -241,6 +247,53 @@ function refName(string $ref): string
 {
     $parts = explode('/', $ref);
     return (string) end($parts);
+}
+
+/**
+ * Emit a fluent typed setter (`withFooBar(...)`) for a request DTO field.
+ *
+ * The setter accepts the field's PHP type, returns a clone (immutability),
+ * and is null-tolerant for optional fields.
+ *
+ * @param array<string, mixed> $schema
+ */
+function renderWithSetter(string $propName, array $schema, bool $isRequired, string $comment): string
+{
+    [$phpType] = mapType($schema, $isRequired);
+
+    // For setters we always allow null (caller can clear an optional value)
+    // and we relax sub-DTO references to "DtoClass|array" so callers can pass
+    // either a typed DTO instance or a raw associative array.
+    $setterType = $phpType;
+    if (isset($schema['$ref']) && is_string($schema['$ref'])) {
+        $ref = refName($schema['$ref']);
+        $setterType = $isRequired ? "{$ref}|array" : "{$ref}|array|null";
+    } elseif (str_starts_with($phpType, '?') === false && $phpType !== 'mixed') {
+        // Setters always allow null so the caller can unset a previously
+        // assigned field on a builder chain.
+        $setterType = '?' . $phpType;
+    }
+
+    $methodName = 'with' . studly($propName);
+    $key = var_export($propName, true);
+
+    $docBlock = "    /**\n";
+    if ($comment !== '') {
+        $docBlock .= '     * Set the "' . $propName . '" field. ' . str_replace("\n", "\n     * ", $comment) . "\n     *\n";
+    } else {
+        $docBlock .= '     * Set the "' . $propName . "\" field.\n     *\n";
+    }
+    $docBlock .= "     * @return static\n";
+    $docBlock .= "     */\n";
+
+    $body = "        \$value = \$value instanceof AbstractDto ? \$value->toArray() : \$value;\n"
+          . "        return \$this->with({$key}, \$value);\n";
+
+    return $docBlock
+         . "    public function {$methodName}({$setterType} \$value): static\n"
+         . "    {\n"
+         . $body
+         . '    }';
 }
 
 function studly(string $name): string

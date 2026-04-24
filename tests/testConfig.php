@@ -21,8 +21,8 @@ final class testConfig
     public static function hasCredentials(): bool
     {
         $bearer = getenv('SYNAXON_BEARER_TOKEN');
-        $user   = getenv('SYNAXON_BASIC_USER');
-        $pass   = getenv('SYNAXON_BASIC_PASS');
+        $user = getenv('SYNAXON_BASIC_USER');
+        $pass = getenv('SYNAXON_BASIC_PASS');
 
         return ($bearer !== false && $bearer !== '')
             || ($user !== false && $user !== '' && $pass !== false && $pass !== '');

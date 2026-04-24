@@ -16,9 +16,10 @@ interface HttpClientInterface
     /**
      * Execute an HTTP request and return the decoded JSON body.
      *
-     * @param string                             $method HTTP method (GET, POST, ...).
-     * @param string                             $path   Path (appended to the base URI).
+     * @param string $method HTTP method (GET, POST, ...).
+     * @param string $path Path (appended to the base URI).
      * @param array{query?: array<string, scalar|array<int, scalar>>, body?: array<string, mixed>|null, headers?: array<string, string>} $options
+     *
      * @return array<string, mixed>|list<mixed>|null Decoded JSON response (or null for empty/204 responses).
      */
     public function request(string $method, string $path, array $options = []): array|null;

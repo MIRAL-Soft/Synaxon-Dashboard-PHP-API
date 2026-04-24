@@ -40,7 +40,7 @@ final class AcronisReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'acronis:/v1/acronis/customers',
-            fn () => $this->client->acronis()->listAcronisCustomers(["limit" => 1]),
+            fn () => $this->client->acronis()->listAcronisCustomers(['limit' => 1]),
         );
         $response = $this->client->acronis()->getAcronisCustomer($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/acronis/customers/{id}');
@@ -56,7 +56,7 @@ final class AcronisReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'acronis:/v1/acronis/customers',
-            fn () => $this->client->acronis()->listAcronisCustomers(["limit" => 1]),
+            fn () => $this->client->acronis()->listAcronisCustomers(['limit' => 1]),
         );
         $response = $this->client->acronis()->getAcronisCustomerMetrics($id, []);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/acronis/customers/{id}/metrics');
@@ -107,7 +107,7 @@ final class AcronisReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'acronis:/v1/acronis/devices',
-            fn () => $this->client->acronis()->listAcronisDevices(["limit" => 1]),
+            fn () => $this->client->acronis()->listAcronisDevices(['limit' => 1]),
         );
         $response = $this->client->acronis()->getAcronisDevice($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/acronis/devices/{id}');
@@ -135,7 +135,7 @@ final class AcronisReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'acronis:/v1/acronis/policies',
-            fn () => $this->client->acronis()->listAcronisPolicies(["limit" => 1]),
+            fn () => $this->client->acronis()->listAcronisPolicies(['limit' => 1]),
         );
         $response = $this->client->acronis()->getAcronisPolicy($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/acronis/policies/{id}');

@@ -17,6 +17,17 @@ class CreateCustomerReferenceRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "referenceId" field. The reference ID
+     *
+     * @return static
+     */
+    public function withReferenceId(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('referenceId', $value);
+    }
+
+    /**
      * The system of the reference
      *
      * @return string
@@ -24,5 +35,16 @@ class CreateCustomerReferenceRequestDto extends AbstractDto
     public function getSystem(): string
     {
         return (string) $this->data['system'];
+    }
+
+    /**
+     * Set the "system" field. The system of the reference
+     *
+     * @return static
+     */
+    public function withSystem(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('system', $value);
     }
 }

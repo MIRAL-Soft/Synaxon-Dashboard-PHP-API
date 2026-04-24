@@ -15,4 +15,15 @@ class CreateJournalingMailboxRequestDto extends AbstractDto
     {
         return (string) $this->data['instanceId'];
     }
+
+    /**
+     * Set the "instanceId" field. Instance ID
+     *
+     * @return static
+     */
+    public function withInstanceId(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('instanceId', $value);
+    }
 }

@@ -20,7 +20,8 @@ use PHPUnit\Framework\TestCase;
 final class GuzzleHttpClientTest extends TestCase
 {
     /**
-     * @param list<Response>                                     $responses
+     * @param list<Response> $responses
+     *
      * @param-out list<array{request: Request, response: mixed}> $captured
      */
     private function buildClient(array $responses, array &$captured, int $retries = 0): GuzzleHttpClient
@@ -38,8 +39,8 @@ final class GuzzleHttpClientTest extends TestCase
             maxRetries:     $retries,
         );
         $guzzle = new Guzzle([
-            'handler'     => $stack,
-            'base_uri'    => 'https://example.test/api/',
+            'handler' => $stack,
+            'base_uri' => 'https://example.test/api/',
             'http_errors' => false,
         ]);
 
@@ -151,9 +152,9 @@ final class GuzzleHttpClientTest extends TestCase
     {
         $redacted = GuzzleHttpClient::redactHeaders([
             'Authorization' => 'Bearer secret',
-            'Cookie'        => 'session=xyz',
-            'X-API-Key'     => 'abc',
-            'Accept'        => 'application/json',
+            'Cookie' => 'session=xyz',
+            'X-API-Key' => 'abc',
+            'Accept' => 'application/json',
         ]);
 
         self::assertSame('***', $redacted['Authorization']);
@@ -186,5 +187,37 @@ final class GuzzleHttpClientTest extends TestCase
 
         $r = $client->request('GET', '/v1/check');
         self::assertSame(['value' => true], $r);
+    }
+
+    public function testExtractsCorrelationIdFromBody(): void
+    {
+        $history = [];
+        $client = $this->buildClient(
+            [new Response(404, [], '{"message":"Not found","correlationId":"abc-123"}')],
+            $history
+        );
+
+        try {
+            $client->request('GET', '/v1/missing');
+            self::fail('expected exception');
+        } catch (SynaxonApiException $e) {
+            self::assertSame('abc-123', $e->getCorrelationId());
+        }
+    }
+
+    public function testExtractsCorrelationIdFromHeader(): void
+    {
+        $history = [];
+        $client = $this->buildClient(
+            [new Response(500, ['X-Correlation-Id' => 'header-xyz'], '{}')],
+            $history
+        );
+
+        try {
+            $client->request('GET', '/v1/boom');
+            self::fail('expected exception');
+        } catch (SynaxonApiException $e) {
+            self::assertSame('header-xyz', $e->getCorrelationId());
+        }
     }
 }

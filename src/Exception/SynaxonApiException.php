@@ -31,4 +31,15 @@ class SynaxonApiException extends RuntimeException
     {
         return $this->context;
     }
+
+    /**
+     * The Synaxon API returns a "correlationId" in every error response.
+     * Forward it to the caller (and to bug reports against Synaxon support).
+     */
+    public function getCorrelationId(): ?string
+    {
+        $value = $this->context['correlation_id'] ?? null;
+
+        return is_string($value) && $value !== '' ? $value : null;
+    }
 }

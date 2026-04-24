@@ -22,10 +22,10 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$root    = dirname(__DIR__);
+$root = dirname(__DIR__);
 $specPath = $root . '/docs/openapi.json';
-$outDir   = $root . '/tests/Integration/ReadOnly';
-$resDir   = $root . '/src/Resource';
+$outDir = $root . '/tests/Integration/ReadOnly';
+$resDir = $root . '/src/Resource';
 
 if (!is_file($specPath)) {
     fwrite(STDERR, "Spec not found: {$specPath}\n");
@@ -39,7 +39,7 @@ if (!is_file($specPath)) {
  * Key: "METHOD /path", value: human-readable skip reason.
  */
 $knownSkips = [
-    'GET /v1/auth/egis'          => 'OAuth authorization flow — browser redirect, not an API call.',
+    'GET /v1/auth/egis' => 'OAuth authorization flow — browser redirect, not an API call.',
     'GET /v1/auth/egis/callback' => 'OAuth authorization callback — browser redirect, not an API call.',
 ];
 
@@ -50,8 +50,8 @@ $knownSkips = [
  * try/catch.
  */
 $optionalEndpoints = [
-    'GET /v1/customers/{id}/report'         => 'Requires a customer-report setting; skipped when none exists.',
-    'GET /v1/customers/{id}/report/pdf'     => 'Requires a customer-report setting; skipped when none exists.',
+    'GET /v1/customers/{id}/report' => 'Requires a customer-report setting; skipped when none exists.',
+    'GET /v1/customers/{id}/report/pdf' => 'Requires a customer-report setting; skipped when none exists.',
     'GET /v1/customers/{customerId}/report' => 'Requires a customer-report setting; skipped when none exists.',
 ];
 
@@ -61,9 +61,9 @@ $optionalEndpoints = [
  * incomplete rather than failed.
  */
 $knownBrokenUpstream = [
-    'GET /v1/users/terms/pending'        => 'Upstream returns HTTP 500 as of SYNAXON Marketplace API v1.9.2.',
-    'GET /v1/customers/suggestion'       => 'Upstream returns HTTP 500 as of SYNAXON Marketplace API v1.9.2.',
-    'GET /v1/lywand/targets/{id}'        => 'Upstream returns HTTP 500 as of SYNAXON Marketplace API v1.9.2.',
+    'GET /v1/users/terms/pending' => 'Upstream returns HTTP 500 as of SYNAXON Marketplace API v1.9.2.',
+    'GET /v1/customers/suggestion' => 'Upstream returns HTTP 500 as of SYNAXON Marketplace API v1.9.2.',
+    'GET /v1/lywand/targets/{id}' => 'Upstream returns HTTP 500 as of SYNAXON Marketplace API v1.9.2.',
 ];
 
 /**
@@ -72,11 +72,11 @@ $knownBrokenUpstream = [
  * so we skip them from the automated smoke suite with a clear note.
  */
 $nonJsonEndpoints = [
-    'GET /v1/sales-opportunities/csv'    => 'Returns CSV; requires targeted test fixture rather than a smoke call.',
-    'GET /v1/sales-opportunities/pdf'    => 'Returns PDF; requires targeted test fixture rather than a smoke call.',
-    'GET /v1/reports/pdf'                => 'Returns PDF; requires targeted test fixture rather than a smoke call.',
-    'GET /v1/customers/{id}/report/pdf'  => 'Returns PDF; requires targeted test fixture rather than a smoke call.',
-    'GET /v1/n-sight/sites/{id}/installer'   => 'Returns installer binary + requires OS query parameter.',
+    'GET /v1/sales-opportunities/csv' => 'Returns CSV; requires targeted test fixture rather than a smoke call.',
+    'GET /v1/sales-opportunities/pdf' => 'Returns PDF; requires targeted test fixture rather than a smoke call.',
+    'GET /v1/reports/pdf' => 'Returns PDF; requires targeted test fixture rather than a smoke call.',
+    'GET /v1/customers/{id}/report/pdf' => 'Returns PDF; requires targeted test fixture rather than a smoke call.',
+    'GET /v1/n-sight/sites/{id}/installer' => 'Returns installer binary + requires OS query parameter.',
     'GET /v1/sec-auditor/customers/{id}/installer' => 'Returns installer binary + requires OS query parameter.',
 ];
 
@@ -108,16 +108,16 @@ foreach (glob($resDir . '/*.php') ?: [] as $file) {
         }
         $params = array_map(
             static fn (ReflectionParameter $p): array => [
-                'name'        => $p->getName(),
-                'hasDefault'  => $p->isDefaultValueAvailable(),
-                'type'        => $p->getType() instanceof ReflectionNamedType ? $p->getType()->getName() : 'mixed',
+                'name' => $p->getName(),
+                'hasDefault' => $p->isDefaultValueAvailable(),
+                'type' => $p->getType() instanceof ReflectionNamedType ? $p->getType()->getName() : 'mixed',
             ],
             $m->getParameters()
         );
         $endpointToMethod[strtoupper($match[1]) . ' ' . $match[2]] = [
-            'class'   => $base,
-            'method'  => $m->getName(),
-            'params'  => $params,
+            'class' => $base,
+            'method' => $m->getName(),
+            'params' => $params,
         ];
     }
 }
@@ -134,8 +134,8 @@ foreach ((array) ($spec['paths'] ?? []) as $path => $obj) {
         continue;
     }
     $groups[$parts[1]][] = [
-        'path'    => $path,
-        'opId'    => (string) ($obj['get']['operationId'] ?? ''),
+        'path' => $path,
+        'opId' => (string) ($obj['get']['operationId'] ?? ''),
         'summary' => (string) ($obj['get']['summary'] ?? ''),
     ];
 }
@@ -148,7 +148,7 @@ $totalResources = 0;
 foreach ($groups as $group => $ops) {
     $className = studly($group) . 'ReadTest';
     $resourceMethod = camel($group);
-    $resourceClass  = studly($group) . 'Resource';
+    $resourceClass = studly($group) . 'Resource';
 
     // Build a map of parameterless GET endpoints in this group by their
     // path, so path-parameter endpoints can pull a sample ID from the
@@ -168,7 +168,7 @@ foreach ($groups as $group => $ops) {
     $testMethods = [];
     foreach ($ops as $op) {
         $endpointKey = 'GET ' . $op['path'];
-        $methodInfo  = $endpointToMethod[$endpointKey] ?? null;
+        $methodInfo = $endpointToMethod[$endpointKey] ?? null;
         $listEndpoint = resolveListEndpointFor($op['path'], $listByParent);
         $testMethods[] = renderTest(
             $group,
@@ -185,7 +185,7 @@ foreach ($groups as $group => $ops) {
     }
 
     $imports = [
-        "use miralsoft\\synaxon\\api\\Tests\\Integration\\IntegrationTestCase;",
+        'use miralsoft\\synaxon\\api\\Tests\\Integration\\IntegrationTestCase;',
     ];
 
     $hasPathParam = false;
@@ -249,6 +249,7 @@ function camel(string $name): string
  * for an exact match among the known parameterless endpoints.
  *
  * @param array<string, array{path:string,method:string}> $listByParent
+ *
  * @return array{path:string,method:string}|null
  */
 function resolveListEndpointFor(string $path, array $listByParent): ?array
@@ -282,13 +283,13 @@ function resolveListEndpointFor(string $path, array $listByParent): ?array
 }
 
 /**
- * @param array{path:string,opId:string,summary:string}         $op
+ * @param array{path:string,opId:string,summary:string} $op
  * @param array{class:string,method:string,params:list<array{name:string,hasDefault:bool,type:string}>}|null $methodInfo
- * @param array{path:string,method:string}|null                 $listEndpoint
- * @param array<string, string>                                 $knownSkips
- * @param array<string, string>                                 $optionalEndpoints
- * @param array<string, string>                                 $knownBrokenUpstream
- * @param array<string, string>                                 $nonJsonEndpoints
+ * @param array{path:string,method:string}|null $listEndpoint
+ * @param array<string, string> $knownSkips
+ * @param array<string, string> $optionalEndpoints
+ * @param array<string, string> $knownBrokenUpstream
+ * @param array<string, string> $nonJsonEndpoints
  */
 function renderTest(
     string $group,
@@ -302,7 +303,7 @@ function renderTest(
     array $nonJsonEndpoints,
 ): string {
     $endpointKey = 'GET ' . $op['path'];
-    $testName    = 'test' . studly($op['opId'] !== '' ? $op['opId'] : ($op['path'] . 'Get'));
+    $testName = 'test' . studly($op['opId'] !== '' ? $op['opId'] : ($op['path'] . 'Get'));
     // Ensure unique, PSR-friendly test names — sanitize and shorten.
     $testName = preg_replace('/[^A-Za-z0-9]+/', '', $testName) ?? $testName;
     if (strlen($testName) > 80) {
@@ -321,8 +322,8 @@ function renderTest(
              . "    public function {$testName}(): void\n"
              . "    {\n"
              . "        \$this->assertReadOnly('GET');\n"
-             . "        self::markTestSkipped(" . var_export($knownSkips[$endpointKey], true) . ");\n"
-             . "    }";
+             . '        self::markTestSkipped(' . var_export($knownSkips[$endpointKey], true) . ");\n"
+             . '    }';
     }
 
     if (isset($nonJsonEndpoints[$endpointKey])) {
@@ -330,8 +331,8 @@ function renderTest(
              . "    public function {$testName}(): void\n"
              . "    {\n"
              . "        \$this->assertReadOnly('GET');\n"
-             . "        self::markTestSkipped(" . var_export($nonJsonEndpoints[$endpointKey], true) . ");\n"
-             . "    }";
+             . '        self::markTestSkipped(' . var_export($nonJsonEndpoints[$endpointKey], true) . ");\n"
+             . '    }';
     }
 
     if ($methodInfo === null) {
@@ -340,7 +341,7 @@ function renderTest(
              . "    {\n"
              . "        \$this->assertReadOnly('GET');\n"
              . "        self::markTestSkipped('No PHP method is mapped to this endpoint (generator drift).');\n"
-             . "    }";
+             . '    }';
     }
 
     $brokenReason = $knownBrokenUpstream[$endpointKey] ?? null;
@@ -357,14 +358,14 @@ function renderTest(
         if (in_array($p['name'], $pathParams, true)) {
             $args[] = "\${$p['name']}";
         } elseif ($p['name'] === 'query') {
-            $args[] = "[]";
+            $args[] = '[]';
         } elseif ($p['name'] === 'body') {
-            $args[] = "null";
+            $args[] = 'null';
         } elseif ($p['hasDefault']) {
             // skip — default covers it
             continue;
         } else {
-            $args[] = "null";
+            $args[] = 'null';
         }
     }
     $callArgs = implode(', ', $args);
@@ -379,7 +380,7 @@ function renderTest(
              . "    {\n"
              . "        \$this->assertReadOnly('GET');\n"
              . $callBlock
-             . "    }";
+             . '    }';
     }
 
     // Path-param endpoint — sample an ID from the matching list endpoint.
@@ -389,7 +390,7 @@ function renderTest(
              . "    {\n"
              . "        \$this->assertReadOnly('GET');\n"
              . "        self::markTestSkipped('No list endpoint available in this resource to sample an ID from.');\n"
-             . "    }";
+             . '    }';
     }
 
     $listMethod = $listEndpoint['method'];
@@ -400,11 +401,11 @@ function renderTest(
           . "    {\n"
           . "        \$this->assertReadOnly('GET');\n"
           . "        \${$firstParam} = \$this->sampleId(\n"
-          . "            " . var_export($cacheKey, true) . ",\n"
+          . '            ' . var_export($cacheKey, true) . ",\n"
           . "            fn () => \$this->client->{$resourceMethod}()->{$listMethod}([\"limit\" => 1]),\n"
           . "        );\n"
           . $callBlock
-          . "    }";
+          . '    }';
 
     return $doc . $body;
 }
@@ -424,7 +425,7 @@ function renderInvocationBlock(
              . "            \$response = {$invocation};\n"
              . "            self::assertNotNull(\$response, 'Expected a non-null response from GET {$path}');\n"
              . "        } catch (\\miralsoft\\synaxon\\api\\Exception\\ServerException \$e) {\n"
-             . "            self::markTestIncomplete(" . var_export($brokenReason, true) . " . ' Last error: ' . \$e->getMessage());\n"
+             . '            self::markTestIncomplete(' . var_export($brokenReason, true) . " . ' Last error: ' . \$e->getMessage());\n"
              . "        }\n";
     }
 
@@ -433,7 +434,7 @@ function renderInvocationBlock(
              . "            \$response = {$invocation};\n"
              . "            self::assertNotNull(\$response, 'Expected a non-null response from GET {$path}');\n"
              . "        } catch (\\miralsoft\\synaxon\\api\\Exception\\NotFoundException) {\n"
-             . "            self::markTestSkipped(" . var_export($optionalReason, true) . ");\n"
+             . '            self::markTestSkipped(' . var_export($optionalReason, true) . ");\n"
              . "        }\n";
     }
 

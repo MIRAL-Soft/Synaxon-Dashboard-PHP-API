@@ -33,8 +33,8 @@ final class MockHttpClient implements HttpClientInterface
     public function request(string $method, string $path, array $options = []): array|null
     {
         $this->requests[] = [
-            'method'  => $method,
-            'path'    => $path,
+            'method' => $method,
+            'path' => $path,
             'options' => $options,
         ];
 

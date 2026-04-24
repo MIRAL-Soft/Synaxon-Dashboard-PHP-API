@@ -56,7 +56,7 @@ final class CustomersReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'customers:/v1/customers',
-            fn () => $this->client->customers()->list(["limit" => 1]),
+            fn () => $this->client->customers()->list(['limit' => 1]),
         );
         $response = $this->client->customers()->find($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/customers/{id}');
@@ -72,7 +72,7 @@ final class CustomersReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'customers:/v1/customers',
-            fn () => $this->client->customers()->list(["limit" => 1]),
+            fn () => $this->client->customers()->list(['limit' => 1]),
         );
         $response = $this->client->customers()->listReferences($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/customers/{id}/references');
@@ -88,7 +88,7 @@ final class CustomersReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $customerId = $this->sampleId(
             'customers:/v1/customers',
-            fn () => $this->client->customers()->list(["limit" => 1]),
+            fn () => $this->client->customers()->list(['limit' => 1]),
         );
         try {
             $response = $this->client->customers()->getCustomerReportSetting($customerId);

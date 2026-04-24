@@ -18,6 +18,17 @@ class UpdateNSightDashboardRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "name" field. The name of the dashboard
+     *
+     * @return static
+     */
+    public function withName(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('name', $value);
+    }
+
+    /**
      * First API key
      *
      * @return string|null
@@ -26,6 +37,17 @@ class UpdateNSightDashboardRequestDto extends AbstractDto
     {
         $v = $this->data['apiKey'] ?? null;
         return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "apiKey" field. First API key
+     *
+     * @return static
+     */
+    public function withApiKey(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('apiKey', $value);
     }
 
     /**
@@ -40,6 +62,17 @@ class UpdateNSightDashboardRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "apiKeyNetwork" field. Second API key, for network
+     *
+     * @return static
+     */
+    public function withApiKeyNetwork(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('apiKeyNetwork', $value);
+    }
+
+    /**
      * Default status of the dashboard, boolean
      *
      * @return bool|null
@@ -48,5 +81,16 @@ class UpdateNSightDashboardRequestDto extends AbstractDto
     {
         $v = $this->data['default'] ?? null;
         return $v === null ? null : (bool) $v;
+    }
+
+    /**
+     * Set the "default" field. Default status of the dashboard, boolean
+     *
+     * @return static
+     */
+    public function withDefault(?bool $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('default', $value);
     }
 }

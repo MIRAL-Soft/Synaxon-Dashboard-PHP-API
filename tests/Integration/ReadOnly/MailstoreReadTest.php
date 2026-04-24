@@ -40,7 +40,7 @@ final class MailstoreReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'mailstore:/v1/mailstore/journaling/mailboxes',
-            fn () => $this->client->mailstore()->listMailboxes(["limit" => 1]),
+            fn () => $this->client->mailstore()->listMailboxes(['limit' => 1]),
         );
         $response = $this->client->mailstore()->getMailboxById($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/mailstore/journaling/mailboxes/{id}');
@@ -80,7 +80,7 @@ final class MailstoreReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'mailstore:/v1/mailstore/instances',
-            fn () => $this->client->mailstore()->listInstances(["limit" => 1]),
+            fn () => $this->client->mailstore()->listInstances(['limit' => 1]),
         );
         $response = $this->client->mailstore()->getInstanceById($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/mailstore/instances/{id}');
@@ -96,7 +96,7 @@ final class MailstoreReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'mailstore:/v1/mailstore/instances',
-            fn () => $this->client->mailstore()->listInstances(["limit" => 1]),
+            fn () => $this->client->mailstore()->listInstances(['limit' => 1]),
         );
         $response = $this->client->mailstore()->getMailstoreInstanceMetrics($id, []);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/mailstore/instances/{id}/metrics');
@@ -148,7 +148,7 @@ final class MailstoreReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'mailstore:/v1/mailstore/profiles',
-            fn () => $this->client->mailstore()->listProfiles(["limit" => 1]),
+            fn () => $this->client->mailstore()->listProfiles(['limit' => 1]),
         );
         $response = $this->client->mailstore()->getProfileById($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/mailstore/profiles/{id}');
@@ -164,7 +164,7 @@ final class MailstoreReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'mailstore:/v1/mailstore/profiles',
-            fn () => $this->client->mailstore()->listProfiles(["limit" => 1]),
+            fn () => $this->client->mailstore()->listProfiles(['limit' => 1]),
         );
         $response = $this->client->mailstore()->listProfileResults($id, []);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/mailstore/profiles/{id}/results');

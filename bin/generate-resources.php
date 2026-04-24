@@ -19,9 +19,9 @@ declare(strict_types=1);
  *   php bin/generate-resources.php
  */
 
-$root      = dirname(__DIR__);
-$specPath  = $root . '/docs/openapi.json';
-$resDir    = $root . '/src/Resource';
+$root = dirname(__DIR__);
+$specPath = $root . '/docs/openapi.json';
+$resDir = $root . '/src/Resource';
 $clientDir = $root . '/src/Client';
 
 /** @var array<string, mixed> $spec */
@@ -53,14 +53,14 @@ foreach ($paths as $path => $pathObj) {
         $op = $pathObj[$m];
         $group = resourceGroup($path);
         $groups[$group][] = [
-            'path'        => $path,
-            'method'      => strtoupper($m),
+            'path' => $path,
+            'method' => strtoupper($m),
             'operationId' => (string) ($op['operationId'] ?? ''),
-            'summary'     => (string) ($op['summary'] ?? ''),
+            'summary' => (string) ($op['summary'] ?? ''),
             'description' => (string) ($op['description'] ?? ''),
-            'parameters'  => (array)  ($op['parameters'] ?? []),
+            'parameters' => (array)  ($op['parameters'] ?? []),
             'requestBody' => $op['requestBody'] ?? null,
-            'responses'   => (array)  ($op['responses'] ?? []),
+            'responses' => (array)  ($op['responses'] ?? []),
         ];
     }
     if (!$hasOp) {
@@ -73,7 +73,7 @@ ksort($groups);
 // Method-name disambiguation: collect used names per class
 foreach ($groups as $group => $ops) {
     $className = studly($group) . 'Resource';
-    $fileBody  = renderResource($className, $group, $ops);
+    $fileBody = renderResource($className, $group, $ops);
     file_put_contents($resDir . '/' . $className . '.php', $fileBody);
 }
 
@@ -83,8 +83,8 @@ file_put_contents($clientDir . '/SynaxonClient.php', renderClient(array_keys($gr
 file_put_contents(
     $root . '/config/generated-endpoints.json',
     json_encode([
-        'groups'      => array_map(static fn (array $g): int => count($g), $groups),
-        'total'       => array_sum(array_map('count', $groups)),
+        'groups' => array_map(static fn (array $g): int => count($g), $groups),
+        'total' => array_sum(array_map('count', $groups)),
         'empty_paths' => $emptyPaths,
     ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
 );
@@ -160,27 +160,32 @@ function renderResource(string $className, string $group, array $ops): string
  * Decide the PHP method name for a given operation.
  *
  * @param array<string, mixed> $op
+ *
  * @return array{name: string, semantic: string}
  */
 function methodNameFor(array $op, string $group): array
 {
-    $path   = (string) $op['path'];
+    $path = (string) $op['path'];
     $method = (string) $op['method'];
-    $opId   = (string) $op['operationId'];
+    $opId = (string) $op['operationId'];
 
     $after = trim(substr($path, strlen('/v1/' . $group)), '/');
     $hasIdParam = (bool) preg_match('/\{[^}]+\}/', $after);
 
     // Simple REST shapes
-    if ($after === '' && $method === 'GET')      return ['name' => 'list',   'semantic' => 'rest'];
-    if ($after === '' && $method === 'POST')     return ['name' => 'create', 'semantic' => 'rest'];
+    if ($after === '' && $method === 'GET') {
+        return ['name' => 'list',   'semantic' => 'rest'];
+    }
+    if ($after === '' && $method === 'POST') {
+        return ['name' => 'create', 'semantic' => 'rest'];
+    }
     if (preg_match('/^\{[^}]+\}$/', $after)) {
         return match ($method) {
-            'GET'    => ['name' => 'find',   'semantic' => 'rest'],
-            'PATCH'  => ['name' => 'update', 'semantic' => 'rest'],
-            'PUT'    => ['name' => 'replace','semantic' => 'rest'],
+            'GET' => ['name' => 'find',   'semantic' => 'rest'],
+            'PATCH' => ['name' => 'update', 'semantic' => 'rest'],
+            'PUT' => ['name' => 'replace','semantic' => 'rest'],
             'DELETE' => ['name' => 'delete', 'semantic' => 'rest'],
-            default  => ['name' => camel(lastSegment($opId)), 'semantic' => 'custom'],
+            default => ['name' => camel(lastSegment($opId)), 'semantic' => 'custom'],
         };
     }
 
@@ -210,18 +215,24 @@ function lastSegment(string $opId): string
  */
 function renderMethod(string $name, array $op, string $semantic): string
 {
-    $path   = (string) $op['path'];
+    $path = (string) $op['path'];
     $method = (string) $op['method'];
-    $opId   = (string) $op['operationId'];
+    $opId = (string) $op['operationId'];
     $summary = (string) ($op['summary'] ?? '');
     $description = (string) ($op['description'] ?? '');
 
-    $pathParams  = [];
+    $pathParams = [];
     $queryParams = [];
     foreach ((array) $op['parameters'] as $p) {
-        if (!is_array($p)) continue;
-        if (($p['in'] ?? '') === 'path')  $pathParams[]  = $p;
-        if (($p['in'] ?? '') === 'query') $queryParams[] = $p;
+        if (!is_array($p)) {
+            continue;
+        }
+        if (($p['in'] ?? '') === 'path') {
+            $pathParams[] = $p;
+        }
+        if (($p['in'] ?? '') === 'query') {
+            $queryParams[] = $p;
+        }
     }
 
     $args = [];
@@ -236,12 +247,12 @@ function renderMethod(string $name, array $op, string $semantic): string
     $hasBody = isset($op['requestBody']) && is_array($op['requestBody']);
     if ($hasBody) {
         $args[] = ['type' => '?array', 'name' => 'body', 'default' => 'null', 'source' => 'body'];
-        $phpdocParams[] = "@param array<string, mixed>|null \$body Request body.";
+        $phpdocParams[] = '@param array<string, mixed>|null $body Request body.';
     }
 
     if ($queryParams !== []) {
         $args[] = ['type' => 'array', 'name' => 'query', 'default' => '[]', 'source' => 'query'];
-        $phpdocParams[] = "@param array<string, scalar|array<int, scalar>> \$query Query parameters.";
+        $phpdocParams[] = '@param array<string, scalar|array<int, scalar>> $query Query parameters.';
     }
 
     $argStrings = [];
@@ -284,12 +295,18 @@ function renderMethod(string $name, array $op, string $semantic): string
 
     $doc = "    /**\n";
     $titleParts = [];
-    if ($summary !== '')     $titleParts[] = $summary;
-    if ($description !== '' && $description !== $summary) $titleParts[] = $description;
+    if ($summary !== '') {
+        $titleParts[] = $summary;
+    }
+    if ($description !== '' && $description !== $summary) {
+        $titleParts[] = $description;
+    }
     $title = trim(implode(' — ', $titleParts));
-    if ($title === '') $title = $opId;
+    if ($title === '') {
+        $title = $opId;
+    }
     $title = wordwrap($title, 100, "\n     * ");
-    $doc .= "     * " . $title . "\n";
+    $doc .= '     * ' . $title . "\n";
     $doc .= "     *\n";
     $doc .= "     * @synaxon-endpoint {$method} {$path}\n";
     $doc .= "     * @synaxon-operation-id {$opId}\n";
@@ -303,7 +320,7 @@ function renderMethod(string $name, array $op, string $semantic): string
         . "    public function {$name}(" . implode(', ', $argStrings) . "): array|null\n"
         . "    {\n"
         . "        return {$invocation};\n"
-        . "    }";
+        . '    }';
 }
 
 /**
@@ -315,26 +332,26 @@ function renderClient(array $groupKeys): string
 
     $factories = [];
     $properties = [];
-    $imports = ["use miralsoft\\synaxon\\api\\Http\\GuzzleHttpClient;",
-                "use miralsoft\\synaxon\\api\\Http\\HttpClientInterface;",
-                "use miralsoft\\synaxon\\api\\Config\\SynaxonConfig;",
-                "use Psr\\Log\\LoggerInterface;"];
+    $imports = ['use miralsoft\\synaxon\\api\\Http\\GuzzleHttpClient;',
+                'use miralsoft\\synaxon\\api\\Http\\HttpClientInterface;',
+                'use miralsoft\\synaxon\\api\\Config\\SynaxonConfig;',
+                'use Psr\\Log\\LoggerInterface;'];
     foreach ($groupKeys as $g) {
         $imports[] = 'use miralsoft\\synaxon\\api\\Resource\\' . studly($g) . 'Resource;';
     }
     sort($imports);
 
     foreach ($groupKeys as $g) {
-        $class  = studly($g) . 'Resource';
+        $class = studly($g) . 'Resource';
         $method = camel($g);
-        $prop   = $method;
+        $prop = $method;
         $properties[] = "    private ?{$class} \${$prop} = null;";
         $factories[] = <<<PHP
-    public function {$method}(): {$class}
-    {
-        return \$this->{$prop} ??= new {$class}(\$this->http);
-    }
-PHP;
+                public function {$method}(): {$class}
+                {
+                    return \$this->{$prop} ??= new {$class}(\$this->http);
+                }
+            PHP;
     }
 
     $header = "<?php\n\n"

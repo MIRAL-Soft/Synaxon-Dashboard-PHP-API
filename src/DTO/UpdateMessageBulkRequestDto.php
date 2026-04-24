@@ -17,6 +17,17 @@ class UpdateMessageBulkRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "ids" field. List of message ids
+     *
+     * @return static
+     */
+    public function withIds(?array $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('ids', $value);
+    }
+
+    /**
      * Mark message as read
      *
      * @return bool|null
@@ -25,6 +36,17 @@ class UpdateMessageBulkRequestDto extends AbstractDto
     {
         $v = $this->data['markedAsRead'] ?? null;
         return $v === null ? null : (bool) $v;
+    }
+
+    /**
+     * Set the "markedAsRead" field. Mark message as read
+     *
+     * @return static
+     */
+    public function withMarkedAsRead(?bool $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('markedAsRead', $value);
     }
 
     /**
@@ -39,6 +61,17 @@ class UpdateMessageBulkRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "starred" field. Stares the message
+     *
+     * @return static
+     */
+    public function withStarred(?bool $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('starred', $value);
+    }
+
+    /**
      * Marks the message as important
      *
      * @return bool|null
@@ -50,6 +83,17 @@ class UpdateMessageBulkRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "important" field. Marks the message as important
+     *
+     * @return static
+     */
+    public function withImportant(?bool $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('important', $value);
+    }
+
+    /**
      * Marks the message as deleted
      *
      * @return bool|null
@@ -58,5 +102,16 @@ class UpdateMessageBulkRequestDto extends AbstractDto
     {
         $v = $this->data['deleted'] ?? null;
         return $v === null ? null : (bool) $v;
+    }
+
+    /**
+     * Set the "deleted" field. Marks the message as deleted
+     *
+     * @return static
+     */
+    public function withDeleted(?bool $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('deleted', $value);
     }
 }

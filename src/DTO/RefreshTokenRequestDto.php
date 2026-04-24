@@ -15,4 +15,15 @@ class RefreshTokenRequestDto extends AbstractDto
     {
         return (string) $this->data['refreshToken'];
     }
+
+    /**
+     * Set the "refreshToken" field. Refresh token acquired from authentication
+     *
+     * @return static
+     */
+    public function withRefreshToken(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('refreshToken', $value);
+    }
 }

@@ -17,6 +17,17 @@ class DeployPatchesRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "status" field. Patch deployment status
+     *
+     * @return static
+     */
+    public function withStatus(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('status', $value);
+    }
+
+    /**
      * Site IDs
      *
      * @return list<string>
@@ -27,6 +38,17 @@ class DeployPatchesRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "siteIds" field. Site IDs
+     *
+     * @return static
+     */
+    public function withSiteIds(?array $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('siteIds', $value);
+    }
+
+    /**
      * Patch IDs
      *
      * @return list<float>
@@ -34,5 +56,16 @@ class DeployPatchesRequestDto extends AbstractDto
     public function getPatchIds(): array
     {
         return (array) ($this->data['patchIds'] ?? []);
+    }
+
+    /**
+     * Set the "patchIds" field. Patch IDs
+     *
+     * @return static
+     */
+    public function withPatchIds(?array $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('patchIds', $value);
     }
 }

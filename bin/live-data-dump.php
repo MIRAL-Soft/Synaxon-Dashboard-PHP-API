@@ -42,7 +42,7 @@ function probe(string $label, callable $fn, int $sampleItems = 1): void
             echo "  in {$ms}ms — paginated: {$total} total / showing first {$sampleItems}\n";
             $items = array_slice($r['data'], 0, $sampleItems);
             foreach ($items as $i => $item) {
-                echo "  --- item " . ($i + 1) . " ---\n";
+                echo '  --- item ' . ($i + 1) . " ---\n";
                 printAssoc($item, '    ');
             }
             return;
@@ -52,7 +52,7 @@ function probe(string $label, callable $fn, int $sampleItems = 1): void
             $total = count($r);
             echo "  in {$ms}ms — list of {$total} items / showing first {$sampleItems}\n";
             foreach (array_slice($r, 0, $sampleItems) as $i => $item) {
-                echo "  --- item " . ($i + 1) . " ---\n";
+                echo '  --- item ' . ($i + 1) . " ---\n";
                 printAssoc($item, '    ');
             }
             return;
@@ -61,8 +61,8 @@ function probe(string $label, callable $fn, int $sampleItems = 1): void
         echo "  in {$ms}ms — single object\n";
         printAssoc($r, '    ');
     } catch (Throwable $e) {
-        echo "  FAIL: " . get_class($e) . "\n";
-        echo "        " . $e->getMessage() . "\n";
+        echo '  FAIL: ' . get_class($e) . "\n";
+        echo '        ' . $e->getMessage() . "\n";
     }
 }
 

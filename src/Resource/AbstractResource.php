@@ -28,6 +28,7 @@ abstract class AbstractResource
 
     /**
      * @param array<string, scalar|array<int, scalar>> $query
+     *
      * @return array<string, mixed>|list<mixed>|null
      */
     protected function httpGet(string $path, array $query = []): array|null
@@ -38,6 +39,7 @@ abstract class AbstractResource
     /**
      * @param array<string, mixed>|null $body
      * @param array<string, scalar|array<int, scalar>> $query
+     *
      * @return array<string, mixed>|list<mixed>|null
      */
     protected function httpPost(string $path, ?array $body = null, array $query = []): array|null
@@ -48,6 +50,7 @@ abstract class AbstractResource
     /**
      * @param array<string, mixed>|null $body
      * @param array<string, scalar|array<int, scalar>> $query
+     *
      * @return array<string, mixed>|list<mixed>|null
      */
     protected function httpPut(string $path, ?array $body = null, array $query = []): array|null
@@ -58,6 +61,7 @@ abstract class AbstractResource
     /**
      * @param array<string, mixed>|null $body
      * @param array<string, scalar|array<int, scalar>> $query
+     *
      * @return array<string, mixed>|list<mixed>|null
      */
     protected function httpPatch(string $path, ?array $body = null, array $query = []): array|null
@@ -67,6 +71,7 @@ abstract class AbstractResource
 
     /**
      * @param array<string, scalar|array<int, scalar>> $query
+     *
      * @return array<string, mixed>|list<mixed>|null
      */
     protected function httpDelete(string $path, array $query = []): array|null

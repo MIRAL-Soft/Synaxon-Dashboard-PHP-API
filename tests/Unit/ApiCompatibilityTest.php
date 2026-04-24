@@ -41,7 +41,7 @@ final class ApiCompatibilityTest extends TestCase
         $specPath = dirname(__DIR__, 2) . '/docs/openapi.json';
         /** @var array<string, mixed> $spec */
         $spec = json_decode((string) file_get_contents($specPath), true, 512, JSON_THROW_ON_ERROR);
-        $expected    = self::collectSpecEndpoints((array) ($spec['paths'] ?? []));
+        $expected = self::collectSpecEndpoints((array) ($spec['paths'] ?? []));
         $implemented = self::collectImplementedEndpoints();
 
         $orphaned = array_values(array_diff($implemented, $expected));
@@ -54,6 +54,7 @@ final class ApiCompatibilityTest extends TestCase
 
     /**
      * @param array<string, mixed> $paths
+     *
      * @return list<string> e.g. "GET /v1/audit/logs"
      */
     private static function collectSpecEndpoints(array $paths): array

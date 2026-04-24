@@ -40,7 +40,7 @@ final class LayoutReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'layout:/v1/layout/dashboards',
-            fn () => $this->client->layout()->listDashboardLayouts(["limit" => 1]),
+            fn () => $this->client->layout()->listDashboardLayouts(['limit' => 1]),
         );
         $response = $this->client->layout()->getDashboardLayout($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/layout/dashboards/{id}');

@@ -18,6 +18,17 @@ class CreateNSightSiteRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "customerId" field. The id of the customer
+     *
+     * @return static
+     */
+    public function withCustomerId(?float $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('customerId', $value);
+    }
+
+    /**
      * The id of the client
      *
      * @return string
@@ -28,6 +39,17 @@ class CreateNSightSiteRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "clientId" field. The id of the client
+     *
+     * @return static
+     */
+    public function withClientId(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('clientId', $value);
+    }
+
+    /**
      * The name of the site
      *
      * @return string
@@ -35,5 +57,16 @@ class CreateNSightSiteRequestDto extends AbstractDto
     public function getName(): string
     {
         return (string) $this->data['name'];
+    }
+
+    /**
+     * Set the "name" field. The name of the site
+     *
+     * @return static
+     */
+    public function withName(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('name', $value);
     }
 }

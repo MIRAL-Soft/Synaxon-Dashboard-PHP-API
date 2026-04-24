@@ -18,6 +18,17 @@ class UpdateEsetPartnerRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "protectRegion" field. ESET PROTECT region
+     *
+     * @return static
+     */
+    public function withProtectRegion(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('protectRegion', $value);
+    }
+
+    /**
      * Management type of the partner
      *
      * @return string|null
@@ -26,5 +37,16 @@ class UpdateEsetPartnerRequestDto extends AbstractDto
     {
         $v = $this->data['managementType'] ?? null;
         return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "managementType" field. Management type of the partner
+     *
+     * @return static
+     */
+    public function withManagementType(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('managementType', $value);
     }
 }

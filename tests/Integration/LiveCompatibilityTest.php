@@ -44,10 +44,10 @@ final class LiveCompatibilityTest extends TestCase
         $spec = self::extractSpec($body);
         self::assertNotEmpty($spec, 'Could not extract swaggerDoc from live JS bundle.');
 
-        $expected    = self::collectSpecEndpoints((array) ($spec['paths'] ?? []));
+        $expected = self::collectSpecEndpoints((array) ($spec['paths'] ?? []));
         $implemented = self::collectImplementedEndpoints();
 
-        $missing  = array_values(array_diff($expected, $implemented));
+        $missing = array_values(array_diff($expected, $implemented));
         $orphaned = array_values(array_diff($implemented, $expected));
 
         if ($missing !== [] || $orphaned !== []) {
@@ -74,7 +74,7 @@ final class LiveCompatibilityTest extends TestCase
         }
         $start = $pos + strlen($marker);
         $depth = 0;
-        $end   = $start;
+        $end = $start;
         for ($i = $start, $n = strlen($js); $i < $n; $i++) {
             $ch = $js[$i];
             if ($ch === '{') {
@@ -102,6 +102,7 @@ final class LiveCompatibilityTest extends TestCase
 
     /**
      * @param array<string, mixed> $paths
+     *
      * @return list<string>
      */
     private static function collectSpecEndpoints(array $paths): array

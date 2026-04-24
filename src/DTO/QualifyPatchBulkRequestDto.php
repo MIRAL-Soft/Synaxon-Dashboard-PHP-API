@@ -17,6 +17,17 @@ class QualifyPatchBulkRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "status" field. Patch qualification status
+     *
+     * @return static
+     */
+    public function withStatus(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('status', $value);
+    }
+
+    /**
      * Patch qualification reason
      *
      * @return string|null
@@ -25,6 +36,17 @@ class QualifyPatchBulkRequestDto extends AbstractDto
     {
         $v = $this->data['reason'] ?? null;
         return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "reason" field. Patch qualification reason
+     *
+     * @return static
+     */
+    public function withReason(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('reason', $value);
     }
 
     /**
@@ -39,6 +61,17 @@ class QualifyPatchBulkRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "url" field. Patch qualification url
+     *
+     * @return static
+     */
+    public function withUrl(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('url', $value);
+    }
+
+    /**
      * Patch-IDs
      *
      * @return list<string>
@@ -46,5 +79,16 @@ class QualifyPatchBulkRequestDto extends AbstractDto
     public function getPatches(): array
     {
         return (array) ($this->data['patches'] ?? []);
+    }
+
+    /**
+     * Set the "patches" field. Patch-IDs
+     *
+     * @return static
+     */
+    public function withPatches(?array $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('patches', $value);
     }
 }

@@ -28,7 +28,7 @@ if (isset($opts['help'])) {
     exit(0);
 }
 
-$useLive  = array_key_exists('live', $opts);
+$useLive = array_key_exists('live', $opts);
 $snapshot = array_key_exists('snapshot', $opts);
 
 try {
@@ -41,45 +41,45 @@ try {
 $expectedEndpoints = collectSpecEndpoints((array) ($spec['paths'] ?? []));
 $implementedEndpoints = collectImplementedEndpoints((string) $config['resource_dir']);
 
-$expectedSchemas    = array_keys((array) ($spec['components']['schemas'] ?? []));
+$expectedSchemas = array_keys((array) ($spec['components']['schemas'] ?? []));
 $implementedSchemas = collectImplementedSchemas(dirname(__DIR__) . '/src/DTO');
 
-$missingEndpoints  = array_values(array_diff($expectedEndpoints, $implementedEndpoints));
+$missingEndpoints = array_values(array_diff($expectedEndpoints, $implementedEndpoints));
 $orphanedEndpoints = array_values(array_diff($implementedEndpoints, $expectedEndpoints));
-$missingSchemas    = array_values(array_diff($expectedSchemas, $implementedSchemas));
-$orphanedSchemas   = array_values(array_diff($implementedSchemas, $expectedSchemas));
+$missingSchemas = array_values(array_diff($expectedSchemas, $implementedSchemas));
+$orphanedSchemas = array_values(array_diff($implementedSchemas, $expectedSchemas));
 
 renderReport($spec, [
-    'mode'              => $useLive ? 'live' : 'local',
-    'expected'          => count($expectedEndpoints),
-    'implemented'       => count($implementedEndpoints),
+    'mode' => $useLive ? 'live' : 'local',
+    'expected' => count($expectedEndpoints),
+    'implemented' => count($implementedEndpoints),
     'missing_endpoints' => $missingEndpoints,
-    'orphaned_endpoints'=> $orphanedEndpoints,
-    'expected_schemas'    => count($expectedSchemas),
+    'orphaned_endpoints' => $orphanedEndpoints,
+    'expected_schemas' => count($expectedSchemas),
     'implemented_schemas' => count($implementedSchemas),
-    'missing_schemas'   => $missingSchemas,
-    'orphaned_schemas'  => $orphanedSchemas,
+    'missing_schemas' => $missingSchemas,
+    'orphaned_schemas' => $orphanedSchemas,
 ]);
 
 if ($snapshot) {
     $path = (string) $config['snapshot_path'];
-    $dir  = dirname($path);
+    $dir = dirname($path);
     if (!is_dir($dir)) {
         mkdir($dir, 0o755, true);
     }
     file_put_contents($path, json_encode([
-        'generated_at'      => date(DATE_ATOM),
-        'mode'              => $useLive ? 'live' : 'local',
-        'spec_title'        => $spec['info']['title'] ?? null,
-        'spec_version'      => $spec['info']['version'] ?? null,
-        'expected_endpoints'    => $expectedEndpoints,
+        'generated_at' => date(DATE_ATOM),
+        'mode' => $useLive ? 'live' : 'local',
+        'spec_title' => $spec['info']['title'] ?? null,
+        'spec_version' => $spec['info']['version'] ?? null,
+        'expected_endpoints' => $expectedEndpoints,
         'implemented_endpoints' => $implementedEndpoints,
-        'missing_endpoints'     => $missingEndpoints,
-        'orphaned_endpoints'    => $orphanedEndpoints,
-        'expected_schemas'      => $expectedSchemas,
-        'implemented_schemas'   => $implementedSchemas,
-        'missing_schemas'       => $missingSchemas,
-        'orphaned_schemas'      => $orphanedSchemas,
+        'missing_endpoints' => $missingEndpoints,
+        'orphaned_endpoints' => $orphanedEndpoints,
+        'expected_schemas' => $expectedSchemas,
+        'implemented_schemas' => $implementedSchemas,
+        'missing_schemas' => $missingSchemas,
+        'orphaned_schemas' => $orphanedSchemas,
     ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     fwrite(STDOUT, "Snapshot written to: {$path}\n");
 }
@@ -110,7 +110,7 @@ function loadLocalSpec(string $path): array
 function loadLiveSpec(string $url): array
 {
     $client = new GuzzleHttp\Client(['timeout' => 30]);
-    $body   = $client->request('GET', $url)->getBody()->getContents();
+    $body = $client->request('GET', $url)->getBody()->getContents();
 
     $marker = '"swaggerDoc":';
     $pos = strpos($body, $marker);
@@ -119,7 +119,7 @@ function loadLiveSpec(string $url): array
     }
     $start = $pos + strlen($marker);
     $depth = 0;
-    $end   = $start;
+    $end = $start;
     for ($i = $start, $n = strlen($body); $i < $n; $i++) {
         $ch = $body[$i];
         if ($ch === '{') {
@@ -142,6 +142,7 @@ function loadLiveSpec(string $url): array
 
 /**
  * @param array<string, mixed> $paths
+ *
  * @return list<string>
  */
 function collectSpecEndpoints(array $paths): array
@@ -219,7 +220,7 @@ function collectImplementedSchemas(string $dir): array
  */
 function renderReport(array $spec, array $report): void
 {
-    $title   = (string) ($spec['info']['title']   ?? 'unknown');
+    $title = (string) ($spec['info']['title'] ?? 'unknown');
     $version = (string) ($spec['info']['version'] ?? 'unknown');
 
     fwrite(STDOUT, "\n=== SYNAXON API compatibility report ({$report['mode']}) ===\n");

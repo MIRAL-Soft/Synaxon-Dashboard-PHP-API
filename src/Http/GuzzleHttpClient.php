@@ -71,11 +71,11 @@ final class GuzzleHttpClient implements HttpClientInterface
         ?LoggerInterface $logger = null,
     ) {
         $this->client = $client ?? new Client([
-            'base_uri'        => $config->getBaseUri() . '/',
-            'timeout'         => $config->getTimeout(),
+            'base_uri' => $config->getBaseUri() . '/',
+            'timeout' => $config->getTimeout(),
             'connect_timeout' => $config->getConnectTimeout(),
-            'http_errors'     => false,
-            'verify'          => true,
+            'http_errors' => false,
+            'verify' => true,
         ]);
         $this->logger = $logger ?? new NullLogger();
     }
@@ -161,7 +161,7 @@ final class GuzzleHttpClient implements HttpClientInterface
     private function defaultHeaders(): array
     {
         $headers = [
-            'Accept'     => 'application/json',
+            'Accept' => 'application/json',
             'User-Agent' => $this->config->getUserAgent(),
         ];
 
@@ -200,7 +200,7 @@ final class GuzzleHttpClient implements HttpClientInterface
         $contentType = strtolower(trim(explode(';', $response->getHeaderLine('Content-Type'))[0] ?? ''));
         if ($contentType !== '' && !str_contains($contentType, 'json')) {
             return [
-                '_raw'         => $body,
+                '_raw' => $body,
                 '_contentType' => $contentType,
             ];
         }
@@ -249,16 +249,16 @@ final class GuzzleHttpClient implements HttpClientInterface
 
         // Exponential backoff with jitter, capped to MAX_BACKOFF_SECONDS so
         // the call cannot block indefinitely if maxRetries is set high.
-        $baseMs   = 200 * (2 ** min($attempt - 1, 10));
+        $baseMs = 200 * (2 ** min($attempt - 1, 10));
         $jitterMs = random_int(0, 100);
-        $totalMs  = min($baseMs + $jitterMs, self::MAX_BACKOFF_SECONDS * 1000);
+        $totalMs = min($baseMs + $jitterMs, self::MAX_BACKOFF_SECONDS * 1000);
         usleep($totalMs * 1000);
     }
 
     private function mapError(ResponseInterface $response, string $method, string $uri): SynaxonApiException
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
+        $body = (string) $response->getBody();
         $decoded = [];
 
         if ($body !== '') {
@@ -284,23 +284,24 @@ final class GuzzleHttpClient implements HttpClientInterface
         $bodyForContext = $decoded !== [] ? $decoded : self::truncateBody($body);
 
         $context = [
-            'method'    => $method,
-            'uri'       => $uri,
-            'status'    => $status,
-            'body'      => $bodyForContext,
+            'method' => $method,
+            'uri' => $uri,
+            'status' => $status,
+            'body' => $bodyForContext,
+            'correlation_id' => self::extractCorrelationId($response, $decoded),
         ];
 
         return match (true) {
             $status === 401 || $status === 403 => new AuthenticationException($message, $status, null, $context),
-            $status === 404                    => new NotFoundException($message, $status, null, $context),
-            $status === 429                    => new RateLimitException($message, $status, null, array_merge($context, [
+            $status === 404 => new NotFoundException($message, $status, null, $context),
+            $status === 429 => new RateLimitException($message, $status, null, array_merge($context, [
                 'retry_after' => (int) $response->getHeaderLine('Retry-After'),
             ])),
             $status === 400 || $status === 422 => new ValidationException($message, $status, null, array_merge($context, [
                 'errors' => $decoded['errors'] ?? $decoded['error'] ?? [],
             ])),
-            $status >= 500 && $status < 600    => new ServerException($message, $status, null, $context),
-            default                            => new SynaxonApiException($message, $status, null, $context),
+            $status >= 500 && $status < 600 => new ServerException($message, $status, null, $context),
+            default => new SynaxonApiException($message, $status, null, $context),
         };
     }
 
@@ -312,6 +313,28 @@ final class GuzzleHttpClient implements HttpClientInterface
         return substr($body, 0, self::MAX_ERROR_BODY_BYTES) . '... [truncated]';
     }
 
+    /**
+     * Extract Synaxon's correlation ID from an error response. Synaxon sends
+     * it both as a "correlationId" field in the JSON body and (sometimes)
+     * as an "X-Correlation-Id" header. We probe both.
+     *
+     * @param array<string, mixed> $decoded
+     */
+    private static function extractCorrelationId(ResponseInterface $response, array $decoded): ?string
+    {
+        $fromBody = $decoded['correlationId'] ?? null;
+        if (is_string($fromBody) && $fromBody !== '') {
+            return $fromBody;
+        }
+        foreach (['X-Correlation-Id', 'X-Request-Id'] as $headerName) {
+            $value = $response->getHeaderLine($headerName);
+            if ($value !== '') {
+                return $value;
+            }
+        }
+        return null;
+    }
+
     private function logAttempt(
         string $method,
         string $uri,
@@ -320,11 +343,11 @@ final class GuzzleHttpClient implements HttpClientInterface
         ?Throwable $error = null,
     ): void {
         $this->logger->debug('synaxon.request', [
-            'method'  => $method,
-            'uri'     => $uri,
+            'method' => $method,
+            'uri' => $uri,
             'attempt' => $attempt,
-            'status'  => $status,
-            'error'   => $error?->getMessage(),
+            'status' => $status,
+            'error' => $error?->getMessage(),
         ]);
     }
 
@@ -334,6 +357,7 @@ final class GuzzleHttpClient implements HttpClientInterface
      * without leaking credentials.
      *
      * @param array<string, string> $headers
+     *
      * @return array<string, string>
      */
     public static function redactHeaders(array $headers): array

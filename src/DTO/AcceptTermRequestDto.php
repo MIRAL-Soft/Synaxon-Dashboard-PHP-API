@@ -13,4 +13,15 @@ class AcceptTermRequestDto extends AbstractDto
     {
         return (array) ($this->data['terms'] ?? []);
     }
+
+    /**
+     * Set the "terms" field.
+     *
+     * @return static
+     */
+    public function withTerms(?array $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('terms', $value);
+    }
 }

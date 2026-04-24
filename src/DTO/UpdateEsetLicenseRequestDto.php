@@ -15,4 +15,15 @@ class UpdateEsetLicenseRequestDto extends AbstractDto
     {
         return (float) $this->data['quantity'];
     }
+
+    /**
+     * Set the "quantity" field. Quantity
+     *
+     * @return static
+     */
+    public function withQuantity(?float $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('quantity', $value);
+    }
 }

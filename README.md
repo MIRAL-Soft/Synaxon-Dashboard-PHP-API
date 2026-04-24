@@ -251,12 +251,18 @@ use miralsoft\synaxon\api\Exception\RateLimitException;
 
 try {
     $customer = $client->customers()->find('xyz');
-} catch (NotFoundException) {
-    // ...
+} catch (NotFoundException $e) {
+    // Forward the correlation ID to support to make a bug report actionable:
+    error_log('Customer not found, correlationId=' . $e->getCorrelationId());
 } catch (RateLimitException $e) {
     sleep($e->getRetryAfter() ?? 1);
 }
 ```
+
+Every `SynaxonApiException` exposes `getCorrelationId(): ?string`. The
+library extracts it from the `correlationId` field in the API's error
+JSON body and (as a fallback) from the `X-Correlation-Id` /
+`X-Request-Id` response headers.
 
 The client retries `429` and `5xx` responses with exponential backoff plus
 jitter (`maxRetries` controls the upper bound, default 3). 4xx errors other
@@ -295,10 +301,28 @@ payload and provide:
 * `toJson(): string` (throws `JsonException` on failure)
 * `jsonSerialize(): array` (`JsonSerializable`)
 * `getRaw(string $field): mixed`
+* `with(string $field, mixed $value): static` (immutable update)
+* `withAll(array $patch): static` (immutable batch update)
 * Typed getters per declared field
 
 DTOs are tolerant of unknown fields — extra keys passed in `$data` are
 preserved. Missing optional fields return `null` from their getter.
+
+### Builder pattern for request DTOs
+
+Every `*RequestDto` class additionally exposes typed `with*()` setters
+that return a **new instance** on each call (immutability):
+
+```php
+use miralsoft\synaxon\api\DTO\CreateCustomerRequestDto;
+
+$payload = (new CreateCustomerRequestDto())
+    ->withName('Acme GmbH')
+    ->withCustomerNumber('12345')
+    ->withEmail('info@acme.test');
+
+$client->customers()->create($payload->toArray());
+```
 
 ---
 
@@ -326,6 +350,19 @@ The same logic is mirrored in two PHPUnit tests:
 * `tests/Integration/LiveCompatibilityTest.php` — runs only when integration
   tests are enabled (see below)
 
+## Examples
+
+The [`examples/`](examples/) folder contains five self-contained scripts
+covering the most common usage patterns:
+
+| Script | What it does |
+| ------ | ------------ |
+| `01-quickstart.php`     | Bearer-token client + `whoAmI()` |
+| `02-list-customers.php` | List customers + DTO hydration |
+| `03-pagination.php`     | Walk all pages with `PaginationIterator` |
+| `04-error-handling.php` | Typed exception hierarchy + `getCorrelationId()` |
+| `05-builder-pattern.php` | Immutable fluent `with*()` setters on request DTOs |
+
 ## Developer diagnostic: live data dump
 
 For a quick human-readable sample of what each resource returns live,
@@ -351,7 +388,13 @@ composer test                  # unit tests only — never touches the network
 composer analyse               # PHPStan level 8
 composer test:integration      # live read-only smoke tests (opt-in)
 composer test:all              # unit + integration
+composer fmt                   # apply PHP-CS-Fixer to source + tests + examples
+composer fmt:check             # report style violations without changing files
+composer ci                    # one-shot: fmt:check + analyse + test
 ```
+
+GitHub Actions runs the same `composer ci` chain on every push and pull
+request against PHP 8.3 and 8.4 — see `.github/workflows/ci.yml`.
 
 ### Integration tests
 

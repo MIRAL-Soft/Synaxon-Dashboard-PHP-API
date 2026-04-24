@@ -16,4 +16,15 @@ class UpdateAcronisCustomerRequestDto extends AbstractDto
         $v = $this->data['customerId'] ?? null;
         return $v === null ? null : (float) $v;
     }
+
+    /**
+     * Set the "customerId" field. Customer id of customer file
+     *
+     * @return static
+     */
+    public function withCustomerId(?float $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('customerId', $value);
+    }
 }

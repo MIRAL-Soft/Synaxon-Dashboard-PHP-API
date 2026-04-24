@@ -18,6 +18,17 @@ class UpdateSupportQueryRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "rating" field. The rating of the chatbot response
+     *
+     * @return static
+     */
+    public function withRating(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('rating', $value);
+    }
+
+    /**
      * The reason for a negative rating (required when rating is negative)
      *
      * @return string|null
@@ -29,6 +40,17 @@ class UpdateSupportQueryRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "ratingReason" field. The reason for a negative rating (required when rating is negative)
+     *
+     * @return static
+     */
+    public function withRatingReason(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('ratingReason', $value);
+    }
+
+    /**
      * Optional free text comment for the rating
      *
      * @return string|null
@@ -37,5 +59,16 @@ class UpdateSupportQueryRequestDto extends AbstractDto
     {
         $v = $this->data['ratingComment'] ?? null;
         return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "ratingComment" field. Optional free text comment for the rating
+     *
+     * @return static
+     */
+    public function withRatingComment(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('ratingComment', $value);
     }
 }

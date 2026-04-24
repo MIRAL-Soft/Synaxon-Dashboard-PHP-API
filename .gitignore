@@ -10,6 +10,9 @@ phpunit.xml.dist.bak
 # PHPStan
 .phpstan-cache/
 
+# PHP-CS-Fixer
+.php-cs-fixer.cache
+
 # Build / coverage artefacts
 /build/
 /coverage/

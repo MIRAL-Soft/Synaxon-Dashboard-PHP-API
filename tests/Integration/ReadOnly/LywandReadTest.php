@@ -63,7 +63,7 @@ final class LywandReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'lywand:/v1/lywand/customers',
-            fn () => $this->client->lywand()->listLywandCustomers(["limit" => 1]),
+            fn () => $this->client->lywand()->listLywandCustomers(['limit' => 1]),
         );
         $response = $this->client->lywand()->getLywandCustomer($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/lywand/customers/{id}');
@@ -79,7 +79,7 @@ final class LywandReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'lywand:/v1/lywand/customers',
-            fn () => $this->client->lywand()->listLywandCustomers(["limit" => 1]),
+            fn () => $this->client->lywand()->listLywandCustomers(['limit' => 1]),
         );
         $response = $this->client->lywand()->getLywandCustomerMetrics($id, []);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/lywand/customers/{id}/metrics');
@@ -95,7 +95,7 @@ final class LywandReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'lywand:/v1/lywand/customers',
-            fn () => $this->client->lywand()->listLywandCustomers(["limit" => 1]),
+            fn () => $this->client->lywand()->listLywandCustomers(['limit' => 1]),
         );
         $response = $this->client->lywand()->getLywandInstallationToken($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/lywand/customers/{id}/token');
@@ -123,7 +123,7 @@ final class LywandReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'lywand:/v1/lywand/targets',
-            fn () => $this->client->lywand()->listLywandTargets(["limit" => 1]),
+            fn () => $this->client->lywand()->listLywandTargets(['limit' => 1]),
         );
         try {
             $response = $this->client->lywand()->getLywandTarget($id);

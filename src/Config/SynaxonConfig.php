@@ -124,11 +124,11 @@ final class SynaxonConfig
             bearerToken:    self::cfgString($cfg, 'bearerToken'),
             basicUser:      self::cfgString($cfg, 'basicUser'),
             basicPass:      self::cfgString($cfg, 'basicPass'),
-            baseUri:        self::cfgString($cfg, 'baseUri')        ?? self::DEFAULT_BASE_URI,
-            timeout:        self::cfgInt($cfg, 'timeout',        30),
+            baseUri:        self::cfgString($cfg, 'baseUri') ?? self::DEFAULT_BASE_URI,
+            timeout:        self::cfgInt($cfg, 'timeout', 30),
             connectTimeout: self::cfgInt($cfg, 'connectTimeout', 10),
-            maxRetries:     self::cfgInt($cfg, 'maxRetries',     3),
-            userAgent:      self::cfgString($cfg, 'userAgent')      ?? self::DEFAULT_USER_AGENT,
+            maxRetries:     self::cfgInt($cfg, 'maxRetries', 3),
+            userAgent:      self::cfgString($cfg, 'userAgent') ?? self::DEFAULT_USER_AGENT,
         );
     }
 
@@ -221,12 +221,12 @@ final class SynaxonConfig
         }
 
         return [
-            'baseUri'        => $this->getBaseUri(),
-            'auth'           => $auth,
-            'timeout'        => $this->timeout,
+            'baseUri' => $this->getBaseUri(),
+            'auth' => $auth,
+            'timeout' => $this->timeout,
             'connectTimeout' => $this->connectTimeout,
-            'maxRetries'     => $this->maxRetries,
-            'userAgent'      => $this->userAgent,
+            'maxRetries' => $this->maxRetries,
+            'userAgent' => $this->userAgent,
         ];
     }
 

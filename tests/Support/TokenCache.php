@@ -71,9 +71,9 @@ final class TokenCache
             return null;
         }
 
-        $token   = $data['access_token'] ?? null;
-        $expires = $data['expires_at']   ?? null;
-        $cachedBase = $data['base_uri']  ?? null;
+        $token = $data['access_token'] ?? null;
+        $expires = $data['expires_at'] ?? null;
+        $cachedBase = $data['base_uri'] ?? null;
 
         if (!is_string($token) || $token === '') {
             return null;
@@ -108,15 +108,15 @@ final class TokenCache
         /** @var array<string, mixed>|null $response */
         $response = $client->auth()->getApiToken([
             'grant_type' => 'client_credentials',
-            'scope'      => $scope,
+            'scope' => $scope,
         ]);
 
         if (!is_array($response)) {
             throw new RuntimeException('POST /v1/auth/token returned no JSON body');
         }
 
-        $token   = $response['access_token'] ?? null;
-        $expires = $response['expires_in']   ?? 3600;
+        $token = $response['access_token'] ?? null;
+        $expires = $response['expires_in'] ?? 3600;
 
         if (!is_string($token) || $token === '') {
             throw new RuntimeException('POST /v1/auth/token returned no access_token field');
@@ -126,8 +126,8 @@ final class TokenCache
 
         $payload = [
             'access_token' => $token,
-            'expires_at'   => time() + $expiresIn,
-            'base_uri'     => $basicConfig->getBaseUri(),
+            'expires_at' => time() + $expiresIn,
+            'base_uri' => $basicConfig->getBaseUri(),
         ];
 
         $dir = dirname(self::CACHE_FILE);

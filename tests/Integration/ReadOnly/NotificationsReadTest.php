@@ -64,7 +64,7 @@ final class NotificationsReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'notifications:/v1/notifications',
-            fn () => $this->client->notifications()->list(["limit" => 1]),
+            fn () => $this->client->notifications()->list(['limit' => 1]),
         );
         $response = $this->client->notifications()->find($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/notifications/{id}');

@@ -52,7 +52,7 @@ final class EsetReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'eset:/v1/eset/partners',
-            fn () => $this->client->eset()->listEsetPartners(["limit" => 1]),
+            fn () => $this->client->eset()->listEsetPartners(['limit' => 1]),
         );
         $response = $this->client->eset()->getEsetPartnerMetrics($id, []);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/eset/partners/{id}/metrics');
@@ -80,7 +80,7 @@ final class EsetReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'eset:/v1/eset/customers',
-            fn () => $this->client->eset()->listEsetCustomers(["limit" => 1]),
+            fn () => $this->client->eset()->listEsetCustomers(['limit' => 1]),
         );
         $response = $this->client->eset()->getEsetCustomer($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/eset/customers/{id}');
@@ -96,7 +96,7 @@ final class EsetReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'eset:/v1/eset/customers',
-            fn () => $this->client->eset()->listEsetCustomers(["limit" => 1]),
+            fn () => $this->client->eset()->listEsetCustomers(['limit' => 1]),
         );
         $response = $this->client->eset()->getEsetCustomerMetrics($id, []);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/eset/customers/{id}/metrics');
@@ -124,7 +124,7 @@ final class EsetReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'eset:/v1/eset/licenses',
-            fn () => $this->client->eset()->listEsetLicenses(["limit" => 1]),
+            fn () => $this->client->eset()->listEsetLicenses(['limit' => 1]),
         );
         $response = $this->client->eset()->getEsetLicense($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/eset/licenses/{id}');

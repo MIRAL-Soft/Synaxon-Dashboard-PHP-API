@@ -21,6 +21,7 @@ use IteratorAggregate;
  * spin forever.
  *
  * @template T
+ *
  * @implements IteratorAggregate<int, T>
  */
 final class PaginationIterator implements IteratorAggregate

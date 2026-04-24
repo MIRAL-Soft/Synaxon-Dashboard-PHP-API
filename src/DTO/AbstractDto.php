@@ -68,4 +68,35 @@ abstract class AbstractDto implements JsonSerializable
     {
         return $this->data;
     }
+
+    /**
+     * Immutable update: return a copy of this DTO with $field set to $value.
+     *
+     * Used by the generated typed `with*()` methods on request DTOs to build
+     * payloads in a fluent, side-effect-free style.
+     *
+     *     $dto = (new CreateCustomerRequestDto())
+     *         ->withName('Foo')
+     *         ->withCustomerNumber('12345');
+     */
+    public function with(string $field, mixed $value): static
+    {
+        $copy = clone $this;
+        $copy->data[$field] = $value;
+        return $copy;
+    }
+
+    /**
+     * Immutable update of multiple fields at once.
+     *
+     * @param array<string, mixed> $patch
+     */
+    public function withAll(array $patch): static
+    {
+        $copy = clone $this;
+        foreach ($patch as $k => $v) {
+            $copy->data[$k] = $v;
+        }
+        return $copy;
+    }
 }

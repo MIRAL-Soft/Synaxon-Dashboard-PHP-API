@@ -40,7 +40,7 @@ final class SecAuditorReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'sec-auditor:/v1/sec-auditor/customers',
-            fn () => $this->client->secAuditor()->listSecAuditorCustomers(["limit" => 1]),
+            fn () => $this->client->secAuditor()->listSecAuditorCustomers(['limit' => 1]),
         );
         $response = $this->client->secAuditor()->getSecAuditorCustomer($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/sec-auditor/customers/{id}');

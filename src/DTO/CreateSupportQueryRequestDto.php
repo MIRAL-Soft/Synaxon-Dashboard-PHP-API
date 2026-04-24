@@ -17,6 +17,17 @@ class CreateSupportQueryRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "threadId" field. The conversation thread ID.
+     *
+     * @return static
+     */
+    public function withThreadId(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('threadId', $value);
+    }
+
+    /**
      * The question or query to send to the support chatbot
      *
      * @return string
@@ -24,5 +35,16 @@ class CreateSupportQueryRequestDto extends AbstractDto
     public function getQuery(): string
     {
         return (string) $this->data['query'];
+    }
+
+    /**
+     * Set the "query" field. The question or query to send to the support chatbot
+     *
+     * @return static
+     */
+    public function withQuery(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('query', $value);
     }
 }

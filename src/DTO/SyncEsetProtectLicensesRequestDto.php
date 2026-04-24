@@ -17,6 +17,17 @@ class SyncEsetProtectLicensesRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "region" field. ESET PROTECT region
+     *
+     * @return static
+     */
+    public function withRegion(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('region', $value);
+    }
+
+    /**
      * Force sync
      *
      * @return bool|null
@@ -25,5 +36,16 @@ class SyncEsetProtectLicensesRequestDto extends AbstractDto
     {
         $v = $this->data['force'] ?? null;
         return $v === null ? null : (bool) $v;
+    }
+
+    /**
+     * Set the "force" field. Force sync
+     *
+     * @return static
+     */
+    public function withForce(?bool $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('force', $value);
     }
 }

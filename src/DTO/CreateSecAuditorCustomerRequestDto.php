@@ -18,6 +18,17 @@ class CreateSecAuditorCustomerRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "customerId" field. The customer file id of the customer
+     *
+     * @return static
+     */
+    public function withCustomerId(?float $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('customerId', $value);
+    }
+
+    /**
      * The name of the customer
      *
      * @return string
@@ -25,6 +36,17 @@ class CreateSecAuditorCustomerRequestDto extends AbstractDto
     public function getName(): string
     {
         return (string) $this->data['name'];
+    }
+
+    /**
+     * Set the "name" field. The name of the customer
+     *
+     * @return static
+     */
+    public function withName(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('name', $value);
     }
 
     /**
@@ -38,6 +60,17 @@ class CreateSecAuditorCustomerRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "employees" field. This value is ignored
+     *
+     * @return static
+     */
+    public function withEmployees(?float $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('employees', $value);
+    }
+
+    /**
      * Billing cycle of customer
      *
      * @return string
@@ -48,6 +81,17 @@ class CreateSecAuditorCustomerRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "billingCycle" field. Billing cycle of customer
+     *
+     * @return static
+     */
+    public function withBillingCycle(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('billingCycle', $value);
+    }
+
+    /**
      * Operating mode of the customer in Sec Auditor
      *
      * @return string
@@ -55,5 +99,16 @@ class CreateSecAuditorCustomerRequestDto extends AbstractDto
     public function getMode(): string
     {
         return (string) $this->data['mode'];
+    }
+
+    /**
+     * Set the "mode" field. Operating mode of the customer in Sec Auditor
+     *
+     * @return static
+     */
+    public function withMode(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('mode', $value);
     }
 }

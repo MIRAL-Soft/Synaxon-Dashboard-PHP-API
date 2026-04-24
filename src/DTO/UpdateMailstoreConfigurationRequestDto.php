@@ -17,6 +17,17 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "defaultHost" field. Default instance host
+     *
+     * @return static
+     */
+    public function withDefaultHost(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('defaultHost', $value);
+    }
+
+    /**
      * Default base directory
      *
      * @return string
@@ -24,6 +35,17 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
     public function getBaseDirectory(): string
     {
         return (string) $this->data['baseDirectory'];
+    }
+
+    /**
+     * Set the "baseDirectory" field. Default base directory
+     *
+     * @return static
+     */
+    public function withBaseDirectory(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('baseDirectory', $value);
     }
 
     /**
@@ -37,6 +59,17 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "attachmentIndex" field. Attachment index
+     *
+     * @return static
+     */
+    public function withAttachmentIndex(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('attachmentIndex', $value);
+    }
+
+    /**
      * SMTP hostname
      *
      * @return string
@@ -44,6 +77,17 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
     public function getSmtpHostname(): string
     {
         return (string) $this->data['smtpHostname'];
+    }
+
+    /**
+     * Set the "smtpHostname" field. SMTP hostname
+     *
+     * @return static
+     */
+    public function withSmtpHostname(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('smtpHostname', $value);
     }
 
     /**
@@ -57,6 +101,17 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "smtpPort" field. SMTP port
+     *
+     * @return static
+     */
+    public function withSmtpPort(?float $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('smtpPort', $value);
+    }
+
+    /**
      * SMTP protocol
      *
      * @return string
@@ -64,6 +119,17 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
     public function getSmtpProtocol(): string
     {
         return (string) $this->data['smtpProtocol'];
+    }
+
+    /**
+     * Set the "smtpProtocol" field. SMTP protocol
+     *
+     * @return static
+     */
+    public function withSmtpProtocol(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('smtpProtocol', $value);
     }
 
     /**
@@ -77,6 +143,17 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "smtpIgnoreSslPolicyErrors" field. SMTP ignore SSL policy errors
+     *
+     * @return static
+     */
+    public function withSmtpIgnoreSslPolicyErrors(?bool $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('smtpIgnoreSslPolicyErrors', $value);
+    }
+
+    /**
      * SMTP authentication required
      *
      * @return bool
@@ -87,6 +164,17 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "smtpAuthenticationRequired" field. SMTP authentication required
+     *
+     * @return static
+     */
+    public function withSmtpAuthenticationRequired(?bool $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('smtpAuthenticationRequired', $value);
+    }
+
+    /**
      * SMTP username
      *
      * @return string
@@ -94,6 +182,17 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
     public function getSmtpUsername(): string
     {
         return (string) $this->data['smtpUsername'];
+    }
+
+    /**
+     * Set the "smtpUsername" field. SMTP username
+     *
+     * @return static
+     */
+    public function withSmtpUsername(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('smtpUsername', $value);
     }
 
     /**
@@ -108,6 +207,17 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "smtpPassword" field. SMTP password
+     *
+     * @return static
+     */
+    public function withSmtpPassword(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('smtpPassword', $value);
+    }
+
+    /**
      * SMTP from display name
      *
      * @return string
@@ -115,6 +225,17 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
     public function getSmtpFromDisplayName(): string
     {
         return (string) $this->data['smtpFromDisplayName'];
+    }
+
+    /**
+     * Set the "smtpFromDisplayName" field. SMTP from display name
+     *
+     * @return static
+     */
+    public function withSmtpFromDisplayName(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('smtpFromDisplayName', $value);
     }
 
     /**
@@ -128,6 +249,17 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "smtpFromEmailAddress" field. SMTP from email address
+     *
+     * @return static
+     */
+    public function withSmtpFromEmailAddress(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('smtpFromEmailAddress', $value);
+    }
+
+    /**
      * SMTP recipient email address
      *
      * @return string
@@ -135,6 +267,17 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
     public function getSmtpRecipientEmailAddress(): string
     {
         return (string) $this->data['smtpRecipientEmailAddress'];
+    }
+
+    /**
+     * Set the "smtpRecipientEmailAddress" field. SMTP recipient email address
+     *
+     * @return static
+     */
+    public function withSmtpRecipientEmailAddress(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('smtpRecipientEmailAddress', $value);
     }
 
     /**
@@ -153,5 +296,16 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
             }
         }
         return $out;
+    }
+
+    /**
+     * Set the "placementRules" field. Placement rules
+     *
+     * @return static
+     */
+    public function withPlacementRules(?array $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('placementRules', $value);
     }
 }

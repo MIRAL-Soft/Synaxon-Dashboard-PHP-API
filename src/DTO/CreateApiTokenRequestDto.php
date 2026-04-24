@@ -17,6 +17,17 @@ class CreateApiTokenRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "grant_type" field. Grant type
+     *
+     * @return static
+     */
+    public function withGrantType(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('grant_type', $value);
+    }
+
+    /**
      * Scope
      *
      * @return string
@@ -24,5 +35,16 @@ class CreateApiTokenRequestDto extends AbstractDto
     public function getScope(): string
     {
         return (string) $this->data['scope'];
+    }
+
+    /**
+     * Set the "scope" field. Scope
+     *
+     * @return static
+     */
+    public function withScope(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('scope', $value);
     }
 }

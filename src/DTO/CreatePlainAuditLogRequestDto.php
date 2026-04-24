@@ -17,6 +17,17 @@ class CreatePlainAuditLogRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "entityType" field. The name of the entity
+     *
+     * @return static
+     */
+    public function withEntityType(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('entityType', $value);
+    }
+
+    /**
      * The id of the entity
      *
      * @return string
@@ -27,6 +38,17 @@ class CreatePlainAuditLogRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "entityId" field. The id of the entity
+     *
+     * @return static
+     */
+    public function withEntityId(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('entityId', $value);
+    }
+
+    /**
      * Action to be logged
      *
      * @return string
@@ -34,6 +56,17 @@ class CreatePlainAuditLogRequestDto extends AbstractDto
     public function getAction(): string
     {
         return (string) $this->data['action'];
+    }
+
+    /**
+     * Set the "action" field. Action to be logged
+     *
+     * @return static
+     */
+    public function withAction(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('action', $value);
     }
 
     /**
@@ -48,6 +81,17 @@ class CreatePlainAuditLogRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "subAction" field. Sub-Action to be logged
+     *
+     * @return static
+     */
+    public function withSubAction(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('subAction', $value);
+    }
+
+    /**
      * Raw properties of entity
      *
      * @return array<string, mixed>
@@ -55,5 +99,16 @@ class CreatePlainAuditLogRequestDto extends AbstractDto
     public function getEntityRaw(): array
     {
         return (array) ($this->data['entityRaw'] ?? []);
+    }
+
+    /**
+     * Set the "entityRaw" field. Raw properties of entity
+     *
+     * @return static
+     */
+    public function withEntityRaw(?array $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('entityRaw', $value);
     }
 }

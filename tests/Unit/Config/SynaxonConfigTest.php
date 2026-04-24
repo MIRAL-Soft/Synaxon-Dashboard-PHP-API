@@ -36,9 +36,9 @@ final class SynaxonConfigTest extends TestCase
     {
         $cfg = SynaxonConfig::fromArray([
             'bearerToken' => 'abc',
-            'baseUri'     => 'https://example.test/api',
-            'timeout'     => 5,
-            'maxRetries'  => 0,
+            'baseUri' => 'https://example.test/api',
+            'timeout' => 5,
+            'maxRetries' => 0,
         ]);
         self::assertSame('https://example.test/api', $cfg->getBaseUri());
         self::assertSame(5, $cfg->getTimeout());
@@ -59,7 +59,7 @@ final class SynaxonConfigTest extends TestCase
         $info = $cfg->__debugInfo();
         self::assertSame('basic:***', $info['auth']);
         // Neither half of the credential pair may leak.
-        self::assertStringNotContainsString('alice',  $info['auth']);
+        self::assertStringNotContainsString('alice', $info['auth']);
         self::assertStringNotContainsString('secret', $info['auth']);
     }
 
@@ -97,8 +97,8 @@ final class SynaxonConfigTest extends TestCase
     {
         $cfg = SynaxonConfig::fromArray([
             'bearerToken' => 'abc',
-            'timeout'     => 'not-a-number',
-            'maxRetries'  => ['array'],
+            'timeout' => 'not-a-number',
+            'maxRetries' => ['array'],
         ]);
         // Non-numeric strings and arrays fall back to the defaults.
         self::assertSame(30, $cfg->getTimeout());

@@ -18,6 +18,17 @@ class CreateLywandCustomerRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "customerId" field. The id of the customer
+     *
+     * @return static
+     */
+    public function withCustomerId(?float $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('customerId', $value);
+    }
+
+    /**
      * The name of the customer
      *
      * @return string
@@ -25,5 +36,16 @@ class CreateLywandCustomerRequestDto extends AbstractDto
     public function getName(): string
     {
         return (string) $this->data['name'];
+    }
+
+    /**
+     * Set the "name" field. The name of the customer
+     *
+     * @return static
+     */
+    public function withName(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('name', $value);
     }
 }

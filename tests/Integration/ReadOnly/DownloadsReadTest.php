@@ -40,7 +40,7 @@ final class DownloadsReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'downloads:/v1/downloads',
-            fn () => $this->client->downloads()->list(["limit" => 1]),
+            fn () => $this->client->downloads()->list(['limit' => 1]),
         );
         $response = $this->client->downloads()->find($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/downloads/{id}');
@@ -56,7 +56,7 @@ final class DownloadsReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'downloads:/v1/downloads',
-            fn () => $this->client->downloads()->list(["limit" => 1]),
+            fn () => $this->client->downloads()->list(['limit' => 1]),
         );
         $response = $this->client->downloads()->getDownloadUrl($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/downloads/{id}/url');

@@ -24,7 +24,7 @@ if (is_file($envFile)) {
                 continue;
             }
             [$key, $value] = explode('=', $line, 2);
-            $key   = trim($key);
+            $key = trim($key);
             $value = trim($value);
             if ((str_starts_with($value, '"') && str_ends_with($value, '"'))
                 || (str_starts_with($value, "'") && str_ends_with($value, "'"))) {
@@ -32,7 +32,7 @@ if (is_file($envFile)) {
             }
             if (getenv($key) === false || getenv($key) === '') {
                 putenv("{$key}={$value}");
-                $_ENV[$key]    = $value;
+                $_ENV[$key] = $value;
                 $_SERVER[$key] = $value;
             }
         }

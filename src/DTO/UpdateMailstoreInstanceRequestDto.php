@@ -18,6 +18,17 @@ class UpdateMailstoreInstanceRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "customerId" field. Customer ID of customer file
+     *
+     * @return static
+     */
+    public function withCustomerId(?float $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('customerId', $value);
+    }
+
+    /**
      * Customer name
      *
      * @return string|null
@@ -26,6 +37,17 @@ class UpdateMailstoreInstanceRequestDto extends AbstractDto
     {
         $v = $this->data['displayName'] ?? null;
         return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "displayName" field. Customer name
+     *
+     * @return static
+     */
+    public function withDisplayName(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('displayName', $value);
     }
 
     /**
@@ -40,6 +62,17 @@ class UpdateMailstoreInstanceRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "alias" field. Alias of mailstore instance
+     *
+     * @return static
+     */
+    public function withAlias(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('alias', $value);
+    }
+
+    /**
      * Instance admin password
      *
      * @return string|null
@@ -48,5 +81,16 @@ class UpdateMailstoreInstanceRequestDto extends AbstractDto
     {
         $v = $this->data['password'] ?? null;
         return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "password" field. Instance admin password
+     *
+     * @return static
+     */
+    public function withPassword(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('password', $value);
     }
 }

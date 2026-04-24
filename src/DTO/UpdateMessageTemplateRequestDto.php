@@ -18,6 +18,17 @@ class UpdateMessageTemplateRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "name" field. The name identifier of the message template
+     *
+     * @return static
+     */
+    public function withName(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('name', $value);
+    }
+
+    /**
      * The content of the message in german
      *
      * @return string|null
@@ -26,6 +37,17 @@ class UpdateMessageTemplateRequestDto extends AbstractDto
     {
         $v = $this->data['messageDe'] ?? null;
         return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "messageDe" field. The content of the message in german
+     *
+     * @return static
+     */
+    public function withMessageDe(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('messageDe', $value);
     }
 
     /**
@@ -40,6 +62,17 @@ class UpdateMessageTemplateRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "messageEn" field. The content of the message in english
+     *
+     * @return static
+     */
+    public function withMessageEn(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('messageEn', $value);
+    }
+
+    /**
      * The subject line of the message
      *
      * @return string|null
@@ -48,6 +81,17 @@ class UpdateMessageTemplateRequestDto extends AbstractDto
     {
         $v = $this->data['subject'] ?? null;
         return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "subject" field. The subject line of the message
+     *
+     * @return static
+     */
+    public function withSubject(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('subject', $value);
     }
 
     /**
@@ -62,6 +106,17 @@ class UpdateMessageTemplateRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "link" field. Optional URL link associated with the message
+     *
+     * @return static
+     */
+    public function withLink(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('link', $value);
+    }
+
+    /**
      * Tags for categorizing the message (e.g., products, breaking news)
      *
      * @return list<string>
@@ -72,6 +127,17 @@ class UpdateMessageTemplateRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "tags" field. Tags for categorizing the message (e.g., products, breaking news)
+     *
+     * @return static
+     */
+    public function withTags(?array $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('tags', $value);
+    }
+
+    /**
      * The target of the message
      *
      * @return mixed|null
@@ -79,6 +145,17 @@ class UpdateMessageTemplateRequestDto extends AbstractDto
     public function getTarget(): mixed
     {
         return $this->data['target'] ?? null;
+    }
+
+    /**
+     * Set the "target" field. The target of the message
+     *
+     * @return static
+     */
+    public function withTarget(mixed $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('target', $value);
     }
 
     /**
@@ -93,6 +170,17 @@ class UpdateMessageTemplateRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "targetType" field. The target type of the message
+     *
+     * @return static
+     */
+    public function withTargetType(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('targetType', $value);
+    }
+
+    /**
      * The scheduled date and time for sending the message
      *
      * @return string|null
@@ -101,5 +189,16 @@ class UpdateMessageTemplateRequestDto extends AbstractDto
     {
         $v = $this->data['scheduledAt'] ?? null;
         return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "scheduledAt" field. The scheduled date and time for sending the message
+     *
+     * @return static
+     */
+    public function withScheduledAt(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('scheduledAt', $value);
     }
 }

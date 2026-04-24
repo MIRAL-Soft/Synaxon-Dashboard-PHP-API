@@ -51,7 +51,7 @@ final class NSightReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'n-sight:/v1/n-sight/sites',
-            fn () => $this->client->nSight()->listNsightSites(["limit" => 1]),
+            fn () => $this->client->nSight()->listNsightSites(['limit' => 1]),
         );
         $response = $this->client->nSight()->getNsightSite($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/n-sight/sites/{id}');
@@ -78,7 +78,7 @@ final class NSightReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'n-sight:/v1/n-sight/sites',
-            fn () => $this->client->nSight()->listNsightSites(["limit" => 1]),
+            fn () => $this->client->nSight()->listNsightSites(['limit' => 1]),
         );
         $response = $this->client->nSight()->getNsightSiteMetrics($id, []);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/n-sight/sites/{id}/metrics');
@@ -106,7 +106,7 @@ final class NSightReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'n-sight:/v1/n-sight/devices',
-            fn () => $this->client->nSight()->listNsightDevices(["limit" => 1]),
+            fn () => $this->client->nSight()->listNsightDevices(['limit' => 1]),
         );
         $response = $this->client->nSight()->getNsightDevice($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/n-sight/devices/{id}');
@@ -134,7 +134,7 @@ final class NSightReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'n-sight:/v1/n-sight/devices',
-            fn () => $this->client->nSight()->listNsightDevices(["limit" => 1]),
+            fn () => $this->client->nSight()->listNsightDevices(['limit' => 1]),
         );
         $response = $this->client->nSight()->getNsightTakeControlUrl($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/n-sight/devices/{id}/take-control');

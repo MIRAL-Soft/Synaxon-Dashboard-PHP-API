@@ -18,6 +18,17 @@ class UpdateLifecycleInfoRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "name" field. The name of the information
+     *
+     * @return static
+     */
+    public function withName(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('name', $value);
+    }
+
+    /**
      * The type of the information
      *
      * @return string|null
@@ -26,6 +37,17 @@ class UpdateLifecycleInfoRequestDto extends AbstractDto
     {
         $v = $this->data['type'] ?? null;
         return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "type" field. The type of the information
+     *
+     * @return static
+     */
+    public function withType(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('type', $value);
     }
 
     /**
@@ -40,6 +62,17 @@ class UpdateLifecycleInfoRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "release" field. The release date of the information
+     *
+     * @return static
+     */
+    public function withRelease(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('release', $value);
+    }
+
+    /**
      * The end of life date of the information
      *
      * @return string|null
@@ -48,5 +81,16 @@ class UpdateLifecycleInfoRequestDto extends AbstractDto
     {
         $v = $this->data['eol'] ?? null;
         return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "eol" field. The end of life date of the information
+     *
+     * @return static
+     */
+    public function withEol(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('eol', $value);
     }
 }

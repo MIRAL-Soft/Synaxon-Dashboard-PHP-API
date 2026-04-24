@@ -9,12 +9,12 @@ namespace miralsoft\synaxon\api\Query;
  */
 enum FilterOperator: string
 {
-    case EQ    = 'eq';
-    case NEQ   = 'neq';
-    case GT    = 'gt';
-    case GTE   = 'gte';
-    case LT    = 'lt';
-    case LTE   = 'lte';
+    case EQ = 'eq';
+    case NEQ = 'neq';
+    case GT = 'gt';
+    case GTE = 'gte';
+    case LT = 'lt';
+    case LTE = 'lte';
     case ILIKE = 'ilike';
-    case IN    = 'in';
+    case IN = 'in';
 }

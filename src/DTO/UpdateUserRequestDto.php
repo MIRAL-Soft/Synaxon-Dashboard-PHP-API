@@ -18,6 +18,17 @@ class UpdateUserRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "role" field. User role
+     *
+     * @return static
+     */
+    public function withRole(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('role', $value);
+    }
+
+    /**
      * User permissions
      *
      * @return list<UpdateUserPermissions>
@@ -36,6 +47,17 @@ class UpdateUserRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "permissions" field. User permissions
+     *
+     * @return static
+     */
+    public function withPermissions(?array $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('permissions', $value);
+    }
+
+    /**
      * Email notification preference
      *
      * @return string|null
@@ -44,6 +66,17 @@ class UpdateUserRequestDto extends AbstractDto
     {
         $v = $this->data['emailNotification'] ?? null;
         return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "emailNotification" field. Email notification preference
+     *
+     * @return static
+     */
+    public function withEmailNotification(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('emailNotification', $value);
     }
 
     /**
@@ -58,6 +91,17 @@ class UpdateUserRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "language" field. User interface language
+     *
+     * @return static
+     */
+    public function withLanguage(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('language', $value);
+    }
+
+    /**
      * Completed tours
      *
      * @return list<string>
@@ -65,5 +109,16 @@ class UpdateUserRequestDto extends AbstractDto
     public function getCompletedTours(): array
     {
         return (array) ($this->data['completedTours'] ?? []);
+    }
+
+    /**
+     * Set the "completedTours" field. Completed tours
+     *
+     * @return static
+     */
+    public function withCompletedTours(?array $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('completedTours', $value);
     }
 }

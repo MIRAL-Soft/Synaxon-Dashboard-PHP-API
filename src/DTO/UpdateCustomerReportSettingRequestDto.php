@@ -18,6 +18,17 @@ class UpdateCustomerReportSettingRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "customDisplayName" field. Custom display name for customer
+     *
+     * @return static
+     */
+    public function withCustomDisplayName(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('customDisplayName', $value);
+    }
+
+    /**
      * Introduction text
      *
      * @return string|null
@@ -26,6 +37,17 @@ class UpdateCustomerReportSettingRequestDto extends AbstractDto
     {
         $v = $this->data['introductionText'] ?? null;
         return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "introductionText" field. Introduction text
+     *
+     * @return static
+     */
+    public function withIntroductionText(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('introductionText', $value);
     }
 
     /**
@@ -40,6 +62,17 @@ class UpdateCustomerReportSettingRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "cronExpression" field. Cron expression, or null to clear
+     *
+     * @return static
+     */
+    public function withCronExpression(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('cronExpression', $value);
+    }
+
+    /**
      * Timezone for cron expression interpretation (European timezones only)
      *
      * @return string|null
@@ -48,6 +81,17 @@ class UpdateCustomerReportSettingRequestDto extends AbstractDto
     {
         $v = $this->data['timezone'] ?? null;
         return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "timezone" field. Timezone for cron expression interpretation (European timezones only)
+     *
+     * @return static
+     */
+    public function withTimezone(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('timezone', $value);
     }
 
     /**
@@ -62,6 +106,17 @@ class UpdateCustomerReportSettingRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "language" field. Report language
+     *
+     * @return static
+     */
+    public function withLanguage(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('language', $value);
+    }
+
+    /**
      * Recipients
      *
      * @return list<string>
@@ -72,6 +127,17 @@ class UpdateCustomerReportSettingRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "recipients" field. Recipients
+     *
+     * @return static
+     */
+    public function withRecipients(?array $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('recipients', $value);
+    }
+
+    /**
      * Modules
      *
      * @return list<string>
@@ -79,5 +145,16 @@ class UpdateCustomerReportSettingRequestDto extends AbstractDto
     public function getModules(): array
     {
         return (array) ($this->data['modules'] ?? []);
+    }
+
+    /**
+     * Set the "modules" field. Modules
+     *
+     * @return static
+     */
+    public function withModules(?array $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('modules', $value);
     }
 }

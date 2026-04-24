@@ -18,6 +18,17 @@ class UpdateLywandCustomerRequestDto extends AbstractDto
     }
 
     /**
+     * Set the "name" field. Lywand Partner name
+     *
+     * @return static
+     */
+    public function withName(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('name', $value);
+    }
+
+    /**
      * Customer id of customer file
      *
      * @return float|null
@@ -26,5 +37,16 @@ class UpdateLywandCustomerRequestDto extends AbstractDto
     {
         $v = $this->data['customerId'] ?? null;
         return $v === null ? null : (float) $v;
+    }
+
+    /**
+     * Set the "customerId" field. Customer id of customer file
+     *
+     * @return static
+     */
+    public function withCustomerId(?float $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('customerId', $value);
     }
 }

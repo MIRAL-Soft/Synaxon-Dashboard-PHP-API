@@ -15,4 +15,15 @@ class UploadLifecycleInfoRequestDto extends AbstractDto
     {
         return (string) $this->data['lifecycleInfo'];
     }
+
+    /**
+     * Set the "lifecycleInfo" field. Lifecycleinfo
+     *
+     * @return static
+     */
+    public function withLifecycleInfo(?string $value): static
+    {
+        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        return $this->with('lifecycleInfo', $value);
+    }
 }
