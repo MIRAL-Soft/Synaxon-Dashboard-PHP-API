@@ -23,7 +23,6 @@ class CreateEsetPartnerRequestDto extends AbstractDto
      */
     public function withTenantId(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('tenantId', $value);
     }
 
@@ -44,7 +43,6 @@ class CreateEsetPartnerRequestDto extends AbstractDto
      */
     public function withEmail(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('email', $value);
     }
 
@@ -66,7 +64,6 @@ class CreateEsetPartnerRequestDto extends AbstractDto
      */
     public function withManagementType(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('managementType', $value);
     }
 }

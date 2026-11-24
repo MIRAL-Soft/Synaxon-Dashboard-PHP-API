@@ -7,44 +7,42 @@ namespace miralsoft\synaxon\api\DTO;
 class CreateApiTokenRequestDto extends AbstractDto
 {
     /**
-     * Grant type
+     * Name of the API token
      *
      * @return string
      */
-    public function getGrantType(): string
+    public function getName(): string
     {
-        return (string) $this->required('grant_type');
+        return (string) $this->required('name');
     }
 
     /**
-     * Set the "grant_type" field. Grant type
+     * Set the "name" field. Name of the API token
      *
      * @return static
      */
-    public function withGrantType(?string $value): static
+    public function withName(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
-        return $this->with('grant_type', $value);
+        return $this->with('name', $value);
     }
 
     /**
-     * Scope
+     * Expiration date of the API token
      *
      * @return string
      */
-    public function getScope(): string
+    public function getExpiresAt(): string
     {
-        return (string) $this->required('scope');
+        return (string) $this->required('expiresAt');
     }
 
     /**
-     * Set the "scope" field. Scope
+     * Set the "expiresAt" field. Expiration date of the API token
      *
      * @return static
      */
-    public function withScope(?string $value): static
+    public function withExpiresAt(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
-        return $this->with('scope', $value);
+        return $this->with('expiresAt', $value);
     }
 }

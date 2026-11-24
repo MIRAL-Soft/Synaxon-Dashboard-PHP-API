@@ -7,6 +7,27 @@ namespace miralsoft\synaxon\api\DTO;
 class CreateMessageTemplateRequestDto extends AbstractDto
 {
     /**
+     * Client-provided UUID for idempotency. Re-sending the same request with the same id returns the original template instead of creating a duplicate.
+     *
+     * @return string|null
+     */
+    public function getIdempotencyKey(): ?string
+    {
+        $v = $this->data['idempotencyKey'] ?? null;
+        return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "idempotencyKey" field. Client-provided UUID for idempotency. Re-sending the same request with the same id returns the original template instead of creating a duplicate.
+     *
+     * @return static
+     */
+    public function withIdempotencyKey(?string $value): static
+    {
+        return $this->with('idempotencyKey', $value);
+    }
+
+    /**
      * The content of the message in german
      *
      * @return string
@@ -23,7 +44,6 @@ class CreateMessageTemplateRequestDto extends AbstractDto
      */
     public function withMessageDe(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('messageDe', $value);
     }
 
@@ -45,7 +65,6 @@ class CreateMessageTemplateRequestDto extends AbstractDto
      */
     public function withMessageEn(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('messageEn', $value);
     }
 
@@ -66,8 +85,28 @@ class CreateMessageTemplateRequestDto extends AbstractDto
      */
     public function withSubject(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('subject', $value);
+    }
+
+    /**
+     * The subject line of the message in english
+     *
+     * @return string|null
+     */
+    public function getSubjectEn(): ?string
+    {
+        $v = $this->data['subjectEn'] ?? null;
+        return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "subjectEn" field. The subject line of the message in english
+     *
+     * @return static
+     */
+    public function withSubjectEn(?string $value): static
+    {
+        return $this->with('subjectEn', $value);
     }
 
     /**
@@ -88,7 +127,6 @@ class CreateMessageTemplateRequestDto extends AbstractDto
      */
     public function withLink(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('link', $value);
     }
 
@@ -99,17 +137,17 @@ class CreateMessageTemplateRequestDto extends AbstractDto
      */
     public function getTags(): array
     {
-        return (array) ($this->data['tags'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['tags'] ?? [])));
     }
 
     /**
      * Set the "tags" field. Tags for categorizing the message (e.g., products, breaking news)
      *
+     * @param list<string>|null $value
      * @return static
      */
     public function withTags(?array $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('tags', $value);
     }
 
@@ -151,7 +189,6 @@ class CreateMessageTemplateRequestDto extends AbstractDto
      */
     public function withTargetType(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('targetType', $value);
     }
 
@@ -173,7 +210,27 @@ class CreateMessageTemplateRequestDto extends AbstractDto
      */
     public function withScheduledAt(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('scheduledAt', $value);
+    }
+
+    /**
+     * Indicates whether the message content is an advertisement
+     *
+     * @return bool|null
+     */
+    public function getIsAdvertisement(): ?bool
+    {
+        $v = $this->data['isAdvertisement'] ?? null;
+        return $v === null ? null : (bool) $v;
+    }
+
+    /**
+     * Set the "isAdvertisement" field. Indicates whether the message content is an advertisement
+     *
+     * @return static
+     */
+    public function withIsAdvertisement(?bool $value): static
+    {
+        return $this->with('isAdvertisement', $value);
     }
 }

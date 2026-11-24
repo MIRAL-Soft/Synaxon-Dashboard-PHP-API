@@ -43,7 +43,7 @@ class AcronisResource extends AbstractResource
      * Get acronis customer by id
      *
      * @synaxon-endpoint GET /v1/acronis/customers/{id}
-     * @synaxon-operation-id FindAcronisCustomerHttpController_getAcronisCustomer
+     * @synaxon-operation-id FindAcronisCustomerByIdHttpController_getAcronisCustomer
      * @param string $id Path parameter from the upstream spec.
      * @return array<string, mixed>|list<mixed>|null Decoded JSON response body.
      */

@@ -1,6 +1,8 @@
 # SYNAXON Dashboard PHP API Client
 
-A professional PHP client library for the **SYNAXON Marketplace REST API** (v1.9.2).
+A professional PHP client library for the **SYNAXON Marketplace REST API**, generated
+from the API's published OpenAPI document (186 operations, 341 schemas as of
+2026-11-24).
 
 This library is meant to be embedded in other PHP projects. It does not perform
 authentication itself; it expects the consuming application to supply
@@ -37,8 +39,8 @@ credentials (bearer token or HTTP basic) via `SynaxonConfig`.
 
 | Component | Version |
 | --------- | ------- |
-| PHP       | `>= 8.3` |
-| Guzzle    | `^7.15.2` (PSR-7 `^2.12.3`) |
+| PHP       | `>= 8.4` |
+| Guzzle    | `^7.16.5 \|\| ^8.5.5` (PSR-7 `^2.13.4 \|\| ^3.6`) |
 | PSR-3 Log | `^2.0 \|\| ^3.0` |
 
 The library targets the SYNAXON Marketplace API at
@@ -116,6 +118,7 @@ $config = new SynaxonConfig(
     connectTimeout: 10,
     maxRetries:     3,
     userAgent:      'my-app/1.2',
+    acceptLanguage: 'de',   // sent as Accept-Language with every request
 );
 ```
 
@@ -133,6 +136,7 @@ export SYNAXON_TIMEOUT=30
 export SYNAXON_CONNECT_TIMEOUT=10
 export SYNAXON_MAX_RETRIES=3
 export SYNAXON_USER_AGENT=my-app/1.2
+export SYNAXON_ACCEPT_LANGUAGE=de
 ```
 
 ```php
@@ -156,18 +160,23 @@ other. A request issued without any credentials throws
 
 ## Available resources
 
-The client exposes 21 resource classes covering the 140 active endpoints in
-the Marketplace API. Empty/placeholder paths in the spec (such as
-`/v1/health`) are intentionally not implemented.
+The client exposes 28 resource classes covering all 186 operations of the
+Marketplace API. Path entries without operations in the spec (such as
+`/v1/health`) have nothing to implement.
 
 | Resource (`$client->...`) | Methods | Path prefix |
 | ------------------------- | ------- | ----------- |
 | `acronis()`               | All `/v1/acronis/*` operations          | `/v1/acronis/*` |
 | `audit()`                 | All `/v1/audit/*` operations            | `/v1/audit/*` |
 | `auth()`                  | All `/v1/auth/*` operations             | `/v1/auth/*` |
+| `billing()`               | All `/v1/billing/*` operations          | `/v1/billing/*` |
+| `cloudally()`             | All `/v1/cloudally/*` operations        | `/v1/cloudally/*` |
+| `cove()`                  | All `/v1/cove/*` operations             | `/v1/cove/*` |
 | `customers()`             | All `/v1/customers/*` operations        | `/v1/customers/*` |
+| `cyansecurity()`          | All `/v1/cyansecurity/*` operations     | `/v1/cyansecurity/*` |
 | `downloads()`             | All `/v1/downloads/*` operations        | `/v1/downloads/*` |
 | `eset()`                  | All `/v1/eset/*` operations             | `/v1/eset/*` |
+| `guardian360()`           | All `/v1/guardian360/*` operations      | `/v1/guardian360/*` |
 | `layout()`                | All `/v1/layout/*` operations           | `/v1/layout/*` |
 | `lywand()`                | All `/v1/lywand/*` operations           | `/v1/lywand/*` |
 | `mailstore()`             | All `/v1/mailstore/*` operations        | `/v1/mailstore/*` |
@@ -177,8 +186,10 @@ the Marketplace API. Empty/placeholder paths in the spec (such as
 | `products()`              | All `/v1/products/*` operations         | `/v1/products/*` |
 | `pusher()`                | All `/v1/pusher/*` operations           | `/v1/pusher/*` |
 | `reports()`               | All `/v1/reports/*` operations          | `/v1/reports/*` |
+| `rollouter()`             | All `/v1/rollouter/*` operations        | `/v1/rollouter/*` |
 | `salesOpportunities()`    | All `/v1/sales-opportunities/*` operations | `/v1/sales-opportunities/*` |
 | `secAuditor()`            | All `/v1/sec-auditor/*` operations      | `/v1/sec-auditor/*` |
+| `smao()`                  | All `/v1/smao/*` operations             | `/v1/smao/*` |
 | `support()`               | All `/v1/support/*` operations          | `/v1/support/*` |
 | `systemTasks()`           | All `/v1/system-tasks/*` operations     | `/v1/system-tasks/*` |
 | `tenants()`               | All `/v1/tenants/*` operations          | `/v1/tenants/*` |
@@ -193,8 +204,8 @@ the Marketplace API. Empty/placeholder paths in the spec (such as
   derived from the camelCased suffix of the upstream `operationId` so the
   semantic intent is preserved, e.g.
   `audit()->listAuditLogs(...)`,
-  `customers()->references($id)`,
-  `mailstore()->refreshJournalingMailbox(...)`.
+  `customers()->listReferences($id)`,
+  `mailstore()->checkAliasAvailability(['alias' => 'acme'])`.
 
 Every method carries:
 
@@ -445,13 +456,18 @@ composer generate              # regenerate DTOs, resources, client and generate
 composer check:generated       # fail if regenerating changes any committed file
 composer check:content         # fail on em-dashes in prose or secret-like strings
 composer ci                    # every gate CI runs, in one command
+composer update-spec           # fetch the live OpenAPI document into docs/openapi.json
 ```
+
+When SYNAXON changes its API: `composer update-spec`, then `composer generate`,
+then `composer ci`, and `composer check-compat -- --live` to confirm there is no
+drift left.
 
 `composer ci` runs `check:content`, `fmt:check`, `analyse`, `test`,
 `check:generated` and `composer audit`. GitHub Actions runs the same gates on
-every push and pull request against PHP 8.3 and 8.4 (see
-`.github/workflows/ci.yml`), and additionally checks that the package archive
-contains no development files.
+every push and pull request against PHP 8.4 and 8.5 with Guzzle 8, and on
+PHP 8.4 with Guzzle 7 (see `.github/workflows/ci.yml`). It additionally
+checks that the package archive contains no development files.
 
 Generated files (`src/DTO/`, `src/Resource/*Resource.php`,
 `src/Client/SynaxonClient.php`, `config/generated-endpoints.json` and the
@@ -488,7 +504,7 @@ non-GET HTTP verb. There is no path through the suite that mutates live data.
 
 The read-only suite under `tests/Integration/ReadOnly/` is **generated** from
 the OpenAPI spec: one test file per resource, one test method per GET
-endpoint (currently 84 methods across 20 resources). Regenerate them with:
+endpoint (currently 110 methods across 26 resources). Regenerate them with:
 
 ```bash
 php bin/generate-integration-read-tests.php
@@ -518,7 +534,7 @@ tests/
 │   ├── LiveCompatibilityTest.php    # spec ↔ implementation against live spec
 │   └── ReadOnly/                    # generated read-only smoke tests per resource
 │       ├── EndpointSamplingTrait.php  # fetches sample IDs from list endpoints
-│       └── {Resource}ReadTest.php     # one test per GET endpoint (84 total)
+│       └── {Resource}ReadTest.php     # one test per GET endpoint (110 total)
 ├── Support/
 │   ├── LiveSpec.php                 # fetches and validates the live OpenAPI document
 │   ├── MockHttpClient.php           # in-memory HTTP stub
@@ -536,11 +552,11 @@ tests/
 src/
 ├── Client/SynaxonClient.php
 ├── Config/SynaxonConfig.php
-├── DTO/                             # 257 generated DTOs + AbstractDto
+├── DTO/                             # 341 generated DTOs + AbstractDto
 ├── Exception/                       # typed exception hierarchy
 ├── Http/                            # GuzzleHttpClient + interface
 ├── Query/                           # QueryBuilder + FilterOperator
-├── Resource/                        # 21 resource classes + AbstractResource
+├── Resource/                        # 28 resource classes + AbstractResource
 ├── Util/                            # PathBuilder, DtoHydrator, PaginationIterator
 └── Version.php                      # the one authoritative library version
 
@@ -548,6 +564,7 @@ bin/
 ├── check-api-compat.php             # standalone compatibility checker
 ├── check-content.php                # em-dash and secret scan with self-test
 ├── check-generated.php              # generated code reproducibility check
+├── update-spec.php                  # fetches the live OpenAPI document
 ├── generate-dtos.php                # one-shot DTO generator (reproducibility)
 ├── generate-resources.php           # one-shot resource generator (reproducibility)
 ├── generate-write-tests.php         # one-shot write-test generator
@@ -561,8 +578,7 @@ config/
 └── generated-endpoints.json         # generator metadata (commit metadata)
 
 docs/
-├── openapi.json                     # extracted/canonical SYNAXON spec
-└── swagger-ui-init.js               # raw upstream Swagger bundle
+└── openapi.json                     # SYNAXON spec, pretty-printed (composer update-spec)
 
 tests/                               # see "Testing" above
 ```

@@ -13,6 +13,6 @@ class AuditOptionsResponseDto extends AbstractDto
      */
     public function getEntityNames(): array
     {
-        return (array) ($this->data['entityNames'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['entityNames'] ?? [])));
     }
 }

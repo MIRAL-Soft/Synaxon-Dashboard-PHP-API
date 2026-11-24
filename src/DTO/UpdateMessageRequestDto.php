@@ -24,7 +24,6 @@ class UpdateMessageRequestDto extends AbstractDto
      */
     public function withMarkedAsRead(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('markedAsRead', $value);
     }
 
@@ -46,7 +45,6 @@ class UpdateMessageRequestDto extends AbstractDto
      */
     public function withStarred(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('starred', $value);
     }
 
@@ -68,7 +66,6 @@ class UpdateMessageRequestDto extends AbstractDto
      */
     public function withImportant(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('important', $value);
     }
 
@@ -90,7 +87,6 @@ class UpdateMessageRequestDto extends AbstractDto
      */
     public function withDeleted(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('deleted', $value);
     }
 }

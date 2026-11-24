@@ -23,7 +23,6 @@ class QualifyPatchRequestDto extends AbstractDto
      */
     public function withStatus(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('status', $value);
     }
 
@@ -45,7 +44,6 @@ class QualifyPatchRequestDto extends AbstractDto
      */
     public function withReason(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('reason', $value);
     }
 
@@ -67,7 +65,6 @@ class QualifyPatchRequestDto extends AbstractDto
      */
     public function withUrl(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('url', $value);
     }
 }

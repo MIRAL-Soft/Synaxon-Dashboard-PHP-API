@@ -35,7 +35,7 @@ final class AcronisReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/acronis/customers/{id}
      */
-    public function testFindAcronisCustomerHttpControllerGetAcronisCustomer(): void
+    public function testFindAcronisCustomerByIdHttpControllerGetAcronisCustomer(): void
     {
         $this->assertReadOnly('GET');
         $id = $this->sampleId(

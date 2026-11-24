@@ -66,7 +66,7 @@ final class MailstoreReadTest extends IntegrationTestCase
     public function testIsMailstoreAliasAvailableHttpControllerCheckAliasAvailability(): void
     {
         $this->assertReadOnly('GET');
-        $response = $this->client->mailstore()->checkAliasAvailability([]);
+        $response = $this->client->mailstore()->checkAliasAvailability(['alias' => 'meier-gmbh']);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/mailstore/instances/alias-availability');
     }
 
@@ -168,5 +168,21 @@ final class MailstoreReadTest extends IntegrationTestCase
         );
         $response = $this->client->mailstore()->listProfileResults($id, []);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/mailstore/profiles/{id}/results');
+    }
+
+    /**
+     * Mailstore raw API
+     *
+     * @synaxon-endpoint GET /v1/mailstore/raw
+     */
+    public function testInvokeMailstoreRawApiHttpControllerInvokeRawApi(): void
+    {
+        $this->assertReadOnly('GET');
+        try {
+            $response = $this->client->mailstore()->invokeRawApi([]);
+            self::assertNotNull($response, 'Expected a non-null response from GET /v1/mailstore/raw');
+        } catch (\miralsoft\synaxon\api\Exception\AuthenticationException) {
+            self::markTestSkipped('Raw Mailstore pass-through needs a permission the API client may not have.');
+        }
     }
 }

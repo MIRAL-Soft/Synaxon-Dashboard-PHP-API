@@ -6,6 +6,7 @@ namespace miralsoft\synaxon\api\Tests\Unit\DTO;
 
 use miralsoft\synaxon\api\DTO\AbstractDto;
 use miralsoft\synaxon\api\Exception\UnexpectedResponseException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionMethod;
@@ -37,9 +38,9 @@ final class HydrationTest extends TestCase
     }
 
     /**
-     * @dataProvider dtoProvider
      * @param class-string<AbstractDto> $class
      */
+    #[DataProvider('dtoProvider')]
     public function testRoundTrip(string $class): void
     {
         $instance = $class::fromArray([]);
@@ -49,9 +50,9 @@ final class HydrationTest extends TestCase
     }
 
     /**
-     * @dataProvider dtoProvider
      * @param class-string<AbstractDto> $class
      */
+    #[DataProvider('dtoProvider')]
     public function testGettersDoNotFatalOnEmptyPayload(string $class): void
     {
         $instance = $class::fromArray([]);
@@ -77,9 +78,9 @@ final class HydrationTest extends TestCase
      * A required scalar that is missing must be reported, not cast into an
      * empty string, 0 or false that looks like real data.
      *
-     * @dataProvider dtoProvider
      * @param class-string<AbstractDto> $class
      */
+    #[DataProvider('dtoProvider')]
     public function testRequiredScalarGettersReportMissingFields(string $class): void
     {
         $instance = $class::fromArray([]);

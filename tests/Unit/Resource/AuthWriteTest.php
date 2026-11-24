@@ -18,16 +18,16 @@ use PHPUnit\Framework\TestCase;
 final class AuthWriteTest extends TestCase
 {
     /**
-     * Get API token
+     * Create API session
      *
      * @synaxon-endpoint POST /v1/auth/token
      */
-    public function testCreateApiTokenHttpControllerGetApiToken(): void
+    public function testCreateApiSessionHttpControllerCreateApiSession(): void
     {
         $http = (new MockHttpClient())->queue([]);
         $resource = new AuthResource($http);
 
-        $resource->getApiToken(['field' => 'value']);
+        $resource->createApiSession(['field' => 'value']);
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
@@ -38,11 +38,31 @@ final class AuthWriteTest extends TestCase
     }
 
     /**
+     * Create API session (GB)
+     *
+     * @synaxon-endpoint POST /v1/auth/token-gb
+     */
+    public function testCreateApiSessionGbHttpControllerCreateApiSessionGb(): void
+    {
+        $http = (new MockHttpClient())->queue([]);
+        $resource = new AuthResource($http);
+
+        $resource->createApiSessionGb(['field' => 'value']);
+
+        $req = $http->lastRequest();
+        self::assertNotNull($req);
+        self::assertSame('POST', $req['method']);
+        self::assertSame('/v1/auth/token-gb', $req['path']);
+        self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('form', $req['options']['bodyFormat'] ?? 'json');
+    }
+
+    /**
      * Refresh authentication using refresh token
      *
      * @synaxon-endpoint POST /v1/auth/refresh
      */
-    public function testRefreshTokenHttpControllerRefresh(): void
+    public function testRefreshAuthTokenHttpControllerRefresh(): void
     {
         $http = (new MockHttpClient())->queue([]);
         $resource = new AuthResource($http);
@@ -62,7 +82,7 @@ final class AuthWriteTest extends TestCase
      *
      * @synaxon-endpoint DELETE /v1/auth
      */
-    public function testDeleteTokenHttpControllerLogout(): void
+    public function testDeleteAuthTokenHttpControllerLogout(): void
     {
         $http = (new MockHttpClient())->queue([]);
         $resource = new AuthResource($http);
@@ -73,5 +93,43 @@ final class AuthWriteTest extends TestCase
         self::assertNotNull($req);
         self::assertSame('DELETE', $req['method']);
         self::assertSame('/v1/auth', $req['path']);
+    }
+
+    /**
+     * Create API token
+     *
+     * @synaxon-endpoint POST /v1/auth/api-tokens
+     */
+    public function testCreateApiTokenHttpControllerCreateApiToken(): void
+    {
+        $http = (new MockHttpClient())->queue([]);
+        $resource = new AuthResource($http);
+
+        $resource->createApiToken(['field' => 'value']);
+
+        $req = $http->lastRequest();
+        self::assertNotNull($req);
+        self::assertSame('POST', $req['method']);
+        self::assertSame('/v1/auth/api-tokens', $req['path']);
+        self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
+    }
+
+    /**
+     * Revoke API token
+     *
+     * @synaxon-endpoint POST /v1/auth/api-tokens/{id}/revoke
+     */
+    public function testRevokeApiTokenHttpControllerRevokeApiToken(): void
+    {
+        $http = (new MockHttpClient())->queue([]);
+        $resource = new AuthResource($http);
+
+        $resource->revokeApiToken('sample id/1');
+
+        $req = $http->lastRequest();
+        self::assertNotNull($req);
+        self::assertSame('POST', $req['method']);
+        self::assertSame('/v1/auth/api-tokens/sample%20id%2F1/revoke', $req['path']);
     }
 }

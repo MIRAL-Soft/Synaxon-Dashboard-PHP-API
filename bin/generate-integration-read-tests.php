@@ -41,18 +41,24 @@ if (!is_file($specPath)) {
 $knownSkips = [
     'GET /v1/auth/egis' => 'OAuth authorization flow: browser redirect, not an API call.',
     'GET /v1/auth/egis/callback' => 'OAuth authorization callback: browser redirect, not an API call.',
+    'GET /v1/auth/egis-gb' => 'OAuth authorization flow: browser redirect, not an API call.',
+    'GET /v1/auth/egis-gb/callback' => 'OAuth authorization callback: browser redirect, not an API call.',
 ];
 
 /**
- * Endpoints that legitimately return 404 when the tenant has not configured
- * the underlying feature. These are treated as "skipped when not available"
- * rather than test failures: the assertion wraps the call in a 404-aware
- * try/catch.
+ * Endpoints whose answer depends on how the tenant or the API client is set
+ * up rather than on the library: a 404 when a feature is not configured, a
+ * 403 when the client lacks a permission. The named exception skips the test
+ * with the reason; any other outcome is asserted as usual.
+ *
+ * Value: [exception class in miralsoft\synaxon\api\Exception, reason].
  */
 $optionalEndpoints = [
-    'GET /v1/customers/{id}/report' => 'Requires a customer-report setting; skipped when none exists.',
-    'GET /v1/customers/{id}/report/pdf' => 'Requires a customer-report setting; skipped when none exists.',
-    'GET /v1/customers/{customerId}/report' => 'Requires a customer-report setting; skipped when none exists.',
+    'GET /v1/customers/{id}/report' => ['NotFoundException', 'Requires a customer-report setting; skipped when none exists.'],
+    'GET /v1/customers/{id}/report/pdf' => ['NotFoundException', 'Requires a customer-report setting; skipped when none exists.'],
+    'GET /v1/customers/{customerId}/report' => ['NotFoundException', 'Requires a customer-report setting; skipped when none exists.'],
+    'GET /v1/tenants/smtp' => ['NotFoundException', 'Requires an SMTP configuration in the tenant; skipped when none exists.'],
+    'GET /v1/mailstore/raw' => ['AuthenticationException', 'Raw Mailstore pass-through needs a permission the API client may not have.'],
 ];
 
 /**
@@ -61,9 +67,8 @@ $optionalEndpoints = [
  * incomplete rather than failed.
  */
 $knownBrokenUpstream = [
-    'GET /v1/users/terms/pending' => 'Upstream returns HTTP 500 as of SYNAXON Marketplace API v1.9.2.',
-    'GET /v1/customers/suggestion' => 'Upstream returns HTTP 500 as of SYNAXON Marketplace API v1.9.2.',
-    'GET /v1/lywand/targets/{id}' => 'Upstream returns HTTP 500 as of SYNAXON Marketplace API v1.9.2.',
+    'GET /v1/lywand/targets/{id}' => 'Upstream returned HTTP 500 when last checked (2026-11-24).',
+    'GET /v1/customers/suggestion' => 'Upstream answers 503 "Customer cache is in progress" while it builds its cache.',
 ];
 
 /**
@@ -123,7 +128,7 @@ foreach (glob($resDir . '/*.php') ?: [] as $file) {
 }
 
 // Group GET endpoints by resource group (first segment after /v1/).
-/** @var array<string, list<array{path:string,opId:string,summary:string}>> $groups */
+/** @var array<string, list<array{path:string,opId:string,summary:string,requiredQuery:array<string, mixed>}>> $groups */
 $groups = [];
 foreach ((array) ($spec['paths'] ?? []) as $path => $obj) {
     if (!is_string($path) || !is_array($obj) || !isset($obj['get']) || !is_array($obj['get'])) {
@@ -137,6 +142,7 @@ foreach ((array) ($spec['paths'] ?? []) as $path => $obj) {
         'path' => $path,
         'opId' => (string) ($obj['get']['operationId'] ?? ''),
         'summary' => (string) ($obj['get']['summary'] ?? ''),
+        'requiredQuery' => requiredQuerySamples((array) ($obj['get']['parameters'] ?? [])),
     ];
 }
 
@@ -287,10 +293,57 @@ function resolveListEndpointFor(string $path, array $listByParent): ?array
  * @param array{class:string,method:string,params:list<array{name:string,hasDefault:bool,type:string}>}|null $methodInfo
  * @param array{path:string,method:string}|null $listEndpoint
  * @param array<string, string> $knownSkips
- * @param array<string, string> $optionalEndpoints
+ * @param array<string, array{string, string}> $optionalEndpoints
  * @param array<string, string> $knownBrokenUpstream
  * @param array<string, string> $nonJsonEndpoints
  */
+/**
+ * Short-array PHP literal on one line, as the formatter would write it.
+ */
+function exportValue(mixed $value): string
+{
+    if (!is_array($value)) {
+        return var_export($value, true);
+    }
+    $parts = [];
+    foreach ($value as $k => $v) {
+        $parts[] = array_is_list($value) ? exportValue($v) : var_export($k, true) . ' => ' . exportValue($v);
+    }
+
+    return '[' . implode(', ', $parts) . ']';
+}
+
+/**
+ * Values for the required query parameters of an operation, read from the
+ * spec: the parameter's example, else the first enum value. Only where the
+ * spec offers neither is a value assumed, and it is marked as such.
+ *
+ * @param list<mixed> $parameters
+ *
+ * @return array<string, mixed>
+ */
+function requiredQuerySamples(array $parameters): array
+{
+    $out = [];
+    foreach ($parameters as $p) {
+        if (!is_array($p) || ($p['in'] ?? '') !== 'query' || empty($p['required'])) {
+            continue;
+        }
+        $schema = (array) ($p['schema'] ?? []);
+        $value = $p['example'] ?? $schema['example'] ?? ($schema['enum'][0] ?? null);
+        if ($value === null && ($schema['type'] ?? null) === 'array') {
+            $first = $schema['items']['enum'][0] ?? $schema['items']['example'] ?? null;
+            $value = $first === null ? null : [$first];
+        }
+        if ($value === null) {
+            $value = 'assumed-sample'; // no example or enum in the spec
+        }
+        $out[(string) $p['name']] = $value;
+    }
+
+    return $out;
+}
+
 function renderTest(
     string $group,
     array $op,
@@ -345,7 +398,7 @@ function renderTest(
     }
 
     $brokenReason = $knownBrokenUpstream[$endpointKey] ?? null;
-    $optionalReason = $optionalEndpoints[$endpointKey] ?? null;
+    $optional = $optionalEndpoints[$endpointKey] ?? null;
 
     $callMethod = $methodInfo['method'];
 
@@ -358,7 +411,7 @@ function renderTest(
         if (in_array($p['name'], $pathParams, true)) {
             $args[] = "\${$p['name']}";
         } elseif ($p['name'] === 'query') {
-            $args[] = '[]';
+            $args[] = exportValue($op['requiredQuery']);
         } elseif ($p['name'] === 'body') {
             $args[] = 'null';
         } elseif ($p['hasDefault']) {
@@ -372,7 +425,7 @@ function renderTest(
 
     $invocation = "\$this->client->{$resourceMethod}()->{$callMethod}({$callArgs})";
 
-    $callBlock = renderInvocationBlock($invocation, $op['path'], $brokenReason, $optionalReason);
+    $callBlock = renderInvocationBlock($invocation, $op['path'], $brokenReason, $optional);
 
     if ($pathParams === []) {
         return $doc
@@ -418,7 +471,7 @@ function renderInvocationBlock(
     string $invocation,
     string $path,
     ?string $brokenReason,
-    ?string $optionalReason,
+    ?array $optional,
 ): string {
     if ($brokenReason !== null) {
         return "        try {\n"
@@ -429,12 +482,14 @@ function renderInvocationBlock(
              . "        }\n";
     }
 
-    if ($optionalReason !== null) {
+    if ($optional !== null) {
+        [$exception, $reason] = $optional;
+
         return "        try {\n"
              . "            \$response = {$invocation};\n"
              . "            self::assertNotNull(\$response, 'Expected a non-null response from GET {$path}');\n"
-             . "        } catch (\\miralsoft\\synaxon\\api\\Exception\\NotFoundException) {\n"
-             . '            self::markTestSkipped(' . var_export($optionalReason, true) . ");\n"
+             . "        } catch (\\miralsoft\\synaxon\\api\\Exception\\{$exception}) {\n"
+             . '            self::markTestSkipped(' . var_export($reason, true) . ");\n"
              . "        }\n";
     }
 

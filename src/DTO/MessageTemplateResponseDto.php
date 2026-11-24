@@ -68,6 +68,17 @@ class MessageTemplateResponseDto extends AbstractDto
     }
 
     /**
+     * The English subject line of the message template
+     *
+     * @return string|null
+     */
+    public function getSubjectEn(): ?string
+    {
+        $v = $this->data['subjectEn'] ?? null;
+        return $v === null ? null : (string) $v;
+    }
+
+    /**
      * Optional URL link associated with the message
      *
      * @return string|null
@@ -85,7 +96,7 @@ class MessageTemplateResponseDto extends AbstractDto
      */
     public function getTags(): array
     {
-        return (array) ($this->data['tags'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['tags'] ?? [])));
     }
 
     /**
@@ -95,7 +106,7 @@ class MessageTemplateResponseDto extends AbstractDto
      */
     public function getTarget(): array
     {
-        return (array) ($this->data['target'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['target'] ?? [])));
     }
 
     /**
@@ -148,5 +159,15 @@ class MessageTemplateResponseDto extends AbstractDto
     {
         $v = $this->data['deletedAt'] ?? null;
         return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Indicates whether the message content is an advertisement
+     *
+     * @return bool
+     */
+    public function getIsAdvertisement(): bool
+    {
+        return (bool) $this->required('isAdvertisement');
     }
 }

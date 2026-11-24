@@ -23,7 +23,6 @@ class CreateLywandPartnerRequestDto extends AbstractDto
      */
     public function withTenantId(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('tenantId', $value);
     }
 
@@ -44,7 +43,6 @@ class CreateLywandPartnerRequestDto extends AbstractDto
      */
     public function withType(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('type', $value);
     }
 
@@ -65,7 +63,6 @@ class CreateLywandPartnerRequestDto extends AbstractDto
      */
     public function withEmail(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('email', $value);
     }
 }

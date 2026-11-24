@@ -20,7 +20,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use miralsoft\synaxon\api\DTO\CreateCustomerRequestDto;
 
-$payload = (new CreateCustomerRequestDto())
+$payload = new CreateCustomerRequestDto()
     ->withName('Acme GmbH')
     ->withCustomerNumber('12345')
     ->withSalutation('Firma')

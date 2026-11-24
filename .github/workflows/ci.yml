@@ -18,18 +18,25 @@ permissions:
 
 jobs:
   test:
-    # The job name is what the "Protect main" ruleset requires, character for
-    # character. It contains U+2014, written as an escape so this file stays
-    # free of the character itself. Renaming it means updating the ruleset.
-    name: "PHPUnit / PHPStan / CS \u2014 PHP ${{ matrix.php }}"
+    # The job names are what the "Protect main" ruleset requires, character
+    # for character. Renaming a job means updating the ruleset with it.
+    name: "Tests (PHP ${{ matrix.php }}, Guzzle ${{ matrix.guzzle }})"
     # A named image rather than ubuntu-latest, so the environment only changes
     # with a commit that says so.
     runs-on: ubuntu-24.04
 
     strategy:
       fail-fast: false
+      # PHP 8.4 is the minimum. The lock file resolves Guzzle 8; one job
+      # resolves Guzzle 7 instead, because the library supports both lines.
       matrix:
-        php: ['8.3', '8.4']
+        include:
+          - php: '8.4'
+            guzzle: '8'
+          - php: '8.5'
+            guzzle: '8'
+          - php: '8.4'
+            guzzle: '7'
 
     steps:
       # Third-party actions are pinned to a commit digest, with the version as
@@ -52,10 +59,17 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: vendor
-          key: vendor-${{ matrix.php }}-${{ hashFiles('composer.lock') }}
+          key: vendor-${{ matrix.php }}-guzzle${{ matrix.guzzle }}-${{ hashFiles('composer.lock') }}
 
       - name: Install dependencies from the lock file
         run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Resolve Guzzle 7 instead of the locked Guzzle 8
+        if: matrix.guzzle == '7'
+        run: >
+          composer update guzzlehttp/guzzle guzzlehttp/psr7 guzzlehttp/promises
+          --with 'guzzlehttp/guzzle:^7.16.5' --with-all-dependencies
+          --no-interaction --prefer-dist --no-progress
 
       # The steps below are exactly `composer ci`, split so a failure names
       # its gate.

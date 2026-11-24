@@ -24,7 +24,6 @@ class UpdateLifecycleInfoRequestDto extends AbstractDto
      */
     public function withName(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('name', $value);
     }
 
@@ -46,7 +45,6 @@ class UpdateLifecycleInfoRequestDto extends AbstractDto
      */
     public function withType(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('type', $value);
     }
 
@@ -68,7 +66,6 @@ class UpdateLifecycleInfoRequestDto extends AbstractDto
      */
     public function withRelease(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('release', $value);
     }
 
@@ -90,7 +87,6 @@ class UpdateLifecycleInfoRequestDto extends AbstractDto
      */
     public function withEol(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('eol', $value);
     }
 }

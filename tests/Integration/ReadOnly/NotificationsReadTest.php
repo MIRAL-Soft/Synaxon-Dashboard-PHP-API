@@ -38,7 +38,7 @@ final class NotificationsReadTest extends IntegrationTestCase
     public function testFindUnreadMessagesHttpControllerListUnreadMessages(): void
     {
         $this->assertReadOnly('GET');
-        $response = $this->client->notifications()->listUnreadMessages([]);
+        $response = $this->client->notifications()->listUnreadMessages();
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/notifications/unread');
     }
 
@@ -59,7 +59,7 @@ final class NotificationsReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/notifications/{id}
      */
-    public function testFindMessageHttpControllerGetMessage(): void
+    public function testFindMessageByIdHttpControllerGetMessage(): void
     {
         $this->assertReadOnly('GET');
         $id = $this->sampleId(

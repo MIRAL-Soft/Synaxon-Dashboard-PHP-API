@@ -24,7 +24,6 @@ class CreateDashboardLayoutRequestDto extends AbstractDto
      */
     public function withUserId(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('userId', $value);
     }
 
@@ -45,7 +44,6 @@ class CreateDashboardLayoutRequestDto extends AbstractDto
      */
     public function withName(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('name', $value);
     }
 
@@ -56,17 +54,17 @@ class CreateDashboardLayoutRequestDto extends AbstractDto
      */
     public function getLayout(): array
     {
-        return (array) ($this->data['layout'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['layout'] ?? [])));
     }
 
     /**
      * Set the "layout" field. Order of layout categories to display
      *
+     * @param list<string>|null $value
      * @return static
      */
     public function withLayout(?array $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('layout', $value);
     }
 
@@ -91,11 +89,14 @@ class CreateDashboardLayoutRequestDto extends AbstractDto
     /**
      * Set the "meaLayout" field. Managed Email Archiving layout items
      *
+     * @param list<CreateLayoutItemDto|array<string, mixed>>|null $value
      * @return static
      */
     public function withMeaLayout(?array $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        if ($value !== null) {
+            $value = array_map(static fn (mixed $item): mixed => $item instanceof AbstractDto ? $item->toArray() : $item, $value);
+        }
         return $this->with('meaLayout', $value);
     }
 
@@ -120,11 +121,14 @@ class CreateDashboardLayoutRequestDto extends AbstractDto
     /**
      * Set the "rmmLayout" field. Remote Monitoring & Management layout items
      *
+     * @param list<CreateLayoutItemDto|array<string, mixed>>|null $value
      * @return static
      */
     public function withRmmLayout(?array $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        if ($value !== null) {
+            $value = array_map(static fn (mixed $item): mixed => $item instanceof AbstractDto ? $item->toArray() : $item, $value);
+        }
         return $this->with('rmmLayout', $value);
     }
 
@@ -149,11 +153,14 @@ class CreateDashboardLayoutRequestDto extends AbstractDto
     /**
      * Set the "msaLayout" field. Managed Security Audit layout items
      *
+     * @param list<CreateLayoutItemDto|array<string, mixed>>|null $value
      * @return static
      */
     public function withMsaLayout(?array $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        if ($value !== null) {
+            $value = array_map(static fn (mixed $item): mixed => $item instanceof AbstractDto ? $item->toArray() : $item, $value);
+        }
         return $this->with('msaLayout', $value);
     }
 
@@ -178,11 +185,14 @@ class CreateDashboardLayoutRequestDto extends AbstractDto
     /**
      * Set the "mesLayout" field. Managed Endpoint Security layout items
      *
+     * @param list<CreateLayoutItemDto|array<string, mixed>>|null $value
      * @return static
      */
     public function withMesLayout(?array $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        if ($value !== null) {
+            $value = array_map(static fn (mixed $item): mixed => $item instanceof AbstractDto ? $item->toArray() : $item, $value);
+        }
         return $this->with('mesLayout', $value);
     }
 
@@ -207,12 +217,47 @@ class CreateDashboardLayoutRequestDto extends AbstractDto
     /**
      * Set the "mbLayout" field. Managed Backup layout items
      *
+     * @param list<CreateLayoutItemDto|array<string, mixed>>|null $value
      * @return static
      */
     public function withMbLayout(?array $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        if ($value !== null) {
+            $value = array_map(static fn (mixed $item): mixed => $item instanceof AbstractDto ? $item->toArray() : $item, $value);
+        }
         return $this->with('mbLayout', $value);
+    }
+
+    /**
+     * Managed C2C layout items
+     *
+     * @return list<CreateLayoutItemDto>
+     */
+    public function getMc2cLayout(): array
+    {
+        $out = [];
+        foreach ((array) ($this->data['mc2cLayout'] ?? []) as $item) {
+            if (is_array($item)) {
+                $out[] = CreateLayoutItemDto::fromArray($item);
+            } elseif ($item instanceof CreateLayoutItemDto) {
+                $out[] = $item;
+            }
+        }
+        return $out;
+    }
+
+    /**
+     * Set the "mc2cLayout" field. Managed C2C layout items
+     *
+     * @param list<CreateLayoutItemDto|array<string, mixed>>|null $value
+     * @return static
+     */
+    public function withMc2cLayout(?array $value): static
+    {
+        if ($value !== null) {
+            $value = array_map(static fn (mixed $item): mixed => $item instanceof AbstractDto ? $item->toArray() : $item, $value);
+        }
+        return $this->with('mc2cLayout', $value);
     }
 
     /**
@@ -232,7 +277,6 @@ class CreateDashboardLayoutRequestDto extends AbstractDto
      */
     public function withType(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('type', $value);
     }
 }

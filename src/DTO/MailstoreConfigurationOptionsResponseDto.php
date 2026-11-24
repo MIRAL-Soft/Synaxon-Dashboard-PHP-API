@@ -13,6 +13,6 @@ class MailstoreConfigurationOptionsResponseDto extends AbstractDto
      */
     public function getHosts(): array
     {
-        return (array) ($this->data['hosts'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['hosts'] ?? [])));
     }
 }

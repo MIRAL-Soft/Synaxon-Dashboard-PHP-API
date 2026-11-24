@@ -24,7 +24,6 @@ class SetAllReadMessageRequestDto extends AbstractDto
      */
     public function withMessageTargetType(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('messageTargetType', $value);
     }
 }

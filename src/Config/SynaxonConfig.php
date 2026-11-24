@@ -42,6 +42,8 @@ final class SynaxonConfig
      * @param int $connectTimeout Connection timeout in seconds (1..600).
      * @param int $maxRetries Number of retries on 429/5xx (0..10).
      * @param string $userAgent User agent string sent with each request.
+     * @param string|null $acceptLanguage Accept-Language sent with each request (e.g. "de" or
+     *                                    "de-DE, en;q=0.8"); null leaves the API default.
      */
     public function __construct(
         #[\SensitiveParameter]
@@ -55,6 +57,7 @@ final class SynaxonConfig
         private readonly int $connectTimeout = 10,
         private readonly int $maxRetries = 3,
         private readonly string $userAgent = self::DEFAULT_USER_AGENT,
+        private readonly ?string $acceptLanguage = null,
     ) {
         if ($this->timeout < 1 || $this->timeout > self::MAX_TIMEOUT_SECONDS) {
             throw new InvalidArgumentException(sprintf(
@@ -117,6 +120,15 @@ final class SynaxonConfig
         if (preg_match('/[\x00-\x1F\x7F]/', $this->userAgent) === 1) {
             throw new InvalidArgumentException('userAgent must not contain control characters');
         }
+        // Language ranges as in RFC 9110, section 12.5.4, with optional weights.
+        $range = '(\*|[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*)(;q=[01](\.\d{0,3})?)?';
+        if ($this->acceptLanguage !== null
+            && preg_match('/^' . $range . '(\s*,\s*' . $range . ')*$/', $this->acceptLanguage) !== 1
+        ) {
+            throw new InvalidArgumentException(
+                'acceptLanguage must be a list of language ranges, for example "de" or "de-DE, en;q=0.8"'
+            );
+        }
         if ($this->bearerToken !== null && $this->basicUser !== null) {
             throw new InvalidArgumentException('Set either bearerToken or basicUser/basicPass, not both');
         }
@@ -140,6 +152,7 @@ final class SynaxonConfig
      *  - SYNAXON_CONNECT_TIMEOUT
      *  - SYNAXON_MAX_RETRIES
      *  - SYNAXON_USER_AGENT
+     *  - SYNAXON_ACCEPT_LANGUAGE
      *
      * When SYNAXON_BEARER_TOKEN is set, the basic variables are ignored.
      */
@@ -156,6 +169,7 @@ final class SynaxonConfig
             connectTimeout: self::envInt('SYNAXON_CONNECT_TIMEOUT', 10),
             maxRetries:     self::envInt('SYNAXON_MAX_RETRIES', 3),
             userAgent:      self::envString('SYNAXON_USER_AGENT') ?? self::DEFAULT_USER_AGENT,
+            acceptLanguage: self::envString('SYNAXON_ACCEPT_LANGUAGE'),
         );
     }
 
@@ -175,6 +189,7 @@ final class SynaxonConfig
             connectTimeout: self::cfgInt($cfg, 'connectTimeout', 10),
             maxRetries:     self::cfgInt($cfg, 'maxRetries', 3),
             userAgent:      self::cfgString($cfg, 'userAgent') ?? self::DEFAULT_USER_AGENT,
+            acceptLanguage: self::cfgString($cfg, 'acceptLanguage'),
         );
     }
 
@@ -245,6 +260,11 @@ final class SynaxonConfig
         return $this->userAgent;
     }
 
+    public function getAcceptLanguage(): ?string
+    {
+        return $this->acceptLanguage;
+    }
+
     public function hasAuth(): bool
     {
         return $this->bearerToken !== null || ($this->basicUser !== null && $this->basicPass !== null);
@@ -253,7 +273,7 @@ final class SynaxonConfig
     /**
      * Mask credentials when serialised for diagnostics or logs.
      *
-     * @return array{baseUri:string,auth:string,timeout:int,connectTimeout:int,maxRetries:int,userAgent:string}
+     * @return array{baseUri:string,auth:string,timeout:int,connectTimeout:int,maxRetries:int,userAgent:string,acceptLanguage:string|null}
      */
     public function __debugInfo(): array
     {
@@ -273,6 +293,7 @@ final class SynaxonConfig
             'connectTimeout' => $this->connectTimeout,
             'maxRetries' => $this->maxRetries,
             'userAgent' => $this->userAgent,
+            'acceptLanguage' => $this->acceptLanguage,
         ];
     }
 

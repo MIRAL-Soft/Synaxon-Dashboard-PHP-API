@@ -106,31 +106,16 @@ class CustomersResource extends AbstractResource
     }
 
     /**
-     * Create new service reference
+     * Import or update customers.
      *
-     * @synaxon-endpoint POST /v1/customers/{id}/references
-     * @synaxon-operation-id CreateCustomerReferenceHttpController_createCustomerReference
-     * @param string $id Path parameter from the upstream spec.
+     * @synaxon-endpoint POST /v1/customers/import
+     * @synaxon-operation-id ImportCustomersHttpController_importCustomers
      * @param array<string, mixed>|null $body Request body.
      * @return array<string, mixed>|list<mixed>|null Decoded JSON response body.
      */
-    public function createCustomerReference(string $id, ?array $body = null): array|null
+    public function importCustomers(?array $body = null): array|null
     {
-        return $this->httpPost($this->expand('/v1/customers/{id}/references', ['id' => $id]), $body);
-    }
-
-    /**
-     * Delete service reference
-     *
-     * @synaxon-endpoint DELETE /v1/customers/{id}/references/{refId}
-     * @synaxon-operation-id DeleteCustomerReferenceHttpController_removeCustomerReference
-     * @param string $id Path parameter from the upstream spec.
-     * @param string $refId Path parameter from the upstream spec.
-     * @return array<string, mixed>|list<mixed>|null Decoded JSON response body.
-     */
-    public function removeCustomerReference(string $id, string $refId): array|null
-    {
-        return $this->httpDelete($this->expand('/v1/customers/{id}/references/{refId}', ['id' => $id, 'refId' => $refId]));
+        return $this->httpPost($this->expand('/v1/customers/import'), $body);
     }
 
     /**

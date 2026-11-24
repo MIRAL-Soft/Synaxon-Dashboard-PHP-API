@@ -24,7 +24,6 @@ class UpdateLywandPartnerRequestDto extends AbstractDto
      */
     public function withName(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('name', $value);
     }
 }

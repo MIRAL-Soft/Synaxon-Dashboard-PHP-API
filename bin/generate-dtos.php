@@ -205,7 +205,20 @@ function renderAccessorBody(string $propName, array $schema, bool $required, str
                  . "        }\n"
                  . "        return \$out;\n";
         }
-        return "        return (array) (\$this->data[{$key}] ?? []);\n";
+        // Scalar lists keep the getter's documented element type: the items
+        // are cast the same way the scalar getters cast a single value.
+        $cast = is_array($items) ? match ($items['type'] ?? null) {
+            'string' => 'strval',
+            'integer' => 'intval',
+            'number' => 'floatval',
+            'boolean' => 'boolval',
+            default => null,
+        } : null;
+        if ($cast !== null) {
+            return "        return array_values(array_map('{$cast}', (array) (\$this->data[{$key}] ?? [])));\n";
+        }
+
+        return "        return array_values((array) (\$this->data[{$key}] ?? []));\n";
     }
 
     if ($phpType === 'string') {
@@ -259,7 +272,7 @@ function refName(string $ref): string
  */
 function renderWithSetter(string $propName, array $schema, bool $isRequired, string $comment): string
 {
-    [$phpType] = mapType($schema, $isRequired);
+    [$phpType, $docType] = mapType($schema, $isRequired);
 
     // For setters we always allow null (caller can clear an optional value)
     // and we relax sub-DTO references to "DtoClass|array" so callers can pass
@@ -283,11 +296,36 @@ function renderWithSetter(string $propName, array $schema, bool $isRequired, str
     } else {
         $docBlock .= '     * Set the "' . $propName . "\" field.\n     *\n";
     }
+    // The parameter's element types, for arrays and DTO references.
+    $paramDoc = null;
+    if (isset($schema['$ref']) && is_string($schema['$ref'])) {
+        $paramDoc = refName($schema['$ref']) . '|array<string, mixed>' . ($isRequired ? '' : '|null');
+    } elseif ($phpType === 'array') {
+        $paramDoc = $docType . '|null';
+        $itemRef = $schema['items']['$ref'] ?? null;
+        if (is_string($itemRef)) {
+            $paramDoc = 'list<' . refName($itemRef) . '|array<string, mixed>>|null';
+        }
+    }
+    if ($paramDoc !== null) {
+        $docBlock .= "     * @param {$paramDoc} \$value\n";
+    }
     $docBlock .= "     * @return static\n";
     $docBlock .= "     */\n";
 
-    $body = "        \$value = \$value instanceof AbstractDto ? \$value->toArray() : \$value;\n"
-          . "        return \$this->with({$key}, \$value);\n";
+    // Only a DTO reference, a list of them or an untyped value can hold a DTO
+    // instance; scalar setters store the value as given.
+    if (isset($schema['$ref']) || $phpType === 'mixed') {
+        $body = "        \$value = \$value instanceof AbstractDto ? \$value->toArray() : \$value;\n"
+              . "        return \$this->with({$key}, \$value);\n";
+    } elseif (is_string($schema['items']['$ref'] ?? null)) {
+        $body = "        if (\$value !== null) {\n"
+              . "            \$value = array_map(static fn (mixed \$item): mixed => \$item instanceof AbstractDto ? \$item->toArray() : \$item, \$value);\n"
+              . "        }\n"
+              . "        return \$this->with({$key}, \$value);\n";
+    } else {
+        $body = "        return \$this->with({$key}, \$value);\n";
+    }
 
     return $docBlock
          . "    public function {$methodName}({$setterType} \$value): static\n"

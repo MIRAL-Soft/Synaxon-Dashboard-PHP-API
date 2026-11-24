@@ -43,7 +43,7 @@ class SecAuditorResource extends AbstractResource
      * Get SEC AUDITOR customer by id
      *
      * @synaxon-endpoint GET /v1/sec-auditor/customers/{id}
-     * @synaxon-operation-id FindSecAuditorCustomerHttpController_getSecAuditorCustomer
+     * @synaxon-operation-id FindSecAuditorCustomerByIdHttpController_getSecAuditorCustomer
      * @param string $id Path parameter from the upstream spec.
      * @return array<string, mixed>|list<mixed>|null Decoded JSON response body.
      */

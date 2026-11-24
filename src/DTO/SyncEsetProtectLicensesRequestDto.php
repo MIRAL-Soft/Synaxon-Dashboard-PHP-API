@@ -23,7 +23,6 @@ class SyncEsetProtectLicensesRequestDto extends AbstractDto
      */
     public function withRegion(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('region', $value);
     }
 
@@ -45,7 +44,6 @@ class SyncEsetProtectLicensesRequestDto extends AbstractDto
      */
     public function withForce(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('force', $value);
     }
 }

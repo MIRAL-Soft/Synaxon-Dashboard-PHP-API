@@ -23,7 +23,6 @@ class UpdateTenantLogoRequestDto extends AbstractDto
      */
     public function withLogo(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('logo', $value);
     }
 }

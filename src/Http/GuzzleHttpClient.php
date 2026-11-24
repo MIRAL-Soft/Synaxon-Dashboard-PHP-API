@@ -283,6 +283,11 @@ final class GuzzleHttpClient implements HttpClientInterface
             'User-Agent' => $this->config->getUserAgent(),
         ];
 
+        $language = $this->config->getAcceptLanguage();
+        if ($language !== null) {
+            $headers['Accept-Language'] = $language;
+        }
+
         $bearer = $this->config->getBearerToken();
         $user = $this->config->getBasicUser();
         $pass = $this->config->getBasicPass();

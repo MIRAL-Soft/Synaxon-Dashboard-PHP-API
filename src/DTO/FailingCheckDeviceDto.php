@@ -43,6 +43,6 @@ class FailingCheckDeviceDto extends AbstractDto
      */
     public function getErrors(): array
     {
-        return (array) ($this->data['errors'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['errors'] ?? [])));
     }
 }

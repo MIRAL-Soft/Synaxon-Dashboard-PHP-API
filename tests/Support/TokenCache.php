@@ -120,7 +120,7 @@ final class TokenCache
         }
 
         /** @var array<string, mixed>|null $response */
-        $response = $client->auth()->getApiToken([
+        $response = $client->auth()->createApiSession([
             'grant_type' => 'client_credentials',
             'scope' => $scope,
         ]);

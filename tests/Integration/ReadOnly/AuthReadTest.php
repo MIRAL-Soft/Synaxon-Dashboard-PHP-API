@@ -21,7 +21,7 @@ final class AuthReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/auth/egis
      */
-    public function testEgisAuthHttpControllerAuth(): void
+    public function testEgisAuthFlowHttpControllerAuth(): void
     {
         $this->assertReadOnly('GET');
         self::markTestSkipped('OAuth authorization flow: browser redirect, not an API call.');
@@ -32,7 +32,29 @@ final class AuthReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/auth/egis/callback
      */
-    public function testEgisAuthHttpControllerCallback(): void
+    public function testEgisAuthFlowHttpControllerCallback(): void
+    {
+        $this->assertReadOnly('GET');
+        self::markTestSkipped('OAuth authorization callback: browser redirect, not an API call.');
+    }
+
+    /**
+     * Invokes authorization flow and redirects user to EGIS UK
+     *
+     * @synaxon-endpoint GET /v1/auth/egis-gb
+     */
+    public function testEgisGbAuthFlowHttpControllerAuthGb(): void
+    {
+        $this->assertReadOnly('GET');
+        self::markTestSkipped('OAuth authorization flow: browser redirect, not an API call.');
+    }
+
+    /**
+     * EGIS UK authorization callback
+     *
+     * @synaxon-endpoint GET /v1/auth/egis-gb/callback
+     */
+    public function testEgisGbAuthFlowHttpControllerCallbackGb(): void
     {
         $this->assertReadOnly('GET');
         self::markTestSkipped('OAuth authorization callback: browser redirect, not an API call.');
@@ -48,5 +70,17 @@ final class AuthReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         $response = $this->client->auth()->whoAmI();
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/auth/me');
+    }
+
+    /**
+     * List API tokens
+     *
+     * @synaxon-endpoint GET /v1/auth/api-tokens
+     */
+    public function testFindApiTokensHttpControllerListApiTokens(): void
+    {
+        $this->assertReadOnly('GET');
+        $response = $this->client->auth()->listApiTokens([]);
+        self::assertNotNull($response, 'Expected a non-null response from GET /v1/auth/api-tokens');
     }
 }

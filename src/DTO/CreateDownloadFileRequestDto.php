@@ -23,7 +23,6 @@ class CreateDownloadFileRequestDto extends AbstractDto
      */
     public function withPublic(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('public', $value);
     }
 
@@ -45,7 +44,6 @@ class CreateDownloadFileRequestDto extends AbstractDto
      */
     public function withTenantId(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('tenantId', $value);
     }
 
@@ -66,7 +64,6 @@ class CreateDownloadFileRequestDto extends AbstractDto
      */
     public function withUrl(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('url', $value);
     }
 
@@ -87,7 +84,6 @@ class CreateDownloadFileRequestDto extends AbstractDto
      */
     public function withName(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('name', $value);
     }
 
@@ -108,7 +104,6 @@ class CreateDownloadFileRequestDto extends AbstractDto
      */
     public function withType(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('type', $value);
     }
 
@@ -130,7 +125,6 @@ class CreateDownloadFileRequestDto extends AbstractDto
      */
     public function withProduct(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('product', $value);
     }
 
@@ -152,7 +146,6 @@ class CreateDownloadFileRequestDto extends AbstractDto
      */
     public function withPlatform(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('platform', $value);
     }
 
@@ -174,7 +167,6 @@ class CreateDownloadFileRequestDto extends AbstractDto
      */
     public function withAvailableUntil(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('availableUntil', $value);
     }
 
@@ -196,7 +188,6 @@ class CreateDownloadFileRequestDto extends AbstractDto
      */
     public function withFileName(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('fileName', $value);
     }
 
@@ -218,7 +209,6 @@ class CreateDownloadFileRequestDto extends AbstractDto
      */
     public function withHidden(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('hidden', $value);
     }
 }

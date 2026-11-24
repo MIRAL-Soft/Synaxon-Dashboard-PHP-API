@@ -118,6 +118,16 @@ class AcronisCustomerResponseDto extends AbstractDto
     }
 
     /**
+     * The management type of the customer
+     *
+     * @return string
+     */
+    public function getManagementType(): string
+    {
+        return (string) $this->required('managementType');
+    }
+
+    /**
      * The metrics of the customer
      *
      * @return mixed

@@ -23,7 +23,6 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function withName(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('name', $value);
     }
 
@@ -44,7 +43,6 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function withCustomerNumber(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('customerNumber', $value);
     }
 
@@ -65,7 +63,6 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function withCorporateCustomer(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('corporateCustomer', $value);
     }
 
@@ -87,7 +84,6 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function withComment(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('comment', $value);
     }
 
@@ -108,7 +104,6 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function withSalutation(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('salutation', $value);
     }
 
@@ -129,7 +124,6 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function withStreet(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('street', $value);
     }
 
@@ -150,7 +144,6 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function withPostalCode(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('postalCode', $value);
     }
 
@@ -171,7 +164,6 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function withCity(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('city', $value);
     }
 
@@ -192,7 +184,6 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function withCountry(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('country', $value);
     }
 
@@ -214,7 +205,6 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function withEmail(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('email', $value);
     }
 
@@ -236,7 +226,6 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function withFax(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('fax', $value);
     }
 
@@ -258,7 +247,6 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function withMobile(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('mobile', $value);
     }
 
@@ -280,7 +268,6 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function withPhone(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('phone', $value);
     }
 }

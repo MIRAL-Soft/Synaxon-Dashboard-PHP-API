@@ -35,7 +35,7 @@ final class SecAuditorReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/sec-auditor/customers/{id}
      */
-    public function testFindSecAuditorCustomerHttpControllerGetSecAuditorCustomer(): void
+    public function testFindSecAuditorCustomerByIdHttpControllerGetSecAuditorCustomer(): void
     {
         $this->assertReadOnly('GET');
         $id = $this->sampleId(

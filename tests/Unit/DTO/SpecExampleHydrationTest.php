@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace miralsoft\synaxon\api\Tests\Unit\DTO;
 
 use miralsoft\synaxon\api\DTO\AbstractDto;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionMethod;
@@ -98,9 +99,7 @@ final class SpecExampleHydrationTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider schemaProvider
-     */
+    #[DataProvider('schemaProvider')]
     public function testGettersReturnPublishedExamplesWithDeclaredTypes(string $schemaName): void
     {
         /** @var class-string<AbstractDto> $class */

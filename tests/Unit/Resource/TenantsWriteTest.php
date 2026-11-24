@@ -74,4 +74,82 @@ final class TenantsWriteTest extends TestCase
         self::assertSame('DELETE', $req['method']);
         self::assertSame('/v1/tenants/sample%20id%2F1/logo', $req['path']);
     }
+
+    /**
+     * Create SMTP config for the requesting tenant
+     *
+     * @synaxon-endpoint POST /v1/tenants/smtp
+     */
+    public function testCreateSmtpConfigHttpControllerCreateSmtpConfig(): void
+    {
+        $http = (new MockHttpClient())->queue([]);
+        $resource = new TenantsResource($http);
+
+        $resource->createSmtpConfig(['field' => 'value']);
+
+        $req = $http->lastRequest();
+        self::assertNotNull($req);
+        self::assertSame('POST', $req['method']);
+        self::assertSame('/v1/tenants/smtp', $req['path']);
+        self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
+    }
+
+    /**
+     * Update SMTP config for the requesting tenant
+     *
+     * @synaxon-endpoint PATCH /v1/tenants/smtp
+     */
+    public function testUpdateSmtpConfigHttpControllerUpdateSmtpConfig(): void
+    {
+        $http = (new MockHttpClient())->queue([]);
+        $resource = new TenantsResource($http);
+
+        $resource->updateSmtpConfig(['field' => 'value']);
+
+        $req = $http->lastRequest();
+        self::assertNotNull($req);
+        self::assertSame('PATCH', $req['method']);
+        self::assertSame('/v1/tenants/smtp', $req['path']);
+        self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
+    }
+
+    /**
+     * Delete SMTP config for the requesting tenant
+     *
+     * @synaxon-endpoint DELETE /v1/tenants/smtp
+     */
+    public function testDeleteSmtpConfigHttpControllerDeleteSmtpConfig(): void
+    {
+        $http = (new MockHttpClient())->queue([]);
+        $resource = new TenantsResource($http);
+
+        $resource->deleteSmtpConfig();
+
+        $req = $http->lastRequest();
+        self::assertNotNull($req);
+        self::assertSame('DELETE', $req['method']);
+        self::assertSame('/v1/tenants/smtp', $req['path']);
+    }
+
+    /**
+     * Send a test email using the SMTP config
+     *
+     * @synaxon-endpoint POST /v1/tenants/smtp/test
+     */
+    public function testSendSmtpConfigTestEmailHttpControllerSendTestEmail(): void
+    {
+        $http = (new MockHttpClient())->queue([]);
+        $resource = new TenantsResource($http);
+
+        $resource->sendTestEmail(['field' => 'value']);
+
+        $req = $http->lastRequest();
+        self::assertNotNull($req);
+        self::assertSame('POST', $req['method']);
+        self::assertSame('/v1/tenants/smtp/test', $req['path']);
+        self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
+    }
 }

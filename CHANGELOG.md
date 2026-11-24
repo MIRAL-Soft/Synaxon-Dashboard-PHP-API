@@ -7,6 +7,63 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking
+- **PHP 8.4 is the minimum** (was 8.3). CI runs on PHP 8.4 and 8.5.
+- **Generated from the current SYNAXON spec** (186 operations, 341 schemas;
+  previously 140 and 257 from spec 1.9.2). Removed upstream, and therefore
+  removed here:
+  - `UsersResource::listPendingTerms()`, `UsersResource::acceptTerms()`
+  - `CustomersResource::createCustomerReference()`,
+    `CustomersResource::removeCustomerReference()`
+  - DTOs `AcceptTermRequestDto`, `CreateCustomerReferenceRequestDto`,
+    `LayoutItemResponseDto`, `MetricsGroupedResponseDto`,
+    `MetricsLatestResponseDto`, `NSightClientsResponseDto`,
+    `NSightClientsPaginatedResponseDto`, `PendingTermResponseDto`,
+    `PusherChannelAuthDto`, `PusherUserAuthDto`, `RefreshTokenRequestDto`,
+    `SalesOpportunityResponseDto`, `SalesOpportunityPaginatedResponseDto`,
+    `SalesOpportunityRecommendationStatsDto`. Most have a successor under a
+    new upstream name, for example `SalesOpportunitiesResponseDto`,
+    `NSightClientResponseDto`, `LayoutItemDto`, `GroupedMetricsResponseDto`.
+- `AuthResource::getApiToken()` is now `createApiSession()`, following the
+  renamed upstream operation.
+- `GET /v1/notifications/unread` no longer takes `providerId` upstream.
+
+### Added
+- Seven new resources: `billing()`, `cloudally()`, `cove()`,
+  `cyansecurity()`, `guardian360()`, `rollouter()`, `smao()`.
+- New operations on existing resources: API tokens and the GB sign-in flow
+  (`auth()`), customer import (`customers()->importCustomers()`), ESET
+  products, raw Mailstore and N-sight pass-through (`invokeRawApi()`), patch
+  targets and bulk deployment (`patches()`), tenant SMTP configuration
+  (`tenants()`), and the `managementType` filter on Acronis, ESET and Lywand
+  customer lists.
+- **Guzzle 8 support** next to Guzzle 7 (`^7.16.5 || ^8.5.5`); CI tests both.
+- `SynaxonConfig` option `acceptLanguage` (env `SYNAXON_ACCEPT_LANGUAGE`),
+  sent as `Accept-Language` with every request. The spec declares the header
+  on 140 operations.
+- `composer update-spec` (`bin/update-spec.php`) fetches the live OpenAPI
+  document into `docs/openapi.json`.
+
+### Tooling (development only)
+- PHPUnit 12 (tests use attributes instead of doc annotations), PHPStan 2,
+  which now also analyses the generated DTOs at level 8; the DTO generator
+  emits precise list types and no dead `instanceof` checks.
+- Dependency floors raised again to the first releases without published
+  advisories: Guzzle 7.16.5 / 8.5.5, PSR-7 2.13.4 / 3.6.
+- Generated read tests pass the spec's example values for required query
+  parameters; tenant-dependent endpoints (no SMTP configuration, missing
+  permission for raw pass-through) are skipped with a reason instead of
+  failing.
+- `docs/swagger-ui-init.js` removed: SYNAXON no longer publishes the spec
+  that way.
+- `bin/check-content.php` applies the same secret patterns as the local
+  pre-commit hook, including the password pattern. `docs/openapi.json`, the
+  upstream spec whose schema fields are called `password`, is left out of the
+  key and password patterns (never out of the private-key check) and named on
+  every run.
+- CI job names no longer contain an em-dash; the "Protect main" ruleset
+  has to list the new names.
+
 ### Security
 - **Minimum dependency versions raised** to `guzzlehttp/guzzle ^7.15.2` and
   `guzzlehttp/psr7 ^2.12.3`. The previous `^7.0` constraint still allowed

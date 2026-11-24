@@ -23,7 +23,7 @@ final class NSightReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/n-sight/clients/{id}/metrics
      */
-    public function testGetNSightClientMetricsHttpControllerGetNsightClientMetrics(): void
+    public function testGetNSightClientMetricsHttpControllerGetNSightClientMetrics(): void
     {
         $this->assertReadOnly('GET');
         self::markTestSkipped('No list endpoint available in this resource to sample an ID from.');
@@ -34,10 +34,10 @@ final class NSightReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/n-sight/sites
      */
-    public function testFindNSightSitesHttpControllerListNsightSites(): void
+    public function testFindNSightSitesHttpControllerListNSightSites(): void
     {
         $this->assertReadOnly('GET');
-        $response = $this->client->nSight()->listNsightSites([]);
+        $response = $this->client->nSight()->listNSightSites([]);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/n-sight/sites');
     }
 
@@ -46,14 +46,14 @@ final class NSightReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/n-sight/sites/{id}
      */
-    public function testFindNSightSiteByIdHttpControllerGetNsightSite(): void
+    public function testFindNSightSiteByIdHttpControllerGetNSightSite(): void
     {
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'n-sight:/v1/n-sight/sites',
-            fn () => $this->client->nSight()->listNsightSites(['limit' => 1]),
+            fn () => $this->client->nSight()->listNSightSites(['limit' => 1]),
         );
-        $response = $this->client->nSight()->getNsightSite($id);
+        $response = $this->client->nSight()->getNSightSite($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/n-sight/sites/{id}');
     }
 
@@ -62,7 +62,7 @@ final class NSightReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/n-sight/sites/{id}/installer
      */
-    public function testCreateNSightSiteInstallerHttpControllerGetNsightSiteInstaller(): void
+    public function testCreateNSightSiteInstallerHttpControllerGetNSightSiteInstaller(): void
     {
         $this->assertReadOnly('GET');
         self::markTestSkipped('Returns installer binary + requires OS query parameter.');
@@ -73,14 +73,14 @@ final class NSightReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/n-sight/sites/{id}/metrics
      */
-    public function testGetNSightSiteMetricsHttpControllerGetNsightSiteMetrics(): void
+    public function testGetNSightSiteMetricsHttpControllerGetNSightSiteMetrics(): void
     {
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'n-sight:/v1/n-sight/sites',
-            fn () => $this->client->nSight()->listNsightSites(['limit' => 1]),
+            fn () => $this->client->nSight()->listNSightSites(['limit' => 1]),
         );
-        $response = $this->client->nSight()->getNsightSiteMetrics($id, []);
+        $response = $this->client->nSight()->getNSightSiteMetrics($id, []);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/n-sight/sites/{id}/metrics');
     }
 
@@ -89,10 +89,10 @@ final class NSightReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/n-sight/devices
      */
-    public function testFindNSightDevicesHttpControllerListNsightDevices(): void
+    public function testFindNSightDevicesHttpControllerListNSightDevices(): void
     {
         $this->assertReadOnly('GET');
-        $response = $this->client->nSight()->listNsightDevices([]);
+        $response = $this->client->nSight()->listNSightDevices([]);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/n-sight/devices');
     }
 
@@ -101,14 +101,14 @@ final class NSightReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/n-sight/devices/{id}
      */
-    public function testFindNSightDeviceByIdHttpControllerGetNsightDevice(): void
+    public function testFindNSightDeviceByIdHttpControllerGetNSightDevice(): void
     {
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'n-sight:/v1/n-sight/devices',
-            fn () => $this->client->nSight()->listNsightDevices(['limit' => 1]),
+            fn () => $this->client->nSight()->listNSightDevices(['limit' => 1]),
         );
-        $response = $this->client->nSight()->getNsightDevice($id);
+        $response = $this->client->nSight()->getNSightDevice($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/n-sight/devices/{id}');
     }
 
@@ -117,10 +117,10 @@ final class NSightReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/n-sight/device-checks
      */
-    public function testFindNSightDeviceChecksHttpControllerListNsightDeviceChecks(): void
+    public function testFindNSightDeviceChecksHttpControllerListNSightDeviceChecks(): void
     {
         $this->assertReadOnly('GET');
-        $response = $this->client->nSight()->listNsightDeviceChecks([]);
+        $response = $this->client->nSight()->listNSightDeviceChecks([]);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/n-sight/device-checks');
     }
 
@@ -129,14 +129,26 @@ final class NSightReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/n-sight/devices/{id}/take-control
      */
-    public function testGetDeviceTakeControlUrlHttpControllerGetNsightTakeControlUrl(): void
+    public function testGetDeviceTakeControlUrlHttpControllerGetNSightTakeControlUrl(): void
     {
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
             'n-sight:/v1/n-sight/devices',
-            fn () => $this->client->nSight()->listNsightDevices(['limit' => 1]),
+            fn () => $this->client->nSight()->listNSightDevices(['limit' => 1]),
         );
-        $response = $this->client->nSight()->getNsightTakeControlUrl($id);
+        $response = $this->client->nSight()->getNSightTakeControlUrl($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/n-sight/devices/{id}/take-control');
+    }
+
+    /**
+     * Vendor-compatible raw API (N-sight Data Extraction API)
+     *
+     * @synaxon-endpoint GET /v1/n-sight/raw
+     */
+    public function testInvokeNSightRawApiHttpControllerInvokeRawApi(): void
+    {
+        $this->assertReadOnly('GET');
+        $response = $this->client->nSight()->invokeRawApi([]);
+        self::assertNotNull($response, 'Expected a non-null response from GET /v1/n-sight/raw');
     }
 }

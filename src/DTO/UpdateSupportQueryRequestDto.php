@@ -24,7 +24,6 @@ class UpdateSupportQueryRequestDto extends AbstractDto
      */
     public function withRating(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('rating', $value);
     }
 
@@ -46,7 +45,6 @@ class UpdateSupportQueryRequestDto extends AbstractDto
      */
     public function withRatingReason(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('ratingReason', $value);
     }
 
@@ -68,7 +66,6 @@ class UpdateSupportQueryRequestDto extends AbstractDto
      */
     public function withRatingComment(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('ratingComment', $value);
     }
 }

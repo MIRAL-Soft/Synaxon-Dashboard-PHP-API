@@ -24,7 +24,6 @@ class UpdateLywandCustomerRequestDto extends AbstractDto
      */
     public function withName(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('name', $value);
     }
 
@@ -46,7 +45,6 @@ class UpdateLywandCustomerRequestDto extends AbstractDto
      */
     public function withCustomerId(?float $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('customerId', $value);
     }
 }

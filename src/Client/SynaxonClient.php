@@ -11,9 +11,14 @@ use miralsoft\synaxon\api\Http\HttpClientInterface;
 use miralsoft\synaxon\api\Resource\AcronisResource;
 use miralsoft\synaxon\api\Resource\AuditResource;
 use miralsoft\synaxon\api\Resource\AuthResource;
+use miralsoft\synaxon\api\Resource\BillingResource;
+use miralsoft\synaxon\api\Resource\CloudallyResource;
+use miralsoft\synaxon\api\Resource\CoveResource;
 use miralsoft\synaxon\api\Resource\CustomersResource;
+use miralsoft\synaxon\api\Resource\CyansecurityResource;
 use miralsoft\synaxon\api\Resource\DownloadsResource;
 use miralsoft\synaxon\api\Resource\EsetResource;
+use miralsoft\synaxon\api\Resource\Guardian360Resource;
 use miralsoft\synaxon\api\Resource\LayoutResource;
 use miralsoft\synaxon\api\Resource\LywandResource;
 use miralsoft\synaxon\api\Resource\MailstoreResource;
@@ -23,8 +28,10 @@ use miralsoft\synaxon\api\Resource\PatchesResource;
 use miralsoft\synaxon\api\Resource\ProductsResource;
 use miralsoft\synaxon\api\Resource\PusherResource;
 use miralsoft\synaxon\api\Resource\ReportsResource;
+use miralsoft\synaxon\api\Resource\RollouterResource;
 use miralsoft\synaxon\api\Resource\SalesOpportunitiesResource;
 use miralsoft\synaxon\api\Resource\SecAuditorResource;
+use miralsoft\synaxon\api\Resource\SmaoResource;
 use miralsoft\synaxon\api\Resource\SupportResource;
 use miralsoft\synaxon\api\Resource\SystemTasksResource;
 use miralsoft\synaxon\api\Resource\TenantsResource;
@@ -44,9 +51,14 @@ final class SynaxonClient
     private ?AcronisResource $acronis = null;
     private ?AuditResource $audit = null;
     private ?AuthResource $auth = null;
+    private ?BillingResource $billing = null;
+    private ?CloudallyResource $cloudally = null;
+    private ?CoveResource $cove = null;
     private ?CustomersResource $customers = null;
+    private ?CyansecurityResource $cyansecurity = null;
     private ?DownloadsResource $downloads = null;
     private ?EsetResource $eset = null;
+    private ?Guardian360Resource $guardian360 = null;
     private ?LayoutResource $layout = null;
     private ?LywandResource $lywand = null;
     private ?MailstoreResource $mailstore = null;
@@ -56,8 +68,10 @@ final class SynaxonClient
     private ?ProductsResource $products = null;
     private ?PusherResource $pusher = null;
     private ?ReportsResource $reports = null;
+    private ?RollouterResource $rollouter = null;
     private ?SalesOpportunitiesResource $salesOpportunities = null;
     private ?SecAuditorResource $secAuditor = null;
+    private ?SmaoResource $smao = null;
     private ?SupportResource $support = null;
     private ?SystemTasksResource $systemTasks = null;
     private ?TenantsResource $tenants = null;
@@ -86,9 +100,29 @@ final class SynaxonClient
         return $this->auth ??= new AuthResource($this->http);
     }
 
+    public function billing(): BillingResource
+    {
+        return $this->billing ??= new BillingResource($this->http);
+    }
+
+    public function cloudally(): CloudallyResource
+    {
+        return $this->cloudally ??= new CloudallyResource($this->http);
+    }
+
+    public function cove(): CoveResource
+    {
+        return $this->cove ??= new CoveResource($this->http);
+    }
+
     public function customers(): CustomersResource
     {
         return $this->customers ??= new CustomersResource($this->http);
+    }
+
+    public function cyansecurity(): CyansecurityResource
+    {
+        return $this->cyansecurity ??= new CyansecurityResource($this->http);
     }
 
     public function downloads(): DownloadsResource
@@ -99,6 +133,11 @@ final class SynaxonClient
     public function eset(): EsetResource
     {
         return $this->eset ??= new EsetResource($this->http);
+    }
+
+    public function guardian360(): Guardian360Resource
+    {
+        return $this->guardian360 ??= new Guardian360Resource($this->http);
     }
 
     public function layout(): LayoutResource
@@ -146,6 +185,11 @@ final class SynaxonClient
         return $this->reports ??= new ReportsResource($this->http);
     }
 
+    public function rollouter(): RollouterResource
+    {
+        return $this->rollouter ??= new RollouterResource($this->http);
+    }
+
     public function salesOpportunities(): SalesOpportunitiesResource
     {
         return $this->salesOpportunities ??= new SalesOpportunitiesResource($this->http);
@@ -154,6 +198,11 @@ final class SynaxonClient
     public function secAuditor(): SecAuditorResource
     {
         return $this->secAuditor ??= new SecAuditorResource($this->http);
+    }
+
+    public function smao(): SmaoResource
+    {
+        return $this->smao ??= new SmaoResource($this->http);
     }
 
     public function support(): SupportResource

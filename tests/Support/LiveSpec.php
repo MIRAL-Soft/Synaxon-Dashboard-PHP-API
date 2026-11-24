@@ -30,7 +30,7 @@ final class LiveSpec
      */
     public static function fetch(string $url = self::DEFAULT_URL): array
     {
-        $response = (new Client(['timeout' => 30, 'http_errors' => false]))->request('GET', $url);
+        $response = new Client(['timeout' => 30, 'http_errors' => false])->request('GET', $url);
 
         $status = $response->getStatusCode();
         if ($status !== 200) {

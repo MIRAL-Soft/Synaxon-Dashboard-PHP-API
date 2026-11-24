@@ -23,7 +23,6 @@ class PusherUserAuthRequestDto extends AbstractDto
      */
     public function withSocketId(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('socket_id', $value);
     }
 }

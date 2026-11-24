@@ -14,6 +14,19 @@ namespace miralsoft\synaxon\api\Resource;
 class EsetResource extends AbstractResource
 {
     /**
+     * List ESET products with filtering and sorting, without pagination
+     *
+     * @synaxon-endpoint GET /v1/eset/products
+     * @synaxon-operation-id FindEsetProductsHttpController_listEsetProducts
+     * @param array<string, scalar|array<int, scalar>> $query Query parameters.
+     * @return array<string, mixed>|list<mixed>|null Decoded JSON response body.
+     */
+    public function listEsetProducts(array $query = []): array|null
+    {
+        return $this->httpGet($this->expand('/v1/eset/products'), $query);
+    }
+
+    /**
      * List ESET partners
      *
      * @synaxon-endpoint GET /v1/eset/partners

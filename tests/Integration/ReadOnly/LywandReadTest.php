@@ -58,7 +58,7 @@ final class LywandReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/lywand/customers/{id}
      */
-    public function testFindLywandCustomerHttpControllerGetLywandCustomer(): void
+    public function testFindLywandCustomerByIdHttpControllerGetLywandCustomer(): void
     {
         $this->assertReadOnly('GET');
         $id = $this->sampleId(
@@ -129,7 +129,7 @@ final class LywandReadTest extends IntegrationTestCase
             $response = $this->client->lywand()->getLywandTarget($id);
             self::assertNotNull($response, 'Expected a non-null response from GET /v1/lywand/targets/{id}');
         } catch (\miralsoft\synaxon\api\Exception\ServerException $e) {
-            self::markTestIncomplete('Upstream returns HTTP 500 as of SYNAXON Marketplace API v1.9.2.' . ' Last error: ' . $e->getMessage());
+            self::markTestIncomplete('Upstream returned HTTP 500 when last checked (2026-11-24).' . ' Last error: ' . $e->getMessage());
         }
     }
 
