@@ -23,7 +23,6 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function withDefaultHost(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('defaultHost', $value);
     }
 
@@ -44,7 +43,6 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function withBaseDirectory(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('baseDirectory', $value);
     }
 
@@ -65,7 +63,6 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function withAttachmentIndex(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('attachmentIndex', $value);
     }
 
@@ -86,7 +83,6 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function withSmtpHostname(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('smtpHostname', $value);
     }
 
@@ -107,7 +103,6 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function withSmtpPort(?float $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('smtpPort', $value);
     }
 
@@ -128,7 +123,6 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function withSmtpProtocol(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('smtpProtocol', $value);
     }
 
@@ -149,7 +143,6 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function withSmtpIgnoreSslPolicyErrors(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('smtpIgnoreSslPolicyErrors', $value);
     }
 
@@ -170,7 +163,6 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function withSmtpAuthenticationRequired(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('smtpAuthenticationRequired', $value);
     }
 
@@ -191,7 +183,6 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function withSmtpUsername(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('smtpUsername', $value);
     }
 
@@ -213,7 +204,6 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function withSmtpPassword(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('smtpPassword', $value);
     }
 
@@ -234,7 +224,6 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function withSmtpFromDisplayName(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('smtpFromDisplayName', $value);
     }
 
@@ -255,7 +244,6 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function withSmtpFromEmailAddress(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('smtpFromEmailAddress', $value);
     }
 
@@ -276,7 +264,6 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function withSmtpRecipientEmailAddress(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('smtpRecipientEmailAddress', $value);
     }
 
@@ -301,11 +288,14 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
     /**
      * Set the "placementRules" field. Placement rules
      *
+     * @param list<MailstoreConfigurationPlacementRuleDto|array<string, mixed>>|null $value
      * @return static
      */
     public function withPlacementRules(?array $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        if ($value !== null) {
+            $value = array_map(static fn (mixed $item): mixed => $item instanceof AbstractDto ? $item->toArray() : $item, $value);
+        }
         return $this->with('placementRules', $value);
     }
 }

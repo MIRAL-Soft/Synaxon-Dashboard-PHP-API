@@ -127,7 +127,7 @@ class ReportSettingResponseDto extends AbstractDto
      */
     public function getRecipients(): array
     {
-        return (array) ($this->data['recipients'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['recipients'] ?? [])));
     }
 
     /**
@@ -137,6 +137,6 @@ class ReportSettingResponseDto extends AbstractDto
      */
     public function getModules(): array
     {
-        return (array) ($this->data['modules'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['modules'] ?? [])));
     }
 }

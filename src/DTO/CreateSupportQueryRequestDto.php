@@ -23,7 +23,6 @@ class CreateSupportQueryRequestDto extends AbstractDto
      */
     public function withThreadId(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('threadId', $value);
     }
 
@@ -44,7 +43,6 @@ class CreateSupportQueryRequestDto extends AbstractDto
      */
     public function withQuery(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('query', $value);
     }
 }

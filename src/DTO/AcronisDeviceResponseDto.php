@@ -103,7 +103,7 @@ class AcronisDeviceResponseDto extends AbstractDto
      */
     public function getCpu(): array
     {
-        return (array) ($this->data['cpu'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['cpu'] ?? [])));
     }
 
     /**
@@ -113,7 +113,7 @@ class AcronisDeviceResponseDto extends AbstractDto
      */
     public function getIpAddresses(): array
     {
-        return (array) ($this->data['ipAddresses'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['ipAddresses'] ?? [])));
     }
 
     /**
@@ -235,6 +235,6 @@ class AcronisDeviceResponseDto extends AbstractDto
      */
     public function getAcronisPolicies(): array
     {
-        return (array) ($this->data['acronisPolicies'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['acronisPolicies'] ?? [])));
     }
 }

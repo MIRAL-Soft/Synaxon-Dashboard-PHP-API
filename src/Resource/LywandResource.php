@@ -84,7 +84,7 @@ class LywandResource extends AbstractResource
      * Get lywand customer by id
      *
      * @synaxon-endpoint GET /v1/lywand/customers/{id}
-     * @synaxon-operation-id FindLywandCustomerHttpController_getLywandCustomer
+     * @synaxon-operation-id FindLywandCustomerByIdHttpController_getLywandCustomer
      * @param string $id Path parameter from the upstream spec.
      * @return array<string, mixed>|list<mixed>|null Decoded JSON response body.
      */

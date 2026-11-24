@@ -23,7 +23,6 @@ class CreatePlainAuditLogRequestDto extends AbstractDto
      */
     public function withEntityType(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('entityType', $value);
     }
 
@@ -44,7 +43,6 @@ class CreatePlainAuditLogRequestDto extends AbstractDto
      */
     public function withEntityId(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('entityId', $value);
     }
 
@@ -65,7 +63,6 @@ class CreatePlainAuditLogRequestDto extends AbstractDto
      */
     public function withAction(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('action', $value);
     }
 
@@ -87,7 +84,6 @@ class CreatePlainAuditLogRequestDto extends AbstractDto
      */
     public function withSubAction(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('subAction', $value);
     }
 
@@ -104,11 +100,11 @@ class CreatePlainAuditLogRequestDto extends AbstractDto
     /**
      * Set the "entityRaw" field. Raw properties of entity
      *
+     * @param array<string, mixed>|null $value
      * @return static
      */
     public function withEntityRaw(?array $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('entityRaw', $value);
     }
 }

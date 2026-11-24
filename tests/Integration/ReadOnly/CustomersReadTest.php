@@ -39,10 +39,10 @@ final class CustomersReadTest extends IntegrationTestCase
     {
         $this->assertReadOnly('GET');
         try {
-            $response = $this->client->customers()->getCustomerSuggestion([]);
+            $response = $this->client->customers()->getCustomerSuggestion(['query' => 'assumed-sample', 'system' => 'n-sight']);
             self::assertNotNull($response, 'Expected a non-null response from GET /v1/customers/suggestion');
         } catch (\miralsoft\synaxon\api\Exception\ServerException $e) {
-            self::markTestIncomplete('Upstream returns HTTP 500 as of SYNAXON Marketplace API v1.9.2.' . ' Last error: ' . $e->getMessage());
+            self::markTestIncomplete('Upstream answers 503 "Customer cache is in progress" while it builds its cache.' . ' Last error: ' . $e->getMessage());
         }
     }
 

@@ -240,4 +240,17 @@ class MailstoreResource extends AbstractResource
     {
         return $this->httpGet($this->expand('/v1/mailstore/profiles/{id}/results', ['id' => $id]), $query);
     }
+
+    /**
+     * Mailstore raw API
+     *
+     * @synaxon-endpoint GET /v1/mailstore/raw
+     * @synaxon-operation-id InvokeMailstoreRawApiHttpController_invokeRawApi
+     * @param array<string, scalar|array<int, scalar>> $query Query parameters.
+     * @return array<string, mixed>|list<mixed>|null Decoded JSON response body.
+     */
+    public function invokeRawApi(array $query = []): array|null
+    {
+        return $this->httpGet($this->expand('/v1/mailstore/raw'), $query);
+    }
 }

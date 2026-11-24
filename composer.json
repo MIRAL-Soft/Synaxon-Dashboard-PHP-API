@@ -12,15 +12,15 @@
         }
     ],
     "require": {
-        "php": ">=8.3",
-        "guzzlehttp/guzzle": "^7.15.2",
-        "guzzlehttp/psr7": "^2.12.3",
+        "php": ">=8.4",
+        "guzzlehttp/guzzle": "^7.16.5 || ^8.5.5",
+        "guzzlehttp/psr7": "^2.13.4 || ^3.6",
         "psr/log": "^2.0 || ^3.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.0",
-        "phpstan/phpstan": "^1.0",
-        "friendsofphp/php-cs-fixer": "^3.50"
+        "friendsofphp/php-cs-fixer": "^3.95",
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^12.5"
     },
     "autoload": {
         "psr-4": {
@@ -36,7 +36,7 @@
         "test": "phpunit --testsuite Unit --testdox",
         "test:integration": "phpunit --testsuite Integration --testdox",
         "test:all": "phpunit --testdox",
-        "analyse": "phpstan analyse src --level=8",
+        "analyse": "phpstan analyse --memory-limit=1G",
         "check-compat": "@php bin/check-api-compat.php",
         "check:content": "@php bin/check-content.php",
         "check:generated": "@php bin/check-generated.php",
@@ -55,15 +55,20 @@
             "@test",
             "@check:generated",
             "@composer audit"
-        ]
+        ],
+        "update-spec": "@php bin/update-spec.php"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "8.4.0"
+        }
     },
     "scripts-descriptions": {
         "check:content": "Fail on em-dashes in prose and on secret-like strings in tracked files.",
         "check:generated": "Regenerate all generated code and fail if it differs from what is committed.",
         "generate": "Regenerate DTOs, resources, the client and the generated tests from docs/openapi.json.",
-        "ci": "Run every gate CI runs."
+        "ci": "Run every gate CI runs.",
+        "update-spec": "Fetch the live SYNAXON OpenAPI document into docs/openapi.json."
     }
 }

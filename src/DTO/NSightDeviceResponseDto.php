@@ -425,13 +425,23 @@ class NSightDeviceResponseDto extends AbstractDto
     }
 
     /**
+     * Whether Web Protection module is enabled
+     *
+     * @return bool
+     */
+    public function getWebProtection(): bool
+    {
+        return (bool) $this->required('webProtection');
+    }
+
+    /**
      * MAV threat items for the device
      *
      * @return list<mixed>
      */
     public function getMavThreats(): array
     {
-        return (array) ($this->data['mavThreats'] ?? []);
+        return array_values((array) ($this->data['mavThreats'] ?? []));
     }
 
     /**

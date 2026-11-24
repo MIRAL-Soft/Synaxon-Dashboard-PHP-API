@@ -24,7 +24,6 @@ class UpdateMailstoreInstanceRequestDto extends AbstractDto
      */
     public function withCustomerId(?float $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('customerId', $value);
     }
 
@@ -46,7 +45,6 @@ class UpdateMailstoreInstanceRequestDto extends AbstractDto
      */
     public function withDisplayName(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('displayName', $value);
     }
 
@@ -68,7 +66,6 @@ class UpdateMailstoreInstanceRequestDto extends AbstractDto
      */
     public function withAlias(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('alias', $value);
     }
 
@@ -90,7 +87,6 @@ class UpdateMailstoreInstanceRequestDto extends AbstractDto
      */
     public function withPassword(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('password', $value);
     }
 }

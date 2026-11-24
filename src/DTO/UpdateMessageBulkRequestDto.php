@@ -13,17 +13,17 @@ class UpdateMessageBulkRequestDto extends AbstractDto
      */
     public function getIds(): array
     {
-        return (array) ($this->data['ids'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['ids'] ?? [])));
     }
 
     /**
      * Set the "ids" field. List of message ids
      *
+     * @param list<string>|null $value
      * @return static
      */
     public function withIds(?array $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('ids', $value);
     }
 
@@ -45,7 +45,6 @@ class UpdateMessageBulkRequestDto extends AbstractDto
      */
     public function withMarkedAsRead(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('markedAsRead', $value);
     }
 
@@ -67,7 +66,6 @@ class UpdateMessageBulkRequestDto extends AbstractDto
      */
     public function withStarred(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('starred', $value);
     }
 
@@ -89,7 +87,6 @@ class UpdateMessageBulkRequestDto extends AbstractDto
      */
     public function withImportant(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('important', $value);
     }
 
@@ -111,7 +108,6 @@ class UpdateMessageBulkRequestDto extends AbstractDto
      */
     public function withDeleted(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('deleted', $value);
     }
 }

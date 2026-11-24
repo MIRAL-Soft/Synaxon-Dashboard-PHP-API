@@ -24,7 +24,6 @@ class CreateSecAuditorCustomerRequestDto extends AbstractDto
      */
     public function withCustomerId(?float $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('customerId', $value);
     }
 
@@ -45,18 +44,18 @@ class CreateSecAuditorCustomerRequestDto extends AbstractDto
      */
     public function withName(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('name', $value);
     }
 
     /**
      * This value is ignored
      *
-     * @return float
+     * @return float|null
      */
-    public function getEmployees(): float
+    public function getEmployees(): ?float
     {
-        return (float) $this->required('employees');
+        $v = $this->data['employees'] ?? null;
+        return $v === null ? null : (float) $v;
     }
 
     /**
@@ -66,7 +65,6 @@ class CreateSecAuditorCustomerRequestDto extends AbstractDto
      */
     public function withEmployees(?float $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('employees', $value);
     }
 
@@ -87,7 +85,6 @@ class CreateSecAuditorCustomerRequestDto extends AbstractDto
      */
     public function withBillingCycle(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('billingCycle', $value);
     }
 
@@ -108,7 +105,6 @@ class CreateSecAuditorCustomerRequestDto extends AbstractDto
      */
     public function withMode(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('mode', $value);
     }
 }

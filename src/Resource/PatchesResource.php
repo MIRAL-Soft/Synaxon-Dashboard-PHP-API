@@ -27,6 +27,19 @@ class PatchesResource extends AbstractResource
     }
 
     /**
+     * Get patch deployment targets
+     *
+     * @synaxon-endpoint POST /v1/patches/targets
+     * @synaxon-operation-id FindPatchTargetsHttpController_getPatchTargets
+     * @param array<string, mixed>|null $body Request body.
+     * @return array<string, mixed>|list<mixed>|null Decoded JSON response body.
+     */
+    public function getPatchTargets(?array $body = null): array|null
+    {
+        return $this->httpPost($this->expand('/v1/patches/targets'), $body);
+    }
+
+    /**
      * Deploy patches
      *
      * @synaxon-endpoint POST /v1/patches/deploy
@@ -37,5 +50,18 @@ class PatchesResource extends AbstractResource
     public function deployPatches(?array $body = null): array|null
     {
         return $this->httpPost($this->expand('/v1/patches/deploy'), $body);
+    }
+
+    /**
+     * Deploy patches with advanced targeting
+     *
+     * @synaxon-endpoint POST /v1/patches/deploy-bulk
+     * @synaxon-operation-id DeployPatchesBulkHttpController_deployPatchesBulk
+     * @param array<string, mixed>|null $body Request body.
+     * @return array<string, mixed>|list<mixed>|null Decoded JSON response body.
+     */
+    public function deployPatchesBulk(?array $body = null): array|null
+    {
+        return $this->httpPost($this->expand('/v1/patches/deploy-bulk'), $body);
     }
 }

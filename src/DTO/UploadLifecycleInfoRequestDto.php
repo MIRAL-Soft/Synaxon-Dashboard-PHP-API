@@ -7,7 +7,7 @@ namespace miralsoft\synaxon\api\DTO;
 class UploadLifecycleInfoRequestDto extends AbstractDto
 {
     /**
-     * Lifecycleinfo
+     * LifecycleInfo
      *
      * @return string
      */
@@ -17,13 +17,12 @@ class UploadLifecycleInfoRequestDto extends AbstractDto
     }
 
     /**
-     * Set the "lifecycleInfo" field. Lifecycleinfo
+     * Set the "lifecycleInfo" field. LifecycleInfo
      *
      * @return static
      */
     public function withLifecycleInfo(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('lifecycleInfo', $value);
     }
 }

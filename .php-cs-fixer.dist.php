@@ -23,27 +23,7 @@ $finder = (new PhpCsFixer\Finder())
     // regenerating reproduces the committed files byte for byte. Paths are
     // relative to each directory passed to in().
     ->exclude(['DTO'])
-    ->notPath('Resource/AcronisResource.php')
-    ->notPath('Resource/AuditResource.php')
-    ->notPath('Resource/AuthResource.php')
-    ->notPath('Resource/CustomersResource.php')
-    ->notPath('Resource/DownloadsResource.php')
-    ->notPath('Resource/EsetResource.php')
-    ->notPath('Resource/LayoutResource.php')
-    ->notPath('Resource/LywandResource.php')
-    ->notPath('Resource/MailstoreResource.php')
-    ->notPath('Resource/NSightResource.php')
-    ->notPath('Resource/NotificationsResource.php')
-    ->notPath('Resource/PatchesResource.php')
-    ->notPath('Resource/ProductsResource.php')
-    ->notPath('Resource/PusherResource.php')
-    ->notPath('Resource/ReportsResource.php')
-    ->notPath('Resource/SalesOpportunitiesResource.php')
-    ->notPath('Resource/SecAuditorResource.php')
-    ->notPath('Resource/SupportResource.php')
-    ->notPath('Resource/SystemTasksResource.php')
-    ->notPath('Resource/TenantsResource.php')
-    ->notPath('Resource/UsersResource.php')
+    ->notPath('#^Resource/(?!AbstractResource)[A-Za-z0-9]+Resource\.php$#')
     ->notPath('Client/SynaxonClient.php')
     ->notPath('#^Integration/ReadOnly/.+ReadTest\.php$#')
     ->notPath('#^Unit/Resource/.+WriteTest\.php$#');
@@ -52,7 +32,7 @@ return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setRules([
         '@PSR12'                       => true,
-        '@PHP83Migration'              => true,
+        '@PHP84Migration'              => true,
         'declare_strict_types'         => true,
         'no_unused_imports'            => true,
         'ordered_imports'              => ['sort_algorithm' => 'alpha'],

@@ -24,7 +24,6 @@ class UpdateEsetPartnerRequestDto extends AbstractDto
      */
     public function withProtectRegion(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('protectRegion', $value);
     }
 
@@ -46,7 +45,6 @@ class UpdateEsetPartnerRequestDto extends AbstractDto
      */
     public function withManagementType(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('managementType', $value);
     }
 }

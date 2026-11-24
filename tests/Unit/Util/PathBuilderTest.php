@@ -6,6 +6,7 @@ namespace miralsoft\synaxon\api\Tests\Unit\Util;
 
 use InvalidArgumentException;
 use miralsoft\synaxon\api\Util\PathBuilder;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class PathBuilderTest extends TestCase
@@ -41,9 +42,8 @@ final class PathBuilderTest extends TestCase
     /**
      * URI resolution removes dot segments, so ".." as an id would turn
      * DELETE /v1/customers/abc/references/.. into DELETE /v1/customers/abc/.
-     *
-     * @dataProvider dotSegmentProvider
      */
+    #[DataProvider('dotSegmentProvider')]
     public function testRejectsDotSegmentParam(string $value): void
     {
         $this->expectException(InvalidArgumentException::class);

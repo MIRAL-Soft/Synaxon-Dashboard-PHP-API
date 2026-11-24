@@ -18,6 +18,7 @@ use miralsoft\synaxon\api\Exception\ServerException;
 use miralsoft\synaxon\api\Exception\SynaxonApiException;
 use miralsoft\synaxon\api\Exception\TransportException;
 use miralsoft\synaxon\api\Http\GuzzleHttpClient;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\AbstractLogger;
 
@@ -246,9 +247,8 @@ final class GuzzleHttpClientTest extends TestCase
     /**
      * Without advice from the server the exception must say so with null,
      * not with 0, which a caller would read as "retry immediately".
-     *
-     * @dataProvider retryAfterProvider
      */
+    #[DataProvider('retryAfterProvider')]
     public function testRateLimitExceptionReportsRetryAfter(array $headers, ?int $expectedMin, ?int $expectedMax): void
     {
         $history = [];
@@ -295,6 +295,22 @@ final class GuzzleHttpClientTest extends TestCase
         $client->request('GET', '/v1/x', ['query' => ['status' => ['a', 'b c'], 'isOnline' => false, 'page' => 2]]);
 
         self::assertSame('status=a&status=b%20c&isOnline=false&page=2', $history[0]['request']->getUri()->getQuery());
+    }
+
+    public function testSendsConfiguredAcceptLanguage(): void
+    {
+        $history = [];
+        $stack = HandlerStack::create(new MockHandler([new Response(200, [], '{}'), new Response(200, [], '{}')]));
+        $stack->push(Middleware::history($history));
+        $guzzle = new Guzzle(['handler' => $stack, 'base_uri' => 'https://example.test/api/', 'http_errors' => false]);
+
+        new GuzzleHttpClient(new SynaxonConfig(bearerToken: 't', baseUri: 'https://example.test/api', acceptLanguage: 'de'), $guzzle)
+            ->request('GET', '/v1/x');
+        new GuzzleHttpClient(new SynaxonConfig(bearerToken: 't', baseUri: 'https://example.test/api'), $guzzle)
+            ->request('GET', '/v1/x');
+
+        self::assertSame('de', $history[0]['request']->getHeaderLine('Accept-Language'));
+        self::assertFalse($history[1]['request']->hasHeader('Accept-Language'));
     }
 
     public function testSendsEmptyJsonBodyAsObject(): void

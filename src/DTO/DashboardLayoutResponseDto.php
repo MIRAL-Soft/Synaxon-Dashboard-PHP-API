@@ -84,21 +84,21 @@ class DashboardLayoutResponseDto extends AbstractDto
      */
     public function getLayout(): array
     {
-        return (array) ($this->data['layout'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['layout'] ?? [])));
     }
 
     /**
      * Managed Email Archiving layout items
      *
-     * @return list<LayoutItemResponseDto>
+     * @return list<LayoutItemDto>
      */
     public function getMeaLayout(): array
     {
         $out = [];
         foreach ((array) ($this->data['meaLayout'] ?? []) as $item) {
             if (is_array($item)) {
-                $out[] = LayoutItemResponseDto::fromArray($item);
-            } elseif ($item instanceof LayoutItemResponseDto) {
+                $out[] = LayoutItemDto::fromArray($item);
+            } elseif ($item instanceof LayoutItemDto) {
                 $out[] = $item;
             }
         }
@@ -108,15 +108,15 @@ class DashboardLayoutResponseDto extends AbstractDto
     /**
      * Remote Monitoring & Management layout items
      *
-     * @return list<LayoutItemResponseDto>
+     * @return list<LayoutItemDto>
      */
     public function getRmmLayout(): array
     {
         $out = [];
         foreach ((array) ($this->data['rmmLayout'] ?? []) as $item) {
             if (is_array($item)) {
-                $out[] = LayoutItemResponseDto::fromArray($item);
-            } elseif ($item instanceof LayoutItemResponseDto) {
+                $out[] = LayoutItemDto::fromArray($item);
+            } elseif ($item instanceof LayoutItemDto) {
                 $out[] = $item;
             }
         }
@@ -126,15 +126,15 @@ class DashboardLayoutResponseDto extends AbstractDto
     /**
      * Managed Security Audit layout items
      *
-     * @return list<LayoutItemResponseDto>
+     * @return list<LayoutItemDto>
      */
     public function getMsaLayout(): array
     {
         $out = [];
         foreach ((array) ($this->data['msaLayout'] ?? []) as $item) {
             if (is_array($item)) {
-                $out[] = LayoutItemResponseDto::fromArray($item);
-            } elseif ($item instanceof LayoutItemResponseDto) {
+                $out[] = LayoutItemDto::fromArray($item);
+            } elseif ($item instanceof LayoutItemDto) {
                 $out[] = $item;
             }
         }
@@ -144,15 +144,15 @@ class DashboardLayoutResponseDto extends AbstractDto
     /**
      * Managed Endpoint Security layout items
      *
-     * @return list<LayoutItemResponseDto>
+     * @return list<LayoutItemDto>
      */
     public function getMesLayout(): array
     {
         $out = [];
         foreach ((array) ($this->data['mesLayout'] ?? []) as $item) {
             if (is_array($item)) {
-                $out[] = LayoutItemResponseDto::fromArray($item);
-            } elseif ($item instanceof LayoutItemResponseDto) {
+                $out[] = LayoutItemDto::fromArray($item);
+            } elseif ($item instanceof LayoutItemDto) {
                 $out[] = $item;
             }
         }
@@ -162,15 +162,33 @@ class DashboardLayoutResponseDto extends AbstractDto
     /**
      * Managed Backup layout items
      *
-     * @return list<LayoutItemResponseDto>
+     * @return list<LayoutItemDto>
      */
     public function getMbLayout(): array
     {
         $out = [];
         foreach ((array) ($this->data['mbLayout'] ?? []) as $item) {
             if (is_array($item)) {
-                $out[] = LayoutItemResponseDto::fromArray($item);
-            } elseif ($item instanceof LayoutItemResponseDto) {
+                $out[] = LayoutItemDto::fromArray($item);
+            } elseif ($item instanceof LayoutItemDto) {
+                $out[] = $item;
+            }
+        }
+        return $out;
+    }
+
+    /**
+     * Managed C2C layout items
+     *
+     * @return list<LayoutItemDto>
+     */
+    public function getMc2cLayout(): array
+    {
+        $out = [];
+        foreach ((array) ($this->data['mc2cLayout'] ?? []) as $item) {
+            if (is_array($item)) {
+                $out[] = LayoutItemDto::fromArray($item);
+            } elseif ($item instanceof LayoutItemDto) {
                 $out[] = $item;
             }
         }

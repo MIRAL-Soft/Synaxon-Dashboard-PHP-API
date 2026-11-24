@@ -23,7 +23,6 @@ class VerifyMailstoreStoreRequestDto extends AbstractDto
      */
     public function withInstanceId(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('instanceId', $value);
     }
 
@@ -44,7 +43,6 @@ class VerifyMailstoreStoreRequestDto extends AbstractDto
      */
     public function withStoreId(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('storeId', $value);
     }
 
@@ -65,7 +63,6 @@ class VerifyMailstoreStoreRequestDto extends AbstractDto
      */
     public function withIncludeIndexes(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('includeIndexes', $value);
     }
 }

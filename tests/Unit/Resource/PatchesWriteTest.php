@@ -18,6 +18,26 @@ use PHPUnit\Framework\TestCase;
 final class PatchesWriteTest extends TestCase
 {
     /**
+     * Get patch deployment targets
+     *
+     * @synaxon-endpoint POST /v1/patches/targets
+     */
+    public function testFindPatchTargetsHttpControllerGetPatchTargets(): void
+    {
+        $http = (new MockHttpClient())->queue([]);
+        $resource = new PatchesResource($http);
+
+        $resource->getPatchTargets(['field' => 'value']);
+
+        $req = $http->lastRequest();
+        self::assertNotNull($req);
+        self::assertSame('POST', $req['method']);
+        self::assertSame('/v1/patches/targets', $req['path']);
+        self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
+    }
+
+    /**
      * Deploy patches
      *
      * @synaxon-endpoint POST /v1/patches/deploy
@@ -33,6 +53,26 @@ final class PatchesWriteTest extends TestCase
         self::assertNotNull($req);
         self::assertSame('POST', $req['method']);
         self::assertSame('/v1/patches/deploy', $req['path']);
+        self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
+    }
+
+    /**
+     * Deploy patches with advanced targeting
+     *
+     * @synaxon-endpoint POST /v1/patches/deploy-bulk
+     */
+    public function testDeployPatchesBulkHttpControllerDeployPatchesBulk(): void
+    {
+        $http = (new MockHttpClient())->queue([]);
+        $resource = new PatchesResource($http);
+
+        $resource->deployPatchesBulk(['field' => 'value']);
+
+        $req = $http->lastRequest();
+        self::assertNotNull($req);
+        self::assertSame('POST', $req['method']);
+        self::assertSame('/v1/patches/deploy-bulk', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
         self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }

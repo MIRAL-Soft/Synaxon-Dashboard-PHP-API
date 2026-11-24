@@ -23,7 +23,6 @@ class CreateEsetLicenseRequestDto extends AbstractDto
      */
     public function withCustomerId(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('customerId', $value);
     }
 
@@ -44,7 +43,6 @@ class CreateEsetLicenseRequestDto extends AbstractDto
      */
     public function withProductCode(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('productCode', $value);
     }
 
@@ -65,7 +63,6 @@ class CreateEsetLicenseRequestDto extends AbstractDto
      */
     public function withQuantity(?float $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('quantity', $value);
     }
 }

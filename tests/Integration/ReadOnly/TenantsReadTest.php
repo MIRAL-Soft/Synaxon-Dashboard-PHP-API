@@ -40,4 +40,20 @@ final class TenantsReadTest extends IntegrationTestCase
         $this->assertReadOnly('GET');
         self::markTestSkipped('No list endpoint available in this resource to sample an ID from.');
     }
+
+    /**
+     * Get SMTP config info for the requesting tenant
+     *
+     * @synaxon-endpoint GET /v1/tenants/smtp
+     */
+    public function testFindSmtpConfigHttpControllerGetSmtpConfig(): void
+    {
+        $this->assertReadOnly('GET');
+        try {
+            $response = $this->client->tenants()->getSmtpConfig();
+            self::assertNotNull($response, 'Expected a non-null response from GET /v1/tenants/smtp');
+        } catch (\miralsoft\synaxon\api\Exception\NotFoundException) {
+            self::markTestSkipped('Requires an SMTP configuration in the tenant; skipped when none exists.');
+        }
+    }
 }

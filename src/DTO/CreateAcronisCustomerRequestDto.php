@@ -24,7 +24,6 @@ class CreateAcronisCustomerRequestDto extends AbstractDto
      */
     public function withCustomerId(?float $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('customerId', $value);
     }
 
@@ -45,7 +44,6 @@ class CreateAcronisCustomerRequestDto extends AbstractDto
      */
     public function withEmail(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('email', $value);
     }
 
@@ -66,7 +64,6 @@ class CreateAcronisCustomerRequestDto extends AbstractDto
      */
     public function withName(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('name', $value);
     }
 
@@ -87,7 +84,6 @@ class CreateAcronisCustomerRequestDto extends AbstractDto
      */
     public function withType(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('type', $value);
     }
 
@@ -108,7 +104,6 @@ class CreateAcronisCustomerRequestDto extends AbstractDto
      */
     public function withStorage(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('storage', $value);
     }
 }

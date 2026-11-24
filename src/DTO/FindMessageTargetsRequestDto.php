@@ -44,8 +44,28 @@ class FindMessageTargetsRequestDto extends AbstractDto
      */
     public function withTargetType(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('targetType', $value);
+    }
+
+    /**
+     * Indicates whether the message content is an advertisement
+     *
+     * @return bool|null
+     */
+    public function getIsAdvertisement(): ?bool
+    {
+        $v = $this->data['isAdvertisement'] ?? null;
+        return $v === null ? null : (bool) $v;
+    }
+
+    /**
+     * Set the "isAdvertisement" field. Indicates whether the message content is an advertisement
+     *
+     * @return static
+     */
+    public function withIsAdvertisement(?bool $value): static
+    {
+        return $this->with('isAdvertisement', $value);
     }
 
     /**
@@ -66,7 +86,6 @@ class FindMessageTargetsRequestDto extends AbstractDto
      */
     public function withSendToAllUsersOfTenants(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('sendToAllUsersOfTenants', $value);
     }
 }

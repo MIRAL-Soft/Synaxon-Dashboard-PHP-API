@@ -23,7 +23,6 @@ class CreateSecAuditorPartnerRequestDto extends AbstractDto
      */
     public function withTenantId(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('tenantId', $value);
     }
 
@@ -44,7 +43,6 @@ class CreateSecAuditorPartnerRequestDto extends AbstractDto
      */
     public function withType(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('type', $value);
     }
 
@@ -65,7 +63,6 @@ class CreateSecAuditorPartnerRequestDto extends AbstractDto
      */
     public function withEmail(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('email', $value);
     }
 
@@ -86,7 +83,6 @@ class CreateSecAuditorPartnerRequestDto extends AbstractDto
      */
     public function withFirstname(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('firstname', $value);
     }
 
@@ -107,7 +103,6 @@ class CreateSecAuditorPartnerRequestDto extends AbstractDto
      */
     public function withLastname(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('lastname', $value);
     }
 }

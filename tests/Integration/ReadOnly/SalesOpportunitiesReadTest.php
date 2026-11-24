@@ -21,7 +21,7 @@ final class SalesOpportunitiesReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/sales-opportunities
      */
-    public function testGetSalesOpportunitiesHttpControllerListNsightSalesOpportunities(): void
+    public function testGetSalesOpportunitiesHttpControllerListNSightSalesOpportunities(): void
     {
         $this->assertReadOnly('GET');
         $response = $this->client->salesOpportunities()->list([]);
@@ -33,7 +33,7 @@ final class SalesOpportunitiesReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/sales-opportunities/csv
      */
-    public function testGetSalesOpportunitiesExportHttpControllerExportNsightSalesOpportunitiesCSV(): void
+    public function testGetSalesOpportunitiesExportHttpControllerExportNSightSalesOpportunitiesCSV(): void
     {
         $this->assertReadOnly('GET');
         self::markTestSkipped('Returns CSV; requires targeted test fixture rather than a smoke call.');
@@ -44,7 +44,7 @@ final class SalesOpportunitiesReadTest extends IntegrationTestCase
      *
      * @synaxon-endpoint GET /v1/sales-opportunities/pdf
      */
-    public function testGetSalesOpportunitiesExportHttpControllerExportNsightSalesOpportunitiesPDF(): void
+    public function testGetSalesOpportunitiesExportHttpControllerExportNSightSalesOpportunitiesPDF(): void
     {
         $this->assertReadOnly('GET');
         self::markTestSkipped('Returns PDF; requires targeted test fixture rather than a smoke call.');

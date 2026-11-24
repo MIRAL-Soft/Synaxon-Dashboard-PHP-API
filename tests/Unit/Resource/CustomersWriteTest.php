@@ -76,41 +76,23 @@ final class CustomersWriteTest extends TestCase
     }
 
     /**
-     * Create new service reference
+     * Import or update customers.
      *
-     * @synaxon-endpoint POST /v1/customers/{id}/references
+     * @synaxon-endpoint POST /v1/customers/import
      */
-    public function testCreateCustomerReferenceHttpControllerCreateCustomerReference(): void
+    public function testImportCustomersHttpControllerImportCustomers(): void
     {
         $http = (new MockHttpClient())->queue([]);
         $resource = new CustomersResource($http);
 
-        $resource->createCustomerReference('sample id/1', ['field' => 'value']);
+        $resource->importCustomers(['field' => 'value']);
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('POST', $req['method']);
-        self::assertSame('/v1/customers/sample%20id%2F1/references', $req['path']);
+        self::assertSame('/v1/customers/import', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
         self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
-    }
-
-    /**
-     * Delete service reference
-     *
-     * @synaxon-endpoint DELETE /v1/customers/{id}/references/{refId}
-     */
-    public function testDeleteCustomerReferenceHttpControllerRemoveCustomerReference(): void
-    {
-        $http = (new MockHttpClient())->queue([]);
-        $resource = new CustomersResource($http);
-
-        $resource->removeCustomerReference('sample id/1', 'sample refId/2');
-
-        $req = $http->lastRequest();
-        self::assertNotNull($req);
-        self::assertSame('DELETE', $req['method']);
-        self::assertSame('/v1/customers/sample%20id%2F1/references/sample%20refId%2F2', $req['path']);
     }
 
     /**

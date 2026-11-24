@@ -25,7 +25,7 @@ final class SynaxonClientTest extends TestCase
 
     public function testResourceMethodsRouteThroughHttpClient(): void
     {
-        $http = (new MockHttpClient())->queue(['ok' => true]);
+        $http = new MockHttpClient()->queue(['ok' => true]);
         $client = new SynaxonClient(new SynaxonConfig(bearerToken: 'tok'), $http);
 
         $client->audit()->findAuditLogOptions();

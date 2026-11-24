@@ -6,6 +6,7 @@ namespace miralsoft\synaxon\api\Tests\Unit\Config;
 
 use InvalidArgumentException;
 use miralsoft\synaxon\api\Config\SynaxonConfig;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class SynaxonConfigTest extends TestCase
@@ -91,9 +92,7 @@ final class SynaxonConfigTest extends TestCase
         new SynaxonConfig(bearerToken: 't', baseUri: 'http://api.example.test/marketplace');
     }
 
-    /**
-     * @dataProvider loopbackProvider
-     */
+    #[DataProvider('loopbackProvider')]
     public function testAcceptsPlainHttpToLoopback(string $uri): void
     {
         $cfg = new SynaxonConfig(bearerToken: 't', baseUri: $uri);
@@ -111,10 +110,10 @@ final class SynaxonConfigTest extends TestCase
     }
 
     /**
-     * @dataProvider emptyCredentialProvider
      *
      * @param array<string, string> $args
      */
+    #[DataProvider('emptyCredentialProvider')]
     public function testRejectsEmptyCredentialStrings(array $args): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -132,10 +131,10 @@ final class SynaxonConfigTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidConfigProvider
      *
      * @param array<string, string> $args
      */
+    #[DataProvider('invalidConfigProvider')]
     public function testRejectsInvalidConfig(array $args, string $messagePart): void
     {
         try {
@@ -160,6 +159,19 @@ final class SynaxonConfigTest extends TestCase
         yield 'user info in uri' => [['bearerToken' => 't', 'baseUri' => 'https://u:s3cr3t@api.example.test'], 'user info'];
         yield 'query in uri' => [['bearerToken' => 't', 'baseUri' => 'https://api.example.test/?x=1'], 'query string'];
         yield 'fragment in uri' => [['bearerToken' => 't', 'baseUri' => 'https://api.example.test/#x'], 'fragment'];
+    }
+
+    public function testAcceptsLanguageRanges(): void
+    {
+        $cfg = new SynaxonConfig(bearerToken: 't', acceptLanguage: 'de-DE, en;q=0.8');
+        self::assertSame('de-DE, en;q=0.8', $cfg->getAcceptLanguage());
+        self::assertNull(new SynaxonConfig(bearerToken: 't')->getAcceptLanguage());
+    }
+
+    public function testRejectsMalformedAcceptLanguage(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new SynaxonConfig(bearerToken: 't', acceptLanguage: "de\r\nX-Injected: 1");
     }
 
     public function testCredentialsAreHiddenFromStackTraces(): void

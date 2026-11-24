@@ -43,6 +43,6 @@ class ApiErrorResponse extends AbstractDto
      */
     public function getSubErrors(): array
     {
-        return (array) ($this->data['subErrors'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['subErrors'] ?? [])));
     }
 }

@@ -13,6 +13,6 @@ class MessageOptionsResponseDto extends AbstractDto
      */
     public function getTags(): array
     {
-        return (array) ($this->data['tags'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['tags'] ?? [])));
     }
 }

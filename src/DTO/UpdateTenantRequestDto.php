@@ -24,7 +24,6 @@ class UpdateTenantRequestDto extends AbstractDto
      */
     public function withDisplayName(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('displayName', $value);
     }
 
@@ -46,7 +45,6 @@ class UpdateTenantRequestDto extends AbstractDto
      */
     public function withAlertEmail(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('alertEmail', $value);
     }
 
@@ -68,7 +66,6 @@ class UpdateTenantRequestDto extends AbstractDto
      */
     public function withSupportEmail(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('supportEmail', $value);
     }
 
@@ -90,7 +87,6 @@ class UpdateTenantRequestDto extends AbstractDto
      */
     public function withSupportPhone(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('supportPhone', $value);
     }
 
@@ -112,7 +108,6 @@ class UpdateTenantRequestDto extends AbstractDto
      */
     public function withSupportUrl(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('supportUrl', $value);
     }
 }

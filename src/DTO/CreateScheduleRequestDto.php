@@ -23,7 +23,6 @@ class CreateScheduleRequestDto extends AbstractDto
      */
     public function withName(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('name', $value);
     }
 
@@ -45,7 +44,6 @@ class CreateScheduleRequestDto extends AbstractDto
      */
     public function withTimeZone(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('timeZone', $value);
     }
 
@@ -66,7 +64,6 @@ class CreateScheduleRequestDto extends AbstractDto
      */
     public function withDisabled(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('disabled', $value);
     }
 
@@ -87,7 +84,6 @@ class CreateScheduleRequestDto extends AbstractDto
      */
     public function withCronExpression(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('cronExpression', $value);
     }
 }

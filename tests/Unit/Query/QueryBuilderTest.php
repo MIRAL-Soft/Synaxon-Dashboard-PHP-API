@@ -12,7 +12,7 @@ final class QueryBuilderTest extends TestCase
 {
     public function testBuildsParameters(): void
     {
-        $q = (new QueryBuilder())
+        $q = new QueryBuilder()
             ->limit(50)
             ->offset(100)
             ->orderBy('createdAt', 'desc')
@@ -30,7 +30,7 @@ final class QueryBuilderTest extends TestCase
 
     public function testBuildsTheParametersTheApiDeclares(): void
     {
-        $arr = (new QueryBuilder())
+        $arr = new QueryBuilder()
             ->page(0)
             ->limit(100)
             ->search('acme')
@@ -46,13 +46,13 @@ final class QueryBuilderTest extends TestCase
 
     public function testDeprecatedWhereSerialisesBooleansAsWords(): void
     {
-        $arr = (new QueryBuilder())->where('read', FilterOperator::EQ, false)->toArray();
+        $arr = new QueryBuilder()->where('read', FilterOperator::EQ, false)->toArray();
         self::assertSame(['read=eq:false'], $arr['filter']);
     }
 
     public function testUnknownOrderDirectionFallsBackToAsc(): void
     {
-        $q = (new QueryBuilder())->orderBy('id', 'sideways');
+        $q = new QueryBuilder()->orderBy('id', 'sideways');
         self::assertSame('asc', $q->toArray()['orderDirection']);
     }
 }

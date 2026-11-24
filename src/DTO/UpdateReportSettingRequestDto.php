@@ -24,7 +24,6 @@ class UpdateReportSettingRequestDto extends AbstractDto
      */
     public function withCustomDisplayName(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('customDisplayName', $value);
     }
 
@@ -44,7 +43,6 @@ class UpdateReportSettingRequestDto extends AbstractDto
      */
     public function withIntroductionText(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('introductionText', $value);
     }
 
@@ -66,7 +64,6 @@ class UpdateReportSettingRequestDto extends AbstractDto
      */
     public function withCronExpression(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('cronExpression', $value);
     }
 
@@ -88,7 +85,6 @@ class UpdateReportSettingRequestDto extends AbstractDto
      */
     public function withTimezone(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('timezone', $value);
     }
 
@@ -99,17 +95,17 @@ class UpdateReportSettingRequestDto extends AbstractDto
      */
     public function getRecipients(): array
     {
-        return (array) ($this->data['recipients'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['recipients'] ?? [])));
     }
 
     /**
      * Set the "recipients" field. Recipients
      *
+     * @param list<string>|null $value
      * @return static
      */
     public function withRecipients(?array $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('recipients', $value);
     }
 
@@ -131,7 +127,6 @@ class UpdateReportSettingRequestDto extends AbstractDto
      */
     public function withLanguage(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('language', $value);
     }
 
@@ -142,17 +137,17 @@ class UpdateReportSettingRequestDto extends AbstractDto
      */
     public function getModules(): array
     {
-        return (array) ($this->data['modules'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['modules'] ?? [])));
     }
 
     /**
      * Set the "modules" field. Modules
      *
+     * @param list<string>|null $value
      * @return static
      */
     public function withModules(?array $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('modules', $value);
     }
 }

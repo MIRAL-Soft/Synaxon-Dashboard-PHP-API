@@ -48,6 +48,26 @@ class UserResponseDto extends AbstractDto
     }
 
     /**
+     * Authentication provider
+     *
+     * @return string
+     */
+    public function getProvider(): string
+    {
+        return (string) $this->required('provider');
+    }
+
+    /**
+     * Authentication provider ID
+     *
+     * @return string
+     */
+    public function getProviderId(): string
+    {
+        return (string) $this->required('providerId');
+    }
+
+    /**
      * Tenant ID
      *
      * @return string
@@ -161,6 +181,27 @@ class UserResponseDto extends AbstractDto
     }
 
     /**
+     * Weekday for weekly email digests
+     *
+     * @return string|null
+     */
+    public function getWeeklyDigestDay(): ?string
+    {
+        $v = $this->data['weeklyDigestDay'] ?? null;
+        return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Whether the user wants to receive advertisement emails
+     *
+     * @return bool
+     */
+    public function getReceivesAdvertisementEmails(): bool
+    {
+        return (bool) $this->required('receivesAdvertisementEmails');
+    }
+
+    /**
      * User interface language
      *
      * @return string
@@ -177,6 +218,17 @@ class UserResponseDto extends AbstractDto
      */
     public function getCompletedTours(): array
     {
-        return (array) ($this->data['completedTours'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['completedTours'] ?? [])));
+    }
+
+    /**
+     * Date when user was blocked
+     *
+     * @return string|null
+     */
+    public function getBlockedAt(): ?string
+    {
+        $v = $this->data['blockedAt'] ?? null;
+        return $v === null ? null : (string) $v;
     }
 }

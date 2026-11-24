@@ -23,7 +23,6 @@ class CreateNSightDashboardRequestDto extends AbstractDto
      */
     public function withName(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('name', $value);
     }
 
@@ -44,7 +43,6 @@ class CreateNSightDashboardRequestDto extends AbstractDto
      */
     public function withApiKey(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('apiKey', $value);
     }
 
@@ -65,7 +63,6 @@ class CreateNSightDashboardRequestDto extends AbstractDto
      */
     public function withApiKeyNetwork(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('apiKeyNetwork', $value);
     }
 
@@ -86,7 +83,6 @@ class CreateNSightDashboardRequestDto extends AbstractDto
      */
     public function withDefault(?bool $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('default', $value);
     }
 }

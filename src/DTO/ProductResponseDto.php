@@ -27,6 +27,17 @@ class ProductResponseDto extends AbstractDto
     }
 
     /**
+     * Product group
+     *
+     * @return string|null
+     */
+    public function getGroup(): ?string
+    {
+        $v = $this->data['group'] ?? null;
+        return $v === null ? null : (string) $v;
+    }
+
+    /**
      * Product status
      *
      * @return string
@@ -148,7 +159,7 @@ class ProductResponseDto extends AbstractDto
      */
     public function getPreviewImages(): array
     {
-        return (array) ($this->data['previewImages'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['previewImages'] ?? [])));
     }
 
     /**
@@ -171,5 +182,15 @@ class ProductResponseDto extends AbstractDto
     {
         $v = $this->data['orderText'] ?? null;
         return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Whether the product is a managed (full service) product
+     *
+     * @return bool
+     */
+    public function getManaged(): bool
+    {
+        return (bool) $this->required('managed');
     }
 }

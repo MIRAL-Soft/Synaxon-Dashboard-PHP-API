@@ -22,12 +22,12 @@ final class NSightWriteTest extends TestCase
      *
      * @synaxon-endpoint POST /v1/n-sight/sites
      */
-    public function testCreateNSightSiteHttpControllerCreateNsightSite(): void
+    public function testCreateNSightSiteHttpControllerCreateNSightSite(): void
     {
         $http = (new MockHttpClient())->queue([]);
         $resource = new NSightResource($http);
 
-        $resource->createNsightSite(['field' => 'value']);
+        $resource->createNSightSite(['field' => 'value']);
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
@@ -42,12 +42,12 @@ final class NSightWriteTest extends TestCase
      *
      * @synaxon-endpoint PATCH /v1/n-sight/sites/{id}
      */
-    public function testUpdateNSightSiteHttpControllerUpdateNsightSite(): void
+    public function testUpdateNSightSiteHttpControllerUpdateNSightSite(): void
     {
         $http = (new MockHttpClient())->queue([]);
         $resource = new NSightResource($http);
 
-        $resource->updateNsightSite('sample id/1', ['field' => 'value']);
+        $resource->updateNSightSite('sample id/1', ['field' => 'value']);
 
         $req = $http->lastRequest();
         self::assertNotNull($req);

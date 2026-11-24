@@ -19,6 +19,18 @@ final class EsetReadTest extends IntegrationTestCase
     use EndpointSamplingTrait;
 
     /**
+     * List ESET products with filtering and sorting, without pagination
+     *
+     * @synaxon-endpoint GET /v1/eset/products
+     */
+    public function testFindEsetProductsHttpControllerListEsetProducts(): void
+    {
+        $this->assertReadOnly('GET');
+        $response = $this->client->eset()->listEsetProducts([]);
+        self::assertNotNull($response, 'Expected a non-null response from GET /v1/eset/products');
+    }
+
+    /**
      * List ESET partners
      *
      * @synaxon-endpoint GET /v1/eset/partners

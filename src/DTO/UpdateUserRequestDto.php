@@ -24,7 +24,6 @@ class UpdateUserRequestDto extends AbstractDto
      */
     public function withRole(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('role', $value);
     }
 
@@ -49,11 +48,14 @@ class UpdateUserRequestDto extends AbstractDto
     /**
      * Set the "permissions" field. User permissions
      *
+     * @param list<UpdateUserPermissions|array<string, mixed>>|null $value
      * @return static
      */
     public function withPermissions(?array $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
+        if ($value !== null) {
+            $value = array_map(static fn (mixed $item): mixed => $item instanceof AbstractDto ? $item->toArray() : $item, $value);
+        }
         return $this->with('permissions', $value);
     }
 
@@ -75,8 +77,28 @@ class UpdateUserRequestDto extends AbstractDto
      */
     public function withEmailNotification(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('emailNotification', $value);
+    }
+
+    /**
+     * Weekday for weekly email digests
+     *
+     * @return string|null
+     */
+    public function getWeeklyDigestDay(): ?string
+    {
+        $v = $this->data['weeklyDigestDay'] ?? null;
+        return $v === null ? null : (string) $v;
+    }
+
+    /**
+     * Set the "weeklyDigestDay" field. Weekday for weekly email digests
+     *
+     * @return static
+     */
+    public function withWeeklyDigestDay(?string $value): static
+    {
+        return $this->with('weeklyDigestDay', $value);
     }
 
     /**
@@ -97,7 +119,6 @@ class UpdateUserRequestDto extends AbstractDto
      */
     public function withLanguage(?string $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('language', $value);
     }
 
@@ -108,17 +129,17 @@ class UpdateUserRequestDto extends AbstractDto
      */
     public function getCompletedTours(): array
     {
-        return (array) ($this->data['completedTours'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['completedTours'] ?? [])));
     }
 
     /**
      * Set the "completedTours" field. Completed tours
      *
+     * @param list<string>|null $value
      * @return static
      */
     public function withCompletedTours(?array $value): static
     {
-        $value = $value instanceof AbstractDto ? $value->toArray() : $value;
         return $this->with('completedTours', $value);
     }
 }

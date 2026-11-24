@@ -154,7 +154,7 @@ class EsetLicenseResponseDto extends AbstractDto
      */
     public function getBundleProducts(): array
     {
-        return (array) ($this->data['bundleProducts'] ?? []);
+        return array_values(array_map('strval', (array) ($this->data['bundleProducts'] ?? [])));
     }
 
     /**

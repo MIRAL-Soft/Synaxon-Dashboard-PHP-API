@@ -36,24 +36,4 @@ final class UsersWriteTest extends TestCase
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
         self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
-
-    /**
-     * Accept providing terms
-     *
-     * @synaxon-endpoint POST /v1/users/terms/accept
-     */
-    public function testAcceptTermHttpControllerAcceptTerms(): void
-    {
-        $http = (new MockHttpClient())->queue([]);
-        $resource = new UsersResource($http);
-
-        $resource->acceptTerms(['field' => 'value']);
-
-        $req = $http->lastRequest();
-        self::assertNotNull($req);
-        self::assertSame('POST', $req['method']);
-        self::assertSame('/v1/users/terms/accept', $req['path']);
-        self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
-        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
-    }
 }

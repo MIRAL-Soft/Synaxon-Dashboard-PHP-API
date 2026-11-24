@@ -31,12 +31,11 @@ class NotificationsResource extends AbstractResource
      *
      * @synaxon-endpoint GET /v1/notifications/unread
      * @synaxon-operation-id FindUnreadMessagesHttpController_listUnreadMessages
-     * @param array<string, scalar|array<int, scalar>> $query Query parameters.
      * @return array<string, mixed>|list<mixed>|null Decoded JSON response body.
      */
-    public function listUnreadMessages(array $query = []): array|null
+    public function listUnreadMessages(): array|null
     {
-        return $this->httpGet($this->expand('/v1/notifications/unread'), $query);
+        return $this->httpGet($this->expand('/v1/notifications/unread'));
     }
 
     /**
@@ -68,7 +67,7 @@ class NotificationsResource extends AbstractResource
      * Get message by id
      *
      * @synaxon-endpoint GET /v1/notifications/{id}
-     * @synaxon-operation-id FindMessageHttpController_getMessage
+     * @synaxon-operation-id FindMessageByIdHttpController_getMessage
      * @param string $id Path parameter from the upstream spec.
      * @return array<string, mixed>|list<mixed>|null Decoded JSON response body.
      */

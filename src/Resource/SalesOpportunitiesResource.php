@@ -17,7 +17,7 @@ class SalesOpportunitiesResource extends AbstractResource
      * Get sales opportunities
      *
      * @synaxon-endpoint GET /v1/sales-opportunities
-     * @synaxon-operation-id GetSalesOpportunitiesHttpController_listNsightSalesOpportunities
+     * @synaxon-operation-id GetSalesOpportunitiesHttpController_listNSightSalesOpportunities
      * @param array<string, scalar|array<int, scalar>> $query Query parameters.
      * @return array<string, mixed>|list<mixed>|null Decoded JSON response body.
      */
@@ -30,11 +30,11 @@ class SalesOpportunitiesResource extends AbstractResource
      * Get sales opportunities
      *
      * @synaxon-endpoint GET /v1/sales-opportunities/csv
-     * @synaxon-operation-id GetSalesOpportunitiesExportHttpController_exportNsightSalesOpportunitiesCSV
+     * @synaxon-operation-id GetSalesOpportunitiesExportHttpController_exportNSightSalesOpportunitiesCSV
      * @param array<string, scalar|array<int, scalar>> $query Query parameters.
      * @return array<string, mixed>|list<mixed>|null Decoded JSON response body.
      */
-    public function exportNsightSalesOpportunitiesCSV(array $query = []): array|null
+    public function exportNSightSalesOpportunitiesCSV(array $query = []): array|null
     {
         return $this->httpGet($this->expand('/v1/sales-opportunities/csv'), $query);
     }
@@ -43,11 +43,11 @@ class SalesOpportunitiesResource extends AbstractResource
      * Get sales opportunities
      *
      * @synaxon-endpoint GET /v1/sales-opportunities/pdf
-     * @synaxon-operation-id GetSalesOpportunitiesExportHttpController_exportNsightSalesOpportunitiesPDF
+     * @synaxon-operation-id GetSalesOpportunitiesExportHttpController_exportNSightSalesOpportunitiesPDF
      * @param array<string, scalar|array<int, scalar>> $query Query parameters.
      * @return array<string, mixed>|list<mixed>|null Decoded JSON response body.
      */
-    public function exportNsightSalesOpportunitiesPDF(array $query = []): array|null
+    public function exportNSightSalesOpportunitiesPDF(array $query = []): array|null
     {
         return $this->httpGet($this->expand('/v1/sales-opportunities/pdf'), $query);
     }
