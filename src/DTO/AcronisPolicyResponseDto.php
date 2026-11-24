@@ -13,7 +13,7 @@ class AcronisPolicyResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class AcronisPolicyResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class AcronisPolicyResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class AcronisPolicyResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -53,7 +53,7 @@ class AcronisPolicyResponseDto extends AbstractDto
      */
     public function getCount(): float
     {
-        return (float) $this->data['count'];
+        return (float) $this->required('count');
     }
 
     /**
@@ -61,7 +61,7 @@ class AcronisPolicyResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -69,7 +69,7 @@ class AcronisPolicyResponseDto extends AbstractDto
      */
     public function getParentId(): string
     {
-        return (string) $this->data['parentId'];
+        return (string) $this->required('parentId');
     }
 
     /**
@@ -79,7 +79,7 @@ class AcronisPolicyResponseDto extends AbstractDto
      */
     public function getVendorId(): string
     {
-        return (string) $this->data['vendorId'];
+        return (string) $this->required('vendorId');
     }
 
     /**

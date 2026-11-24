@@ -13,6 +13,6 @@ class PusherChannelAuthDto extends AbstractDto
      */
     public function getAuth(): string
     {
-        return (string) $this->data['auth'];
+        return (string) $this->required('auth');
     }
 }

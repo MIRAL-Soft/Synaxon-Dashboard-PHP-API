@@ -13,7 +13,7 @@ class CreateCustomerReferenceRequestDto extends AbstractDto
      */
     public function getReferenceId(): string
     {
-        return (string) $this->data['referenceId'];
+        return (string) $this->required('referenceId');
     }
 
     /**
@@ -34,7 +34,7 @@ class CreateCustomerReferenceRequestDto extends AbstractDto
      */
     public function getSystem(): string
     {
-        return (string) $this->data['system'];
+        return (string) $this->required('system');
     }
 
     /**

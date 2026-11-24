@@ -13,7 +13,7 @@ class NSightDeviceHardwareDto extends AbstractDto
      */
     public function getHardwareId(): float
     {
-        return (float) $this->data['hardwareId'];
+        return (float) $this->required('hardwareId');
     }
 
     /**
@@ -23,7 +23,7 @@ class NSightDeviceHardwareDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -33,7 +33,7 @@ class NSightDeviceHardwareDto extends AbstractDto
      */
     public function getType(): float
     {
-        return (float) $this->data['type'];
+        return (float) $this->required('type');
     }
 
     /**
@@ -43,7 +43,7 @@ class NSightDeviceHardwareDto extends AbstractDto
      */
     public function getManufacturer(): string
     {
-        return (string) $this->data['manufacturer'];
+        return (string) $this->required('manufacturer');
     }
 
     /**
@@ -53,7 +53,7 @@ class NSightDeviceHardwareDto extends AbstractDto
      */
     public function getDetails(): string
     {
-        return (string) $this->data['details'];
+        return (string) $this->required('details');
     }
 
     /**
@@ -63,7 +63,7 @@ class NSightDeviceHardwareDto extends AbstractDto
      */
     public function getStatus(): string
     {
-        return (string) $this->data['status'];
+        return (string) $this->required('status');
     }
 
     /**
@@ -73,7 +73,7 @@ class NSightDeviceHardwareDto extends AbstractDto
      */
     public function getModified(): float
     {
-        return (float) $this->data['modified'];
+        return (float) $this->required('modified');
     }
 
     /**
@@ -83,6 +83,6 @@ class NSightDeviceHardwareDto extends AbstractDto
      */
     public function getDeleted(): float
     {
-        return (float) $this->data['deleted'];
+        return (float) $this->required('deleted');
     }
 }

@@ -34,6 +34,7 @@ final class SupportWriteTest extends TestCase
         self::assertSame('POST', $req['method']);
         self::assertSame('/v1/support/queries', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -46,13 +47,14 @@ final class SupportWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new SupportResource($http);
 
-        $resource->updateSupportQuery('sample-id-1', ['field' => 'value']);
+        $resource->updateSupportQuery('sample id/1', ['field' => 'value']);
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('PATCH', $req['method']);
-        self::assertSame('/v1/support/queries/sample-id-1', $req['path']);
+        self::assertSame('/v1/support/queries/sample%20id%2F1', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -65,11 +67,11 @@ final class SupportWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new SupportResource($http);
 
-        $resource->removeSupportChat('sample-threadId-1');
+        $resource->removeSupportChat('sample threadId/1');
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('DELETE', $req['method']);
-        self::assertSame('/v1/support/chats/sample-threadId-1', $req['path']);
+        self::assertSame('/v1/support/chats/sample%20threadId%2F1', $req['path']);
     }
 }

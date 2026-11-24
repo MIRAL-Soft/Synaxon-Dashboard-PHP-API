@@ -13,7 +13,7 @@ class LywandTargetDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -23,7 +23,7 @@ class LywandTargetDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 
     /**
@@ -33,7 +33,7 @@ class LywandTargetDto extends AbstractDto
      */
     public function getInScope(): bool
     {
-        return (bool) $this->data['inScope'];
+        return (bool) $this->required('inScope');
     }
 
     /**
@@ -43,6 +43,6 @@ class LywandTargetDto extends AbstractDto
      */
     public function getLywandIdentifier(): string
     {
-        return (string) $this->data['lywandIdentifier'];
+        return (string) $this->required('lywandIdentifier');
     }
 }

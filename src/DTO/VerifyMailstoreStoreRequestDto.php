@@ -13,7 +13,7 @@ class VerifyMailstoreStoreRequestDto extends AbstractDto
      */
     public function getInstanceId(): string
     {
-        return (string) $this->data['instanceId'];
+        return (string) $this->required('instanceId');
     }
 
     /**
@@ -34,7 +34,7 @@ class VerifyMailstoreStoreRequestDto extends AbstractDto
      */
     public function getStoreId(): string
     {
-        return (string) $this->data['storeId'];
+        return (string) $this->required('storeId');
     }
 
     /**
@@ -55,7 +55,7 @@ class VerifyMailstoreStoreRequestDto extends AbstractDto
      */
     public function getIncludeIndexes(): bool
     {
-        return (bool) $this->data['includeIndexes'];
+        return (bool) $this->required('includeIndexes');
     }
 
     /**

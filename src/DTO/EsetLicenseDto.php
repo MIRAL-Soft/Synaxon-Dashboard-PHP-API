@@ -13,7 +13,7 @@ class EsetLicenseDto extends AbstractDto
      */
     public function getActiveLicenses(): float
     {
-        return (float) $this->data['activeLicenses'];
+        return (float) $this->required('activeLicenses');
     }
 
     /**
@@ -23,7 +23,7 @@ class EsetLicenseDto extends AbstractDto
      */
     public function getProductProtectEntryOnPremQuantity(): float
     {
-        return (float) $this->data['productProtectEntryOnPremQuantity'];
+        return (float) $this->required('productProtectEntryOnPremQuantity');
     }
 
     /**
@@ -33,7 +33,7 @@ class EsetLicenseDto extends AbstractDto
      */
     public function getProductProtectEntryOnPremUsage(): float
     {
-        return (float) $this->data['productProtectEntryOnPremUsage'];
+        return (float) $this->required('productProtectEntryOnPremUsage');
     }
 
     /**
@@ -43,7 +43,7 @@ class EsetLicenseDto extends AbstractDto
      */
     public function getProductProtectAdvancedQuantity(): float
     {
-        return (float) $this->data['productProtectAdvancedQuantity'];
+        return (float) $this->required('productProtectAdvancedQuantity');
     }
 
     /**
@@ -53,7 +53,7 @@ class EsetLicenseDto extends AbstractDto
      */
     public function getProductProtectAdvancedUsage(): float
     {
-        return (float) $this->data['productProtectAdvancedUsage'];
+        return (float) $this->required('productProtectAdvancedUsage');
     }
 
     /**
@@ -63,7 +63,7 @@ class EsetLicenseDto extends AbstractDto
      */
     public function getProductProtectCompleteQuantity(): float
     {
-        return (float) $this->data['productProtectCompleteQuantity'];
+        return (float) $this->required('productProtectCompleteQuantity');
     }
 
     /**
@@ -73,6 +73,6 @@ class EsetLicenseDto extends AbstractDto
      */
     public function getProductProtectCompleteUsage(): float
     {
-        return (float) $this->data['productProtectCompleteUsage'];
+        return (float) $this->required('productProtectCompleteUsage');
     }
 }

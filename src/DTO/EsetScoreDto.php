@@ -13,7 +13,7 @@ class EsetScoreDto extends AbstractDto
      */
     public function getTotalDevices(): float
     {
-        return (float) $this->data['totalDevices'];
+        return (float) $this->required('totalDevices');
     }
 
     /**
@@ -23,7 +23,7 @@ class EsetScoreDto extends AbstractDto
      */
     public function getDevicesWithErrors(): float
     {
-        return (float) $this->data['devicesWithErrors'];
+        return (float) $this->required('devicesWithErrors');
     }
 
     /**
@@ -33,6 +33,6 @@ class EsetScoreDto extends AbstractDto
      */
     public function getScore(): float
     {
-        return (float) $this->data['score'];
+        return (float) $this->required('score');
     }
 }

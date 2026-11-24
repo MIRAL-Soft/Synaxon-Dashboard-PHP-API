@@ -36,15 +36,19 @@ final class SynaxonConfig
      * @param string|null $bearerToken HTTP bearer token (mutually exclusive with basic credentials).
      * @param string|null $basicUser HTTP basic auth user.
      * @param string|null $basicPass HTTP basic auth password.
-     * @param string $baseUri Base URI of the API, without trailing slash. Must be http(s).
+     * @param string $baseUri Base URI of the API. https, or http for a loopback host; no
+     *                        user info, query or fragment.
      * @param int $timeout Request timeout in seconds (1..600).
      * @param int $connectTimeout Connection timeout in seconds (1..600).
      * @param int $maxRetries Number of retries on 429/5xx (0..10).
      * @param string $userAgent User agent string sent with each request.
      */
     public function __construct(
+        #[\SensitiveParameter]
         private readonly ?string $bearerToken = null,
+        #[\SensitiveParameter]
         private readonly ?string $basicUser = null,
+        #[\SensitiveParameter]
         private readonly ?string $basicPass = null,
         private readonly string $baseUri = self::DEFAULT_BASE_URI,
         private readonly int $timeout = 30,
@@ -76,9 +80,45 @@ final class SynaxonConfig
         if (filter_var($this->baseUri, FILTER_VALIDATE_URL) === false) {
             throw new InvalidArgumentException('baseUri must be a valid URL');
         }
-        $scheme = parse_url($this->baseUri, PHP_URL_SCHEME);
+        $scheme = strtolower((string) parse_url($this->baseUri, PHP_URL_SCHEME));
         if ($scheme !== 'http' && $scheme !== 'https') {
             throw new InvalidArgumentException('baseUri must use http or https scheme');
+        }
+        // Every request carries the credential in the Authorization header,
+        // so plain http would send it readable over the network. It is only
+        // accepted for a loopback host, for local mocks and proxies.
+        if ($scheme === 'http' && !self::isLoopbackHost((string) parse_url($this->baseUri, PHP_URL_HOST))) {
+            throw new InvalidArgumentException(
+                'baseUri must use https; plain http is only accepted for localhost, 127.0.0.1 and [::1]'
+            );
+        }
+        // Credentials belong in the Authorization header, never in the URI,
+        // where they would end up in logs and __debugInfo(). A query or
+        // fragment would be dropped silently when paths are resolved.
+        foreach ([PHP_URL_USER => 'user info', PHP_URL_QUERY => 'a query string', PHP_URL_FRAGMENT => 'a fragment'] as $part => $label) {
+            if (parse_url($this->baseUri, $part) !== null) {
+                throw new InvalidArgumentException(sprintf('baseUri must not contain %s', $label));
+            }
+        }
+        foreach (['bearerToken' => $this->bearerToken, 'basicUser' => $this->basicUser, 'basicPass' => $this->basicPass] as $name => $value) {
+            if ($value === '') {
+                throw new InvalidArgumentException(sprintf(
+                    '%s must not be an empty string; pass null to leave it unset',
+                    $name
+                ));
+            }
+            // A trailing newline from a secrets file would make the HTTP layer
+            // reject the header with the full value in its message. Refuse it
+            // here, where the message names the field and not the value.
+            if ($value !== null && preg_match('/[\x00-\x1F\x7F]/', $value) === 1) {
+                throw new InvalidArgumentException(sprintf('%s must not contain control characters', $name));
+            }
+        }
+        if (preg_match('/[\x00-\x1F\x7F]/', $this->userAgent) === 1) {
+            throw new InvalidArgumentException('userAgent must not contain control characters');
+        }
+        if ($this->bearerToken !== null && $this->basicUser !== null) {
+            throw new InvalidArgumentException('Set either bearerToken or basicUser/basicPass, not both');
         }
         if ($this->basicUser !== null && $this->basicPass === null) {
             throw new InvalidArgumentException('basicPass is required when basicUser is set');
@@ -100,13 +140,17 @@ final class SynaxonConfig
      *  - SYNAXON_CONNECT_TIMEOUT
      *  - SYNAXON_MAX_RETRIES
      *  - SYNAXON_USER_AGENT
+     *
+     * When SYNAXON_BEARER_TOKEN is set, the basic variables are ignored.
      */
     public static function fromEnv(): self
     {
+        $bearer = self::envString('SYNAXON_BEARER_TOKEN');
+
         return new self(
-            bearerToken:    self::envString('SYNAXON_BEARER_TOKEN'),
-            basicUser:      self::envString('SYNAXON_BASIC_USER'),
-            basicPass:      self::envString('SYNAXON_BASIC_PASS'),
+            bearerToken:    $bearer,
+            basicUser:      $bearer === null ? self::envString('SYNAXON_BASIC_USER') : null,
+            basicPass:      $bearer === null ? self::envString('SYNAXON_BASIC_PASS') : null,
             baseUri:        self::envString('SYNAXON_BASE_URI') ?? self::DEFAULT_BASE_URI,
             timeout:        self::envInt('SYNAXON_TIMEOUT', 30),
             connectTimeout: self::envInt('SYNAXON_CONNECT_TIMEOUT', 10),
@@ -230,6 +274,11 @@ final class SynaxonConfig
             'maxRetries' => $this->maxRetries,
             'userAgent' => $this->userAgent,
         ];
+    }
+
+    private static function isLoopbackHost(string $host): bool
+    {
+        return in_array(strtolower(trim($host, '[]')), ['localhost', '127.0.0.1', '::1'], true);
     }
 
     private static function envString(string $key): ?string

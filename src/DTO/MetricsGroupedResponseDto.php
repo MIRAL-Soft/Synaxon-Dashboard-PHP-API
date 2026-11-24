@@ -13,7 +13,7 @@ class MetricsGroupedResponseDto extends AbstractDto
      */
     public function getPeriod(): string
     {
-        return (string) $this->data['period'];
+        return (string) $this->required('period');
     }
 
     /**

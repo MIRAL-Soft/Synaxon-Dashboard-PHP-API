@@ -22,6 +22,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (`synaxon.request.unauthorized`) instead of `debug`. The log context still
   carries no headers or credentials.
 
+- **Path parameters `.` and `..` are rejected.** URI resolution removes dot
+  segments, so an id of `..` turned
+  `DELETE /v1/customers/{id}/references/{refId}` into
+  `DELETE /v1/customers/{id}/`, a different endpoint.
+- **`baseUri` must use https**; plain http is accepted only for `localhost`,
+  `127.0.0.1` and `[::1]`, since every request carries the credential. User
+  info, a query string or a fragment in `baseUri` are rejected.
+- **Credentials and the User-Agent may not contain control characters or be
+  empty strings.** A token with a trailing newline used to make PSR-7 throw
+  an exception whose message quoted the whole `Authorization` header. Such
+  PSR-7 errors are now wrapped in a `TransportException` that quotes nothing.
+- Credential parameters of `SynaxonConfig` carry `#[\SensitiveParameter]`, so
+  they no longer appear in stack traces.
+- Setting a bearer token and basic credentials together is rejected instead
+  of silently preferring the token; `fromEnv()` ignores the basic variables
+  when `SYNAXON_BEARER_TOKEN` is set.
+
+### Changed (behaviour; review before upgrading)
+- **`PaginationIterator` starts at page `0`.** The API counts pages from 0
+  (measured on the live API); starting at 1, as before, silently skipped the
+  first page. Callers who pass `startPage` explicitly are unaffected.
+- **Getters of required scalar fields throw `UnexpectedResponseException`**
+  when the field is missing or null, instead of raising an "Undefined array
+  key" warning and returning `''`, `0` or `false`.
+- Query parameters follow the spec's encoding: lists as repeated keys
+  (`status=a&status=b` instead of `status[0]=a&status[1]=b`), booleans as
+  `true` / `false` instead of `1` / `0`.
+- Request bodies use the content type the operation declares:
+  `AuthResource::getApiToken()` sends `x-www-form-urlencoded` (verified on the
+  live API), `TenantsResource::updateLogo()` sends `multipart/form-data`, so a
+  logo upload is possible at all. An empty JSON body is sent as `{}`, not `[]`.
+- `AuthResource::callback()` sends `scope` as a query parameter; it was
+  accepted and silently dropped.
+- `RateLimitException::getRetryAfter()` returns `null` when the server sent
+  no usable `Retry-After`, instead of `0` (which read as "retry now"), and
+  understands the HTTP-date form.
+- `QueryBuilder`: new `search()`; `with()` accepts lists. `offset()` and
+  `where()` are deprecated because no endpoint declares `offset` or `filter`.
+
 ### Changed
 - The default `User-Agent` is now derived from the new `Version::VERSION`
   constant (`miralsoft-synaxon-api/1.1.0`). It previously said `/1.0`
@@ -69,6 +108,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   not match); the generators emit formatter-clean code themselves.
 - Em-dashes removed from documentation, comments, generator templates and
   generated output.
+- The release workflow runs `composer ci` on the tagged commit before it
+  publishes anything.
+- `bin/check-generated.php` plants its self-test change on disk, so the test
+  proves that the generators rewrite the file and the comparison sees it.
+- Generated write tests use path ids that need percent-encoding, assert the
+  body format, and cannot produce duplicate test names.
+- `bin/check-content.php` also flags password assignments.
+- `tests/Support/TokenCache` keys the cached token by client and scope and
+  creates the cache file with owner-only permissions from the first byte.
+- `bin/live-data-dump.php` exits with a message instead of a `TypeError`
+  when no credentials are configured.
+- README: the quick start called a method that does not exist
+  (`notifications()->create()`); it now uses `fromEnv()` and a real method.
 
 ## [1.1.0] - 2026-04-23
 

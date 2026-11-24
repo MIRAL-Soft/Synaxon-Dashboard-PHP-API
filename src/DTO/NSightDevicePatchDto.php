@@ -13,7 +13,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getPatchId(): float
     {
-        return (float) $this->data['patchId'];
+        return (float) $this->required('patchId');
     }
 
     /**
@@ -23,7 +23,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getPolicy(): float
     {
-        return (float) $this->data['policy'];
+        return (float) $this->required('policy');
     }
 
     /**
@@ -33,7 +33,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getPolicyLabel(): string
     {
-        return (string) $this->data['policyLabel'];
+        return (string) $this->required('policyLabel');
     }
 
     /**
@@ -43,7 +43,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getPatchIcon(): string
     {
-        return (string) $this->data['patchIcon'];
+        return (string) $this->required('patchIcon');
     }
 
     /**
@@ -53,7 +53,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getStatus(): float
     {
-        return (float) $this->data['status'];
+        return (float) $this->required('status');
     }
 
     /**
@@ -63,7 +63,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getSelectPatch(): string
     {
-        return (string) $this->data['selectPatch'];
+        return (string) $this->required('selectPatch');
     }
 
     /**
@@ -73,7 +73,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getStatusLabel(): string
     {
-        return (string) $this->data['statusLabel'];
+        return (string) $this->required('statusLabel');
     }
 
     /**
@@ -83,7 +83,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getPatchUrl(): string
     {
-        return (string) $this->data['patchUrl'];
+        return (string) $this->required('patchUrl');
     }
 
     /**
@@ -93,7 +93,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getPatchTitle(): string
     {
-        return (string) $this->data['patchTitle'];
+        return (string) $this->required('patchTitle');
     }
 
     /**
@@ -103,7 +103,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getProduct(): string
     {
-        return (string) $this->data['product'];
+        return (string) $this->required('product');
     }
 
     /**
@@ -113,7 +113,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getSeverity(): float
     {
-        return (float) $this->data['severity'];
+        return (float) $this->required('severity');
     }
 
     /**
@@ -123,7 +123,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getSeverityLabel(): string
     {
-        return (string) $this->data['severityLabel'];
+        return (string) $this->required('severityLabel');
     }
 
     /**
@@ -133,7 +133,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getReleaseDate(): string
     {
-        return (string) $this->data['releaseDate'];
+        return (string) $this->required('releaseDate');
     }
 
     /**
@@ -143,7 +143,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getReleaseDateText(): string
     {
-        return (string) $this->data['releaseDateText'];
+        return (string) $this->required('releaseDateText');
     }
 
     /**
@@ -153,7 +153,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getInstallDateText(): string
     {
-        return (string) $this->data['installDateText'];
+        return (string) $this->required('installDateText');
     }
 
     /**
@@ -163,7 +163,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getDeployable(): float
     {
-        return (float) $this->data['deployable'];
+        return (float) $this->required('deployable');
     }
 
     /**
@@ -173,7 +173,7 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getUninstallable(): float
     {
-        return (float) $this->data['uninstallable'];
+        return (float) $this->required('uninstallable');
     }
 
     /**
@@ -183,6 +183,6 @@ class NSightDevicePatchDto extends AbstractDto
      */
     public function getClassification(): string
     {
-        return (string) $this->data['classification'];
+        return (string) $this->required('classification');
     }
 }

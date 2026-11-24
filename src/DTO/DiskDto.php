@@ -11,7 +11,7 @@ class DiskDto extends AbstractDto
      */
     public function getDescription(): string
     {
-        return (string) $this->data['description'];
+        return (string) $this->required('description');
     }
 
     /**
@@ -19,7 +19,7 @@ class DiskDto extends AbstractDto
      */
     public function getFreeSpace(): float
     {
-        return (float) $this->data['freeSpace'];
+        return (float) $this->required('freeSpace');
     }
 
     /**
@@ -27,6 +27,6 @@ class DiskDto extends AbstractDto
      */
     public function getSize(): float
     {
-        return (float) $this->data['size'];
+        return (float) $this->required('size');
     }
 }

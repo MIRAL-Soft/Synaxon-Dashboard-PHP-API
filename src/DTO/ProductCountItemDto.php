@@ -13,7 +13,7 @@ class ProductCountItemDto extends AbstractDto
      */
     public function getProduct(): string
     {
-        return (string) $this->data['product'];
+        return (string) $this->required('product');
     }
 
     /**
@@ -23,6 +23,6 @@ class ProductCountItemDto extends AbstractDto
      */
     public function getCount(): float
     {
-        return (float) $this->data['count'];
+        return (float) $this->required('count');
     }
 }

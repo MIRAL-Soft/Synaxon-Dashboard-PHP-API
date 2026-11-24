@@ -13,7 +13,7 @@ class NSightSiteResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class NSightSiteResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class NSightSiteResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -54,7 +54,7 @@ class NSightSiteResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -64,7 +64,7 @@ class NSightSiteResponseDto extends AbstractDto
      */
     public function getVendorId(): float
     {
-        return (float) $this->data['vendorId'];
+        return (float) $this->required('vendorId');
     }
 
     /**
@@ -74,7 +74,7 @@ class NSightSiteResponseDto extends AbstractDto
      */
     public function getWorkstationCount(): float
     {
-        return (float) $this->data['workstationCount'];
+        return (float) $this->required('workstationCount');
     }
 
     /**
@@ -84,7 +84,7 @@ class NSightSiteResponseDto extends AbstractDto
      */
     public function getServerCount(): float
     {
-        return (float) $this->data['serverCount'];
+        return (float) $this->required('serverCount');
     }
 
     /**
@@ -94,7 +94,7 @@ class NSightSiteResponseDto extends AbstractDto
      */
     public function getFailingChecksCount(): float
     {
-        return (float) $this->data['failingChecksCount'];
+        return (float) $this->required('failingChecksCount');
     }
 
     /**
@@ -104,6 +104,6 @@ class NSightSiteResponseDto extends AbstractDto
      */
     public function getDeletedAt(): string
     {
-        return (string) $this->data['deletedAt'];
+        return (string) $this->required('deletedAt');
     }
 }

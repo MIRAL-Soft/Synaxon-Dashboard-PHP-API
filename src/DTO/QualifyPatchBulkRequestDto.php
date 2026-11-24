@@ -13,7 +13,7 @@ class QualifyPatchBulkRequestDto extends AbstractDto
      */
     public function getStatus(): string
     {
-        return (string) $this->data['status'];
+        return (string) $this->required('status');
     }
 
     /**

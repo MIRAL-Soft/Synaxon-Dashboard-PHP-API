@@ -13,6 +13,6 @@ class MailstoreCustomerCountDto extends AbstractDto
      */
     public function getCount(): float
     {
-        return (float) $this->data['count'];
+        return (float) $this->required('count');
     }
 }

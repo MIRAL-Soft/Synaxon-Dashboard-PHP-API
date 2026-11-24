@@ -13,7 +13,7 @@ class NSightSiteInstallerResponseDto extends AbstractDto
      */
     public function getUrl(): string
     {
-        return (string) $this->data['url'];
+        return (string) $this->required('url');
     }
 
     /**
@@ -23,6 +23,6 @@ class NSightSiteInstallerResponseDto extends AbstractDto
      */
     public function getFileName(): string
     {
-        return (string) $this->data['fileName'];
+        return (string) $this->required('fileName');
     }
 }

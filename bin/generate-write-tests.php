@@ -69,7 +69,7 @@ foreach (glob($resDir . '/*.php') ?: [] as $file) {
 }
 
 // Group mutating operations by resource (path-prefix after /v1/).
-/** @var array<string, list<array{path:string,method:string,opId:string,summary:string}>> $groups */
+/** @var array<string, list<array{path:string,method:string,opId:string,summary:string,contentTypes:list<string>}>> $groups */
 $groups = [];
 foreach ((array) ($spec['paths'] ?? []) as $path => $obj) {
     if (!is_string($path) || !is_array($obj)) {
@@ -88,6 +88,7 @@ foreach ((array) ($spec['paths'] ?? []) as $path => $obj) {
             'method' => strtoupper($verb),
             'opId' => (string) ($obj[$verb]['operationId'] ?? ''),
             'summary' => (string) ($obj[$verb]['summary'] ?? ''),
+            'contentTypes' => array_keys((array) ($obj[$verb]['requestBody']['content'] ?? [])),
         ];
     }
 }
@@ -103,13 +104,14 @@ foreach ($groups as $group => $ops) {
     $resourceClass = studly($group) . 'Resource';
 
     $testMethods = [];
+    $usedNames = [];
     foreach ($ops as $op) {
         $endpointKey = $op['method'] . ' ' . $op['path'];
         $methodInfo = $endpointToMethod[$endpointKey] ?? null;
         if ($methodInfo === null) {
             continue;
         }
-        $testMethods[] = renderTest($op, $methodInfo, $resourceMethod);
+        $testMethods[] = renderTest($op, $methodInfo, $resourceMethod, $usedNames);
         $totalTests++;
     }
 
@@ -165,10 +167,11 @@ function camel(string $name): string
 }
 
 /**
- * @param array{path:string,method:string,opId:string,summary:string} $op
+ * @param array{path:string,method:string,opId:string,summary:string,contentTypes:list<string>} $op
  * @param array{class:string,method:string,params:list<array{name:string,hasDefault:bool}>} $methodInfo
+ * @param array<string, true> $usedNames test names already emitted in this file
  */
-function renderTest(array $op, array $methodInfo, string $resourceMethod): string
+function renderTest(array $op, array $methodInfo, string $resourceMethod, array &$usedNames): string
 {
     $verb = $op['method'];
     $path = $op['path'];
@@ -181,7 +184,9 @@ function renderTest(array $op, array $methodInfo, string $resourceMethod): strin
     $sampleIds = [];
     $expandedPath = $path;
     foreach ($pathParams as $i => $name) {
-        $value = 'sample-' . $name . '-' . ($i + 1);
+        // A space and a slash, so the expected path proves that the value
+        // was percent-encoded and cannot add a path segment.
+        $value = 'sample ' . $name . '/' . ($i + 1);
         $sampleIds[$name] = $value;
         $expandedPath = str_replace('{' . $name . '}', rawurlencode($value), $expandedPath);
     }
@@ -214,12 +219,26 @@ function renderTest(array $op, array $methodInfo, string $resourceMethod): strin
     if (strlen($testName) > 80) {
         $testName = substr($testName, 0, 80);
     }
+    // Truncation can make two names equal, which would be a fatal redeclare.
+    $base = $testName;
+    for ($n = 2; isset($usedNames[$testName]); $n++) {
+        $testName = $base . $n;
+    }
+    $usedNames[$testName] = true;
+
+    $bodyFormat = 'json';
+    if (in_array('multipart/form-data', $op['contentTypes'], true)) {
+        $bodyFormat = 'multipart';
+    } elseif (in_array('application/x-www-form-urlencoded', $op['contentTypes'], true)) {
+        $bodyFormat = 'form';
+    }
 
     $assertions = [];
     $assertions[] = "        self::assertSame('{$verb}', \$req['method']);";
     $assertions[] = '        self::assertSame(' . var_export($expandedPath, true) . ", \$req['path']);";
     if ($hasBody) {
         $assertions[] = "        self::assertSame(['field' => 'value'], \$req['options']['body'] ?? null);";
+        $assertions[] = "        self::assertSame('{$bodyFormat}', \$req['options']['bodyFormat'] ?? 'json');";
     }
     if ($hasQuery) {
         $assertions[] = "        self::assertSame(['filter' => 'a'], \$req['options']['query'] ?? null);";

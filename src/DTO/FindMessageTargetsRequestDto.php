@@ -34,7 +34,7 @@ class FindMessageTargetsRequestDto extends AbstractDto
      */
     public function getTargetType(): string
     {
-        return (string) $this->data['targetType'];
+        return (string) $this->required('targetType');
     }
 
     /**

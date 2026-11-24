@@ -13,7 +13,7 @@ class JournalingMailboxPaginatedResponseDto extends AbstractDto
      */
     public function getLimit(): float
     {
-        return (float) $this->data['limit'];
+        return (float) $this->required('limit');
     }
 
     /**
@@ -23,7 +23,7 @@ class JournalingMailboxPaginatedResponseDto extends AbstractDto
      */
     public function getPage(): float
     {
-        return (float) $this->data['page'];
+        return (float) $this->required('page');
     }
 
     /**
@@ -33,7 +33,7 @@ class JournalingMailboxPaginatedResponseDto extends AbstractDto
      */
     public function getTotalItems(): float
     {
-        return (float) $this->data['totalItems'];
+        return (float) $this->required('totalItems');
     }
 
     /**

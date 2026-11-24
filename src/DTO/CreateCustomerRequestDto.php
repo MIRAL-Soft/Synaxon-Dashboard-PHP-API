@@ -13,7 +13,7 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -34,7 +34,7 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function getCustomerNumber(): string
     {
-        return (string) $this->data['customerNumber'];
+        return (string) $this->required('customerNumber');
     }
 
     /**
@@ -55,7 +55,7 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function getCorporateCustomer(): bool
     {
-        return (bool) $this->data['corporateCustomer'];
+        return (bool) $this->required('corporateCustomer');
     }
 
     /**
@@ -98,7 +98,7 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function getSalutation(): string
     {
-        return (string) $this->data['salutation'];
+        return (string) $this->required('salutation');
     }
 
     /**
@@ -119,7 +119,7 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function getStreet(): string
     {
-        return (string) $this->data['street'];
+        return (string) $this->required('street');
     }
 
     /**
@@ -140,7 +140,7 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function getPostalCode(): string
     {
-        return (string) $this->data['postalCode'];
+        return (string) $this->required('postalCode');
     }
 
     /**
@@ -161,7 +161,7 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function getCity(): string
     {
-        return (string) $this->data['city'];
+        return (string) $this->required('city');
     }
 
     /**
@@ -182,7 +182,7 @@ class CreateCustomerRequestDto extends AbstractDto
      */
     public function getCountry(): string
     {
-        return (string) $this->data['country'];
+        return (string) $this->required('country');
     }
 
     /**

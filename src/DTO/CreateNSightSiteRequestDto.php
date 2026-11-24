@@ -35,7 +35,7 @@ class CreateNSightSiteRequestDto extends AbstractDto
      */
     public function getClientId(): string
     {
-        return (string) $this->data['clientId'];
+        return (string) $this->required('clientId');
     }
 
     /**
@@ -56,7 +56,7 @@ class CreateNSightSiteRequestDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**

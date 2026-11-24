@@ -39,34 +39,37 @@ abstract class AbstractResource
     /**
      * @param array<string, mixed>|null $body
      * @param array<string, scalar|array<int, scalar>> $query
+     * @param string $bodyFormat json, form or multipart (see HttpClientInterface)
      *
      * @return array<string, mixed>|list<mixed>|null
      */
-    protected function httpPost(string $path, ?array $body = null, array $query = []): array|null
+    protected function httpPost(string $path, ?array $body = null, array $query = [], string $bodyFormat = 'json'): array|null
     {
-        return $this->http->request('POST', $path, ['body' => $body, 'query' => $query]);
+        return $this->http->request('POST', $path, ['body' => $body, 'query' => $query, 'bodyFormat' => $bodyFormat]);
     }
 
     /**
      * @param array<string, mixed>|null $body
      * @param array<string, scalar|array<int, scalar>> $query
+     * @param string $bodyFormat json, form or multipart (see HttpClientInterface)
      *
      * @return array<string, mixed>|list<mixed>|null
      */
-    protected function httpPut(string $path, ?array $body = null, array $query = []): array|null
+    protected function httpPut(string $path, ?array $body = null, array $query = [], string $bodyFormat = 'json'): array|null
     {
-        return $this->http->request('PUT', $path, ['body' => $body, 'query' => $query]);
+        return $this->http->request('PUT', $path, ['body' => $body, 'query' => $query, 'bodyFormat' => $bodyFormat]);
     }
 
     /**
      * @param array<string, mixed>|null $body
      * @param array<string, scalar|array<int, scalar>> $query
+     * @param string $bodyFormat json, form or multipart (see HttpClientInterface)
      *
      * @return array<string, mixed>|list<mixed>|null
      */
-    protected function httpPatch(string $path, ?array $body = null, array $query = []): array|null
+    protected function httpPatch(string $path, ?array $body = null, array $query = [], string $bodyFormat = 'json'): array|null
     {
-        return $this->http->request('PATCH', $path, ['body' => $body, 'query' => $query]);
+        return $this->http->request('PATCH', $path, ['body' => $body, 'query' => $query, 'bodyFormat' => $bodyFormat]);
     }
 
     /**

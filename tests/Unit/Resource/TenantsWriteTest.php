@@ -27,13 +27,14 @@ final class TenantsWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new TenantsResource($http);
 
-        $resource->update('sample-id-1', ['field' => 'value']);
+        $resource->update('sample id/1', ['field' => 'value']);
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('PATCH', $req['method']);
-        self::assertSame('/v1/tenants/sample-id-1', $req['path']);
+        self::assertSame('/v1/tenants/sample%20id%2F1', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -46,13 +47,14 @@ final class TenantsWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new TenantsResource($http);
 
-        $resource->updateLogo('sample-id-1', ['field' => 'value']);
+        $resource->updateLogo('sample id/1', ['field' => 'value']);
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('PUT', $req['method']);
-        self::assertSame('/v1/tenants/sample-id-1/logo', $req['path']);
+        self::assertSame('/v1/tenants/sample%20id%2F1/logo', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('multipart', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -65,11 +67,11 @@ final class TenantsWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new TenantsResource($http);
 
-        $resource->removeLogo('sample-id-1');
+        $resource->removeLogo('sample id/1');
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('DELETE', $req['method']);
-        self::assertSame('/v1/tenants/sample-id-1/logo', $req['path']);
+        self::assertSame('/v1/tenants/sample%20id%2F1/logo', $req['path']);
     }
 }

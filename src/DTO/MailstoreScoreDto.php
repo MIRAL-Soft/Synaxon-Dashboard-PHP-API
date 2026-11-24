@@ -13,7 +13,7 @@ class MailstoreScoreDto extends AbstractDto
      */
     public function getTotalInstances(): float
     {
-        return (float) $this->data['totalInstances'];
+        return (float) $this->required('totalInstances');
     }
 
     /**
@@ -23,7 +23,7 @@ class MailstoreScoreDto extends AbstractDto
      */
     public function getInstancesWithErrors(): float
     {
-        return (float) $this->data['instancesWithErrors'];
+        return (float) $this->required('instancesWithErrors');
     }
 
     /**
@@ -33,6 +33,6 @@ class MailstoreScoreDto extends AbstractDto
      */
     public function getScore(): float
     {
-        return (float) $this->data['score'];
+        return (float) $this->required('score');
     }
 }

@@ -13,7 +13,7 @@ class EsetLicenseResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class EsetLicenseResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class EsetLicenseResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class EsetLicenseResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -53,7 +53,7 @@ class EsetLicenseResponseDto extends AbstractDto
      */
     public function getCustomerId(): string
     {
-        return (string) $this->data['customerId'];
+        return (string) $this->required('customerId');
     }
 
     /**
@@ -63,7 +63,7 @@ class EsetLicenseResponseDto extends AbstractDto
      */
     public function getParentId(): string
     {
-        return (string) $this->data['parentId'];
+        return (string) $this->required('parentId');
     }
 
     /**
@@ -73,7 +73,7 @@ class EsetLicenseResponseDto extends AbstractDto
      */
     public function getPublicLicenseKey(): string
     {
-        return (string) $this->data['publicLicenseKey'];
+        return (string) $this->required('publicLicenseKey');
     }
 
     /**
@@ -83,7 +83,7 @@ class EsetLicenseResponseDto extends AbstractDto
      */
     public function getProductCode(): string
     {
-        return (string) $this->data['productCode'];
+        return (string) $this->required('productCode');
     }
 
     /**
@@ -93,7 +93,7 @@ class EsetLicenseResponseDto extends AbstractDto
      */
     public function getProductName(): string
     {
-        return (string) $this->data['productName'];
+        return (string) $this->required('productName');
     }
 
     /**
@@ -103,7 +103,7 @@ class EsetLicenseResponseDto extends AbstractDto
      */
     public function getQuantity(): float
     {
-        return (float) $this->data['quantity'];
+        return (float) $this->required('quantity');
     }
 
     /**
@@ -113,7 +113,7 @@ class EsetLicenseResponseDto extends AbstractDto
      */
     public function getUsage(): float
     {
-        return (float) $this->data['usage'];
+        return (float) $this->required('usage');
     }
 
     /**
@@ -123,7 +123,7 @@ class EsetLicenseResponseDto extends AbstractDto
      */
     public function getState(): float
     {
-        return (float) $this->data['state'];
+        return (float) $this->required('state');
     }
 
     /**
@@ -133,7 +133,7 @@ class EsetLicenseResponseDto extends AbstractDto
      */
     public function getTrial(): bool
     {
-        return (bool) $this->data['trial'];
+        return (bool) $this->required('trial');
     }
 
     /**

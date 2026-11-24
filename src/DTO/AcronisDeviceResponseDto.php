@@ -13,7 +13,7 @@ class AcronisDeviceResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class AcronisDeviceResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class AcronisDeviceResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class AcronisDeviceResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -53,7 +53,7 @@ class AcronisDeviceResponseDto extends AbstractDto
      */
     public function getVendorId(): string
     {
-        return (string) $this->data['vendorId'];
+        return (string) $this->required('vendorId');
     }
 
     /**
@@ -63,7 +63,7 @@ class AcronisDeviceResponseDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 
     /**
@@ -73,7 +73,7 @@ class AcronisDeviceResponseDto extends AbstractDto
      */
     public function getLicense(): string
     {
-        return (string) $this->data['license'];
+        return (string) $this->required('license');
     }
 
     /**
@@ -83,7 +83,7 @@ class AcronisDeviceResponseDto extends AbstractDto
      */
     public function getStatus(): string
     {
-        return (string) $this->data['status'];
+        return (string) $this->required('status');
     }
 
     /**
@@ -93,7 +93,7 @@ class AcronisDeviceResponseDto extends AbstractDto
      */
     public function getIsOnline(): bool
     {
-        return (bool) $this->data['isOnline'];
+        return (bool) $this->required('isOnline');
     }
 
     /**
@@ -209,7 +209,7 @@ class AcronisDeviceResponseDto extends AbstractDto
      */
     public function getAcronisUsername(): string
     {
-        return (string) $this->data['acronisUsername'];
+        return (string) $this->required('acronisUsername');
     }
 
     /**
@@ -217,7 +217,7 @@ class AcronisDeviceResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -225,7 +225,7 @@ class AcronisDeviceResponseDto extends AbstractDto
      */
     public function getParentId(): string
     {
-        return (string) $this->data['parentId'];
+        return (string) $this->required('parentId');
     }
 
     /**

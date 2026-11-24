@@ -13,7 +13,7 @@ class PermissionResponseDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 
     /**
@@ -23,6 +23,6 @@ class PermissionResponseDto extends AbstractDto
      */
     public function getAccess(): string
     {
-        return (string) $this->data['access'];
+        return (string) $this->required('access');
     }
 }

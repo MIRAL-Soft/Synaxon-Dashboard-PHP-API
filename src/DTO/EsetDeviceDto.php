@@ -13,7 +13,7 @@ class EsetDeviceDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -23,7 +23,7 @@ class EsetDeviceDto extends AbstractDto
      */
     public function getStatus(): string
     {
-        return (string) $this->data['status'];
+        return (string) $this->required('status');
     }
 
     /**
@@ -33,7 +33,7 @@ class EsetDeviceDto extends AbstractDto
      */
     public function getModuleStatus(): string
     {
-        return (string) $this->data['moduleStatus'];
+        return (string) $this->required('moduleStatus');
     }
 
     /**

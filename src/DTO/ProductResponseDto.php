@@ -13,7 +13,7 @@ class ProductResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class ProductResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -33,7 +33,7 @@ class ProductResponseDto extends AbstractDto
      */
     public function getStatus(): string
     {
-        return (string) $this->data['status'];
+        return (string) $this->required('status');
     }
 
     /**
@@ -43,7 +43,7 @@ class ProductResponseDto extends AbstractDto
      */
     public function getTermsUrl(): string
     {
-        return (string) $this->data['termsUrl'];
+        return (string) $this->required('termsUrl');
     }
 
     /**

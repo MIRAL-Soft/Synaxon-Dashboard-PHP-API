@@ -27,12 +27,12 @@ final class LywandWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new LywandResource($http);
 
-        $resource->indexLywandPartner('sample-id-1');
+        $resource->indexLywandPartner('sample id/1');
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('POST', $req['method']);
-        self::assertSame('/v1/lywand/partners/sample-id-1/index', $req['path']);
+        self::assertSame('/v1/lywand/partners/sample%20id%2F1/index', $req['path']);
     }
 
     /**
@@ -52,6 +52,7 @@ final class LywandWriteTest extends TestCase
         self::assertSame('POST', $req['method']);
         self::assertSame('/v1/lywand/customers', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -64,13 +65,14 @@ final class LywandWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new LywandResource($http);
 
-        $resource->updateLywandCustomer('sample-id-1', ['field' => 'value']);
+        $resource->updateLywandCustomer('sample id/1', ['field' => 'value']);
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('PATCH', $req['method']);
-        self::assertSame('/v1/lywand/customers/sample-id-1', $req['path']);
+        self::assertSame('/v1/lywand/customers/sample%20id%2F1', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -83,12 +85,12 @@ final class LywandWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new LywandResource($http);
 
-        $resource->removeLywandCustomer('sample-id-1');
+        $resource->removeLywandCustomer('sample id/1');
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('DELETE', $req['method']);
-        self::assertSame('/v1/lywand/customers/sample-id-1', $req['path']);
+        self::assertSame('/v1/lywand/customers/sample%20id%2F1', $req['path']);
     }
 
     /**
@@ -101,12 +103,12 @@ final class LywandWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new LywandResource($http);
 
-        $resource->indexLywandCustomer('sample-id-1');
+        $resource->indexLywandCustomer('sample id/1');
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('POST', $req['method']);
-        self::assertSame('/v1/lywand/customers/sample-id-1/index', $req['path']);
+        self::assertSame('/v1/lywand/customers/sample%20id%2F1/index', $req['path']);
     }
 
     /**
@@ -119,12 +121,12 @@ final class LywandWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new LywandResource($http);
 
-        $resource->indexLywandCustomerTargets('sample-id-1');
+        $resource->indexLywandCustomerTargets('sample id/1');
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('POST', $req['method']);
-        self::assertSame('/v1/lywand/customers/sample-id-1/targets/index', $req['path']);
+        self::assertSame('/v1/lywand/customers/sample%20id%2F1/targets/index', $req['path']);
     }
 
     /**
@@ -137,11 +139,11 @@ final class LywandWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new LywandResource($http);
 
-        $resource->indexLywandCustomerVulnerabilities('sample-id-1');
+        $resource->indexLywandCustomerVulnerabilities('sample id/1');
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('POST', $req['method']);
-        self::assertSame('/v1/lywand/customers/sample-id-1/vulnerabilities/index', $req['path']);
+        self::assertSame('/v1/lywand/customers/sample%20id%2F1/vulnerabilities/index', $req['path']);
     }
 }

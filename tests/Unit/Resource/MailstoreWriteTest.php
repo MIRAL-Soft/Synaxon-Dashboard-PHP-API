@@ -34,6 +34,7 @@ final class MailstoreWriteTest extends TestCase
         self::assertSame('POST', $req['method']);
         self::assertSame('/v1/mailstore/journaling/mailboxes', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -46,12 +47,12 @@ final class MailstoreWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new MailstoreResource($http);
 
-        $resource->removeJournalingMailbox('sample-id-1');
+        $resource->removeJournalingMailbox('sample id/1');
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('DELETE', $req['method']);
-        self::assertSame('/v1/mailstore/journaling/mailboxes/sample-id-1', $req['path']);
+        self::assertSame('/v1/mailstore/journaling/mailboxes/sample%20id%2F1', $req['path']);
     }
 
     /**
@@ -64,12 +65,12 @@ final class MailstoreWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new MailstoreResource($http);
 
-        $resource->updateJournalingMailboxPassword('sample-id-1');
+        $resource->updateJournalingMailboxPassword('sample id/1');
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('POST', $req['method']);
-        self::assertSame('/v1/mailstore/journaling/mailboxes/sample-id-1/password', $req['path']);
+        self::assertSame('/v1/mailstore/journaling/mailboxes/sample%20id%2F1/password', $req['path']);
     }
 
     /**
@@ -89,6 +90,7 @@ final class MailstoreWriteTest extends TestCase
         self::assertSame('POST', $req['method']);
         self::assertSame('/v1/mailstore/instances', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -101,13 +103,14 @@ final class MailstoreWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new MailstoreResource($http);
 
-        $resource->updateMailstoreInstance('sample-id-1', ['field' => 'value']);
+        $resource->updateMailstoreInstance('sample id/1', ['field' => 'value']);
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('PATCH', $req['method']);
-        self::assertSame('/v1/mailstore/instances/sample-id-1', $req['path']);
+        self::assertSame('/v1/mailstore/instances/sample%20id%2F1', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -120,11 +123,11 @@ final class MailstoreWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new MailstoreResource($http);
 
-        $resource->removeMailstoreInstance('sample-id-1');
+        $resource->removeMailstoreInstance('sample id/1');
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('DELETE', $req['method']);
-        self::assertSame('/v1/mailstore/instances/sample-id-1', $req['path']);
+        self::assertSame('/v1/mailstore/instances/sample%20id%2F1', $req['path']);
     }
 }

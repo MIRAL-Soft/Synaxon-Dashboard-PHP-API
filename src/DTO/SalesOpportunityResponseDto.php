@@ -13,7 +13,7 @@ class SalesOpportunityResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -23,7 +23,7 @@ class SalesOpportunityResponseDto extends AbstractDto
      */
     public function getSiteName(): string
     {
-        return (string) $this->data['siteName'];
+        return (string) $this->required('siteName');
     }
 
     /**
@@ -55,7 +55,7 @@ class SalesOpportunityResponseDto extends AbstractDto
      */
     public function getOsEOL(): string
     {
-        return (string) $this->data['osEOL'];
+        return (string) $this->required('osEOL');
     }
 
     /**

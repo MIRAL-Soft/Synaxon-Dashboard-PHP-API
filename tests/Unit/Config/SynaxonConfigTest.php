@@ -81,6 +81,118 @@ final class SynaxonConfigTest extends TestCase
         new SynaxonConfig(bearerToken: 't', baseUri: 'ftp://example.test');
     }
 
+    /**
+     * The credential travels in the Authorization header of every request,
+     * so plain http to a remote host would expose it.
+     */
+    public function testRejectsPlainHttpToRemoteHost(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new SynaxonConfig(bearerToken: 't', baseUri: 'http://api.example.test/marketplace');
+    }
+
+    /**
+     * @dataProvider loopbackProvider
+     */
+    public function testAcceptsPlainHttpToLoopback(string $uri): void
+    {
+        $cfg = new SynaxonConfig(bearerToken: 't', baseUri: $uri);
+        self::assertSame($uri, $cfg->getBaseUri());
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function loopbackProvider(): iterable
+    {
+        yield 'localhost' => ['http://localhost:8080'];
+        yield 'ipv4' => ['http://127.0.0.1:8080/api'];
+        yield 'ipv6' => ['http://[::1]:8080'];
+    }
+
+    /**
+     * @dataProvider emptyCredentialProvider
+     *
+     * @param array<string, string> $args
+     */
+    public function testRejectsEmptyCredentialStrings(array $args): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new SynaxonConfig(...$args);
+    }
+
+    /**
+     * @return iterable<string, array{array<string, string>}>
+     */
+    public static function emptyCredentialProvider(): iterable
+    {
+        yield 'bearer' => [['bearerToken' => '']];
+        yield 'basic user' => [['basicUser' => '', 'basicPass' => 'p']];
+        yield 'basic pass' => [['basicUser' => 'u', 'basicPass' => '']];
+    }
+
+    /**
+     * @dataProvider invalidConfigProvider
+     *
+     * @param array<string, string> $args
+     */
+    public function testRejectsInvalidConfig(array $args, string $messagePart): void
+    {
+        try {
+            new SynaxonConfig(...$args);
+            self::fail('expected InvalidArgumentException');
+        } catch (InvalidArgumentException $e) {
+            self::assertStringContainsString($messagePart, $e->getMessage());
+            // The message names the field, never the value.
+            self::assertStringNotContainsString('s3cr3t', $e->getMessage());
+        }
+    }
+
+    /**
+     * @return iterable<string, array{array<string, string>, string}>
+     */
+    public static function invalidConfigProvider(): iterable
+    {
+        yield 'newline in token' => [['bearerToken' => "s3cr3t\n"], 'bearerToken must not contain control characters'];
+        yield 'newline in basic pass' => [['basicUser' => 'u', 'basicPass' => "s3cr3t\r\n"], 'basicPass must not contain control characters'];
+        yield 'newline in user agent' => [['bearerToken' => 't', 'userAgent' => "a\r\nX-Injected: 1"], 'userAgent must not contain control characters'];
+        yield 'both credentials' => [['bearerToken' => 's3cr3t', 'basicUser' => 'u', 'basicPass' => 'p'], 'not both'];
+        yield 'user info in uri' => [['bearerToken' => 't', 'baseUri' => 'https://u:s3cr3t@api.example.test'], 'user info'];
+        yield 'query in uri' => [['bearerToken' => 't', 'baseUri' => 'https://api.example.test/?x=1'], 'query string'];
+        yield 'fragment in uri' => [['bearerToken' => 't', 'baseUri' => 'https://api.example.test/#x'], 'fragment'];
+    }
+
+    public function testCredentialsAreHiddenFromStackTraces(): void
+    {
+        $previous = ini_set('zend.exception_ignore_args', '0');
+        try {
+            new SynaxonConfig(bearerToken: 's3cr3t-token', timeout: 0);
+            self::fail('expected InvalidArgumentException');
+        } catch (InvalidArgumentException $e) {
+            self::assertStringNotContainsString('s3cr3t-token', print_r($e->getTrace(), true));
+        } finally {
+            if ($previous !== false) {
+                ini_set('zend.exception_ignore_args', $previous);
+            }
+        }
+    }
+
+    public function testFromEnvPrefersBearerOverBasic(): void
+    {
+        putenv('SYNAXON_BEARER_TOKEN=tok');
+        putenv('SYNAXON_BASIC_USER=u');
+        putenv('SYNAXON_BASIC_PASS=p');
+        try {
+            $cfg = SynaxonConfig::fromEnv();
+            self::assertSame('tok', $cfg->getBearerToken());
+            self::assertNull($cfg->getBasicUser());
+        } finally {
+            putenv('SYNAXON_BEARER_TOKEN');
+            putenv('SYNAXON_BASIC_USER');
+            putenv('SYNAXON_BASIC_PASS');
+        }
+    }
+
     public function testRejectsExcessiveTimeout(): void
     {
         $this->expectException(InvalidArgumentException::class);

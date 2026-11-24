@@ -26,6 +26,6 @@ class CustomerSuggestionResponseDto extends AbstractDto
      */
     public function getScore(): float
     {
-        return (float) $this->data['score'];
+        return (float) $this->required('score');
     }
 }

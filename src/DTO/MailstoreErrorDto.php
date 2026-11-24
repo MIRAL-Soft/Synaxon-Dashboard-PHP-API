@@ -13,7 +13,7 @@ class MailstoreErrorDto extends AbstractDto
      */
     public function getInstanceId(): string
     {
-        return (string) $this->data['instanceId'];
+        return (string) $this->required('instanceId');
     }
 
     /**
@@ -23,7 +23,7 @@ class MailstoreErrorDto extends AbstractDto
      */
     public function getDisplayName(): string
     {
-        return (string) $this->data['displayName'];
+        return (string) $this->required('displayName');
     }
 
     /**
@@ -33,6 +33,6 @@ class MailstoreErrorDto extends AbstractDto
      */
     public function getStatus(): string
     {
-        return (string) $this->data['status'];
+        return (string) $this->required('status');
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace miralsoft\synaxon\api\Tests\Unit\DTO;
 
 use miralsoft\synaxon\api\DTO\AbstractDto;
+use miralsoft\synaxon\api\Exception\UnexpectedResponseException;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionMethod;
@@ -68,6 +69,36 @@ final class HydrationTest extends TestCase
                 continue;
             }
             $m->invoke($instance);
+        }
+        $this->addToAssertionCount(1);
+    }
+
+    /**
+     * A required scalar that is missing must be reported, not cast into an
+     * empty string, 0 or false that looks like real data.
+     *
+     * @dataProvider dtoProvider
+     * @param class-string<AbstractDto> $class
+     */
+    public function testRequiredScalarGettersReportMissingFields(string $class): void
+    {
+        $instance = $class::fromArray([]);
+        foreach ((new ReflectionClass($class))->getMethods(ReflectionMethod::IS_PUBLIC) as $m) {
+            $type = $m->getReturnType();
+            if ($m->class === AbstractDto::class
+                || !str_starts_with($m->getName(), 'get')
+                || !$type instanceof \ReflectionNamedType
+                || $type->allowsNull()
+                || !in_array($type->getName(), ['string', 'int', 'float', 'bool'], true)
+            ) {
+                continue;
+            }
+            try {
+                $m->invoke($instance);
+                self::fail("{$class}::{$m->getName()}() returned a value for a missing required field");
+            } catch (UnexpectedResponseException) {
+                $this->addToAssertionCount(1);
+            }
         }
         $this->addToAssertionCount(1);
     }

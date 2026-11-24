@@ -13,6 +13,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use miralsoft\synaxon\api\Config\SynaxonConfig;
 use miralsoft\synaxon\api\Exception\AuthenticationException;
+use miralsoft\synaxon\api\Exception\RateLimitException;
 use miralsoft\synaxon\api\Exception\ServerException;
 use miralsoft\synaxon\api\Exception\SynaxonApiException;
 use miralsoft\synaxon\api\Exception\TransportException;
@@ -240,6 +241,121 @@ final class GuzzleHttpClientTest extends TestCase
         self::assertCount(1, $logger->records);
         self::assertSame('warning', $logger->records[0]['level']);
         self::assertStringNotContainsString('tok', (string) json_encode($logger->records[0]['context']));
+    }
+
+    /**
+     * Without advice from the server the exception must say so with null,
+     * not with 0, which a caller would read as "retry immediately".
+     *
+     * @dataProvider retryAfterProvider
+     */
+    public function testRateLimitExceptionReportsRetryAfter(array $headers, ?int $expectedMin, ?int $expectedMax): void
+    {
+        $history = [];
+        $client = $this->buildClient([new Response(429, $headers, '')], $history);
+
+        try {
+            $client->request('GET', '/v1/ping');
+            self::fail('expected exception');
+        } catch (RateLimitException $e) {
+            $retryAfter = $e->getRetryAfter();
+            if ($expectedMin === null) {
+                self::assertNull($retryAfter);
+
+                return;
+            }
+            self::assertNotNull($retryAfter);
+            self::assertGreaterThanOrEqual($expectedMin, $retryAfter);
+            self::assertLessThanOrEqual((int) $expectedMax, $retryAfter);
+        }
+    }
+
+    /**
+     * @return iterable<string, array{array<string, string>, ?int, ?int}>
+     */
+    public static function retryAfterProvider(): iterable
+    {
+        yield 'absent' => [[], null, null];
+        yield 'delay seconds' => [['Retry-After' => '7'], 7, 7];
+        yield 'http date' => [['Retry-After' => gmdate(DATE_RFC7231, time() + 60)], 55, 60];
+        yield 'date in the past' => [['Retry-After' => gmdate(DATE_RFC7231, time() - 60)], 0, 0];
+        yield 'garbage' => [['Retry-After' => 'soon'], null, null];
+        yield 'fraction is not delay-seconds' => [['Retry-After' => '1.5'], null, null];
+    }
+
+    /**
+     * The spec declares list parameters with the default form/explode style
+     * (repeated keys) and boolean parameters as true/false.
+     */
+    public function testEncodesQueryListsAsRepeatedKeysAndBooleansAsWords(): void
+    {
+        $history = [];
+        $client = $this->buildClient([new Response(200, [], '{}')], $history);
+
+        $client->request('GET', '/v1/x', ['query' => ['status' => ['a', 'b c'], 'isOnline' => false, 'page' => 2]]);
+
+        self::assertSame('status=a&status=b%20c&isOnline=false&page=2', $history[0]['request']->getUri()->getQuery());
+    }
+
+    public function testSendsEmptyJsonBodyAsObject(): void
+    {
+        $history = [];
+        $client = $this->buildClient([new Response(200, [], '{}')], $history);
+
+        $client->request('POST', '/v1/x', ['body' => []]);
+
+        self::assertSame('{}', (string) $history[0]['request']->getBody());
+        self::assertSame('application/json', $history[0]['request']->getHeaderLine('Content-Type'));
+    }
+
+    public function testSendsFormBody(): void
+    {
+        $history = [];
+        $client = $this->buildClient([new Response(200, [], '{}')], $history);
+
+        $client->request('POST', '/v1/auth/token', [
+            'body' => ['grant_type' => 'client_credentials', 'scope' => 'sys-app'],
+            'bodyFormat' => GuzzleHttpClient::BODY_FORM,
+        ]);
+
+        self::assertSame('application/x-www-form-urlencoded', $history[0]['request']->getHeaderLine('Content-Type'));
+        self::assertSame('grant_type=client_credentials&scope=sys-app', (string) $history[0]['request']->getBody());
+    }
+
+    public function testSendsMultipartBodyWithFile(): void
+    {
+        $history = [];
+        $client = $this->buildClient([new Response(200, [], '{}')], $history);
+
+        $client->request('PUT', '/v1/tenants/1/logo', [
+            'body' => ['file' => ['contents' => 'PNGDATA', 'filename' => 'logo.png'], 'note' => 'x'],
+            'bodyFormat' => GuzzleHttpClient::BODY_MULTIPART,
+        ]);
+
+        $request = $history[0]['request'];
+        self::assertStringStartsWith('multipart/form-data; boundary=', $request->getHeaderLine('Content-Type'));
+        $body = (string) $request->getBody();
+        self::assertStringContainsString('name="file"; filename="logo.png"', $body);
+        self::assertStringContainsString('PNGDATA', $body);
+        self::assertStringContainsString('name="note"', $body);
+    }
+
+    /**
+     * PSR-7 quotes an invalid header value in its exception message. The
+     * library must not pass that message (and with it the credential) on.
+     */
+    public function testInvalidHeaderValueDoesNotLeakIntoException(): void
+    {
+        $history = [];
+        $client = $this->buildClient([new Response(200, [], '{}')], $history);
+
+        try {
+            $client->request('GET', '/v1/x', ['headers' => ['X-Trace' => "abc\r\nsecret-value"]]);
+            self::fail('expected exception');
+        } catch (TransportException $e) {
+            self::assertStringNotContainsString('secret-value', $e->getMessage());
+            self::assertNull($e->getPrevious());
+        }
     }
 
     public function testDoesNotRetryOn4xxOtherThan429(): void

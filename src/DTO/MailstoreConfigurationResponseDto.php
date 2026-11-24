@@ -13,7 +13,7 @@ class MailstoreConfigurationResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class MailstoreConfigurationResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class MailstoreConfigurationResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class MailstoreConfigurationResponseDto extends AbstractDto
      */
     public function getDefaultHost(): string
     {
-        return (string) $this->data['defaultHost'];
+        return (string) $this->required('defaultHost');
     }
 
     /**
@@ -53,7 +53,7 @@ class MailstoreConfigurationResponseDto extends AbstractDto
      */
     public function getBaseDirectory(): string
     {
-        return (string) $this->data['baseDirectory'];
+        return (string) $this->required('baseDirectory');
     }
 
     /**
@@ -63,7 +63,7 @@ class MailstoreConfigurationResponseDto extends AbstractDto
      */
     public function getAttachmentIndex(): string
     {
-        return (string) $this->data['attachmentIndex'];
+        return (string) $this->required('attachmentIndex');
     }
 
     /**
@@ -73,7 +73,7 @@ class MailstoreConfigurationResponseDto extends AbstractDto
      */
     public function getSmtpHostname(): string
     {
-        return (string) $this->data['smtpHostname'];
+        return (string) $this->required('smtpHostname');
     }
 
     /**
@@ -83,7 +83,7 @@ class MailstoreConfigurationResponseDto extends AbstractDto
      */
     public function getSmtpPort(): float
     {
-        return (float) $this->data['smtpPort'];
+        return (float) $this->required('smtpPort');
     }
 
     /**
@@ -93,7 +93,7 @@ class MailstoreConfigurationResponseDto extends AbstractDto
      */
     public function getSmtpProtocol(): string
     {
-        return (string) $this->data['smtpProtocol'];
+        return (string) $this->required('smtpProtocol');
     }
 
     /**
@@ -103,7 +103,7 @@ class MailstoreConfigurationResponseDto extends AbstractDto
      */
     public function getSmtpIgnoreSslPolicyErrors(): bool
     {
-        return (bool) $this->data['smtpIgnoreSslPolicyErrors'];
+        return (bool) $this->required('smtpIgnoreSslPolicyErrors');
     }
 
     /**
@@ -113,7 +113,7 @@ class MailstoreConfigurationResponseDto extends AbstractDto
      */
     public function getSmtpAuthenticationRequired(): bool
     {
-        return (bool) $this->data['smtpAuthenticationRequired'];
+        return (bool) $this->required('smtpAuthenticationRequired');
     }
 
     /**
@@ -123,7 +123,7 @@ class MailstoreConfigurationResponseDto extends AbstractDto
      */
     public function getSmtpUsername(): string
     {
-        return (string) $this->data['smtpUsername'];
+        return (string) $this->required('smtpUsername');
     }
 
     /**
@@ -133,7 +133,7 @@ class MailstoreConfigurationResponseDto extends AbstractDto
      */
     public function getSmtpFromDisplayName(): string
     {
-        return (string) $this->data['smtpFromDisplayName'];
+        return (string) $this->required('smtpFromDisplayName');
     }
 
     /**
@@ -143,7 +143,7 @@ class MailstoreConfigurationResponseDto extends AbstractDto
      */
     public function getSmtpFromEmailAddress(): string
     {
-        return (string) $this->data['smtpFromEmailAddress'];
+        return (string) $this->required('smtpFromEmailAddress');
     }
 
     /**
@@ -153,7 +153,7 @@ class MailstoreConfigurationResponseDto extends AbstractDto
      */
     public function getSmtpRecipientEmailAddress(): string
     {
-        return (string) $this->data['smtpRecipientEmailAddress'];
+        return (string) $this->required('smtpRecipientEmailAddress');
     }
 
     /**

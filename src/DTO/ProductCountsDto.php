@@ -31,6 +31,6 @@ class ProductCountsDto extends AbstractDto
      */
     public function getTotalCount(): float
     {
-        return (float) $this->data['totalCount'];
+        return (float) $this->required('totalCount');
     }
 }

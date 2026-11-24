@@ -11,7 +11,7 @@ class PendingTermResponseDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 
     /**
@@ -19,6 +19,6 @@ class PendingTermResponseDto extends AbstractDto
      */
     public function getUrl(): string
     {
-        return (string) $this->data['url'];
+        return (string) $this->required('url');
     }
 }

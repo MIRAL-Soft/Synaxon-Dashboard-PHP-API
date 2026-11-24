@@ -34,6 +34,7 @@ final class ReportsWriteTest extends TestCase
         self::assertSame('POST', $req['method']);
         self::assertSame('/v1/reports/setting', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -53,6 +54,7 @@ final class ReportsWriteTest extends TestCase
         self::assertSame('PATCH', $req['method']);
         self::assertSame('/v1/reports/setting', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**

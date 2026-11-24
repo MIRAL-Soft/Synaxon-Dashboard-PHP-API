@@ -13,7 +13,7 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function getDefaultHost(): string
     {
-        return (string) $this->data['defaultHost'];
+        return (string) $this->required('defaultHost');
     }
 
     /**
@@ -34,7 +34,7 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function getBaseDirectory(): string
     {
-        return (string) $this->data['baseDirectory'];
+        return (string) $this->required('baseDirectory');
     }
 
     /**
@@ -55,7 +55,7 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function getAttachmentIndex(): string
     {
-        return (string) $this->data['attachmentIndex'];
+        return (string) $this->required('attachmentIndex');
     }
 
     /**
@@ -76,7 +76,7 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function getSmtpHostname(): string
     {
-        return (string) $this->data['smtpHostname'];
+        return (string) $this->required('smtpHostname');
     }
 
     /**
@@ -97,7 +97,7 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function getSmtpPort(): float
     {
-        return (float) $this->data['smtpPort'];
+        return (float) $this->required('smtpPort');
     }
 
     /**
@@ -118,7 +118,7 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function getSmtpProtocol(): string
     {
-        return (string) $this->data['smtpProtocol'];
+        return (string) $this->required('smtpProtocol');
     }
 
     /**
@@ -139,7 +139,7 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function getSmtpIgnoreSslPolicyErrors(): bool
     {
-        return (bool) $this->data['smtpIgnoreSslPolicyErrors'];
+        return (bool) $this->required('smtpIgnoreSslPolicyErrors');
     }
 
     /**
@@ -160,7 +160,7 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function getSmtpAuthenticationRequired(): bool
     {
-        return (bool) $this->data['smtpAuthenticationRequired'];
+        return (bool) $this->required('smtpAuthenticationRequired');
     }
 
     /**
@@ -181,7 +181,7 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function getSmtpUsername(): string
     {
-        return (string) $this->data['smtpUsername'];
+        return (string) $this->required('smtpUsername');
     }
 
     /**
@@ -224,7 +224,7 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function getSmtpFromDisplayName(): string
     {
-        return (string) $this->data['smtpFromDisplayName'];
+        return (string) $this->required('smtpFromDisplayName');
     }
 
     /**
@@ -245,7 +245,7 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function getSmtpFromEmailAddress(): string
     {
-        return (string) $this->data['smtpFromEmailAddress'];
+        return (string) $this->required('smtpFromEmailAddress');
     }
 
     /**
@@ -266,7 +266,7 @@ class UpdateMailstoreConfigurationRequestDto extends AbstractDto
      */
     public function getSmtpRecipientEmailAddress(): string
     {
-        return (string) $this->data['smtpRecipientEmailAddress'];
+        return (string) $this->required('smtpRecipientEmailAddress');
     }
 
     /**

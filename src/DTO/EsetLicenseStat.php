@@ -13,7 +13,7 @@ class EsetLicenseStat extends AbstractDto
      */
     public function getProductCode(): string
     {
-        return (string) $this->data['productCode'];
+        return (string) $this->required('productCode');
     }
 
     /**
@@ -23,7 +23,7 @@ class EsetLicenseStat extends AbstractDto
      */
     public function getProductName(): string
     {
-        return (string) $this->data['productName'];
+        return (string) $this->required('productName');
     }
 
     /**
@@ -33,7 +33,7 @@ class EsetLicenseStat extends AbstractDto
      */
     public function getQuantity(): float
     {
-        return (float) $this->data['quantity'];
+        return (float) $this->required('quantity');
     }
 
     /**
@@ -43,6 +43,6 @@ class EsetLicenseStat extends AbstractDto
      */
     public function getUsage(): float
     {
-        return (float) $this->data['usage'];
+        return (float) $this->required('usage');
     }
 }

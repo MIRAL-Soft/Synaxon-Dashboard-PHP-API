@@ -13,7 +13,7 @@ class LywandCustomerResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class LywandCustomerResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class LywandCustomerResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -54,7 +54,7 @@ class LywandCustomerResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -64,7 +64,7 @@ class LywandCustomerResponseDto extends AbstractDto
      */
     public function getVendorId(): string
     {
-        return (string) $this->data['vendorId'];
+        return (string) $this->required('vendorId');
     }
 
     /**
@@ -74,7 +74,7 @@ class LywandCustomerResponseDto extends AbstractDto
      */
     public function getRating(): string
     {
-        return (string) $this->data['rating'];
+        return (string) $this->required('rating');
     }
 
     /**
@@ -84,7 +84,7 @@ class LywandCustomerResponseDto extends AbstractDto
      */
     public function getScore(): float
     {
-        return (float) $this->data['score'];
+        return (float) $this->required('score');
     }
 
     /**
@@ -94,7 +94,7 @@ class LywandCustomerResponseDto extends AbstractDto
      */
     public function getTargets(): float
     {
-        return (float) $this->data['targets'];
+        return (float) $this->required('targets');
     }
 
     /**
@@ -104,7 +104,7 @@ class LywandCustomerResponseDto extends AbstractDto
      */
     public function getScanCoverage(): float
     {
-        return (float) $this->data['scanCoverage'];
+        return (float) $this->required('scanCoverage');
     }
 
     /**
@@ -144,6 +144,6 @@ class LywandCustomerResponseDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 }

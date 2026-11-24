@@ -13,7 +13,7 @@ class NSightDeviceDiskDto extends AbstractDto
      */
     public function getDescription(): string
     {
-        return (string) $this->data['description'];
+        return (string) $this->required('description');
     }
 
     /**
@@ -23,7 +23,7 @@ class NSightDeviceDiskDto extends AbstractDto
      */
     public function getSize(): float
     {
-        return (float) $this->data['size'];
+        return (float) $this->required('size');
     }
 
     /**
@@ -33,7 +33,7 @@ class NSightDeviceDiskDto extends AbstractDto
      */
     public function getFreeSpace(): float
     {
-        return (float) $this->data['freeSpace'];
+        return (float) $this->required('freeSpace');
     }
 
     /**
@@ -43,6 +43,6 @@ class NSightDeviceDiskDto extends AbstractDto
      */
     public function getFailing(): bool
     {
-        return (bool) $this->data['failing'];
+        return (bool) $this->required('failing');
     }
 }

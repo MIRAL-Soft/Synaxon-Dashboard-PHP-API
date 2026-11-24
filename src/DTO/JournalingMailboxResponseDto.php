@@ -13,7 +13,7 @@ class JournalingMailboxResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class JournalingMailboxResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class JournalingMailboxResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -54,7 +54,7 @@ class JournalingMailboxResponseDto extends AbstractDto
      */
     public function getInstanceId(): string
     {
-        return (string) $this->data['instanceId'];
+        return (string) $this->required('instanceId');
     }
 
     /**
@@ -64,7 +64,7 @@ class JournalingMailboxResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -74,7 +74,7 @@ class JournalingMailboxResponseDto extends AbstractDto
      */
     public function getDomain(): string
     {
-        return (string) $this->data['domain'];
+        return (string) $this->required('domain');
     }
 
     /**
@@ -84,7 +84,7 @@ class JournalingMailboxResponseDto extends AbstractDto
      */
     public function getQuota(): float
     {
-        return (float) $this->data['quota'];
+        return (float) $this->required('quota');
     }
 
     /**
@@ -94,7 +94,7 @@ class JournalingMailboxResponseDto extends AbstractDto
      */
     public function getQuotaUsed(): float
     {
-        return (float) $this->data['quotaUsed'];
+        return (float) $this->required('quotaUsed');
     }
 
     /**
@@ -104,6 +104,6 @@ class JournalingMailboxResponseDto extends AbstractDto
      */
     public function getEmail(): string
     {
-        return (string) $this->data['email'];
+        return (string) $this->required('email');
     }
 }

@@ -13,7 +13,7 @@ class CreateSecAuditorPartnerRequestDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -34,7 +34,7 @@ class CreateSecAuditorPartnerRequestDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 
     /**
@@ -55,7 +55,7 @@ class CreateSecAuditorPartnerRequestDto extends AbstractDto
      */
     public function getEmail(): string
     {
-        return (string) $this->data['email'];
+        return (string) $this->required('email');
     }
 
     /**
@@ -76,7 +76,7 @@ class CreateSecAuditorPartnerRequestDto extends AbstractDto
      */
     public function getFirstname(): string
     {
-        return (string) $this->data['firstname'];
+        return (string) $this->required('firstname');
     }
 
     /**
@@ -97,7 +97,7 @@ class CreateSecAuditorPartnerRequestDto extends AbstractDto
      */
     public function getLastname(): string
     {
-        return (string) $this->data['lastname'];
+        return (string) $this->required('lastname');
     }
 
     /**

@@ -13,7 +13,7 @@ class MailstoreArchiveResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -23,7 +23,7 @@ class MailstoreArchiveResponseDto extends AbstractDto
      */
     public function getSize(): float
     {
-        return (float) $this->data['size'];
+        return (float) $this->required('size');
     }
 
     /**
@@ -33,6 +33,6 @@ class MailstoreArchiveResponseDto extends AbstractDto
      */
     public function getMessageCount(): float
     {
-        return (float) $this->data['messageCount'];
+        return (float) $this->required('messageCount');
     }
 }

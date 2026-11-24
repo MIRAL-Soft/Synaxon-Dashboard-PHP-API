@@ -13,7 +13,7 @@ class NSightDeviceSoftwareDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -23,7 +23,7 @@ class NSightDeviceSoftwareDto extends AbstractDto
      */
     public function getSoftwareId(): float
     {
-        return (float) $this->data['softwareId'];
+        return (float) $this->required('softwareId');
     }
 
     /**
@@ -33,7 +33,7 @@ class NSightDeviceSoftwareDto extends AbstractDto
      */
     public function getVersion(): string
     {
-        return (string) $this->data['version'];
+        return (string) $this->required('version');
     }
 
     /**
@@ -43,7 +43,7 @@ class NSightDeviceSoftwareDto extends AbstractDto
      */
     public function getInstallDate(): string
     {
-        return (string) $this->data['installDate'];
+        return (string) $this->required('installDate');
     }
 
     /**
@@ -53,7 +53,7 @@ class NSightDeviceSoftwareDto extends AbstractDto
      */
     public function getDeleted(): float
     {
-        return (float) $this->data['deleted'];
+        return (float) $this->required('deleted');
     }
 
     /**
@@ -63,7 +63,7 @@ class NSightDeviceSoftwareDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 
     /**
@@ -73,6 +73,6 @@ class NSightDeviceSoftwareDto extends AbstractDto
      */
     public function getModified(): float
     {
-        return (float) $this->data['modified'];
+        return (float) $this->required('modified');
     }
 }

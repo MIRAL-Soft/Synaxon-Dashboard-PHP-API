@@ -13,7 +13,7 @@ class ReportSettingResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class ReportSettingResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class ReportSettingResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class ReportSettingResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -53,7 +53,7 @@ class ReportSettingResponseDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 
     /**
@@ -107,7 +107,7 @@ class ReportSettingResponseDto extends AbstractDto
      */
     public function getTimezone(): string
     {
-        return (string) $this->data['timezone'];
+        return (string) $this->required('timezone');
     }
 
     /**
@@ -117,7 +117,7 @@ class ReportSettingResponseDto extends AbstractDto
      */
     public function getLanguage(): string
     {
-        return (string) $this->data['language'];
+        return (string) $this->required('language');
     }
 
     /**

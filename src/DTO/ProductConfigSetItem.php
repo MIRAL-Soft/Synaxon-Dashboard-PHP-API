@@ -13,7 +13,7 @@ class ProductConfigSetItem extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -23,7 +23,7 @@ class ProductConfigSetItem extends AbstractDto
      */
     public function getLabel(): string
     {
-        return (string) $this->data['label'];
+        return (string) $this->required('label');
     }
 
     /**
@@ -33,7 +33,7 @@ class ProductConfigSetItem extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 
     /**
@@ -43,6 +43,6 @@ class ProductConfigSetItem extends AbstractDto
      */
     public function getRequired(): bool
     {
-        return (bool) $this->data['required'];
+        return (bool) $this->required('required');
     }
 }

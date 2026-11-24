@@ -34,6 +34,7 @@ final class PusherWriteTest extends TestCase
         self::assertSame('POST', $req['method']);
         self::assertSame('/v1/pusher/user-auth', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -53,5 +54,6 @@ final class PusherWriteTest extends TestCase
         self::assertSame('POST', $req['method']);
         self::assertSame('/v1/pusher/channel-auth', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 }

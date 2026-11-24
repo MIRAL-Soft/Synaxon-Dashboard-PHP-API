@@ -13,7 +13,7 @@ class UploadLifecycleInfoRequestDto extends AbstractDto
      */
     public function getLifecycleInfo(): string
     {
-        return (string) $this->data['lifecycleInfo'];
+        return (string) $this->required('lifecycleInfo');
     }
 
     /**

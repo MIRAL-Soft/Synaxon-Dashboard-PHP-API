@@ -13,7 +13,7 @@ class CreateNSightDashboardRequestDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -34,7 +34,7 @@ class CreateNSightDashboardRequestDto extends AbstractDto
      */
     public function getApiKey(): string
     {
-        return (string) $this->data['apiKey'];
+        return (string) $this->required('apiKey');
     }
 
     /**
@@ -55,7 +55,7 @@ class CreateNSightDashboardRequestDto extends AbstractDto
      */
     public function getApiKeyNetwork(): string
     {
-        return (string) $this->data['apiKeyNetwork'];
+        return (string) $this->required('apiKeyNetwork');
     }
 
     /**
@@ -76,7 +76,7 @@ class CreateNSightDashboardRequestDto extends AbstractDto
      */
     public function getDefault(): bool
     {
-        return (bool) $this->data['default'];
+        return (bool) $this->required('default');
     }
 
     /**

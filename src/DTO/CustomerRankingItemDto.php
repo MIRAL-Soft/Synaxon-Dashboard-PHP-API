@@ -24,7 +24,7 @@ class CustomerRankingItemDto extends AbstractDto
      */
     public function getCustomerName(): string
     {
-        return (string) $this->data['customerName'];
+        return (string) $this->required('customerName');
     }
 
     /**
@@ -52,7 +52,7 @@ class CustomerRankingItemDto extends AbstractDto
      */
     public function getTotalItems(): float
     {
-        return (float) $this->data['totalItems'];
+        return (float) $this->required('totalItems');
     }
 
     /**
@@ -62,7 +62,7 @@ class CustomerRankingItemDto extends AbstractDto
      */
     public function getTotalErrors(): float
     {
-        return (float) $this->data['totalErrors'];
+        return (float) $this->required('totalErrors');
     }
 
     /**
@@ -72,6 +72,6 @@ class CustomerRankingItemDto extends AbstractDto
      */
     public function getOverallScore(): float
     {
-        return (float) $this->data['overallScore'];
+        return (float) $this->required('overallScore');
     }
 }

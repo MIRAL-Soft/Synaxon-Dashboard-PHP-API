@@ -33,6 +33,6 @@ class MetricsLatestResponseDto extends AbstractDto
      */
     public function getTimestamp(): string
     {
-        return (string) $this->data['timestamp'];
+        return (string) $this->required('timestamp');
     }
 }

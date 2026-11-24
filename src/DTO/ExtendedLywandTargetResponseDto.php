@@ -13,7 +13,7 @@ class ExtendedLywandTargetResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class ExtendedLywandTargetResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class ExtendedLywandTargetResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class ExtendedLywandTargetResponseDto extends AbstractDto
      */
     public function getParentId(): string
     {
-        return (string) $this->data['parentId'];
+        return (string) $this->required('parentId');
     }
 
     /**
@@ -53,7 +53,7 @@ class ExtendedLywandTargetResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -63,7 +63,7 @@ class ExtendedLywandTargetResponseDto extends AbstractDto
      */
     public function getVendorId(): string
     {
-        return (string) $this->data['vendorId'];
+        return (string) $this->required('vendorId');
     }
 
     /**
@@ -73,7 +73,7 @@ class ExtendedLywandTargetResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -83,7 +83,7 @@ class ExtendedLywandTargetResponseDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 
     /**
@@ -93,7 +93,7 @@ class ExtendedLywandTargetResponseDto extends AbstractDto
      */
     public function getLywandIdentifier(): string
     {
-        return (string) $this->data['lywandIdentifier'];
+        return (string) $this->required('lywandIdentifier');
     }
 
     /**
@@ -103,7 +103,7 @@ class ExtendedLywandTargetResponseDto extends AbstractDto
      */
     public function getInScope(): bool
     {
-        return (bool) $this->data['inScope'];
+        return (bool) $this->required('inScope');
     }
 
     /**
@@ -113,7 +113,7 @@ class ExtendedLywandTargetResponseDto extends AbstractDto
      */
     public function getVulnerabilities(): float
     {
-        return (float) $this->data['vulnerabilities'];
+        return (float) $this->required('vulnerabilities');
     }
 
     /**

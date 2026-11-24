@@ -13,7 +13,7 @@ class PusherChannelAuthRequestDto extends AbstractDto
      */
     public function getSocketId(): string
     {
-        return (string) $this->data['socket_id'];
+        return (string) $this->required('socket_id');
     }
 
     /**
@@ -34,7 +34,7 @@ class PusherChannelAuthRequestDto extends AbstractDto
      */
     public function getChannelName(): string
     {
-        return (string) $this->data['channel_name'];
+        return (string) $this->required('channel_name');
     }
 
     /**

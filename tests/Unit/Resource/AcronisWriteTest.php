@@ -34,6 +34,7 @@ final class AcronisWriteTest extends TestCase
         self::assertSame('POST', $req['method']);
         self::assertSame('/v1/acronis/customers', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -46,12 +47,13 @@ final class AcronisWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new AcronisResource($http);
 
-        $resource->updateAcronisCustomer('sample-id-1', ['field' => 'value']);
+        $resource->updateAcronisCustomer('sample id/1', ['field' => 'value']);
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('PATCH', $req['method']);
-        self::assertSame('/v1/acronis/customers/sample-id-1', $req['path']);
+        self::assertSame('/v1/acronis/customers/sample%20id%2F1', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 }

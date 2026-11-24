@@ -13,7 +13,7 @@ class UserResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class UserResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class UserResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -54,7 +54,7 @@ class UserResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -75,7 +75,7 @@ class UserResponseDto extends AbstractDto
      */
     public function getFamilyName(): string
     {
-        return (string) $this->data['familyName'];
+        return (string) $this->required('familyName');
     }
 
     /**
@@ -107,7 +107,7 @@ class UserResponseDto extends AbstractDto
      */
     public function getRole(): string
     {
-        return (string) $this->data['role'];
+        return (string) $this->required('role');
     }
 
     /**
@@ -135,7 +135,7 @@ class UserResponseDto extends AbstractDto
      */
     public function getPartnerNo(): string
     {
-        return (string) $this->data['partnerNo'];
+        return (string) $this->required('partnerNo');
     }
 
     /**
@@ -167,7 +167,7 @@ class UserResponseDto extends AbstractDto
      */
     public function getLanguage(): string
     {
-        return (string) $this->data['language'];
+        return (string) $this->required('language');
     }
 
     /**

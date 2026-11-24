@@ -13,7 +13,7 @@ class MailstoreInstanceResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class MailstoreInstanceResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class MailstoreInstanceResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class MailstoreInstanceResponseDto extends AbstractDto
      */
     public function getInstanceId(): string
     {
-        return (string) $this->data['instanceId'];
+        return (string) $this->required('instanceId');
     }
 
     /**
@@ -64,7 +64,7 @@ class MailstoreInstanceResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -74,7 +74,7 @@ class MailstoreInstanceResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -95,7 +95,7 @@ class MailstoreInstanceResponseDto extends AbstractDto
      */
     public function getInstanceHost(): string
     {
-        return (string) $this->data['instanceHost'];
+        return (string) $this->required('instanceHost');
     }
 
     /**
@@ -105,7 +105,7 @@ class MailstoreInstanceResponseDto extends AbstractDto
      */
     public function getStatus(): string
     {
-        return (string) $this->data['status'];
+        return (string) $this->required('status');
     }
 
     /**
@@ -115,7 +115,7 @@ class MailstoreInstanceResponseDto extends AbstractDto
      */
     public function getArchiveCount(): float
     {
-        return (float) $this->data['archiveCount'];
+        return (float) $this->required('archiveCount');
     }
 
     /**
@@ -125,7 +125,7 @@ class MailstoreInstanceResponseDto extends AbstractDto
      */
     public function getMessageCount(): float
     {
-        return (float) $this->data['messageCount'];
+        return (float) $this->required('messageCount');
     }
 
     /**
@@ -135,7 +135,7 @@ class MailstoreInstanceResponseDto extends AbstractDto
      */
     public function getSizeCount(): float
     {
-        return (float) $this->data['sizeCount'];
+        return (float) $this->required('sizeCount');
     }
 
     /**
@@ -145,7 +145,7 @@ class MailstoreInstanceResponseDto extends AbstractDto
      */
     public function getAdditionalUsers(): float
     {
-        return (float) $this->data['additionalUsers'];
+        return (float) $this->required('additionalUsers');
     }
 
     /**
@@ -155,7 +155,7 @@ class MailstoreInstanceResponseDto extends AbstractDto
      */
     public function getAdditionalStorage(): float
     {
-        return (float) $this->data['additionalStorage'];
+        return (float) $this->required('additionalStorage');
     }
 
     /**

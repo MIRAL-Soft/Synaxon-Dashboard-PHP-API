@@ -13,7 +13,7 @@ class MessageResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class MessageResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class MessageResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class MessageResponseDto extends AbstractDto
      */
     public function getMessage(): string
     {
-        return (string) $this->data['message'];
+        return (string) $this->required('message');
     }
 
     /**
@@ -64,7 +64,7 @@ class MessageResponseDto extends AbstractDto
      */
     public function getLink(): string
     {
-        return (string) $this->data['link'];
+        return (string) $this->required('link');
     }
 
     /**
@@ -84,7 +84,7 @@ class MessageResponseDto extends AbstractDto
      */
     public function getMarkedAsRead(): bool
     {
-        return (bool) $this->data['markedAsRead'];
+        return (bool) $this->required('markedAsRead');
     }
 
     /**
@@ -94,7 +94,7 @@ class MessageResponseDto extends AbstractDto
      */
     public function getStarred(): bool
     {
-        return (bool) $this->data['starred'];
+        return (bool) $this->required('starred');
     }
 
     /**
@@ -104,7 +104,7 @@ class MessageResponseDto extends AbstractDto
      */
     public function getImportant(): bool
     {
-        return (bool) $this->data['important'];
+        return (bool) $this->required('important');
     }
 
     /**
@@ -114,7 +114,7 @@ class MessageResponseDto extends AbstractDto
      */
     public function getTargetType(): string
     {
-        return (string) $this->data['targetType'];
+        return (string) $this->required('targetType');
     }
 
     /**
@@ -124,6 +124,6 @@ class MessageResponseDto extends AbstractDto
      */
     public function getDeleted(): bool
     {
-        return (bool) $this->data['deleted'];
+        return (bool) $this->required('deleted');
     }
 }

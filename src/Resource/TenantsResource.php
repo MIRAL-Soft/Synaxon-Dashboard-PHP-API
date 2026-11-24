@@ -63,7 +63,7 @@ class TenantsResource extends AbstractResource
      */
     public function updateLogo(string $id, ?array $body = null): array|null
     {
-        return $this->httpPut($this->expand('/v1/tenants/{id}/logo', ['id' => $id]), $body);
+        return $this->httpPut($this->expand('/v1/tenants/{id}/logo', ['id' => $id]), $body, [], 'multipart');
     }
 
     /**

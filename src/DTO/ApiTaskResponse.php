@@ -13,6 +13,6 @@ class ApiTaskResponse extends AbstractDto
      */
     public function getTaskId(): string
     {
-        return (string) $this->data['taskId'];
+        return (string) $this->required('taskId');
     }
 }

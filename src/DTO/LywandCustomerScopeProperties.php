@@ -13,7 +13,7 @@ class LywandCustomerScopeProperties extends AbstractDto
      */
     public function getEndpoints(): float
     {
-        return (float) $this->data['endpoints'];
+        return (float) $this->required('endpoints');
     }
 
     /**
@@ -23,7 +23,7 @@ class LywandCustomerScopeProperties extends AbstractDto
      */
     public function getDomains(): float
     {
-        return (float) $this->data['domains'];
+        return (float) $this->required('domains');
     }
 
     /**
@@ -33,7 +33,7 @@ class LywandCustomerScopeProperties extends AbstractDto
      */
     public function getEmails(): float
     {
-        return (float) $this->data['emails'];
+        return (float) $this->required('emails');
     }
 
     /**
@@ -43,6 +43,6 @@ class LywandCustomerScopeProperties extends AbstractDto
      */
     public function getIpAddresses(): float
     {
-        return (float) $this->data['ipAddresses'];
+        return (float) $this->required('ipAddresses');
     }
 }

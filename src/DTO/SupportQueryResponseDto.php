@@ -13,7 +13,7 @@ class SupportQueryResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class SupportQueryResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class SupportQueryResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class SupportQueryResponseDto extends AbstractDto
      */
     public function getThreadId(): string
     {
-        return (string) $this->data['threadId'];
+        return (string) $this->required('threadId');
     }
 
     /**
@@ -53,7 +53,7 @@ class SupportQueryResponseDto extends AbstractDto
      */
     public function getQuery(): string
     {
-        return (string) $this->data['query'];
+        return (string) $this->required('query');
     }
 
     /**
@@ -63,7 +63,7 @@ class SupportQueryResponseDto extends AbstractDto
      */
     public function getResponse(): string
     {
-        return (string) $this->data['response'];
+        return (string) $this->required('response');
     }
 
     /**
@@ -73,7 +73,7 @@ class SupportQueryResponseDto extends AbstractDto
      */
     public function getResponseMarkdown(): string
     {
-        return (string) $this->data['responseMarkdown'];
+        return (string) $this->required('responseMarkdown');
     }
 
     /**
@@ -83,7 +83,7 @@ class SupportQueryResponseDto extends AbstractDto
      */
     public function getQueryTime(): float
     {
-        return (float) $this->data['queryTime'];
+        return (float) $this->required('queryTime');
     }
 
     /**
@@ -93,7 +93,7 @@ class SupportQueryResponseDto extends AbstractDto
      */
     public function getUserId(): string
     {
-        return (string) $this->data['userId'];
+        return (string) $this->required('userId');
     }
 
     /**

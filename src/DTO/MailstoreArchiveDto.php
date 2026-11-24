@@ -13,7 +13,7 @@ class MailstoreArchiveDto extends AbstractDto
      */
     public function getInstanceName(): string
     {
-        return (string) $this->data['instanceName'];
+        return (string) $this->required('instanceName');
     }
 
     /**
@@ -23,6 +23,6 @@ class MailstoreArchiveDto extends AbstractDto
      */
     public function getArchiveName(): string
     {
-        return (string) $this->data['archiveName'];
+        return (string) $this->required('archiveName');
     }
 }

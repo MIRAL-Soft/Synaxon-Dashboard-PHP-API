@@ -13,7 +13,7 @@ class SupportChatListItemResponseDto extends AbstractDto
      */
     public function getThreadId(): string
     {
-        return (string) $this->data['threadId'];
+        return (string) $this->required('threadId');
     }
 
     /**
@@ -23,6 +23,6 @@ class SupportChatListItemResponseDto extends AbstractDto
      */
     public function getQuery(): string
     {
-        return (string) $this->data['query'];
+        return (string) $this->required('query');
     }
 }

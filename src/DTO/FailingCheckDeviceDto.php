@@ -11,7 +11,7 @@ class FailingCheckDeviceDto extends AbstractDto
      */
     public function getDeviceId(): string
     {
-        return (string) $this->data['deviceId'];
+        return (string) $this->required('deviceId');
     }
 
     /**
@@ -19,7 +19,7 @@ class FailingCheckDeviceDto extends AbstractDto
      */
     public function getSiteName(): string
     {
-        return (string) $this->data['siteName'];
+        return (string) $this->required('siteName');
     }
 
     /**
@@ -27,7 +27,7 @@ class FailingCheckDeviceDto extends AbstractDto
      */
     public function getDeviceName(): string
     {
-        return (string) $this->data['deviceName'];
+        return (string) $this->required('deviceName');
     }
 
     /**
@@ -35,7 +35,7 @@ class FailingCheckDeviceDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 
     /**

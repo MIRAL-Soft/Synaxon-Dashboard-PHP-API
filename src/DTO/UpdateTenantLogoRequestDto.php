@@ -13,7 +13,7 @@ class UpdateTenantLogoRequestDto extends AbstractDto
      */
     public function getLogo(): string
     {
-        return (string) $this->data['logo'];
+        return (string) $this->required('logo');
     }
 
     /**

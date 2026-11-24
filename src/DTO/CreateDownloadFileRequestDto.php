@@ -13,7 +13,7 @@ class CreateDownloadFileRequestDto extends AbstractDto
      */
     public function getPublic(): bool
     {
-        return (bool) $this->data['public'];
+        return (bool) $this->required('public');
     }
 
     /**
@@ -56,7 +56,7 @@ class CreateDownloadFileRequestDto extends AbstractDto
      */
     public function getUrl(): string
     {
-        return (string) $this->data['url'];
+        return (string) $this->required('url');
     }
 
     /**
@@ -77,7 +77,7 @@ class CreateDownloadFileRequestDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -98,7 +98,7 @@ class CreateDownloadFileRequestDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 
     /**

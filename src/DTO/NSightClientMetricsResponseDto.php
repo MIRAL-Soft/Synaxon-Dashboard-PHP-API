@@ -13,7 +13,7 @@ class NSightClientMetricsResponseDto extends AbstractDto
      */
     public function getCurrTimestamp(): string
     {
-        return (string) $this->data['currTimestamp'];
+        return (string) $this->required('currTimestamp');
     }
 
     /**
@@ -23,7 +23,7 @@ class NSightClientMetricsResponseDto extends AbstractDto
      */
     public function getPrevTimestamp(): string
     {
-        return (string) $this->data['prevTimestamp'];
+        return (string) $this->required('prevTimestamp');
     }
 
     /**

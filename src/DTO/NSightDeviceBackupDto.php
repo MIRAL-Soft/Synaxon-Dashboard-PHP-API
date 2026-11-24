@@ -13,7 +13,7 @@ class NSightDeviceBackupDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -23,7 +23,7 @@ class NSightDeviceBackupDto extends AbstractDto
      */
     public function getFormattedOutput(): string
     {
-        return (string) $this->data['formattedOutput'];
+        return (string) $this->required('formattedOutput');
     }
 
     /**
@@ -33,7 +33,7 @@ class NSightDeviceBackupDto extends AbstractDto
      */
     public function getLastCheck(): string
     {
-        return (string) $this->data['lastCheck'];
+        return (string) $this->required('lastCheck');
     }
 
     /**
@@ -43,6 +43,6 @@ class NSightDeviceBackupDto extends AbstractDto
      */
     public function getStatus(): string
     {
-        return (string) $this->data['status'];
+        return (string) $this->required('status');
     }
 }

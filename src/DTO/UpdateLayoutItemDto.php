@@ -13,7 +13,7 @@ class UpdateLayoutItemDto extends AbstractDto
      */
     public function getX(): float
     {
-        return (float) $this->data['x'];
+        return (float) $this->required('x');
     }
 
     /**
@@ -23,7 +23,7 @@ class UpdateLayoutItemDto extends AbstractDto
      */
     public function getY(): float
     {
-        return (float) $this->data['y'];
+        return (float) $this->required('y');
     }
 
     /**
@@ -33,7 +33,7 @@ class UpdateLayoutItemDto extends AbstractDto
      */
     public function getCols(): float
     {
-        return (float) $this->data['cols'];
+        return (float) $this->required('cols');
     }
 
     /**
@@ -43,7 +43,7 @@ class UpdateLayoutItemDto extends AbstractDto
      */
     public function getRows(): float
     {
-        return (float) $this->data['rows'];
+        return (float) $this->required('rows');
     }
 
     /**
@@ -53,6 +53,6 @@ class UpdateLayoutItemDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 }

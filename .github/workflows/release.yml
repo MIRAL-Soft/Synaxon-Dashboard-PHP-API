@@ -49,6 +49,23 @@ jobs:
 
           echo "version=${version}" >> "$GITHUB_OUTPUT"
 
+      # The tag may point at a commit whose CI never ran or failed, so the
+      # gates run again here, on exactly the tagged commit, before anything
+      # is published.
+      - name: Setup PHP
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: '8.3'
+          extensions: mbstring, intl, json, openssl, curl, fileinfo
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies from the lock file
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Run every gate (composer ci)
+        run: composer ci
+
       - name: Extract release notes from CHANGELOG
         id: notes
         run: |

@@ -13,7 +13,7 @@ class EsetCustomerResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class EsetCustomerResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class EsetCustomerResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class EsetCustomerResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -64,7 +64,7 @@ class EsetCustomerResponseDto extends AbstractDto
      */
     public function getParentId(): string
     {
-        return (string) $this->data['parentId'];
+        return (string) $this->required('parentId');
     }
 
     /**
@@ -74,7 +74,7 @@ class EsetCustomerResponseDto extends AbstractDto
      */
     public function getVendorId(): string
     {
-        return (string) $this->data['vendorId'];
+        return (string) $this->required('vendorId');
     }
 
     /**
@@ -84,7 +84,7 @@ class EsetCustomerResponseDto extends AbstractDto
      */
     public function getType(): float
     {
-        return (float) $this->data['type'];
+        return (float) $this->required('type');
     }
 
     /**
@@ -94,7 +94,7 @@ class EsetCustomerResponseDto extends AbstractDto
      */
     public function getStatus(): float
     {
-        return (float) $this->data['status'];
+        return (float) $this->required('status');
     }
 
     /**
@@ -104,7 +104,7 @@ class EsetCustomerResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -125,7 +125,7 @@ class EsetCustomerResponseDto extends AbstractDto
      */
     public function getManagementType(): string
     {
-        return (string) $this->data['managementType'];
+        return (string) $this->required('managementType');
     }
 
     /**

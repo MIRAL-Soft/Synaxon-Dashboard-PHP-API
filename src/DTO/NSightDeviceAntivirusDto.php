@@ -13,7 +13,7 @@ class NSightDeviceAntivirusDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -23,7 +23,7 @@ class NSightDeviceAntivirusDto extends AbstractDto
      */
     public function getVersion(): string
     {
-        return (string) $this->data['version'];
+        return (string) $this->required('version');
     }
 
     /**
@@ -33,7 +33,7 @@ class NSightDeviceAntivirusDto extends AbstractDto
      */
     public function getLastCheck(): string
     {
-        return (string) $this->data['lastCheck'];
+        return (string) $this->required('lastCheck');
     }
 
     /**
@@ -43,6 +43,6 @@ class NSightDeviceAntivirusDto extends AbstractDto
      */
     public function getStatus(): string
     {
-        return (string) $this->data['status'];
+        return (string) $this->required('status');
     }
 }

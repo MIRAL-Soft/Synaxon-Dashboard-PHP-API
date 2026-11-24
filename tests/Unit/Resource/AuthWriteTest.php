@@ -34,6 +34,7 @@ final class AuthWriteTest extends TestCase
         self::assertSame('POST', $req['method']);
         self::assertSame('/v1/auth/token', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('form', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -53,6 +54,7 @@ final class AuthWriteTest extends TestCase
         self::assertSame('POST', $req['method']);
         self::assertSame('/v1/auth/refresh', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**

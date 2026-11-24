@@ -11,7 +11,7 @@ class UsedAntivirusDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -19,7 +19,7 @@ class UsedAntivirusDto extends AbstractDto
      */
     public function getCount(): float
     {
-        return (float) $this->data['count'];
+        return (float) $this->required('count');
     }
 
     /**

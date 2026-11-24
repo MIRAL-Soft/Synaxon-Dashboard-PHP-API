@@ -13,7 +13,7 @@ class RefreshTokenRequestDto extends AbstractDto
      */
     public function getRefreshToken(): string
     {
-        return (string) $this->data['refreshToken'];
+        return (string) $this->required('refreshToken');
     }
 
     /**
