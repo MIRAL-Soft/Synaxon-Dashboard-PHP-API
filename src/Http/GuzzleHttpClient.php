@@ -30,7 +30,10 @@ use Throwable;
  *  - Add Authorization header from configured credentials.
  *  - Enforce TLS verification and sensible timeouts.
  *  - Map HTTP status codes to typed exceptions.
- *  - Retry transient failures (429/5xx/connect errors) with exponential backoff + jitter.
+ *  - Retry transient failures with exponential backoff + jitter: 429 for every
+ *    method (the server refused the request, so nothing was processed), 5xx and
+ *    connection errors only for idempotent methods, because a POST or PATCH that
+ *    timed out or failed upstream may already have taken effect.
  *  - Log request metadata via PSR-3, with sensitive headers redacted.
  */
 final class GuzzleHttpClient implements HttpClientInterface
@@ -45,6 +48,13 @@ final class GuzzleHttpClient implements HttpClientInterface
      * library-managed defaults.
      */
     private const RESERVED_HEADERS = ['authorization', 'host'];
+
+    /**
+     * Methods that may be repeated after a 5xx or a connection error without
+     * risking a second side effect (RFC 9110, section 9.2.2). POST and PATCH are
+     * deliberately absent: repeating them could create a duplicate record.
+     */
+    private const IDEMPOTENT_METHODS = ['GET', 'HEAD', 'OPTIONS', 'PUT', 'DELETE'];
 
     /**
      * Hard upper bound on a single backoff sleep, in seconds. Protects
@@ -90,7 +100,7 @@ final class GuzzleHttpClient implements HttpClientInterface
             $extra = $options['headers'];
             // Strip any caller-supplied header that would override our
             // managed defaults (Authorization, Host). The library owns
-            // authentication — a resource method must never be able to
+            // authentication; a resource method must never be able to
             // smuggle a different credential through.
             foreach ($extra as $name => $value) {
                 if (in_array(strtolower((string) $name), self::RESERVED_HEADERS, true)) {
@@ -121,7 +131,7 @@ final class GuzzleHttpClient implements HttpClientInterface
                 $response = $this->client->request($method, $uri, $requestOptions);
             } catch (ConnectException $e) {
                 $this->logAttempt($method, $uri, $attempt, null, $e);
-                if ($attempt >= $maxAttempts) {
+                if ($attempt >= $maxAttempts || !$this->isIdempotent($method)) {
                     throw new TransportException(
                         'HTTP connection failed: ' . $e->getMessage(),
                         0,
@@ -146,7 +156,7 @@ final class GuzzleHttpClient implements HttpClientInterface
                 return $this->decodeBody($response);
             }
 
-            if ($this->isRetryable($status) && $attempt < $maxAttempts) {
+            if ($this->isRetryable($status, $method) && $attempt < $maxAttempts) {
                 $this->sleepBackoff($attempt, $response);
                 continue;
             }
@@ -220,19 +230,24 @@ final class GuzzleHttpClient implements HttpClientInterface
             return $decoded;
         }
 
-        // JSON scalar (bool, int, float, string) at the root — wrap it so
+        // JSON scalar (bool, int, float, string) at the root: wrap it so
         // the resource method contract stays array-shaped. Consumers can
         // read $result['value'].
         return ['value' => $decoded];
     }
 
-    private function isRetryable(int $status): bool
+    private function isRetryable(int $status, string $method): bool
     {
         if ($status === 429) {
             return true;
         }
 
-        return $status >= 500 && $status < 600;
+        return $status >= 500 && $status < 600 && $this->isIdempotent($method);
+    }
+
+    private function isIdempotent(string $method): bool
+    {
+        return in_array($method, self::IDEMPOTENT_METHODS, true);
     }
 
     private function sleepBackoff(int $attempt, ?ResponseInterface $response = null): void
@@ -342,13 +357,24 @@ final class GuzzleHttpClient implements HttpClientInterface
         ?int $status,
         ?Throwable $error = null,
     ): void {
-        $this->logger->debug('synaxon.request', [
+        $context = [
             'method' => $method,
             'uri' => $uri,
             'attempt' => $attempt,
             'status' => $status,
             'error' => $error?->getMessage(),
-        ]);
+        ];
+
+        // Authentication and authorization failures are security-relevant
+        // events and are logged above debug level. The context never carries
+        // a credential: headers are not part of it.
+        if ($status === 401 || $status === 403) {
+            $this->logger->warning('synaxon.request.unauthorized', $context);
+
+            return;
+        }
+
+        $this->logger->debug('synaxon.request', $context);
     }
 
     /**

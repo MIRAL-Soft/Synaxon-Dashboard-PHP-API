@@ -1,0 +1,20 @@
+# Line endings: LF everywhere, on every platform. The generators write LF and
+# bin/check-generated.php compares their output with the checkout, so a CRLF
+# working copy would read as drift. PSR-12 requires LF as well.
+* text=auto eol=lf
+
+# Not part of the installable package (what ships is what counts). Composer
+# builds dist archives with `git archive`, which honours export-ignore.
+/.github                export-ignore
+/.gitattributes         export-ignore
+/.gitignore             export-ignore
+/.php-cs-fixer.dist.php export-ignore
+/bin                    export-ignore
+/build                  export-ignore
+/config                 export-ignore
+/docs                   export-ignore
+/examples               export-ignore
+/phpstan.neon           export-ignore
+/phpunit.xml            export-ignore
+/tests                  export-ignore
+/composer.lock          export-ignore

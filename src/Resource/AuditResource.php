@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace miralsoft\synaxon\api\Resource;
 
 /**
- * Audit resource — wraps all /v1/audit/* endpoints.
+ * Audit resource: wraps all /v1/audit/* endpoints.
  *
  * This class is generated from the OpenAPI specification. Method names follow
  * REST conventions where the endpoint shape permits; otherwise the suffix of
@@ -27,7 +27,7 @@ class AuditResource extends AbstractResource
     }
 
     /**
-     * Get audit log options — Returns all unique entity names for audit log filtering
+     * Get audit log options. Returns all unique entity names for audit log filtering
      *
      * @synaxon-endpoint GET /v1/audit/logs/options
      * @synaxon-operation-id FindAuditLogOptionsHttpController_findAuditLogOptions

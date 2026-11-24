@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace miralsoft\synaxon\api\Resource;
 
 /**
- * Mailstore resource — wraps all /v1/mailstore/* endpoints.
+ * Mailstore resource: wraps all /v1/mailstore/* endpoints.
  *
  * This class is generated from the OpenAPI specification. Method names follow
  * REST conventions where the endpoint shape permits; otherwise the suffix of
@@ -158,9 +158,9 @@ class MailstoreResource extends AbstractResource
     }
 
     /**
-     * Get Mailstore instance metrics with comparison — Retrieves current real-time metrics for an
-     * instance and compares them with the most recent historical metric. Optionally specify a date to
-     * compare against a specific historical point.
+     * Get Mailstore instance metrics with comparison. Retrieves current real-time metrics for an instance
+     * and compares them with the most recent historical metric. Optionally specify a date to compare
+     * against a specific historical point.
      *
      * @synaxon-endpoint GET /v1/mailstore/instances/{id}/metrics
      * @synaxon-operation-id GetMailstoreInstanceMetricsHttpController_getMailstoreInstanceMetrics
@@ -174,8 +174,8 @@ class MailstoreResource extends AbstractResource
     }
 
     /**
-     * Get Mailstore partner metrics with comparison — Retrieves current real-time metrics for the
-     * partner (aggregated across all instances) and compares them with the most recent historical metric.
+     * Get Mailstore partner metrics with comparison. Retrieves current real-time metrics for the partner
+     * (aggregated across all instances) and compares them with the most recent historical metric.
      * Optionally specify a date to compare against a specific historical point.
      *
      * @synaxon-endpoint GET /v1/mailstore/metrics

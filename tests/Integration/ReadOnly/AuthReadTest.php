@@ -24,7 +24,7 @@ final class AuthReadTest extends IntegrationTestCase
     public function testEgisAuthHttpControllerAuth(): void
     {
         $this->assertReadOnly('GET');
-        self::markTestSkipped('OAuth authorization flow — browser redirect, not an API call.');
+        self::markTestSkipped('OAuth authorization flow: browser redirect, not an API call.');
     }
 
     /**
@@ -35,7 +35,7 @@ final class AuthReadTest extends IntegrationTestCase
     public function testEgisAuthHttpControllerCallback(): void
     {
         $this->assertReadOnly('GET');
-        self::markTestSkipped('OAuth authorization callback — browser redirect, not an API call.');
+        self::markTestSkipped('OAuth authorization callback: browser redirect, not an API call.');
     }
 
     /**

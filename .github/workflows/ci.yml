@@ -6,13 +6,25 @@ on:
   pull_request:
     branches: [main, API-v1]
 
+# One run per ref: a branch with an open pull request would otherwise run
+# twice for the same commit.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# This workflow only reads.
 permissions:
   contents: read
 
 jobs:
   test:
-    name: PHPUnit / PHPStan / CS — PHP ${{ matrix.php }}
-    runs-on: ubuntu-latest
+    # The job name is what the "Protect main" ruleset requires, character for
+    # character. It contains U+2014, written as an escape so this file stays
+    # free of the character itself. Renaming it means updating the ruleset.
+    name: "PHPUnit / PHPStan / CS \u2014 PHP ${{ matrix.php }}"
+    # A named image rather than ubuntu-latest, so the environment only changes
+    # with a commit that says so.
+    runs-on: ubuntu-24.04
 
     strategy:
       fail-fast: false
@@ -20,35 +32,62 @@ jobs:
         php: ['8.3', '8.4']
 
     steps:
+      # Third-party actions are pinned to a commit digest, with the version as
+      # a comment. A tag can be moved; a digest cannot. Update both together.
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup PHP ${{ matrix.php }}
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
           php-version: ${{ matrix.php }}
           extensions: mbstring, intl, json, openssl, curl, fileinfo
           coverage: none
           tools: composer:v2
 
-      - name: Validate composer.json
+      - name: Validate composer.json and composer.lock
         run: composer validate --strict
 
       - name: Cache Composer dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: vendor
-          key: vendor-${{ matrix.php }}-${{ hashFiles('composer.json') }}
-          restore-keys: vendor-${{ matrix.php }}-
+          key: vendor-${{ matrix.php }}-${{ hashFiles('composer.lock') }}
 
-      - name: Install dependencies
+      - name: Install dependencies from the lock file
         run: composer install --no-interaction --prefer-dist --no-progress
 
-      - name: Run PHP-CS-Fixer (check)
+      # The steps below are exactly `composer ci`, split so a failure names
+      # its gate.
+      - name: Content check (em-dashes, secrets)
+        run: composer check:content
+
+      - name: PHP-CS-Fixer (check)
         run: composer fmt:check
 
-      - name: Run PHPStan (level 8)
+      - name: PHPStan (level 8)
         run: composer analyse
 
-      - name: Run unit tests
+      - name: Unit tests
         run: composer test
+
+      - name: Generated code is reproducible
+        run: composer check:generated
+
+      - name: Dependency vulnerability audit
+        run: composer audit
+
+      # What ships is what counts: build the archive Packagist users receive and
+      # check that it carries the library and nothing that is only for us.
+      - name: Package contents
+        run: |
+          set -eu
+          git archive --format=tar HEAD | tar -t > package-files.txt
+          grep -q '^src/Client/SynaxonClient.php$' package-files.txt
+          grep -q '^composer.json$' package-files.txt
+          grep -q '^LICENSE$' package-files.txt
+          if grep -E '^(tests|docs|bin|build|config|examples|\.github)/' package-files.txt; then
+            echo "Development files would ship in the package (see .gitattributes)." >&2
+            exit 1
+          fi
+          echo "Package contains $(wc -l < package-files.txt) entries, none of them development-only."

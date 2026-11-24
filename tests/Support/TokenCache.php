@@ -18,7 +18,7 @@ use RuntimeException;
  * exists on developer machines.
  *
  * This helper is part of the test suite, not of the public library API.
- * The library itself is auth-agnostic — it is the consumer's responsibility
+ * The library itself is auth-agnostic; it is the consumer's responsibility
  * to acquire and rotate tokens.
  */
 final class TokenCache
@@ -82,7 +82,7 @@ final class TokenCache
             return null;
         }
         if ($cachedBase !== $baseUri) {
-            // Different environment cached — never reuse cross-environment.
+            // Different environment cached: never reuse cross-environment.
             return null;
         }
 
@@ -139,7 +139,7 @@ final class TokenCache
 
         // Write with an exclusive lock so concurrent test runs don't truncate
         // each other's payload, then lock down permissions to the owner only
-        // — the cached bearer token is a credential and must not be readable
+        // The cached bearer token is a credential and must not be readable
         // by other users on the machine.
         $written = @file_put_contents(self::CACHE_FILE, $encoded, LOCK_EX);
         if ($written === false) {

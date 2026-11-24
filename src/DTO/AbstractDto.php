@@ -11,7 +11,7 @@ use JsonSerializable;
  * Shared behaviour for all request/response DTOs.
  *
  * DTOs carry the raw associative payload in $data and expose typed accessors
- * in their subclasses. Passing unknown fields is allowed — they are preserved
+ * in their subclasses. Passing unknown fields is allowed; they are preserved
  * in $data so callers can access future API fields via getRaw().
  */
 abstract class AbstractDto implements JsonSerializable

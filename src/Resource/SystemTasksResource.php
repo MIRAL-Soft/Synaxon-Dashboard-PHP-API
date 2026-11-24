@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace miralsoft\synaxon\api\Resource;
 
 /**
- * SystemTasks resource — wraps all /v1/system-tasks/* endpoints.
+ * SystemTasks resource: wraps all /v1/system-tasks/* endpoints.
  *
  * This class is generated from the OpenAPI specification. Method names follow
  * REST conventions where the endpoint shape permits; otherwise the suffix of

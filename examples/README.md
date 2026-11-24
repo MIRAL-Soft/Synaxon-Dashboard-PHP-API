@@ -24,5 +24,5 @@ export SYNAXON_BASIC_PASS=...
 php examples/01-quickstart.php
 ```
 
-The `05-builder-pattern.php` script does no network call — it can be
+The `05-builder-pattern.php` script does no network call, so it can be
 run without any credentials.

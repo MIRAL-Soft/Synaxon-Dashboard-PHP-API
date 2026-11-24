@@ -15,7 +15,7 @@ namespace miralsoft\synaxon\api\Tests\Integration\ReadOnly;
  *
  * If the list response is empty (e.g. nothing has been provisioned yet for
  * the test tenant) the test is skipped with a clear message rather than
- * failing — the absence of test data is not a regression.
+ * failing: the absence of test data is not a regression.
  */
 trait EndpointSamplingTrait
 {
@@ -40,7 +40,7 @@ trait EndpointSamplingTrait
         $id = self::$sampledIds[$key];
         if ($id === null) {
             self::markTestSkipped(sprintf(
-                'No sample entity available for "%s" — list endpoint returned no items.',
+                'No sample entity available for "%s": list endpoint returned no items.',
                 $cacheKey
             ));
         }

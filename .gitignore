@@ -1,6 +1,5 @@
-# Composer
+# Composer (composer.lock is committed: CI installs and audits exactly that set)
 /vendor/
-composer.lock
 
 # PHPUnit
 .phpunit.cache/

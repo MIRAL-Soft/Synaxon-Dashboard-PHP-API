@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace miralsoft\synaxon\api\Resource;
 
 /**
- * Acronis resource — wraps all /v1/acronis/* endpoints.
+ * Acronis resource: wraps all /v1/acronis/* endpoints.
  *
  * This class is generated from the OpenAPI specification. Method names follow
  * REST conventions where the endpoint shape permits; otherwise the suffix of
@@ -67,9 +67,9 @@ class AcronisResource extends AbstractResource
     }
 
     /**
-     * Get Acronis customer metrics with comparison — Retrieves current real-time metrics for a customer
-     * and compares them with the most recent historical metric. Optionally specify a date to compare
-     * against a specific historical point.
+     * Get Acronis customer metrics with comparison. Retrieves current real-time metrics for a customer and
+     * compares them with the most recent historical metric. Optionally specify a date to compare against a
+     * specific historical point.
      *
      * @synaxon-endpoint GET /v1/acronis/customers/{id}/metrics
      * @synaxon-operation-id GetAcronisCustomerMetricsHttpController_getAcronisCustomerMetrics
@@ -95,7 +95,7 @@ class AcronisResource extends AbstractResource
     }
 
     /**
-     * Get Acronis partner metrics with comparison — Retrieves current real-time metrics for an Acronis
+     * Get Acronis partner metrics with comparison. Retrieves current real-time metrics for an Acronis
      * partner and compares them with the most recent historical metric. Optionally specify a date to
      * compare against a specific historical point.
      *

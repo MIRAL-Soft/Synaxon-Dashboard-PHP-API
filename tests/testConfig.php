@@ -11,8 +11,8 @@ use miralsoft\synaxon\api\Tests\Support\TokenCache;
  * Central helper for resolving the SynaxonConfig used by integration tests.
  *
  * Resolution order:
- *  1. SYNAXON_BEARER_TOKEN — used directly.
- *  2. SYNAXON_BASIC_USER / SYNAXON_BASIC_PASS — exchanged for a bearer token
+ *  1. SYNAXON_BEARER_TOKEN: used directly.
+ *  2. SYNAXON_BASIC_USER / SYNAXON_BASIC_PASS: exchanged for a bearer token
  *     via POST /v1/auth/token (cached on disk by TokenCache).
  *  3. Otherwise: returns null and the calling test is skipped.
  */

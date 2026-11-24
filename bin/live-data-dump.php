@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * Diagnostic script — issues one read call per resource against the live API
+ * Diagnostic script: issues one read call per resource against the live API
  * and prints a compact sample of the returned data so a human can verify
  * the shape and contents are sensible.
  *
@@ -39,7 +39,7 @@ function probe(string $label, callable $fn, int $sampleItems = 1): void
 
         if (isset($r['data']) && is_array($r['data'])) {
             $total = $r['totalItems'] ?? '?';
-            echo "  in {$ms}ms — paginated: {$total} total / showing first {$sampleItems}\n";
+            echo "  in {$ms}ms, paginated: {$total} total / showing first {$sampleItems}\n";
             $items = array_slice($r['data'], 0, $sampleItems);
             foreach ($items as $i => $item) {
                 echo '  --- item ' . ($i + 1) . " ---\n";
@@ -50,7 +50,7 @@ function probe(string $label, callable $fn, int $sampleItems = 1): void
 
         if (array_is_list($r)) {
             $total = count($r);
-            echo "  in {$ms}ms — list of {$total} items / showing first {$sampleItems}\n";
+            echo "  in {$ms}ms, list of {$total} items / showing first {$sampleItems}\n";
             foreach (array_slice($r, 0, $sampleItems) as $i => $item) {
                 echo '  --- item ' . ($i + 1) . " ---\n";
                 printAssoc($item, '    ');
@@ -58,7 +58,7 @@ function probe(string $label, callable $fn, int $sampleItems = 1): void
             return;
         }
 
-        echo "  in {$ms}ms — single object\n";
+        echo "  in {$ms}ms, single object\n";
         printAssoc($r, '    ');
     } catch (Throwable $e) {
         echo '  FAIL: ' . get_class($e) . "\n";

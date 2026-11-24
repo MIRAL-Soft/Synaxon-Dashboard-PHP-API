@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace miralsoft\synaxon\api\Resource;
 
 /**
- * Lywand resource — wraps all /v1/lywand/* endpoints.
+ * Lywand resource: wraps all /v1/lywand/* endpoints.
  *
  * This class is generated from the OpenAPI specification. Method names follow
  * REST conventions where the endpoint shape permits; otherwise the suffix of
@@ -26,7 +26,7 @@ class LywandResource extends AbstractResource
     }
 
     /**
-     * Get Lywand partner metrics with comparison — Retrieves current real-time metrics for a partner and
+     * Get Lywand partner metrics with comparison. Retrieves current real-time metrics for a partner and
      * compares them with the most recent historical metric. Optionally specify a date to compare against a
      * specific historical point.
      *
@@ -121,9 +121,9 @@ class LywandResource extends AbstractResource
     }
 
     /**
-     * Get Lywand customer metrics with comparison — Retrieves current real-time metrics for a customer
-     * and compares them with the most recent historical metric. Optionally specify a date to compare
-     * against a specific historical point.
+     * Get Lywand customer metrics with comparison. Retrieves current real-time metrics for a customer and
+     * compares them with the most recent historical metric. Optionally specify a date to compare against a
+     * specific historical point.
      *
      * @synaxon-endpoint GET /v1/lywand/customers/{id}/metrics
      * @synaxon-operation-id GetLywandCustomerMetricsHttpController_getLywandCustomerMetrics

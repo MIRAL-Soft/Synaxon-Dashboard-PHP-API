@@ -39,14 +39,14 @@ if (!is_file($specPath)) {
  * Key: "METHOD /path", value: human-readable skip reason.
  */
 $knownSkips = [
-    'GET /v1/auth/egis' => 'OAuth authorization flow — browser redirect, not an API call.',
-    'GET /v1/auth/egis/callback' => 'OAuth authorization callback — browser redirect, not an API call.',
+    'GET /v1/auth/egis' => 'OAuth authorization flow: browser redirect, not an API call.',
+    'GET /v1/auth/egis/callback' => 'OAuth authorization callback: browser redirect, not an API call.',
 ];
 
 /**
  * Endpoints that legitimately return 404 when the tenant has not configured
  * the underlying feature. These are treated as "skipped when not available"
- * rather than test failures — the assertion wraps the call in a 404-aware
+ * rather than test failures: the assertion wraps the call in a 404-aware
  * try/catch.
  */
 $optionalEndpoints = [
@@ -257,7 +257,7 @@ function resolveListEndpointFor(string $path, array $listByParent): ?array
     if (!str_contains($path, '{')) {
         return null;
     }
-    // Strip from the first "{" back to the previous "/" — that yields the
+    // Strip from the first "{" back to the previous "/"; that yields the
     // parent collection path. E.g. /v1/eset/customers/{id}/metrics → /v1/eset/customers
     $firstBrace = strpos($path, '{');
     if ($firstBrace === false) {
@@ -304,7 +304,7 @@ function renderTest(
 ): string {
     $endpointKey = 'GET ' . $op['path'];
     $testName = 'test' . studly($op['opId'] !== '' ? $op['opId'] : ($op['path'] . 'Get'));
-    // Ensure unique, PSR-friendly test names — sanitize and shorten.
+    // Ensure unique, PSR-friendly test names: sanitize and shorten.
     $testName = preg_replace('/[^A-Za-z0-9]+/', '', $testName) ?? $testName;
     if (strlen($testName) > 80) {
         $testName = substr($testName, 0, 80);
@@ -362,7 +362,7 @@ function renderTest(
         } elseif ($p['name'] === 'body') {
             $args[] = 'null';
         } elseif ($p['hasDefault']) {
-            // skip — default covers it
+            // skip, default covers it
             continue;
         } else {
             $args[] = 'null';
@@ -383,7 +383,7 @@ function renderTest(
              . '    }';
     }
 
-    // Path-param endpoint — sample an ID from the matching list endpoint.
+    // Path-param endpoint: sample an ID from the matching list endpoint.
     if ($listEndpoint === null) {
         return $doc
              . "    public function {$testName}(): void\n"
@@ -402,7 +402,7 @@ function renderTest(
           . "        \$this->assertReadOnly('GET');\n"
           . "        \${$firstParam} = \$this->sampleId(\n"
           . '            ' . var_export($cacheKey, true) . ",\n"
-          . "            fn () => \$this->client->{$resourceMethod}()->{$listMethod}([\"limit\" => 1]),\n"
+          . "            fn () => \$this->client->{$resourceMethod}()->{$listMethod}(['limit' => 1]),\n"
           . "        );\n"
           . $callBlock
           . '    }';

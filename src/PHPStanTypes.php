@@ -10,7 +10,7 @@ namespace miralsoft\synaxon\api;
  * resource method's PHPDoc gives consumers full IDE autocomplete on
  * the array offsets we hand back.
  *
- * This class is intentionally never instantiated — it exists solely to
+ * This class is intentionally never instantiated; it exists solely to
  * carry the type definitions in one place.
  *
  * @phpstan-type PaginatedResponse array{

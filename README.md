@@ -3,8 +3,12 @@
 A professional PHP client library for the **SYNAXON Marketplace REST API** (v1.9.2).
 
 This library is meant to be embedded in other PHP projects. It does not perform
-authentication itself — it expects the consuming application to supply
+authentication itself; it expects the consuming application to supply
 credentials (bearer token or HTTP basic) via `SynaxonConfig`.
+
+> SYNAXON is a trademark of its owner. This is an independent, community
+> library by MIRAL Soft. It is not affiliated with, endorsed by, or supported
+> by SYNAXON.
 
 ---
 
@@ -21,9 +25,11 @@ credentials (bearer token or HTTP basic) via `SynaxonConfig`.
 9. [Logging (PSR-3)](#logging-psr-3)
 10. [DTOs](#dtos)
 11. [API compatibility checking](#api-compatibility-checking)
-12. [Testing](#testing)
-13. [Project layout](#project-layout)
-14. [License](#license)
+12. [What this library does not do](#what-this-library-does-not-do)
+13. [Testing](#testing)
+14. [Project layout](#project-layout)
+15. [Security](#security)
+16. [License](#license)
 
 ---
 
@@ -32,7 +38,7 @@ credentials (bearer token or HTTP basic) via `SynaxonConfig`.
 | Component | Version |
 | --------- | ------- |
 | PHP       | `>= 8.3` |
-| Guzzle    | `^7.0` |
+| Guzzle    | `^7.15.2` (PSR-7 `^2.12.3`) |
 | PSR-3 Log | `^2.0 \|\| ^3.0` |
 
 The library targets the SYNAXON Marketplace API at
@@ -68,8 +74,9 @@ If you use a private VCS repository, add the following to your application's
 use miralsoft\synaxon\api\Client\SynaxonClient;
 use miralsoft\synaxon\api\Config\SynaxonConfig;
 
+// Keep credentials out of source code: read them from the environment.
 $client = new SynaxonClient(new SynaxonConfig(
-    bearerToken: 'your-bearer-token',
+    bearerToken: (string) getenv('SYNAXON_BEARER_TOKEN'),
 ));
 
 // List audit logs
@@ -86,8 +93,8 @@ Basic-auth example:
 
 ```php
 $client = new SynaxonClient(new SynaxonConfig(
-    basicUser: 'api-user',
-    basicPass: 'api-secret',
+    basicUser: (string) getenv('SYNAXON_BASIC_USER'),
+    basicPass: (string) getenv('SYNAXON_BASIC_PASS'),
 ));
 ```
 
@@ -101,7 +108,7 @@ $client = new SynaxonClient(new SynaxonConfig(
 
 ```php
 $config = new SynaxonConfig(
-    bearerToken:    'tok',
+    bearerToken:    (string) getenv('SYNAXON_BEARER_TOKEN'),
     baseUri:        'https://api.synaxon.com/marketplace',
     timeout:        30,
     connectTimeout: 10,
@@ -139,7 +146,7 @@ $config = SynaxonConfig::fromArray([
 ]);
 ```
 
-Bearer token and basic credentials are mutually exclusive — set one or the
+Bearer token and basic credentials are mutually exclusive: set one or the
 other. A request issued without any credentials throws
 `InvalidArgumentException`.
 
@@ -264,9 +271,19 @@ library extracts it from the `correlationId` field in the API's error
 JSON body and (as a fallback) from the `X-Correlation-Id` /
 `X-Request-Id` response headers.
 
-The client retries `429` and `5xx` responses with exponential backoff plus
-jitter (`maxRetries` controls the upper bound, default 3). 4xx errors other
-than `429` are not retried, to avoid retry storms on permanent failures.
+The client retries transient failures with exponential backoff plus jitter
+(`maxRetries` controls the upper bound, default 3):
+
+| Failure | `GET`, `HEAD`, `OPTIONS`, `PUT`, `DELETE` | `POST`, `PATCH` |
+| ------- | ------------------------------------------ | --------------- |
+| `429` | retried | retried (the server refused the request, nothing was processed) |
+| `5xx` | retried | **not retried** |
+| connection error, timeout | retried | **not retried** |
+| other `4xx` | not retried | not retried |
+
+A `POST` or `PATCH` that failed upstream or timed out may already have taken
+effect, and repeating it could create a second record. The exception is
+raised instead, so the caller decides whether to check and retry.
 
 ---
 
@@ -284,7 +301,10 @@ $logger->pushHandler(new StreamHandler('php://stderr'));
 $client = new SynaxonClient($config, null, $logger);
 ```
 
-The library logs every request attempt at `debug` level. Sensitive headers
+The library logs every request attempt at `debug` level, and `401` / `403`
+responses at `warning` level as security-relevant events. Log context holds
+method, path, attempt, status and error message; it never holds headers or
+credentials. Sensitive headers
 (`Authorization`, `Cookie`, `X-API-*`) are masked before any payload reaches
 the logger. Tokens are also masked in `SynaxonConfig::__debugInfo()`.
 
@@ -305,7 +325,7 @@ payload and provide:
 * `withAll(array $patch): static` (immutable batch update)
 * Typed getters per declared field
 
-DTOs are tolerant of unknown fields — extra keys passed in `$data` are
+DTOs are tolerant of unknown fields: extra keys passed in `$data` are
 preserved. Missing optional fields return `null` from their getter.
 
 ### Builder pattern for request DTOs
@@ -335,7 +355,8 @@ local spec or the live spec.
 # Offline check (uses docs/openapi.json)
 composer check-compat
 
-# Live check against api.synaxon.com
+# Live check against the OpenAPI document the SYNAXON Swagger UI loads
+# (https://api.synaxon.com/marketplace/swagger/marketplace-openapi.json)
 php bin/check-api-compat.php --live
 
 # Write JSON report to build/api-compat-report.json
@@ -344,11 +365,29 @@ php bin/check-api-compat.php --live --snapshot
 
 Exit codes: `0` compatible, `1` drift, `2` spec unreachable.
 
-The same logic is mirrored in two PHPUnit tests:
+The live document is accepted only when it is served as JSON and contains an
+OpenAPI `paths` object, because the Swagger UI answers `200` with HTML for
+unknown paths. The same logic is mirrored in two PHPUnit tests:
 
-* `tests/Unit/ApiCompatibilityTest.php` — runs offline by default
-* `tests/Integration/LiveCompatibilityTest.php` — runs only when integration
+* `tests/Unit/ApiCompatibilityTest.php` runs offline by default
+* `tests/Integration/LiveCompatibilityTest.php` runs only when integration
   tests are enabled (see below)
+
+## What this library does not do
+
+* **No telemetry.** The library contacts only the configured `baseUri`. It
+  sends nothing to MIRAL Soft or anyone else.
+* **No login, token refresh or credential storage.** It takes a bearer token
+  or a basic pair from you and sends it as the `Authorization` header. It never
+  writes credentials to disk, caches tokens or runs an OAuth flow.
+* **No caching of API data.** Every call goes to the API; nothing is stored
+  between calls.
+* **No automatic repeat of creating or changing calls after an upstream
+  failure.** `POST` and `PATCH` are retried only on `429` (see
+  [Error handling](#error-handling)).
+* **No relaxed TLS.** Certificate verification cannot be switched off.
+
+---
 
 ## Examples
 
@@ -375,7 +414,7 @@ returns sensible data. Uses the credentials from `tests/.env.test`.
 php bin/live-data-dump.php
 ```
 
-The script is strictly a developer tool — it is not part of the test
+The script is strictly a developer tool. It is not part of the test
 suite, it is not autoloaded, and it is excluded from static analysis.
 
 ---
@@ -384,32 +423,44 @@ suite, it is not autoloaded, and it is excluded from static analysis.
 
 ```bash
 composer install
-composer test                  # unit tests only — never touches the network
+composer test                  # unit tests only, never touches the network
 composer analyse               # PHPStan level 8
 composer test:integration      # live read-only smoke tests (opt-in)
 composer test:all              # unit + integration
 composer fmt                   # apply PHP-CS-Fixer to source + tests + examples
 composer fmt:check             # report style violations without changing files
-composer ci                    # one-shot: fmt:check + analyse + test
+composer generate              # regenerate DTOs, resources, client and generated tests
+composer check:generated       # fail if regenerating changes any committed file
+composer check:content         # fail on em-dashes in prose or secret-like strings
+composer ci                    # every gate CI runs, in one command
 ```
 
-GitHub Actions runs the same `composer ci` chain on every push and pull
-request against PHP 8.3 and 8.4 — see `.github/workflows/ci.yml`.
+`composer ci` runs `check:content`, `fmt:check`, `analyse`, `test`,
+`check:generated` and `composer audit`. GitHub Actions runs the same gates on
+every push and pull request against PHP 8.3 and 8.4 (see
+`.github/workflows/ci.yml`), and additionally checks that the package archive
+contains no development files.
+
+Generated files (`src/DTO/`, `src/Resource/*Resource.php`,
+`src/Client/SynaxonClient.php`, `config/generated-endpoints.json` and the
+generated tests) are never edited by hand. Change the generator in `bin/`,
+run `composer generate`, and commit the generator change together with the
+regenerated output.
 
 ### Integration tests
 
 Integration tests are **skipped automatically** unless `tests/.env.test`
-contains valid credentials. There is no master switch — if you have no
+contains valid credentials. There is no master switch: if you have no
 credentials configured, nothing ever touches the live API.
 
 Credentials accepted by the test suite:
 
-- `SYNAXON_BEARER_TOKEN` — used directly if present.
-- `SYNAXON_BASIC_USER` + `SYNAXON_BASIC_PASS` — exchanged for a bearer
+- `SYNAXON_BEARER_TOKEN`: used directly if present.
+- `SYNAXON_BASIC_USER` + `SYNAXON_BASIC_PASS`: exchanged for a bearer
   token via `POST /v1/auth/token`. The token is cached to
   `tests/.bearer-token.cache` (gitignored) and reused on subsequent test
   runs until it expires. This mirrors how Synaxon's own dashboard
-  authenticates — the library itself remains auth-agnostic.
+  authenticates; the library itself remains auth-agnostic.
 
 To enable integration tests locally:
 
@@ -424,7 +475,7 @@ Integration tests are **strictly read-only**: the base
 non-GET HTTP verb. There is no path through the suite that mutates live data.
 
 The read-only suite under `tests/Integration/ReadOnly/` is **generated** from
-the OpenAPI spec — one test file per resource, one test method per GET
+the OpenAPI spec: one test file per resource, one test method per GET
 endpoint (currently 84 methods across 20 resources). Regenerate them with:
 
 ```bash
@@ -446,6 +497,7 @@ tests/
 │   ├── Client/                      # client facade tests
 │   ├── Config/                      # config validation
 │   ├── DTO/HydrationTest.php        # round-trips every generated DTO
+│   ├── DTO/SpecExampleHydrationTest.php # hydrates DTOs with the spec's own examples
 │   ├── Query/                       # query builder
 │   ├── Resource/                    # per-resource tests with mock HTTP client
 │   └── Util/                        # path builder etc.
@@ -456,6 +508,7 @@ tests/
 │       ├── EndpointSamplingTrait.php  # fetches sample IDs from list endpoints
 │       └── {Resource}ReadTest.php     # one test per GET endpoint (84 total)
 ├── Support/
+│   ├── LiveSpec.php                 # fetches and validates the live OpenAPI document
 │   ├── MockHttpClient.php           # in-memory HTTP stub
 │   └── TokenCache.php               # Basic → Bearer exchange with on-disk cache
 ├── bootstrap.php                    # loads vendor + tests/.env.test
@@ -476,12 +529,16 @@ src/
 ├── Http/                            # GuzzleHttpClient + interface
 ├── Query/                           # QueryBuilder + FilterOperator
 ├── Resource/                        # 21 resource classes + AbstractResource
-└── Util/                            # PathBuilder, DtoHydrator, PaginationIterator
+├── Util/                            # PathBuilder, DtoHydrator, PaginationIterator
+└── Version.php                      # the one authoritative library version
 
 bin/
 ├── check-api-compat.php             # standalone compatibility checker
+├── check-content.php                # em-dash and secret scan with self-test
+├── check-generated.php              # generated code reproducibility check
 ├── generate-dtos.php                # one-shot DTO generator (reproducibility)
 ├── generate-resources.php           # one-shot resource generator (reproducibility)
+├── generate-write-tests.php         # one-shot write-test generator
 ├── generate-integration-read-tests.php  # one-shot read-test generator
 └── live-data-dump.php               # developer diagnostic: pretty-prints one
                                      # read response per resource (uses credentials
@@ -510,18 +567,19 @@ tests/                               # see "Testing" above
 * Sensitive headers (`Authorization`, `Cookie`, `X-API-*`) are masked in
   logs via `GuzzleHttpClient::redactHeaders()`.
 * Both the bearer token and the basic-auth pair (user + password) are
-  completely masked in `SynaxonConfig::__debugInfo()` — the basic user
+  completely masked in `SynaxonConfig::__debugInfo()`, because the basic user
   half of an OAuth2 client-credentials pair is a secret in its own right.
 * Callers cannot override reserved headers (`Authorization`, `Host`) via
-  request options — the library owns authentication end-to-end.
+  request options; the library owns authentication end-to-end.
 * Error response bodies embedded in exception context are truncated to
   4 KiB to keep an oversize 5xx HTML page from ballooning memory.
-* Path parameters are URL-encoded by `PathBuilder` — no string
+* Path parameters are URL-encoded by `PathBuilder`, never by string
   concatenation. Path expansion surfaces PCRE failures as
   `InvalidArgumentException` rather than silent empty strings.
 * Retries use exponential backoff with jitter, capped at 30 seconds per
-  sleep and `SynaxonConfig::MAX_RETRIES` (10) total attempts — only fires
-  on `429` / `5xx`.
+  sleep and `SynaxonConfig::MAX_RETRIES` (10) total attempts. They fire on
+  `429` for every method, and on `5xx` and connection errors only for
+  idempotent methods.
 * `Retry-After` values from the server are clamped to the same cap.
 * Timeouts are bounded to `SynaxonConfig::MAX_TIMEOUT_SECONDS` (600 s).
 * Network errors are wrapped in `TransportException`; Guzzle internals

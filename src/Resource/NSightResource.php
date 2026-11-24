@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace miralsoft\synaxon\api\Resource;
 
 /**
- * NSight resource — wraps all /v1/n-sight/* endpoints.
+ * NSight resource: wraps all /v1/n-sight/* endpoints.
  *
  * This class is generated from the OpenAPI specification. Method names follow
  * REST conventions where the endpoint shape permits; otherwise the suffix of
@@ -14,7 +14,7 @@ namespace miralsoft\synaxon\api\Resource;
 class NSightResource extends AbstractResource
 {
     /**
-     * Get N-Sight client metrics with comparison — Retrieves current real-time metrics for a client and
+     * Get N-Sight client metrics with comparison. Retrieves current real-time metrics for a client and
      * compares them with the most recent historical metric. Optionally specify a date to compare against a
      * specific historical point.
      *
@@ -97,7 +97,7 @@ class NSightResource extends AbstractResource
     }
 
     /**
-     * Get N-Sight site metrics with comparison — Retrieves current real-time metrics for a site and
+     * Get N-Sight site metrics with comparison. Retrieves current real-time metrics for a site and
      * compares them with the most recent historical metric. Optionally specify a date to compare against a
      * specific historical point.
      *

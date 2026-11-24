@@ -64,7 +64,7 @@ final class HydrationTest extends TestCase
             }
             $returnType = $m->getReturnType();
             if ($returnType !== null && method_exists($returnType, 'allowsNull') && !$returnType->allowsNull()) {
-                // Non-nullable getters require concrete data — skip in smoke test.
+                // Non-nullable getters require concrete data, skip in smoke test.
                 continue;
             }
             $m->invoke($instance);
