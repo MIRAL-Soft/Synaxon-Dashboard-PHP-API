@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  *
  * Tests are skipped automatically unless tests/.env.test contains valid
  * credentials (either a bearer token or basic user + password). No master
- * switch is required — if no credentials are configured, nothing talks to
+ * switch is required: if no credentials are configured, nothing talks to
  * the live API.
  *
  * Tests are strictly read-only: the base class records a flag at setUp

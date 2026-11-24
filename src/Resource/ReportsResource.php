@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace miralsoft\synaxon\api\Resource;
 
 /**
- * Reports resource — wraps all /v1/reports/* endpoints.
+ * Reports resource: wraps all /v1/reports/* endpoints.
  *
  * This class is generated from the OpenAPI specification. Method names follow
  * REST conventions where the endpoint shape permits; otherwise the suffix of

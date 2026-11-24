@@ -109,35 +109,7 @@ function loadLocalSpec(string $path): array
  */
 function loadLiveSpec(string $url): array
 {
-    $client = new GuzzleHttp\Client(['timeout' => 30]);
-    $body = $client->request('GET', $url)->getBody()->getContents();
-
-    $marker = '"swaggerDoc":';
-    $pos = strpos($body, $marker);
-    if ($pos === false) {
-        throw new RuntimeException('swaggerDoc not found in live JS bundle.');
-    }
-    $start = $pos + strlen($marker);
-    $depth = 0;
-    $end = $start;
-    for ($i = $start, $n = strlen($body); $i < $n; $i++) {
-        $ch = $body[$i];
-        if ($ch === '{') {
-            if ($depth === 0) {
-                $start = $i;
-            }
-            $depth++;
-        } elseif ($ch === '}') {
-            $depth--;
-            if ($depth === 0) {
-                $end = $i + 1;
-                break;
-            }
-        }
-    }
-    /** @var array<string, mixed> $decoded */
-    $decoded = json_decode(substr($body, $start, $end - $start), true, 512, JSON_THROW_ON_ERROR);
-    return $decoded;
+    return miralsoft\synaxon\api\Tests\Support\LiveSpec::fetch($url);
 }
 
 /**

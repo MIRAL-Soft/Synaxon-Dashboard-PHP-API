@@ -122,7 +122,7 @@ foreach ($groups as $group => $ops) {
         'use miralsoft\\synaxon\\api\\Tests\\Support\\MockHttpClient;',
         'use PHPUnit\\Framework\\TestCase;',
     ];
-    sort($imports);
+    sort($imports, SORT_STRING | SORT_FLAG_CASE);
 
     $file = "<?php\n\n"
           . "declare(strict_types=1);\n\n"
@@ -201,7 +201,7 @@ function renderTest(array $op, array $methodInfo, string $resourceMethod): strin
             $hasQuery = true;
             $args[] = "['filter' => 'a']";
         } elseif ($p['hasDefault']) {
-            // skip — default applies
+            // skip, default applies
             continue;
         } else {
             $args[] = 'null';

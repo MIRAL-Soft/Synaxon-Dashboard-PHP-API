@@ -13,7 +13,8 @@
     ],
     "require": {
         "php": ">=8.3",
-        "guzzlehttp/guzzle": "^7.0",
+        "guzzlehttp/guzzle": "^7.15.2",
+        "guzzlehttp/psr7": "^2.12.3",
         "psr/log": "^2.0 || ^3.0"
     },
     "require-dev": {
@@ -36,16 +37,33 @@
         "test:integration": "phpunit --testsuite Integration --testdox",
         "test:all": "phpunit --testdox",
         "analyse": "phpstan analyse src --level=8",
-        "check-compat": "php bin/check-api-compat.php",
+        "check-compat": "@php bin/check-api-compat.php",
+        "check:content": "@php bin/check-content.php",
+        "check:generated": "@php bin/check-generated.php",
+        "generate": [
+            "@php bin/generate-dtos.php",
+            "@php bin/generate-resources.php",
+            "@php bin/generate-write-tests.php",
+            "@php bin/generate-integration-read-tests.php"
+        ],
         "fmt": "php-cs-fixer fix",
         "fmt:check": "php-cs-fixer fix --dry-run --diff",
         "ci": [
+            "@check:content",
             "@fmt:check",
             "@analyse",
-            "@test"
+            "@test",
+            "@check:generated",
+            "@composer audit"
         ]
     },
     "config": {
         "sort-packages": true
+    },
+    "scripts-descriptions": {
+        "check:content": "Fail on em-dashes in prose and on secret-like strings in tracked files.",
+        "check:generated": "Regenerate all generated code and fail if it differs from what is committed.",
+        "generate": "Regenerate DTOs, resources, the client and the generated tests from docs/openapi.json.",
+        "ci": "Run every gate CI runs."
     }
 }

@@ -59,7 +59,7 @@ final class PaginationIteratorTest extends TestCase
     public function testAbortsIfServerNeverReturnsShortPage(): void
     {
         $iter = new PaginationIterator(
-            // Always returns exactly $limit items — a pathological server.
+            // Always returns exactly $limit items: a pathological server.
             fetch: fn (int $p, int $l): array => array_fill(0, $l, $p),
             limit: 2,
         );

@@ -18,7 +18,10 @@ $finder = (new PhpCsFixer\Finder())
         __DIR__ . '/examples',
     ])
     ->name('*.php')
-    // Generated artefacts: skip to avoid fighting the generator's style.
+    // Generated artefacts (C-15, C-16): never touched by the formatter. The
+    // generators are the only writers, and bin/check-generated.php verifies that
+    // regenerating reproduces the committed files byte for byte. Paths are
+    // relative to each directory passed to in().
     ->exclude(['DTO'])
     ->notPath('Resource/AcronisResource.php')
     ->notPath('Resource/AuditResource.php')
@@ -42,8 +45,8 @@ $finder = (new PhpCsFixer\Finder())
     ->notPath('Resource/TenantsResource.php')
     ->notPath('Resource/UsersResource.php')
     ->notPath('Client/SynaxonClient.php')
-    ->notPath('Tests/Integration/ReadOnly')
-    ->notPath('Tests/Unit/Resource');
+    ->notPath('#^Integration/ReadOnly/.+ReadTest\.php$#')
+    ->notPath('#^Unit/Resource/.+WriteTest\.php$#');
 
 return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)

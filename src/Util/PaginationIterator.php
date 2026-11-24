@@ -16,7 +16,7 @@ use IteratorAggregate;
  * items than the configured limit, which signals the last page).
  *
  * A hard upper bound on the number of pages visited (MAX_PAGES) protects
- * against a misbehaving server that always returns a full page — the
+ * against a misbehaving server that always returns a full page; the
  * iterator will terminate with an InvalidArgumentException rather than
  * spin forever.
  *
@@ -79,7 +79,7 @@ final class PaginationIterator implements IteratorAggregate
             $visited++;
             if ($visited >= self::MAX_PAGES) {
                 throw new InvalidArgumentException(sprintf(
-                    'PaginationIterator aborted: exceeded MAX_PAGES (%d) — server likely never returns a short page.',
+                    'PaginationIterator aborted: exceeded MAX_PAGES (%d), the server likely never returns a short page.',
                     self::MAX_PAGES
                 ));
             }

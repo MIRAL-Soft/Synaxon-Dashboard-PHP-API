@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace miralsoft\synaxon\api\Resource;
 
 /**
- * Eset resource — wraps all /v1/eset/* endpoints.
+ * Eset resource: wraps all /v1/eset/* endpoints.
  *
  * This class is generated from the OpenAPI specification. Method names follow
  * REST conventions where the endpoint shape permits; otherwise the suffix of
@@ -52,7 +52,7 @@ class EsetResource extends AbstractResource
     }
 
     /**
-     * Get ESET partner metrics with comparison — Retrieves current real-time metrics for an ESET partner
+     * Get ESET partner metrics with comparison. Retrieves current real-time metrics for an ESET partner
      * (aggregated across all customers) and compares them with the most recent historical metric.
      * Optionally specify a date to compare against a specific historical point.
      *
@@ -121,7 +121,7 @@ class EsetResource extends AbstractResource
     }
 
     /**
-     * Get ESET customer metrics with comparison — Retrieves current real-time metrics for a customer and
+     * Get ESET customer metrics with comparison. Retrieves current real-time metrics for a customer and
      * compares them with the most recent historical metric. Optionally specify a date to compare against a
      * specific historical point.
      *

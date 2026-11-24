@@ -6,14 +6,14 @@ declare(strict_types=1);
  * Build a request payload using the immutable fluent setters on a
  * generated *RequestDto class.
  *
- * Each `with*()` call returns a NEW instance — the original DTO is
+ * Each `with*()` call returns a NEW instance; the original DTO is
  * never mutated, which makes the pattern safe to share between
  * threads/coroutines and easy to test.
  *
  * Run with:
  *   php examples/05-builder-pattern.php
  *
- * (No network call — this is a pure build-and-print example.)
+ * (No network call: this is a pure build-and-print example.)
  */
 
 require_once __DIR__ . '/../vendor/autoload.php';

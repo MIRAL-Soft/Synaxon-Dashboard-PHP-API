@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace miralsoft\synaxon\api\Resource;
 
 /**
- * SalesOpportunities resource — wraps all /v1/sales-opportunities/* endpoints.
+ * SalesOpportunities resource: wraps all /v1/sales-opportunities/* endpoints.
  *
  * This class is generated from the OpenAPI specification. Method names follow
  * REST conventions where the endpoint shape permits; otherwise the suffix of

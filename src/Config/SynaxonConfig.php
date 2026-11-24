@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace miralsoft\synaxon\api\Config;
 
 use InvalidArgumentException;
+use miralsoft\synaxon\api\Version;
 
 /**
  * Immutable configuration for the SYNAXON Marketplace API client.
@@ -22,12 +23,13 @@ final class SynaxonConfig
 {
     public const DEFAULT_BASE_URI = 'https://api.synaxon.com/marketplace';
 
-    public const DEFAULT_USER_AGENT = 'miralsoft-synaxon-api/1.0';
+    /** Derived from Version::VERSION so the two cannot drift apart. */
+    public const DEFAULT_USER_AGENT = 'miralsoft-synaxon-api/' . Version::VERSION;
 
     /** Upper bound for any timeout to prevent accidental indefinite hangs. */
     public const MAX_TIMEOUT_SECONDS = 600;
 
-    /** Upper bound for retry count — exponential backoff blows up beyond this. */
+    /** Upper bound for retry count; exponential backoff blows up beyond this. */
     public const MAX_RETRIES = 10;
 
     /**
@@ -215,7 +217,7 @@ final class SynaxonConfig
         if ($this->bearerToken !== null) {
             $auth = 'bearer:***';
         } elseif ($this->basicUser !== null) {
-            // Never expose the basic user — in an OAuth2 client-credentials
+            // Never expose the basic user: in an OAuth2 client-credentials
             // setup the user IS half of the secret. Both halves stay masked.
             $auth = 'basic:***';
         }

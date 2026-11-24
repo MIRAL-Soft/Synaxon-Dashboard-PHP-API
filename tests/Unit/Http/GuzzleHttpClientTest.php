@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace miralsoft\synaxon\api\Tests\Unit\Http;
 
 use GuzzleHttp\Client as Guzzle;
+use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
@@ -14,18 +15,24 @@ use miralsoft\synaxon\api\Config\SynaxonConfig;
 use miralsoft\synaxon\api\Exception\AuthenticationException;
 use miralsoft\synaxon\api\Exception\ServerException;
 use miralsoft\synaxon\api\Exception\SynaxonApiException;
+use miralsoft\synaxon\api\Exception\TransportException;
 use miralsoft\synaxon\api\Http\GuzzleHttpClient;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\AbstractLogger;
 
 final class GuzzleHttpClientTest extends TestCase
 {
     /**
-     * @param list<Response> $responses
+     * @param list<Response|ConnectException> $responses
      *
      * @param-out list<array{request: Request, response: mixed}> $captured
      */
-    private function buildClient(array $responses, array &$captured, int $retries = 0): GuzzleHttpClient
-    {
+    private function buildClient(
+        array $responses,
+        array &$captured,
+        int $retries = 0,
+        ?AbstractLogger $logger = null,
+    ): GuzzleHttpClient {
         $captured = [];
         $mock = new MockHandler($responses);
         $stack = HandlerStack::create($mock);
@@ -44,7 +51,12 @@ final class GuzzleHttpClientTest extends TestCase
             'http_errors' => false,
         ]);
 
-        return new GuzzleHttpClient($config, $guzzle);
+        return new GuzzleHttpClient($config, $guzzle, $logger);
+    }
+
+    private static function connectError(string $method): ConnectException
+    {
+        return new ConnectException('timed out', new Request($method, 'https://example.test/api/v1/x'));
     }
 
     public function testSendsBearerAuthorizationHeader(): void
@@ -104,6 +116,130 @@ final class GuzzleHttpClientTest extends TestCase
 
         self::assertSame(['ok' => true], $r);
         self::assertCount(2, $history);
+    }
+
+    public function testRetriesIdempotentMethodOn5xx(): void
+    {
+        $history = [];
+        $client = $this->buildClient(
+            [new Response(503, [], ''), new Response(200, [], '{"ok":true}')],
+            $history,
+            retries: 1
+        );
+
+        self::assertSame(['ok' => true], $client->request('GET', '/v1/ping'));
+        self::assertCount(2, $history);
+    }
+
+    /**
+     * A POST that failed upstream may already have created its record, so a
+     * repeat could create a second one. It is reported, not repeated.
+     */
+    public function testDoesNotRetryPostOn5xx(): void
+    {
+        $history = [];
+        $client = $this->buildClient(
+            [new Response(500, [], '{}'), new Response(201, [], '{"id":"second"}')],
+            $history,
+            retries: 3
+        );
+
+        try {
+            $client->request('POST', '/v1/customers', ['body' => ['name' => 'x']]);
+            self::fail('expected exception');
+        } catch (ServerException) {
+            // expected
+        }
+        self::assertCount(1, $history, 'POST must not be repeated after a 5xx');
+    }
+
+    public function testDoesNotRetryPatchOn5xx(): void
+    {
+        $history = [];
+        $client = $this->buildClient(
+            [new Response(502, [], ''), new Response(200, [], '{}')],
+            $history,
+            retries: 3
+        );
+
+        try {
+            $client->request('PATCH', '/v1/customers/1', ['body' => ['name' => 'x']]);
+            self::fail('expected exception');
+        } catch (ServerException) {
+            // expected
+        }
+        self::assertCount(1, $history);
+    }
+
+    /**
+     * A 429 means the server refused the request before processing it, so
+     * repeating a POST is safe.
+     */
+    public function testRetriesPostOn429(): void
+    {
+        $history = [];
+        $client = $this->buildClient(
+            [new Response(429, ['Retry-After' => '0'], ''), new Response(201, [], '{"id":"1"}')],
+            $history,
+            retries: 1
+        );
+
+        self::assertSame(['id' => '1'], $client->request('POST', '/v1/customers', ['body' => []]));
+        self::assertCount(2, $history);
+    }
+
+    public function testRetriesGetOnConnectionError(): void
+    {
+        $history = [];
+        $client = $this->buildClient(
+            [self::connectError('GET'), new Response(200, [], '{"ok":true}')],
+            $history,
+            retries: 1
+        );
+
+        self::assertSame(['ok' => true], $client->request('GET', '/v1/ping'));
+    }
+
+    public function testDoesNotRetryPostOnConnectionError(): void
+    {
+        $history = [];
+        $mock = [self::connectError('POST'), new Response(201, [], '{"id":"second"}')];
+        $client = $this->buildClient($mock, $history, retries: 3);
+
+        try {
+            $client->request('POST', '/v1/customers', ['body' => []]);
+            self::fail('expected exception');
+        } catch (TransportException) {
+            // expected
+        }
+        // The history middleware records failed transfers too: the POST went out once.
+        self::assertCount(1, $history);
+    }
+
+    public function testLogsUnauthorizedAsWarningWithoutCredentials(): void
+    {
+        $logger = new class () extends AbstractLogger {
+            /** @var list<array{level: mixed, message: string, context: array<mixed>}> */
+            public array $records = [];
+
+            public function log($level, \Stringable|string $message, array $context = []): void
+            {
+                $this->records[] = ['level' => $level, 'message' => (string) $message, 'context' => $context];
+            }
+        };
+        $history = [];
+        $client = $this->buildClient([new Response(401, [], '{"message":"no"}')], $history, 0, $logger);
+
+        try {
+            $client->request('GET', '/v1/private');
+            self::fail('expected exception');
+        } catch (AuthenticationException) {
+            // expected
+        }
+
+        self::assertCount(1, $logger->records);
+        self::assertSame('warning', $logger->records[0]['level']);
+        self::assertStringNotContainsString('tok', (string) json_encode($logger->records[0]['context']));
     }
 
     public function testDoesNotRetryOn4xxOtherThan429(): void

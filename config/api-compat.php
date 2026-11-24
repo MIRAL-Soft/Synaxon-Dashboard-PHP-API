@@ -15,10 +15,10 @@ return [
     'local_spec' => dirname(__DIR__) . '/docs/openapi.json',
 
     /*
-     * Live URL of the Swagger UI initialiser bundle. The compatibility tool
-     * extracts the swaggerDoc object from this JS file at runtime.
+     * Live URL of the OpenAPI document the Swagger UI loads. Until November
+     * 2026 it was embedded in swagger-ui-init.js; that file now answers HTML.
      */
-    'live_url'   => 'https://api.synaxon.com/marketplace/swagger/swagger-ui-init.js',
+    'live_url'   => \miralsoft\synaxon\api\Tests\Support\LiveSpec::DEFAULT_URL,
 
     /*
      * Where to scan for implemented endpoint methods. Public methods carrying

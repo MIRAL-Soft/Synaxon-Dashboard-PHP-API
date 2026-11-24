@@ -22,14 +22,14 @@ $response = $client->customers()->list(['limit' => 5]);
 $page = CustomerPaginatedResponseDto::fromArray($response);
 
 printf(
-    "Tenant has %d customers — showing first %d:\n\n",
+    "Tenant has %d customers, showing first %d:\n\n",
     (int) $page->getTotalItems(),
     count($page->getData())
 );
 
 foreach ($page->getData() as $customer) {
     printf(
-        "  [%s] %s — %s, %s %s\n",
+        "  [%s] %s: %s, %s %s\n",
         $customer->getId(),
         $customer->getName() ?? '?',
         $customer->getStreet() ?? '-',

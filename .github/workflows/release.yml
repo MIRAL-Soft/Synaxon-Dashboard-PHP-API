@@ -5,36 +5,66 @@ on:
     tags:
       - 'v*'
 
-permissions:
-  contents: write
+# Nothing by default; the one job that writes asks for it below.
+permissions: {}
 
 jobs:
   release:
     name: Create GitHub release from tag
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
-      - name: Extract release notes from CHANGELOG
-        id: notes
+      # Nothing is published unless the tag, the version in the code and the
+      # changelog agree. A tag pushed before the version was raised fails here
+      # instead of producing a release whose User-Agent names another version.
+      - name: Verify the tag against the built version
+        id: version
         run: |
           set -euo pipefail
           tag="${GITHUB_REF_NAME}"
           version="${tag#v}"
 
-          # Pull the section between "## [<version>]" and the next "## [" header.
+          if ! printf '%s' "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "Tag ${tag} is not v<major>.<minor>.<patch>." >&2
+            exit 1
+          fi
+
+          code_version=$(sed -n "s/.*public const VERSION = '\([^']*\)';.*/\1/p" src/Version.php)
+          if [ "$code_version" != "$version" ]; then
+            echo "Tag ${tag} does not match Version::VERSION (${code_version:-not found})." >&2
+            exit 1
+          fi
+
+          if ! grep -Eq "^## \[${version//./\\.}\]" CHANGELOG.md; then
+            echo "CHANGELOG.md has no section for ${version}." >&2
+            exit 1
+          fi
+
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+      - name: Extract release notes from CHANGELOG
+        id: notes
+        run: |
+          set -euo pipefail
+          version="${{ steps.version.outputs.version }}"
+
+          # The section between "## [<version>]" and the next "## [" header.
           notes=$(awk -v v="$version" '
             $0 ~ "^## \\[" v "\\]"  { capture = 1; next }
             capture && /^## \[/      { exit }
             capture                  { print }
           ' CHANGELOG.md)
 
-          if [ -z "$notes" ]; then
-            notes="Release ${tag}. See CHANGELOG.md for full details."
+          if [ -z "$(printf '%s' "$notes" | tr -d '[:space:]')" ]; then
+            echo "The CHANGELOG section for ${version} is empty." >&2
+            exit 1
           fi
 
           {
@@ -44,7 +74,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Create release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@8a0cd651e5b2365bd640854a3fa5dfc70e4875f3 # v3.0.4
         with:
           tag_name: ${{ github.ref_name }}
           name: ${{ github.ref_name }}

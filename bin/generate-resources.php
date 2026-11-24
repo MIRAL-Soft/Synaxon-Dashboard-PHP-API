@@ -11,7 +11,7 @@ declare(strict_types=1);
  * (list/find/create/update/delete), otherwise the human-readable suffix
  * from the operationId.
  *
- * This script is committed for reproducibility but is NEVER run at runtime —
+ * This script is committed for reproducibility but is NEVER run at runtime:
  * its output (src/Resource/*.php + src/Client/SynaxonClient.php) is the
  * source of truth.
  *
@@ -144,7 +144,7 @@ function renderResource(string $className, string $group, array $ops): string
         . "declare(strict_types=1);\n\n"
         . "namespace miralsoft\\synaxon\\api\\Resource;\n\n"
         . "/**\n"
-        . " * {$groupPretty} resource — wraps all /v1/{$group}/* endpoints.\n"
+        . " * {$groupPretty} resource: wraps all /v1/{$group}/* endpoints.\n"
         . " *\n"
         . " * This class is generated from the OpenAPI specification. Method names follow\n"
         . " * REST conventions where the endpoint shape permits; otherwise the suffix of\n"
@@ -301,7 +301,12 @@ function renderMethod(string $name, array $op, string $semantic): string
     if ($description !== '' && $description !== $summary) {
         $titleParts[] = $description;
     }
-    $title = trim(implode(' — ', $titleParts));
+    // Summary and description become two sentences; the summary loses its own
+    // trailing full stop first so the join never doubles one.
+    $title = count($titleParts) === 2
+        ? rtrim($titleParts[0], ' .') . '. ' . $titleParts[1]
+        : ($titleParts[0] ?? '');
+    $title = trim($title);
     if ($title === '') {
         $title = $opId;
     }

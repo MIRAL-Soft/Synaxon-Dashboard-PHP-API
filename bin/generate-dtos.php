@@ -6,7 +6,7 @@ declare(strict_types=1);
  * One-shot code generator: emits a typed PHP DTO class for every schema
  * declared in docs/openapi.json.
  *
- * This script is committed for reproducibility but NEVER runs at runtime —
+ * This script is committed for reproducibility but NEVER runs at runtime:
  * its output (src/DTO/*.php) is the source of truth.
  *
  * Usage:
