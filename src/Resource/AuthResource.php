@@ -31,13 +31,13 @@ class AuthResource extends AbstractResource
      *
      * @synaxon-endpoint GET /v1/auth/egis/callback
      * @synaxon-operation-id EgisAuthHttpController_callback
-     * @param string $scope Path parameter from the upstream spec.
+     * @param string $scope Declared as a path parameter upstream, sent as a query parameter.
      * @param array<string, scalar|array<int, scalar>> $query Query parameters.
      * @return array<string, mixed>|list<mixed>|null Decoded JSON response body.
      */
     public function callback(string $scope, array $query = []): array|null
     {
-        return $this->httpGet($this->expand('/v1/auth/egis/callback', ['scope' => $scope]), $query);
+        return $this->httpGet($this->expand('/v1/auth/egis/callback'), ['scope' => $scope] + $query);
     }
 
     /**
@@ -62,7 +62,7 @@ class AuthResource extends AbstractResource
      */
     public function getApiToken(?array $body = null): array|null
     {
-        return $this->httpPost($this->expand('/v1/auth/token'), $body);
+        return $this->httpPost($this->expand('/v1/auth/token'), $body, [], 'form');
     }
 
     /**

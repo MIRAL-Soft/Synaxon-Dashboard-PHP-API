@@ -13,7 +13,7 @@ class CreateEsetLicenseRequestDto extends AbstractDto
      */
     public function getCustomerId(): string
     {
-        return (string) $this->data['customerId'];
+        return (string) $this->required('customerId');
     }
 
     /**
@@ -34,7 +34,7 @@ class CreateEsetLicenseRequestDto extends AbstractDto
      */
     public function getProductCode(): string
     {
-        return (string) $this->data['productCode'];
+        return (string) $this->required('productCode');
     }
 
     /**
@@ -55,7 +55,7 @@ class CreateEsetLicenseRequestDto extends AbstractDto
      */
     public function getQuantity(): float
     {
-        return (float) $this->data['quantity'];
+        return (float) $this->required('quantity');
     }
 
     /**

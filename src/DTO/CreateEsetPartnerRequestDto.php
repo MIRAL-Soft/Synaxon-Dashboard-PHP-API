@@ -13,7 +13,7 @@ class CreateEsetPartnerRequestDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -34,7 +34,7 @@ class CreateEsetPartnerRequestDto extends AbstractDto
      */
     public function getEmail(): string
     {
-        return (string) $this->data['email'];
+        return (string) $this->required('email');
     }
 
     /**

@@ -13,7 +13,7 @@ class EsetDeviceProblemResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class EsetDeviceProblemResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class EsetDeviceProblemResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class EsetDeviceProblemResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -53,7 +53,7 @@ class EsetDeviceProblemResponseDto extends AbstractDto
      */
     public function getParentId(): string
     {
-        return (string) $this->data['parentId'];
+        return (string) $this->required('parentId');
     }
 
     /**
@@ -63,7 +63,7 @@ class EsetDeviceProblemResponseDto extends AbstractDto
      */
     public function getDeviceName(): string
     {
-        return (string) $this->data['deviceName'];
+        return (string) $this->required('deviceName');
     }
 
     /**
@@ -73,7 +73,7 @@ class EsetDeviceProblemResponseDto extends AbstractDto
      */
     public function getProblem(): string
     {
-        return (string) $this->data['problem'];
+        return (string) $this->required('problem');
     }
 
     /**
@@ -83,7 +83,7 @@ class EsetDeviceProblemResponseDto extends AbstractDto
      */
     public function getProblemDetail(): string
     {
-        return (string) $this->data['problemDetail'];
+        return (string) $this->required('problemDetail');
     }
 
     /**
@@ -93,6 +93,6 @@ class EsetDeviceProblemResponseDto extends AbstractDto
      */
     public function getSeverity(): string
     {
-        return (string) $this->data['severity'];
+        return (string) $this->required('severity');
     }
 }

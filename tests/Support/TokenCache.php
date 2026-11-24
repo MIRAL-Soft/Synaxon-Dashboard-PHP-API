@@ -37,7 +37,7 @@ final class TokenCache
      */
     public static function resolve(SynaxonConfig $basicConfig): ?string
     {
-        $cached = self::readCache($basicConfig->getBaseUri());
+        $cached = self::readCache($basicConfig->getBaseUri(), self::clientKey($basicConfig));
         if ($cached !== null) {
             return $cached;
         }
@@ -55,7 +55,17 @@ final class TokenCache
         return self::fetchAndCache($basicConfig);
     }
 
-    private static function readCache(string $baseUri): ?string
+    /**
+     * Identifies the client a token was issued to, without storing the
+     * client id itself. A token is never reused for another client: it would
+     * point the live tests at another tenant.
+     */
+    private static function clientKey(SynaxonConfig $config): string
+    {
+        return hash('sha256', (string) $config->getBasicUser() . '|' . (string) getenv('SYNAXON_SCOPE'));
+    }
+
+    private static function readCache(string $baseUri, string $clientKey): ?string
     {
         if (!is_file(self::CACHE_FILE)) {
             return null;
@@ -65,7 +75,7 @@ final class TokenCache
             return null;
         }
         try {
-            /** @var array{access_token?: string, expires_at?: int, base_uri?: string} $data */
+            /** @var array{access_token?: string, expires_at?: int, base_uri?: string, client?: string} $data */
             $data = json_decode($raw, true, 8, JSON_THROW_ON_ERROR);
         } catch (JsonException) {
             return null;
@@ -85,6 +95,10 @@ final class TokenCache
             // Different environment cached: never reuse cross-environment.
             return null;
         }
+        if (($data['client'] ?? null) !== $clientKey) {
+            // Issued to another client or scope.
+            return null;
+        }
 
         return $token;
     }
@@ -97,9 +111,9 @@ final class TokenCache
 
         $client = new SynaxonClient($basicConfig);
 
-        // The upstream spec omits the request body for POST /v1/auth/token,
-        // but the API rejects empty bodies with HTTP 400. Supply the OAuth2
-        // client-credentials parameters the backend expects.
+        // The API rejects an empty body with HTTP 400. These are the OAuth2
+        // client-credentials parameters it expects, sent form-encoded as the
+        // spec declares for this endpoint.
         $scope = getenv('SYNAXON_SCOPE');
         if ($scope === false || $scope === '') {
             $scope = 'sys-app';
@@ -128,6 +142,7 @@ final class TokenCache
             'access_token' => $token,
             'expires_at' => time() + $expiresIn,
             'base_uri' => $basicConfig->getBaseUri(),
+            'client' => self::clientKey($basicConfig),
         ];
 
         $dir = dirname(self::CACHE_FILE);
@@ -137,15 +152,25 @@ final class TokenCache
 
         $encoded = json_encode($payload, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR);
 
-        // Write with an exclusive lock so concurrent test runs don't truncate
-        // each other's payload, then lock down permissions to the owner only
-        // The cached bearer token is a credential and must not be readable
-        // by other users on the machine.
-        $written = @file_put_contents(self::CACHE_FILE, $encoded, LOCK_EX);
+        // The cached bearer token is a credential and must never be readable
+        // by other users, not even briefly. The file is created under a
+        // restrictive umask, so it is 0600 from its first byte, and then
+        // renamed into place, so a concurrent run never reads half a file.
+        $tmp = self::CACHE_FILE . '.' . bin2hex(random_bytes(6)) . '.tmp';
+        $previousUmask = umask(0o077);
+        try {
+            $written = @file_put_contents($tmp, $encoded, LOCK_EX);
+        } finally {
+            umask($previousUmask);
+        }
         if ($written === false) {
             throw new RuntimeException('Could not write token cache: ' . self::CACHE_FILE);
         }
-        @chmod(self::CACHE_FILE, 0o600);
+        @chmod($tmp, 0o600);
+        if (!@rename($tmp, self::CACHE_FILE)) {
+            @unlink($tmp);
+            throw new RuntimeException('Could not move token cache into place: ' . self::CACHE_FILE);
+        }
 
         return $token;
     }

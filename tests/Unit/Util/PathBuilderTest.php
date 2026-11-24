@@ -37,4 +37,31 @@ final class PathBuilderTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         PathBuilder::expand('/v1/items/{id}', ['id' => '']);
     }
+
+    /**
+     * URI resolution removes dot segments, so ".." as an id would turn
+     * DELETE /v1/customers/abc/references/.. into DELETE /v1/customers/abc/.
+     *
+     * @dataProvider dotSegmentProvider
+     */
+    public function testRejectsDotSegmentParam(string $value): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        PathBuilder::expand('/v1/customers/{id}/references/{refId}', ['id' => 'abc', 'refId' => $value]);
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function dotSegmentProvider(): iterable
+    {
+        yield 'current' => ['.'];
+        yield 'parent' => ['..'];
+    }
+
+    public function testKeepsDotsInsideValues(): void
+    {
+        self::assertSame('/v1/files/a..b', PathBuilder::expand('/v1/files/{id}', ['id' => 'a..b']));
+        self::assertSame('/v1/files/..%2Fx', PathBuilder::expand('/v1/files/{id}', ['id' => '../x']));
+    }
 }

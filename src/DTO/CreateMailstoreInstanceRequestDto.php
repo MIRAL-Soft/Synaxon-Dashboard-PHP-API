@@ -57,7 +57,7 @@ class CreateMailstoreInstanceRequestDto extends AbstractDto
      */
     public function getDisplayName(): string
     {
-        return (string) $this->data['displayName'];
+        return (string) $this->required('displayName');
     }
 
     /**
@@ -78,7 +78,7 @@ class CreateMailstoreInstanceRequestDto extends AbstractDto
      */
     public function getPassword(): string
     {
-        return (string) $this->data['password'];
+        return (string) $this->required('password');
     }
 
     /**

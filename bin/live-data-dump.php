@@ -17,7 +17,12 @@ require_once __DIR__ . '/../tests/bootstrap.php';
 use miralsoft\synaxon\api\Client\SynaxonClient;
 use miralsoft\synaxon\api\Tests\testConfig;
 
-$client = new SynaxonClient(testConfig::resolveBearerConfig());
+$config = testConfig::resolveBearerConfig();
+if ($config === null) {
+    fwrite(STDERR, "No credentials: set SYNAXON_BEARER_TOKEN or SYNAXON_BASIC_USER/PASS in tests/.env.test.\n");
+    exit(1);
+}
+$client = new SynaxonClient($config);
 
 /**
  * @param callable(): array<string, mixed>|list<mixed>|null $fn

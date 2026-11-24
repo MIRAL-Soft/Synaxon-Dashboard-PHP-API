@@ -13,6 +13,6 @@ class LywandTokenResponseDto extends AbstractDto
      */
     public function getToken(): string
     {
-        return (string) $this->data['token'];
+        return (string) $this->required('token');
     }
 }

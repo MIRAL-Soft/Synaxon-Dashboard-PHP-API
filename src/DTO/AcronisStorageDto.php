@@ -13,7 +13,7 @@ class AcronisStorageDto extends AbstractDto
      */
     public function getLocalStorage(): float
     {
-        return (float) $this->data['local_storage'];
+        return (float) $this->required('local_storage');
     }
 
     /**
@@ -23,7 +23,7 @@ class AcronisStorageDto extends AbstractDto
      */
     public function getStorage(): float
     {
-        return (float) $this->data['storage'];
+        return (float) $this->required('storage');
     }
 
     /**
@@ -33,7 +33,7 @@ class AcronisStorageDto extends AbstractDto
      */
     public function getStorageTotal(): float
     {
-        return (float) $this->data['storage_total'];
+        return (float) $this->required('storage_total');
     }
 
     /**
@@ -43,7 +43,7 @@ class AcronisStorageDto extends AbstractDto
      */
     public function getServers(): float
     {
-        return (float) $this->data['servers'];
+        return (float) $this->required('servers');
     }
 
     /**
@@ -53,7 +53,7 @@ class AcronisStorageDto extends AbstractDto
      */
     public function getWorkstations(): float
     {
-        return (float) $this->data['workstations'];
+        return (float) $this->required('workstations');
     }
 
     /**
@@ -63,6 +63,6 @@ class AcronisStorageDto extends AbstractDto
      */
     public function getVms(): float
     {
-        return (float) $this->data['vms'];
+        return (float) $this->required('vms');
     }
 }

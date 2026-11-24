@@ -13,7 +13,7 @@ class CreateLifecycleInfoRequestDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -34,7 +34,7 @@ class CreateLifecycleInfoRequestDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 
     /**
@@ -55,7 +55,7 @@ class CreateLifecycleInfoRequestDto extends AbstractDto
      */
     public function getRelease(): string
     {
-        return (string) $this->data['release'];
+        return (string) $this->required('release');
     }
 
     /**
@@ -76,7 +76,7 @@ class CreateLifecycleInfoRequestDto extends AbstractDto
      */
     public function getEol(): string
     {
-        return (string) $this->data['eol'];
+        return (string) $this->required('eol');
     }
 
     /**

@@ -13,7 +13,7 @@ class ApiTokenResponseDto extends AbstractDto
      */
     public function getAccessToken(): string
     {
-        return (string) $this->data['access_token'];
+        return (string) $this->required('access_token');
     }
 
     /**
@@ -23,7 +23,7 @@ class ApiTokenResponseDto extends AbstractDto
      */
     public function getExpiresIn(): float
     {
-        return (float) $this->data['expires_in'];
+        return (float) $this->required('expires_in');
     }
 
     /**
@@ -33,7 +33,7 @@ class ApiTokenResponseDto extends AbstractDto
      */
     public function getScope(): string
     {
-        return (string) $this->data['scope'];
+        return (string) $this->required('scope');
     }
 
     /**
@@ -43,6 +43,6 @@ class ApiTokenResponseDto extends AbstractDto
      */
     public function getTokenType(): string
     {
-        return (string) $this->data['token_type'];
+        return (string) $this->required('token_type');
     }
 }

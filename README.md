@@ -74,10 +74,9 @@ If you use a private VCS repository, add the following to your application's
 use miralsoft\synaxon\api\Client\SynaxonClient;
 use miralsoft\synaxon\api\Config\SynaxonConfig;
 
-// Keep credentials out of source code: read them from the environment.
-$client = new SynaxonClient(new SynaxonConfig(
-    bearerToken: (string) getenv('SYNAXON_BEARER_TOKEN'),
-));
+// Keep credentials out of source code. fromEnv() reads SYNAXON_BEARER_TOKEN
+// (or SYNAXON_BASIC_USER + SYNAXON_BASIC_PASS) and the optional settings.
+$client = new SynaxonClient(SynaxonConfig::fromEnv());
 
 // List audit logs
 $response = $client->audit()->listAuditLogs(['limit' => 50]);
@@ -85,18 +84,21 @@ $response = $client->audit()->listAuditLogs(['limit' => 50]);
 // Find a customer
 $customer = $client->customers()->find('customer-id-123');
 
-// Create a notification
-$client->notifications()->create(null, ['title' => 'Hello']);
+// Mark a notification as read
+$client->notifications()->setRead('message-id-123');
 ```
 
-Basic-auth example:
+Passing credentials explicitly, for example from your own secret store:
 
 ```php
 $client = new SynaxonClient(new SynaxonConfig(
-    basicUser: (string) getenv('SYNAXON_BASIC_USER'),
-    basicPass: (string) getenv('SYNAXON_BASIC_PASS'),
+    basicUser: $secrets->get('synaxon.client_id'),
+    basicPass: $secrets->get('synaxon.client_secret'),
 ));
 ```
+
+Credentials must be non-empty strings or `null`; an empty string is rejected
+at construction, so a missing environment variable fails early and clearly.
 
 ---
 
@@ -108,7 +110,7 @@ $client = new SynaxonClient(new SynaxonConfig(
 
 ```php
 $config = new SynaxonConfig(
-    bearerToken:    (string) getenv('SYNAXON_BEARER_TOKEN'),
+    bearerToken:    $secrets->get('synaxon.bearer_token'),
     baseUri:        'https://api.synaxon.com/marketplace',
     timeout:        30,
     connectTimeout: 10,
@@ -206,19 +208,25 @@ Every method carries:
 
 ```php
 use miralsoft\synaxon\api\Query\QueryBuilder;
-use miralsoft\synaxon\api\Query\FilterOperator;
 
 $query = (new QueryBuilder())
-    ->limit(50)
-    ->offset(100)
-    ->orderBy('createdAt', 'desc')
-    ->where('status', FilterOperator::EQ, 'open')
-    ->where('id', FilterOperator::IN, [1, 2, 3]);
+    ->page(0)                          // pages are counted from 0
+    ->limit(50)                        // at most 100
+    ->orderBy('name', 'desc')
+    ->search('acme')
+    ->with('status', ['active', 'trial']);   // endpoint-specific parameter
 
-$response = $client->audit()->listAuditLogs($query->toArray());
+$response = $client->customers()->list($query->toArray());
 ```
 
-Supported operators: `EQ`, `NEQ`, `GT`, `GTE`, `LT`, `LTE`, `ILIKE`, `IN`.
+Every list endpoint accepts `page`, `limit`, `orderBy`, `orderDirection` and
+`search`; which other parameters an endpoint takes, and which `orderBy`
+values it allows, is listed in its docblock and in `docs/openapi.json`. Lists
+are sent as repeated keys (`status=active&status=trial`) and booleans as
+`true` / `false`.
+
+`offset()` and `where()` are deprecated: no endpoint declares an `offset` or
+`filter` parameter, so the server ignores them.
 
 ---
 
@@ -237,6 +245,10 @@ foreach ($iter as $log) {
     // ...
 }
 ```
+
+The API counts pages from `0`, which is where the iterator starts by default,
+and accepts at most `100` items per page (a larger `limit` is rejected with
+`400`).
 
 ---
 
@@ -562,8 +574,12 @@ tests/                               # see "Testing" above
 * `declare(strict_types=1);` in every source file.
 * DTOs and config objects are immutable (`readonly` properties).
 * TLS verification is always on (cannot be disabled by public API).
-* Only `http` and `https` schemes are accepted for the base URI; other
-  schemes are rejected at `SynaxonConfig` construction.
+* The base URI must use `https`. Plain `http` is accepted only for
+  `localhost`, `127.0.0.1` and `[::1]` (local mocks and proxies), because the
+  credential travels with every request. Other schemes are rejected at
+  `SynaxonConfig` construction.
+* Path parameters equal to `.` or `..` are rejected, since URI resolution
+  would otherwise retarget the request to a parent path.
 * Sensitive headers (`Authorization`, `Cookie`, `X-API-*`) are masked in
   logs via `GuzzleHttpClient::redactHeaders()`.
 * Both the bearer token and the basic-auth pair (user + password) are

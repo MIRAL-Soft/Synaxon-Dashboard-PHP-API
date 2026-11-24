@@ -13,7 +13,7 @@ class MailstoreProfileResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class MailstoreProfileResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class MailstoreProfileResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class MailstoreProfileResponseDto extends AbstractDto
      */
     public function getInstanceId(): string
     {
-        return (string) $this->data['instanceId'];
+        return (string) $this->required('instanceId');
     }
 
     /**
@@ -53,7 +53,7 @@ class MailstoreProfileResponseDto extends AbstractDto
      */
     public function getProfileId(): float
     {
-        return (float) $this->data['profileId'];
+        return (float) $this->required('profileId');
     }
 
     /**
@@ -63,7 +63,7 @@ class MailstoreProfileResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -73,7 +73,7 @@ class MailstoreProfileResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -83,6 +83,6 @@ class MailstoreProfileResponseDto extends AbstractDto
      */
     public function getLastStatus(): string
     {
-        return (string) $this->data['lastStatus'];
+        return (string) $this->required('lastStatus');
     }
 }

@@ -13,7 +13,7 @@ class NSightClientsResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class NSightClientsResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class NSightClientsResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class NSightClientsResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -53,7 +53,7 @@ class NSightClientsResponseDto extends AbstractDto
      */
     public function getVendorId(): float
     {
-        return (float) $this->data['vendorId'];
+        return (float) $this->required('vendorId');
     }
 
     /**
@@ -63,7 +63,7 @@ class NSightClientsResponseDto extends AbstractDto
      */
     public function getViewDashboard(): string
     {
-        return (string) $this->data['viewDashboard'];
+        return (string) $this->required('viewDashboard');
     }
 
     /**
@@ -73,7 +73,7 @@ class NSightClientsResponseDto extends AbstractDto
      */
     public function getViewWorkstationAssets(): string
     {
-        return (string) $this->data['viewWorkstationAssets'];
+        return (string) $this->required('viewWorkstationAssets');
     }
 
     /**
@@ -83,7 +83,7 @@ class NSightClientsResponseDto extends AbstractDto
      */
     public function getDashboardUsername(): string
     {
-        return (string) $this->data['dashboardUsername'];
+        return (string) $this->required('dashboardUsername');
     }
 
     /**
@@ -93,7 +93,7 @@ class NSightClientsResponseDto extends AbstractDto
      */
     public function getTimezone(): string
     {
-        return (string) $this->data['timezone'];
+        return (string) $this->required('timezone');
     }
 
     /**
@@ -103,7 +103,7 @@ class NSightClientsResponseDto extends AbstractDto
      */
     public function getServerCount(): float
     {
-        return (float) $this->data['serverCount'];
+        return (float) $this->required('serverCount');
     }
 
     /**
@@ -113,7 +113,7 @@ class NSightClientsResponseDto extends AbstractDto
      */
     public function getWorkstationCount(): float
     {
-        return (float) $this->data['workstationCount'];
+        return (float) $this->required('workstationCount');
     }
 
     /**
@@ -123,7 +123,7 @@ class NSightClientsResponseDto extends AbstractDto
      */
     public function getMobileDeviceCount(): float
     {
-        return (float) $this->data['mobileDeviceCount'];
+        return (float) $this->required('mobileDeviceCount');
     }
 
     /**
@@ -133,7 +133,7 @@ class NSightClientsResponseDto extends AbstractDto
      */
     public function getDeviceCount(): float
     {
-        return (float) $this->data['deviceCount'];
+        return (float) $this->required('deviceCount');
     }
 
     /**
@@ -143,7 +143,7 @@ class NSightClientsResponseDto extends AbstractDto
      */
     public function getFailingChecksCount(): float
     {
-        return (float) $this->data['failingChecksCount'];
+        return (float) $this->required('failingChecksCount');
     }
 
     /**
@@ -153,7 +153,7 @@ class NSightClientsResponseDto extends AbstractDto
      */
     public function getDeletedAt(): string
     {
-        return (string) $this->data['deletedAt'];
+        return (string) $this->required('deletedAt');
     }
 
     /**
@@ -163,6 +163,6 @@ class NSightClientsResponseDto extends AbstractDto
      */
     public function getDashboardId(): string
     {
-        return (string) $this->data['dashboardId'];
+        return (string) $this->required('dashboardId');
     }
 }

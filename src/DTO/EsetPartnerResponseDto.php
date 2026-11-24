@@ -13,7 +13,7 @@ class EsetPartnerResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class EsetPartnerResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class EsetPartnerResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class EsetPartnerResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -53,7 +53,7 @@ class EsetPartnerResponseDto extends AbstractDto
      */
     public function getVendorId(): string
     {
-        return (string) $this->data['vendorId'];
+        return (string) $this->required('vendorId');
     }
 
     /**
@@ -63,7 +63,7 @@ class EsetPartnerResponseDto extends AbstractDto
      */
     public function getType(): float
     {
-        return (float) $this->data['type'];
+        return (float) $this->required('type');
     }
 
     /**
@@ -73,7 +73,7 @@ class EsetPartnerResponseDto extends AbstractDto
      */
     public function getStatus(): float
     {
-        return (float) $this->data['status'];
+        return (float) $this->required('status');
     }
 
     /**
@@ -83,7 +83,7 @@ class EsetPartnerResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -93,7 +93,7 @@ class EsetPartnerResponseDto extends AbstractDto
      */
     public function getEmail(): string
     {
-        return (string) $this->data['email'];
+        return (string) $this->required('email');
     }
 
     /**
@@ -103,7 +103,7 @@ class EsetPartnerResponseDto extends AbstractDto
      */
     public function getProtectRegion(): string
     {
-        return (string) $this->data['protectRegion'];
+        return (string) $this->required('protectRegion');
     }
 
     /**
@@ -113,7 +113,7 @@ class EsetPartnerResponseDto extends AbstractDto
      */
     public function getManagementType(): string
     {
-        return (string) $this->data['managementType'];
+        return (string) $this->required('managementType');
     }
 
     /**

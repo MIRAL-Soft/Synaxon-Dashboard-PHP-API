@@ -11,7 +11,7 @@ class ApiErrorResponse extends AbstractDto
      */
     public function getStatusCode(): float
     {
-        return (float) $this->data['statusCode'];
+        return (float) $this->required('statusCode');
     }
 
     /**
@@ -19,7 +19,7 @@ class ApiErrorResponse extends AbstractDto
      */
     public function getMessage(): string
     {
-        return (string) $this->data['message'];
+        return (string) $this->required('message');
     }
 
     /**
@@ -27,7 +27,7 @@ class ApiErrorResponse extends AbstractDto
      */
     public function getError(): string
     {
-        return (string) $this->data['error'];
+        return (string) $this->required('error');
     }
 
     /**
@@ -35,7 +35,7 @@ class ApiErrorResponse extends AbstractDto
      */
     public function getCorrelationId(): string
     {
-        return (string) $this->data['correlationId'];
+        return (string) $this->required('correlationId');
     }
 
     /**

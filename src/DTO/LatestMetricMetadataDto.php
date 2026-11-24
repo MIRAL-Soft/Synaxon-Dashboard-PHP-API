@@ -13,7 +13,7 @@ class LatestMetricMetadataDto extends AbstractDto
      */
     public function getEntityType(): string
     {
-        return (string) $this->data['entityType'];
+        return (string) $this->required('entityType');
     }
 
     /**
@@ -23,6 +23,6 @@ class LatestMetricMetadataDto extends AbstractDto
      */
     public function getEntityId(): string
     {
-        return (string) $this->data['entityId'];
+        return (string) $this->required('entityId');
     }
 }

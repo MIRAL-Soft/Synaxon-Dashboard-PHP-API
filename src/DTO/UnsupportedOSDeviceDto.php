@@ -11,7 +11,7 @@ class UnsupportedOSDeviceDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -19,7 +19,7 @@ class UnsupportedOSDeviceDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -27,7 +27,7 @@ class UnsupportedOSDeviceDto extends AbstractDto
      */
     public function getOperatingSystem(): string
     {
-        return (string) $this->data['operatingSystem'];
+        return (string) $this->required('operatingSystem');
     }
 
     /**
@@ -35,6 +35,6 @@ class UnsupportedOSDeviceDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 }

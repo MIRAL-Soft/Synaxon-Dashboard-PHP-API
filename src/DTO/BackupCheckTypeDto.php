@@ -11,7 +11,7 @@ class BackupCheckTypeDto extends AbstractDto
      */
     public function getTotal(): float
     {
-        return (float) $this->data['total'];
+        return (float) $this->required('total');
     }
 
     /**
@@ -19,7 +19,7 @@ class BackupCheckTypeDto extends AbstractDto
      */
     public function getWithChecks(): float
     {
-        return (float) $this->data['withChecks'];
+        return (float) $this->required('withChecks');
     }
 
     /**

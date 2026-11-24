@@ -11,7 +11,7 @@ class SiteRankingItemDto extends AbstractDto
      */
     public function getRank(): float
     {
-        return (float) $this->data['rank'];
+        return (float) $this->required('rank');
     }
 
     /**
@@ -19,7 +19,7 @@ class SiteRankingItemDto extends AbstractDto
      */
     public function getSiteId(): string
     {
-        return (string) $this->data['siteId'];
+        return (string) $this->required('siteId');
     }
 
     /**
@@ -27,7 +27,7 @@ class SiteRankingItemDto extends AbstractDto
      */
     public function getSiteName(): string
     {
-        return (string) $this->data['siteName'];
+        return (string) $this->required('siteName');
     }
 
     /**
@@ -37,6 +37,6 @@ class SiteRankingItemDto extends AbstractDto
      */
     public function getScore(): float
     {
-        return (float) $this->data['score'];
+        return (float) $this->required('score');
     }
 }

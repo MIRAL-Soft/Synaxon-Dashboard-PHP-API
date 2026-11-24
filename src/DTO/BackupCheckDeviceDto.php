@@ -11,7 +11,7 @@ class BackupCheckDeviceDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -19,7 +19,7 @@ class BackupCheckDeviceDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -27,6 +27,6 @@ class BackupCheckDeviceDto extends AbstractDto
      */
     public function getCheckName(): string
     {
-        return (string) $this->data['checkName'];
+        return (string) $this->required('checkName');
     }
 }

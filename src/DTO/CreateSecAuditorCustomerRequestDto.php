@@ -35,7 +35,7 @@ class CreateSecAuditorCustomerRequestDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -56,7 +56,7 @@ class CreateSecAuditorCustomerRequestDto extends AbstractDto
      */
     public function getEmployees(): float
     {
-        return (float) $this->data['employees'];
+        return (float) $this->required('employees');
     }
 
     /**
@@ -77,7 +77,7 @@ class CreateSecAuditorCustomerRequestDto extends AbstractDto
      */
     public function getBillingCycle(): string
     {
-        return (string) $this->data['billingCycle'];
+        return (string) $this->required('billingCycle');
     }
 
     /**
@@ -98,7 +98,7 @@ class CreateSecAuditorCustomerRequestDto extends AbstractDto
      */
     public function getMode(): string
     {
-        return (string) $this->data['mode'];
+        return (string) $this->required('mode');
     }
 
     /**

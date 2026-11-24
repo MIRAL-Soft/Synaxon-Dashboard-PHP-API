@@ -13,7 +13,7 @@ class MailstoreConfigurationPlacementRuleDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -23,6 +23,6 @@ class MailstoreConfigurationPlacementRuleDto extends AbstractDto
      */
     public function getHost(): string
     {
-        return (string) $this->data['host'];
+        return (string) $this->required('host');
     }
 }

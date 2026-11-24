@@ -34,6 +34,7 @@ final class CustomersWriteTest extends TestCase
         self::assertSame('POST', $req['method']);
         self::assertSame('/v1/customers', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -46,13 +47,14 @@ final class CustomersWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new CustomersResource($http);
 
-        $resource->update('sample-id-1', ['field' => 'value']);
+        $resource->update('sample id/1', ['field' => 'value']);
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('PATCH', $req['method']);
-        self::assertSame('/v1/customers/sample-id-1', $req['path']);
+        self::assertSame('/v1/customers/sample%20id%2F1', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -65,12 +67,12 @@ final class CustomersWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new CustomersResource($http);
 
-        $resource->delete('sample-id-1');
+        $resource->delete('sample id/1');
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('DELETE', $req['method']);
-        self::assertSame('/v1/customers/sample-id-1', $req['path']);
+        self::assertSame('/v1/customers/sample%20id%2F1', $req['path']);
     }
 
     /**
@@ -83,13 +85,14 @@ final class CustomersWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new CustomersResource($http);
 
-        $resource->createCustomerReference('sample-id-1', ['field' => 'value']);
+        $resource->createCustomerReference('sample id/1', ['field' => 'value']);
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('POST', $req['method']);
-        self::assertSame('/v1/customers/sample-id-1/references', $req['path']);
+        self::assertSame('/v1/customers/sample%20id%2F1/references', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -102,12 +105,12 @@ final class CustomersWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new CustomersResource($http);
 
-        $resource->removeCustomerReference('sample-id-1', 'sample-refId-2');
+        $resource->removeCustomerReference('sample id/1', 'sample refId/2');
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('DELETE', $req['method']);
-        self::assertSame('/v1/customers/sample-id-1/references/sample-refId-2', $req['path']);
+        self::assertSame('/v1/customers/sample%20id%2F1/references/sample%20refId%2F2', $req['path']);
     }
 
     /**
@@ -120,13 +123,14 @@ final class CustomersWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new CustomersResource($http);
 
-        $resource->createCustomerReportSetting('sample-id-1', ['field' => 'value']);
+        $resource->createCustomerReportSetting('sample id/1', ['field' => 'value']);
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('POST', $req['method']);
-        self::assertSame('/v1/customers/sample-id-1/report', $req['path']);
+        self::assertSame('/v1/customers/sample%20id%2F1/report', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -139,13 +143,14 @@ final class CustomersWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new CustomersResource($http);
 
-        $resource->updateCustomerReportSetting('sample-id-1', ['field' => 'value']);
+        $resource->updateCustomerReportSetting('sample id/1', ['field' => 'value']);
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('PATCH', $req['method']);
-        self::assertSame('/v1/customers/sample-id-1/report', $req['path']);
+        self::assertSame('/v1/customers/sample%20id%2F1/report', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -158,11 +163,11 @@ final class CustomersWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new CustomersResource($http);
 
-        $resource->removeCustomerReportSetting('sample-id-1');
+        $resource->removeCustomerReportSetting('sample id/1');
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('DELETE', $req['method']);
-        self::assertSame('/v1/customers/sample-id-1/report', $req['path']);
+        self::assertSame('/v1/customers/sample%20id%2F1/report', $req['path']);
     }
 }

@@ -13,7 +13,7 @@ class CreateApiTokenRequestDto extends AbstractDto
      */
     public function getGrantType(): string
     {
-        return (string) $this->data['grant_type'];
+        return (string) $this->required('grant_type');
     }
 
     /**
@@ -34,7 +34,7 @@ class CreateApiTokenRequestDto extends AbstractDto
      */
     public function getScope(): string
     {
-        return (string) $this->data['scope'];
+        return (string) $this->required('scope');
     }
 
     /**

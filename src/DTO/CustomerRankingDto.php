@@ -31,6 +31,6 @@ class CustomerRankingDto extends AbstractDto
      */
     public function getTotalCustomers(): float
     {
-        return (float) $this->data['totalCustomers'];
+        return (float) $this->required('totalCustomers');
     }
 }

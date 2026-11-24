@@ -11,7 +11,7 @@ class OfflineDevicesDto extends AbstractDto
      */
     public function getWorkstation(): float
     {
-        return (float) $this->data['workstation'];
+        return (float) $this->required('workstation');
     }
 
     /**
@@ -19,6 +19,6 @@ class OfflineDevicesDto extends AbstractDto
      */
     public function getServer(): float
     {
-        return (float) $this->data['server'];
+        return (float) $this->required('server');
     }
 }

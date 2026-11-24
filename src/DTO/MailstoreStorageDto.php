@@ -13,7 +13,7 @@ class MailstoreStorageDto extends AbstractDto
      */
     public function getTotalArchives(): float
     {
-        return (float) $this->data['totalArchives'];
+        return (float) $this->required('totalArchives');
     }
 
     /**
@@ -23,7 +23,7 @@ class MailstoreStorageDto extends AbstractDto
      */
     public function getTotalMessages(): float
     {
-        return (float) $this->data['totalMessages'];
+        return (float) $this->required('totalMessages');
     }
 
     /**
@@ -33,7 +33,7 @@ class MailstoreStorageDto extends AbstractDto
      */
     public function getTotalSize(): float
     {
-        return (float) $this->data['totalSize'];
+        return (float) $this->required('totalSize');
     }
 
     /**
@@ -43,7 +43,7 @@ class MailstoreStorageDto extends AbstractDto
      */
     public function getTotalAdditionalUsers(): float
     {
-        return (float) $this->data['totalAdditionalUsers'];
+        return (float) $this->required('totalAdditionalUsers');
     }
 
     /**
@@ -53,6 +53,6 @@ class MailstoreStorageDto extends AbstractDto
      */
     public function getTotalAdditionalStorage(): float
     {
-        return (float) $this->data['totalAdditionalStorage'];
+        return (float) $this->required('totalAdditionalStorage');
     }
 }

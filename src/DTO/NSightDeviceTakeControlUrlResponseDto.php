@@ -13,6 +13,6 @@ class NSightDeviceTakeControlUrlResponseDto extends AbstractDto
      */
     public function getUrl(): string
     {
-        return (string) $this->data['url'];
+        return (string) $this->required('url');
     }
 }

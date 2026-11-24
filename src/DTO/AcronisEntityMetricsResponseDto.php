@@ -13,7 +13,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getLocalStorage(): float
     {
-        return (float) $this->data['local_storage'];
+        return (float) $this->required('local_storage');
     }
 
     /**
@@ -23,7 +23,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getWorkstations(): float
     {
-        return (float) $this->data['workstations'];
+        return (float) $this->required('workstations');
     }
 
     /**
@@ -33,7 +33,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getServers(): float
     {
-        return (float) $this->data['servers'];
+        return (float) $this->required('servers');
     }
 
     /**
@@ -43,7 +43,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getVms(): float
     {
-        return (float) $this->data['vms'];
+        return (float) $this->required('vms');
     }
 
     /**
@@ -53,7 +53,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getM365Seats(): float
     {
-        return (float) $this->data['m365_seats'];
+        return (float) $this->required('m365_seats');
     }
 
     /**
@@ -63,7 +63,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getM365Mailboxes(): float
     {
-        return (float) $this->data['m365_mailboxes'];
+        return (float) $this->required('m365_mailboxes');
     }
 
     /**
@@ -73,7 +73,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getM365Onedrive(): float
     {
-        return (float) $this->data['m365_onedrive'];
+        return (float) $this->required('m365_onedrive');
     }
 
     /**
@@ -83,7 +83,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getM365SharepointSites(): float
     {
-        return (float) $this->data['m365_sharepoint_sites'];
+        return (float) $this->required('m365_sharepoint_sites');
     }
 
     /**
@@ -93,7 +93,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getGoogleMail(): float
     {
-        return (float) $this->data['google_mail'];
+        return (float) $this->required('google_mail');
     }
 
     /**
@@ -103,7 +103,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getGoogleDrive(): float
     {
-        return (float) $this->data['google_drive'];
+        return (float) $this->required('google_drive');
     }
 
     /**
@@ -113,7 +113,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getGoogleTeamDrive(): float
     {
-        return (float) $this->data['google_team_drive'];
+        return (float) $this->required('google_team_drive');
     }
 
     /**
@@ -123,7 +123,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getM365Teams(): float
     {
-        return (float) $this->data['m365_teams'];
+        return (float) $this->required('m365_teams');
     }
 
     /**
@@ -133,7 +133,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getStorage(): float
     {
-        return (float) $this->data['storage'];
+        return (float) $this->required('storage');
     }
 
     /**
@@ -143,7 +143,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getClass1Storage(): float
     {
-        return (float) $this->data['class1_storage'];
+        return (float) $this->required('class1_storage');
     }
 
     /**
@@ -153,7 +153,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getClass2Storage(): float
     {
-        return (float) $this->data['class2_storage'];
+        return (float) $this->required('class2_storage');
     }
 
     /**
@@ -163,7 +163,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getServerStorage(): float
     {
-        return (float) $this->data['server_storage'];
+        return (float) $this->required('server_storage');
     }
 
     /**
@@ -173,7 +173,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getVmStorage(): float
     {
-        return (float) $this->data['vm_storage'];
+        return (float) $this->required('vm_storage');
     }
 
     /**
@@ -183,7 +183,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getWorkstationStorage(): float
     {
-        return (float) $this->data['workstation_storage'];
+        return (float) $this->required('workstation_storage');
     }
 
     /**
@@ -193,7 +193,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getMailboxStorage(): float
     {
-        return (float) $this->data['mailbox_storage'];
+        return (float) $this->required('mailbox_storage');
     }
 
     /**
@@ -203,7 +203,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getO365TeamsStorage(): float
     {
-        return (float) $this->data['o365_teams_storage'];
+        return (float) $this->required('o365_teams_storage');
     }
 
     /**
@@ -213,7 +213,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getOnedriveStorage(): float
     {
-        return (float) $this->data['onedrive_storage'];
+        return (float) $this->required('onedrive_storage');
     }
 
     /**
@@ -223,7 +223,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getNas(): float
     {
-        return (float) $this->data['nas'];
+        return (float) $this->required('nas');
     }
 
     /**
@@ -233,7 +233,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getNasStorage(): float
     {
-        return (float) $this->data['nas_storage'];
+        return (float) $this->required('nas_storage');
     }
 
     /**
@@ -243,7 +243,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getStorageTotal(): float
     {
-        return (float) $this->data['storage_total'];
+        return (float) $this->required('storage_total');
     }
 
     /**
@@ -253,7 +253,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getImmutableStorage(): float
     {
-        return (float) $this->data['immutable_storage'];
+        return (float) $this->required('immutable_storage');
     }
 
     /**
@@ -263,7 +263,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getC2cStorage(): float
     {
-        return (float) $this->data['c2c_storage'];
+        return (float) $this->required('c2c_storage');
     }
 
     /**
@@ -273,7 +273,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getPackAdvBackupWorkstations(): float
     {
-        return (float) $this->data['pack_adv_backup_workstations'];
+        return (float) $this->required('pack_adv_backup_workstations');
     }
 
     /**
@@ -283,7 +283,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getPackAdvBackupServers(): float
     {
-        return (float) $this->data['pack_adv_backup_servers'];
+        return (float) $this->required('pack_adv_backup_servers');
     }
 
     /**
@@ -293,7 +293,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getPackAdvBackupVms(): float
     {
-        return (float) $this->data['pack_adv_backup_vms'];
+        return (float) $this->required('pack_adv_backup_vms');
     }
 
     /**
@@ -303,7 +303,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getPackAdvManagement(): float
     {
-        return (float) $this->data['pack_adv_management'];
+        return (float) $this->required('pack_adv_management');
     }
 
     /**
@@ -313,7 +313,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getPackAdvSecurity(): float
     {
-        return (float) $this->data['pack_adv_security'];
+        return (float) $this->required('pack_adv_security');
     }
 
     /**
@@ -323,7 +323,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getPackAdvSecurityMdr(): float
     {
-        return (float) $this->data['pack_adv_security_mdr'];
+        return (float) $this->required('pack_adv_security_mdr');
     }
 
     /**
@@ -333,7 +333,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getPackAdvSecurityWithoutEdr(): float
     {
-        return (float) $this->data['pack_adv_security_without_edr'];
+        return (float) $this->required('pack_adv_security_without_edr');
     }
 
     /**
@@ -343,7 +343,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getPackAdvSecurityWithEdr(): float
     {
-        return (float) $this->data['pack_adv_security_with_edr'];
+        return (float) $this->required('pack_adv_security_with_edr');
     }
 
     /**
@@ -353,7 +353,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getPackAdvSecurityEdrWorkloads(): float
     {
-        return (float) $this->data['pack_adv_security_edr_workloads'];
+        return (float) $this->required('pack_adv_security_edr_workloads');
     }
 
     /**
@@ -363,7 +363,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getPackAdvSecurityEdrWorkloadsG1(): float
     {
-        return (float) $this->data['pack_adv_security_edr_workloads_g1'];
+        return (float) $this->required('pack_adv_security_edr_workloads_g1');
     }
 
     /**
@@ -373,7 +373,7 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getPackAdvSecurityM365Seats(): float
     {
-        return (float) $this->data['pack_adv_security_m365_seats'];
+        return (float) $this->required('pack_adv_security_m365_seats');
     }
 
     /**
@@ -383,6 +383,6 @@ class AcronisEntityMetricsResponseDto extends AbstractDto
      */
     public function getPackAdvEmailSecurity(): float
     {
-        return (float) $this->data['pack_adv_email_security'];
+        return (float) $this->required('pack_adv_email_security');
     }
 }

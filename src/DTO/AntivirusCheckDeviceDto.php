@@ -11,7 +11,7 @@ class AntivirusCheckDeviceDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['_id'];
+        return (string) $this->required('_id');
     }
 
     /**
@@ -19,7 +19,7 @@ class AntivirusCheckDeviceDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -27,6 +27,6 @@ class AntivirusCheckDeviceDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 }

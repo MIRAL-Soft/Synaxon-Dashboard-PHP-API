@@ -13,7 +13,7 @@ class LywandScoreDto extends AbstractDto
      */
     public function getTotalTargets(): float
     {
-        return (float) $this->data['totalTargets'];
+        return (float) $this->required('totalTargets');
     }
 
     /**
@@ -23,7 +23,7 @@ class LywandScoreDto extends AbstractDto
      */
     public function getTargetsWithVulnerabilities(): float
     {
-        return (float) $this->data['targetsWithVulnerabilities'];
+        return (float) $this->required('targetsWithVulnerabilities');
     }
 
     /**
@@ -33,6 +33,6 @@ class LywandScoreDto extends AbstractDto
      */
     public function getScore(): float
     {
-        return (float) $this->data['score'];
+        return (float) $this->required('score');
     }
 }

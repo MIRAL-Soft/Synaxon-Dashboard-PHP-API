@@ -13,7 +13,7 @@ class MailstoreProfileResultResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class MailstoreProfileResultResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class MailstoreProfileResultResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class MailstoreProfileResultResponseDto extends AbstractDto
      */
     public function getStartedAt(): string
     {
-        return (string) $this->data['startedAt'];
+        return (string) $this->required('startedAt');
     }
 
     /**
@@ -64,7 +64,7 @@ class MailstoreProfileResultResponseDto extends AbstractDto
      */
     public function getStatus(): string
     {
-        return (string) $this->data['status'];
+        return (string) $this->required('status');
     }
 
     /**
@@ -74,6 +74,6 @@ class MailstoreProfileResultResponseDto extends AbstractDto
      */
     public function getMessagesArchived(): float
     {
-        return (float) $this->data['messagesArchived'];
+        return (float) $this->required('messagesArchived');
     }
 }

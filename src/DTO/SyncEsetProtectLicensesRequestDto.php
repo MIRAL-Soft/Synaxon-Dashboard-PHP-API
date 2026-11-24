@@ -13,7 +13,7 @@ class SyncEsetProtectLicensesRequestDto extends AbstractDto
      */
     public function getRegion(): string
     {
-        return (string) $this->data['region'];
+        return (string) $this->required('region');
     }
 
     /**

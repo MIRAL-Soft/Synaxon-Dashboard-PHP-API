@@ -13,7 +13,7 @@ class MetricStatisticsDto extends AbstractDto
      */
     public function getMin(): float
     {
-        return (float) $this->data['min'];
+        return (float) $this->required('min');
     }
 
     /**
@@ -23,7 +23,7 @@ class MetricStatisticsDto extends AbstractDto
      */
     public function getAvg(): float
     {
-        return (float) $this->data['avg'];
+        return (float) $this->required('avg');
     }
 
     /**
@@ -33,6 +33,6 @@ class MetricStatisticsDto extends AbstractDto
      */
     public function getMax(): float
     {
-        return (float) $this->data['max'];
+        return (float) $this->required('max');
     }
 }

@@ -10,11 +10,15 @@ use PHPUnit\Framework\TestCase;
 
 final class PaginationIteratorTest extends TestCase
 {
-    public function testWalksAllPages(): void
+    /**
+     * Page numbers start at 0: measured against the live SYNAXON API on
+     * 2026-11-24, where page=0 returns the first items.
+     */
+    public function testWalksAllPagesStartingAtZero(): void
     {
         $pages = [
-            1 => [1, 2, 3, 4, 5],
-            2 => [6, 7, 8],
+            0 => [1, 2, 3, 4, 5],
+            1 => [6, 7, 8],
         ];
         $iter = new PaginationIterator(
             fetch: fn (int $p, int $l): array => $pages[$p] ?? [],
@@ -27,7 +31,7 @@ final class PaginationIteratorTest extends TestCase
     public function testStopsOnEmptyBatch(): void
     {
         $iter = new PaginationIterator(
-            fetch: fn (int $p, int $l): array => $p === 1 ? [1, 2, 3] : [],
+            fetch: fn (int $p, int $l): array => $p === 0 ? [1, 2, 3] : [],
             limit: 3,
         );
 

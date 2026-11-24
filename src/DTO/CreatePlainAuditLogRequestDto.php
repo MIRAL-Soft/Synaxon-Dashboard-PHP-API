@@ -13,7 +13,7 @@ class CreatePlainAuditLogRequestDto extends AbstractDto
      */
     public function getEntityType(): string
     {
-        return (string) $this->data['entityType'];
+        return (string) $this->required('entityType');
     }
 
     /**
@@ -34,7 +34,7 @@ class CreatePlainAuditLogRequestDto extends AbstractDto
      */
     public function getEntityId(): string
     {
-        return (string) $this->data['entityId'];
+        return (string) $this->required('entityId');
     }
 
     /**
@@ -55,7 +55,7 @@ class CreatePlainAuditLogRequestDto extends AbstractDto
      */
     public function getAction(): string
     {
-        return (string) $this->data['action'];
+        return (string) $this->required('action');
     }
 
     /**

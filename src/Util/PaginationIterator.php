@@ -12,7 +12,9 @@ use IteratorAggregate;
  * Simple cursor-style iterator that walks a paginated endpoint.
  *
  * The iterator invokes the supplied fetch closure with an increasing page
- * number until the closure returns an empty list or a short page (fewer
+ * number, starting at 0 because the SYNAXON API counts pages from 0
+ * (measured against the live API on 2026-11-24: page=0 returns the first
+ * items; starting at 1 would skip them), until the closure returns an empty list or a short page (fewer
  * items than the configured limit, which signals the last page).
  *
  * A hard upper bound on the number of pages visited (MAX_PAGES) protects
@@ -34,7 +36,7 @@ final class PaginationIterator implements IteratorAggregate
     public function __construct(
         private readonly mixed $fetch,
         private readonly int $limit = 100,
-        private readonly int $startPage = 1,
+        private readonly int $startPage = 0,
     ) {
         if (!is_callable($this->fetch)) {
             throw new InvalidArgumentException('$fetch must be callable');

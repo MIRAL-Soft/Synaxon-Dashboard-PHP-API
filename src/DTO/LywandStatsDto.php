@@ -13,7 +13,7 @@ class LywandStatsDto extends AbstractDto
      */
     public function getScore(): float
     {
-        return (float) $this->data['score'];
+        return (float) $this->required('score');
     }
 
     /**
@@ -23,7 +23,7 @@ class LywandStatsDto extends AbstractDto
      */
     public function getVulnerabilitiesHigh(): float
     {
-        return (float) $this->data['vulnerabilitiesHigh'];
+        return (float) $this->required('vulnerabilitiesHigh');
     }
 
     /**
@@ -33,7 +33,7 @@ class LywandStatsDto extends AbstractDto
      */
     public function getVulnerabilitiesMedium(): float
     {
-        return (float) $this->data['vulnerabilitiesMedium'];
+        return (float) $this->required('vulnerabilitiesMedium');
     }
 
     /**
@@ -43,7 +43,7 @@ class LywandStatsDto extends AbstractDto
      */
     public function getVulnerabilitiesLow(): float
     {
-        return (float) $this->data['vulnerabilitiesLow'];
+        return (float) $this->required('vulnerabilitiesLow');
     }
 
     /**
@@ -53,7 +53,7 @@ class LywandStatsDto extends AbstractDto
      */
     public function getInScopeEndpoints(): float
     {
-        return (float) $this->data['inScopeEndpoints'];
+        return (float) $this->required('inScopeEndpoints');
     }
 
     /**
@@ -63,7 +63,7 @@ class LywandStatsDto extends AbstractDto
      */
     public function getInScopeDomains(): float
     {
-        return (float) $this->data['inScopeDomains'];
+        return (float) $this->required('inScopeDomains');
     }
 
     /**
@@ -73,7 +73,7 @@ class LywandStatsDto extends AbstractDto
      */
     public function getInScopeEmails(): float
     {
-        return (float) $this->data['inScopeEmails'];
+        return (float) $this->required('inScopeEmails');
     }
 
     /**
@@ -83,7 +83,7 @@ class LywandStatsDto extends AbstractDto
      */
     public function getInScopeIpAddresses(): float
     {
-        return (float) $this->data['inScopeIpAddresses'];
+        return (float) $this->required('inScopeIpAddresses');
     }
 
     /**
@@ -93,7 +93,7 @@ class LywandStatsDto extends AbstractDto
      */
     public function getOutOfScopeEndpoints(): float
     {
-        return (float) $this->data['outOfScopeEndpoints'];
+        return (float) $this->required('outOfScopeEndpoints');
     }
 
     /**
@@ -103,7 +103,7 @@ class LywandStatsDto extends AbstractDto
      */
     public function getOutOfScopeDomains(): float
     {
-        return (float) $this->data['outOfScopeDomains'];
+        return (float) $this->required('outOfScopeDomains');
     }
 
     /**
@@ -113,7 +113,7 @@ class LywandStatsDto extends AbstractDto
      */
     public function getOutOfScopeEmails(): float
     {
-        return (float) $this->data['outOfScopeEmails'];
+        return (float) $this->required('outOfScopeEmails');
     }
 
     /**
@@ -123,6 +123,6 @@ class LywandStatsDto extends AbstractDto
      */
     public function getOutOfScopeIpAddresses(): float
     {
-        return (float) $this->data['outOfScopeIpAddresses'];
+        return (float) $this->required('outOfScopeIpAddresses');
     }
 }

@@ -13,7 +13,7 @@ class SystemTaskResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class SystemTaskResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class SystemTaskResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class SystemTaskResponseDto extends AbstractDto
      */
     public function getLabel(): string
     {
-        return (string) $this->data['label'];
+        return (string) $this->required('label');
     }
 
     /**
@@ -53,7 +53,7 @@ class SystemTaskResponseDto extends AbstractDto
      */
     public function getStatus(): string
     {
-        return (string) $this->data['status'];
+        return (string) $this->required('status');
     }
 
     /**

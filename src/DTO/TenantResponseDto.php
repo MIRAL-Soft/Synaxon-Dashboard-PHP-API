@@ -13,7 +13,7 @@ class TenantResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class TenantResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class TenantResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class TenantResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -53,7 +53,7 @@ class TenantResponseDto extends AbstractDto
      */
     public function getDisplayName(): string
     {
-        return (string) $this->data['displayName'];
+        return (string) $this->required('displayName');
     }
 
     /**
@@ -63,7 +63,7 @@ class TenantResponseDto extends AbstractDto
      */
     public function getPartnerNumber(): string
     {
-        return (string) $this->data['partnerNumber'];
+        return (string) $this->required('partnerNumber');
     }
 
     /**
@@ -73,7 +73,7 @@ class TenantResponseDto extends AbstractDto
      */
     public function getAlertEmail(): string
     {
-        return (string) $this->data['alertEmail'];
+        return (string) $this->required('alertEmail');
     }
 
     /**
@@ -83,7 +83,7 @@ class TenantResponseDto extends AbstractDto
      */
     public function getSupportEmail(): string
     {
-        return (string) $this->data['supportEmail'];
+        return (string) $this->required('supportEmail');
     }
 
     /**
@@ -93,7 +93,7 @@ class TenantResponseDto extends AbstractDto
      */
     public function getSupportPhone(): string
     {
-        return (string) $this->data['supportPhone'];
+        return (string) $this->required('supportPhone');
     }
 
     /**
@@ -103,7 +103,7 @@ class TenantResponseDto extends AbstractDto
      */
     public function getSupportUrl(): string
     {
-        return (string) $this->data['supportUrl'];
+        return (string) $this->required('supportUrl');
     }
 
     /**
@@ -113,6 +113,6 @@ class TenantResponseDto extends AbstractDto
      */
     public function getRegion(): string
     {
-        return (string) $this->data['region'];
+        return (string) $this->required('region');
     }
 }

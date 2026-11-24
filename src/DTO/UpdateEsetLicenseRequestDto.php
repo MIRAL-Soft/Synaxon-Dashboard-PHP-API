@@ -13,7 +13,7 @@ class UpdateEsetLicenseRequestDto extends AbstractDto
      */
     public function getQuantity(): float
     {
-        return (float) $this->data['quantity'];
+        return (float) $this->required('quantity');
     }
 
     /**

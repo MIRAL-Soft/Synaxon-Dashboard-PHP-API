@@ -13,7 +13,7 @@ class ScheduleResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class ScheduleResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class ScheduleResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class ScheduleResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -64,7 +64,7 @@ class ScheduleResponseDto extends AbstractDto
      */
     public function getDisabled(): bool
     {
-        return (bool) $this->data['disabled'];
+        return (bool) $this->required('disabled');
     }
 
     /**
@@ -74,6 +74,6 @@ class ScheduleResponseDto extends AbstractDto
      */
     public function getCronExpression(): string
     {
-        return (string) $this->data['cronExpression'];
+        return (string) $this->required('cronExpression');
     }
 }

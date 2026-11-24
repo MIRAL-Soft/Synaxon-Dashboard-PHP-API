@@ -209,28 +209,28 @@ function renderAccessorBody(string $propName, array $schema, bool $required, str
     }
 
     if ($phpType === 'string') {
-        return "        return (string) \$this->data[{$key}];\n";
+        return "        return (string) \$this->required({$key});\n";
     }
     if ($phpType === '?string') {
         return "        \$v = \$this->data[{$key}] ?? null;\n"
              . "        return \$v === null ? null : (string) \$v;\n";
     }
     if ($phpType === 'int') {
-        return "        return (int) \$this->data[{$key}];\n";
+        return "        return (int) \$this->required({$key});\n";
     }
     if ($phpType === '?int') {
         return "        \$v = \$this->data[{$key}] ?? null;\n"
              . "        return \$v === null ? null : (int) \$v;\n";
     }
     if ($phpType === 'float') {
-        return "        return (float) \$this->data[{$key}];\n";
+        return "        return (float) \$this->required({$key});\n";
     }
     if ($phpType === '?float') {
         return "        \$v = \$this->data[{$key}] ?? null;\n"
              . "        return \$v === null ? null : (float) \$v;\n";
     }
     if ($phpType === 'bool') {
-        return "        return (bool) \$this->data[{$key}];\n";
+        return "        return (bool) \$this->required({$key});\n";
     }
     if ($phpType === '?bool') {
         return "        \$v = \$this->data[{$key}] ?? null;\n"

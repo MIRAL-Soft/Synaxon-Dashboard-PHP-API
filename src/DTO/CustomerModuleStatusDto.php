@@ -13,7 +13,7 @@ class CustomerModuleStatusDto extends AbstractDto
      */
     public function getModule(): string
     {
-        return (string) $this->data['module'];
+        return (string) $this->required('module');
     }
 
     /**
@@ -23,7 +23,7 @@ class CustomerModuleStatusDto extends AbstractDto
      */
     public function getTotal(): float
     {
-        return (float) $this->data['total'];
+        return (float) $this->required('total');
     }
 
     /**
@@ -33,7 +33,7 @@ class CustomerModuleStatusDto extends AbstractDto
      */
     public function getErrors(): float
     {
-        return (float) $this->data['errors'];
+        return (float) $this->required('errors');
     }
 
     /**
@@ -43,6 +43,6 @@ class CustomerModuleStatusDto extends AbstractDto
      */
     public function getScore(): float
     {
-        return (float) $this->data['score'];
+        return (float) $this->required('score');
     }
 }

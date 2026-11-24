@@ -35,7 +35,7 @@ class CreateAcronisCustomerRequestDto extends AbstractDto
      */
     public function getEmail(): string
     {
-        return (string) $this->data['email'];
+        return (string) $this->required('email');
     }
 
     /**
@@ -56,7 +56,7 @@ class CreateAcronisCustomerRequestDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -77,7 +77,7 @@ class CreateAcronisCustomerRequestDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 
     /**
@@ -98,7 +98,7 @@ class CreateAcronisCustomerRequestDto extends AbstractDto
      */
     public function getStorage(): string
     {
-        return (string) $this->data['storage'];
+        return (string) $this->required('storage');
     }
 
     /**

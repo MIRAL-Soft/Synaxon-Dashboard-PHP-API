@@ -13,7 +13,7 @@ class AuthResponseDto extends AbstractDto
      */
     public function getTokenId(): string
     {
-        return (string) $this->data['tokenId'];
+        return (string) $this->required('tokenId');
     }
 
     /**
@@ -23,7 +23,7 @@ class AuthResponseDto extends AbstractDto
      */
     public function getUserId(): string
     {
-        return (string) $this->data['userId'];
+        return (string) $this->required('userId');
     }
 
     /**
@@ -33,7 +33,7 @@ class AuthResponseDto extends AbstractDto
      */
     public function getUserRole(): string
     {
-        return (string) $this->data['userRole'];
+        return (string) $this->required('userRole');
     }
 
     /**
@@ -43,7 +43,7 @@ class AuthResponseDto extends AbstractDto
      */
     public function getAccessToken(): string
     {
-        return (string) $this->data['accessToken'];
+        return (string) $this->required('accessToken');
     }
 
     /**
@@ -53,7 +53,7 @@ class AuthResponseDto extends AbstractDto
      */
     public function getRefreshToken(): string
     {
-        return (string) $this->data['refreshToken'];
+        return (string) $this->required('refreshToken');
     }
 
     /**
@@ -63,7 +63,7 @@ class AuthResponseDto extends AbstractDto
      */
     public function getExpiresAt(): string
     {
-        return (string) $this->data['expiresAt'];
+        return (string) $this->required('expiresAt');
     }
 
     /**
@@ -73,7 +73,7 @@ class AuthResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -83,7 +83,7 @@ class AuthResponseDto extends AbstractDto
      */
     public function getPartnerNo(): string
     {
-        return (string) $this->data['partnerNo'];
+        return (string) $this->required('partnerNo');
     }
 
     /**

@@ -13,7 +13,7 @@ class CreateJournalingMailboxRequestDto extends AbstractDto
      */
     public function getInstanceId(): string
     {
-        return (string) $this->data['instanceId'];
+        return (string) $this->required('instanceId');
     }
 
     /**

@@ -100,10 +100,20 @@ if ($before === []) {
     exit(1);
 }
 
-// R-20: plant a change in the first generated file. The regenerated output
-// must then differ from the snapshot in exactly that file.
+// Self-test: plant a change in one generated file on disk, as a hand edit
+// would. The run below must report it, which proves both that the
+// generators rewrite that file and that the comparison sees a difference.
+// Regenerating restores the file; if a generator fails, it is restored here.
 $planted = array_key_first($before);
-$before[$planted] .= "\n// planted by bin/check-generated.php\n";
+$plantedPath = $root . '/' . $planted;
+$plantedOriginal = (string) file_get_contents($plantedPath);
+file_put_contents($plantedPath, $plantedOriginal . "\n// planted by bin/check-generated.php\n");
+$before[$planted] = str_replace("\r\n", "\n", (string) file_get_contents($plantedPath));
+register_shutdown_function(static function () use ($plantedPath, $plantedOriginal): void {
+    if (str_contains((string) file_get_contents($plantedPath), '// planted by bin/check-generated.php')) {
+        file_put_contents($plantedPath, $plantedOriginal);
+    }
+});
 
 // Mark every generated file as not yet written, so a file no generator
 // touches can be told apart from one that was rewritten unchanged.
@@ -127,8 +137,8 @@ clearstatcache();
 $after = snapshot($root, $generatedGlobs, $handWritten);
 $changed = changedFiles($before, $after);
 
-if (!in_array($planted, $changed, true)) {
-    fwrite(STDERR, "The detector is dead: a planted change in {$planted} was not reported.\n");
+if (!in_array($planted, $changed, true) || str_contains($after[$planted] ?? '', 'planted by bin/check-generated.php')) {
+    fwrite(STDERR, "The detector is dead: a planted change in {$planted} was not reported or not overwritten.\n");
     fwrite(STDERR, "Nothing this check says can be trusted, including a pass.\n");
     exit(1);
 }

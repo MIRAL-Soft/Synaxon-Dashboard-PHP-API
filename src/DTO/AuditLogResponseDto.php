@@ -13,7 +13,7 @@ class AuditLogResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class AuditLogResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class AuditLogResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class AuditLogResponseDto extends AbstractDto
      */
     public function getEntityType(): string
     {
-        return (string) $this->data['entityType'];
+        return (string) $this->required('entityType');
     }
 
     /**
@@ -53,7 +53,7 @@ class AuditLogResponseDto extends AbstractDto
      */
     public function getEntityId(): string
     {
-        return (string) $this->data['entityId'];
+        return (string) $this->required('entityId');
     }
 
     /**
@@ -63,7 +63,7 @@ class AuditLogResponseDto extends AbstractDto
      */
     public function getAction(): string
     {
-        return (string) $this->data['action'];
+        return (string) $this->required('action');
     }
 
     /**
@@ -94,7 +94,7 @@ class AuditLogResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -104,7 +104,7 @@ class AuditLogResponseDto extends AbstractDto
      */
     public function getUserId(): string
     {
-        return (string) $this->data['userId'];
+        return (string) $this->required('userId');
     }
 
     /**
@@ -114,7 +114,7 @@ class AuditLogResponseDto extends AbstractDto
      */
     public function getTenantName(): string
     {
-        return (string) $this->data['tenantName'];
+        return (string) $this->required('tenantName');
     }
 
     /**
@@ -124,6 +124,6 @@ class AuditLogResponseDto extends AbstractDto
      */
     public function getUserName(): string
     {
-        return (string) $this->data['userName'];
+        return (string) $this->required('userName');
     }
 }

@@ -13,7 +13,7 @@ class CreateScheduleRequestDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -56,7 +56,7 @@ class CreateScheduleRequestDto extends AbstractDto
      */
     public function getDisabled(): bool
     {
-        return (bool) $this->data['disabled'];
+        return (bool) $this->required('disabled');
     }
 
     /**
@@ -77,7 +77,7 @@ class CreateScheduleRequestDto extends AbstractDto
      */
     public function getCronExpression(): string
     {
-        return (string) $this->data['cronExpression'];
+        return (string) $this->required('cronExpression');
     }
 
     /**

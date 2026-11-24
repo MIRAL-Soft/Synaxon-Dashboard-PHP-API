@@ -13,7 +13,7 @@ class MetricValueDto extends AbstractDto
      */
     public function getCurr(): float
     {
-        return (float) $this->data['curr'];
+        return (float) $this->required('curr');
     }
 
     /**
@@ -23,6 +23,6 @@ class MetricValueDto extends AbstractDto
      */
     public function getPrev(): float
     {
-        return (float) $this->data['prev'];
+        return (float) $this->required('prev');
     }
 }

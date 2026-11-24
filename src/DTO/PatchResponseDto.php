@@ -13,7 +13,7 @@ class PatchResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class PatchResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class PatchResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class PatchResponseDto extends AbstractDto
      */
     public function getPatchId(): float
     {
-        return (float) $this->data['patchId'];
+        return (float) $this->required('patchId');
     }
 
     /**
@@ -53,7 +53,7 @@ class PatchResponseDto extends AbstractDto
      */
     public function getStatus(): string
     {
-        return (string) $this->data['status'];
+        return (string) $this->required('status');
     }
 
     /**
@@ -96,7 +96,7 @@ class PatchResponseDto extends AbstractDto
      */
     public function getPatchTitle(): string
     {
-        return (string) $this->data['patchTitle'];
+        return (string) $this->required('patchTitle');
     }
 
     /**
@@ -106,7 +106,7 @@ class PatchResponseDto extends AbstractDto
      */
     public function getProduct(): string
     {
-        return (string) $this->data['product'];
+        return (string) $this->required('product');
     }
 
     /**
@@ -149,6 +149,6 @@ class PatchResponseDto extends AbstractDto
      */
     public function getDeviceType(): string
     {
-        return (string) $this->data['deviceType'];
+        return (string) $this->required('deviceType');
     }
 }

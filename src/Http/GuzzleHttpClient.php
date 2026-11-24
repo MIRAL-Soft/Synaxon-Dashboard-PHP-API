@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace miralsoft\synaxon\api\Http;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Query;
 use InvalidArgumentException;
 use JsonException;
 use miralsoft\synaxon\api\Config\SynaxonConfig;
@@ -19,6 +22,7 @@ use miralsoft\synaxon\api\Exception\SynaxonApiException;
 use miralsoft\synaxon\api\Exception\TransportException;
 use miralsoft\synaxon\api\Exception\ValidationException;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Throwable;
@@ -48,6 +52,13 @@ final class GuzzleHttpClient implements HttpClientInterface
      * library-managed defaults.
      */
     private const RESERVED_HEADERS = ['authorization', 'host'];
+
+    /** Request body encodings, chosen per operation from its declared content type. */
+    public const BODY_JSON = 'json';
+
+    public const BODY_FORM = 'form';
+
+    public const BODY_MULTIPART = 'multipart';
 
     /**
      * Methods that may be repeated after a 5xx or a connection error without
@@ -113,11 +124,11 @@ final class GuzzleHttpClient implements HttpClientInterface
         $requestOptions = ['headers' => $headers];
 
         if (isset($options['query']) && is_array($options['query']) && $options['query'] !== []) {
-            $requestOptions['query'] = $options['query'];
+            $requestOptions['query'] = self::buildQuery($options['query']);
         }
 
         if (array_key_exists('body', $options) && $options['body'] !== null) {
-            $requestOptions['json'] = $options['body'];
+            $requestOptions += self::bodyOptions($options['body'], $options['bodyFormat'] ?? self::BODY_JSON);
         }
 
         $uri = ltrim($path, '/');
@@ -147,6 +158,19 @@ final class GuzzleHttpClient implements HttpClientInterface
                     0,
                     $e
                 );
+                // Guzzle's interface declares only GuzzleException, but PSR-7
+                // throws this while building the request, so the catch is not
+                // dead (see testInvalidHeaderValueDoesNotLeakIntoException).
+                // @phpstan-ignore catch.neverThrown
+            } catch (\InvalidArgumentException $e) {
+                // PSR-7 rejects an invalid header or URI with a message that
+                // quotes the offending value, which can be the Authorization
+                // header. Neither the message nor the exception is passed on.
+                throw new TransportException(sprintf(
+                    'HTTP request could not be built for %s %s: an option, header or URI value is invalid',
+                    $method,
+                    $uri
+                ));
             }
 
             $status = $response->getStatusCode();
@@ -163,6 +187,90 @@ final class GuzzleHttpClient implements HttpClientInterface
 
             throw $this->mapError($response, $method, $uri);
         }
+    }
+
+    /**
+     * Encode query parameters the way the OpenAPI document declares them:
+     * form style with explode, so a list becomes repeated keys
+     * (`status=a&status=b`), and booleans become `true` / `false` rather than
+     * PHP's `1` / `0`, which a server may read as truthy strings.
+     *
+     * @param array<array-key, mixed> $query
+     */
+    private static function buildQuery(array $query): string
+    {
+        $normalised = [];
+        foreach ($query as $key => $value) {
+            if ($value === null) {
+                continue;
+            }
+            $normalised[(string) $key] = is_array($value)
+                ? array_values(array_map(self::queryScalar(...), $value))
+                : self::queryScalar($value);
+        }
+
+        return Query::build($normalised, PHP_QUERY_RFC3986);
+    }
+
+    private static function queryScalar(mixed $value): string
+    {
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        }
+        if (is_scalar($value) || $value instanceof \Stringable) {
+            return (string) $value;
+        }
+
+        throw new InvalidArgumentException(sprintf(
+            'Query values must be scalars or lists of scalars, %s given',
+            get_debug_type($value)
+        ));
+    }
+
+    /**
+     * Guzzle request options for a body in the format the operation declares.
+     *
+     * @param array<array-key, mixed> $body
+     *
+     * @return array<string, mixed>
+     */
+    private static function bodyOptions(array $body, string $format): array
+    {
+        return match ($format) {
+            // An empty PHP array would encode as `[]`; every JSON request body
+            // in the API is an object, so it is sent as `{}`.
+            self::BODY_JSON => ['json' => $body === [] ? new \stdClass() : $body],
+            self::BODY_FORM => ['form_params' => $body],
+            self::BODY_MULTIPART => ['multipart' => self::multipartParts($body)],
+            default => throw new InvalidArgumentException(sprintf('Unknown bodyFormat "%s"', $format)),
+        };
+    }
+
+    /**
+     * Each field becomes one part. A field can be a scalar, a stream or
+     * resource (a file), or an array with `contents` and optional
+     * `filename` / `headers`, as Guzzle's multipart option expects.
+     *
+     * @param array<array-key, mixed> $body
+     *
+     * @return list<array<string, mixed>>
+     */
+    private static function multipartParts(array $body): array
+    {
+        $parts = [];
+        foreach ($body as $name => $value) {
+            if (is_array($value) && array_key_exists('contents', $value)) {
+                $parts[] = ['name' => (string) $name] + $value;
+                continue;
+            }
+            if (is_resource($value) || $value instanceof StreamInterface) {
+                $parts[] = ['name' => (string) $name, 'contents' => $value];
+                continue;
+            }
+            $parts[] = ['name' => (string) $name, 'contents' => self::queryScalar($value)];
+        }
+
+        return $parts;
     }
 
     /**
@@ -253,9 +361,9 @@ final class GuzzleHttpClient implements HttpClientInterface
     private function sleepBackoff(int $attempt, ?ResponseInterface $response = null): void
     {
         if ($response !== null && $response->getStatusCode() === 429) {
-            $retryAfter = $response->getHeaderLine('Retry-After');
-            if ($retryAfter !== '' && is_numeric($retryAfter)) {
-                $seconds = max(0.0, min((float) $retryAfter, (float) self::MAX_BACKOFF_SECONDS));
+            $retryAfter = self::parseRetryAfter($response);
+            if ($retryAfter !== null) {
+                $seconds = (float) min($retryAfter, self::MAX_BACKOFF_SECONDS);
                 usleep((int) ($seconds * 1_000_000));
 
                 return;
@@ -310,7 +418,7 @@ final class GuzzleHttpClient implements HttpClientInterface
             $status === 401 || $status === 403 => new AuthenticationException($message, $status, null, $context),
             $status === 404 => new NotFoundException($message, $status, null, $context),
             $status === 429 => new RateLimitException($message, $status, null, array_merge($context, [
-                'retry_after' => (int) $response->getHeaderLine('Retry-After'),
+                'retry_after' => self::parseRetryAfter($response),
             ])),
             $status === 400 || $status === 422 => new ValidationException($message, $status, null, array_merge($context, [
                 'errors' => $decoded['errors'] ?? $decoded['error'] ?? [],
@@ -318,6 +426,28 @@ final class GuzzleHttpClient implements HttpClientInterface
             $status >= 500 && $status < 600 => new ServerException($message, $status, null, $context),
             default => new SynaxonApiException($message, $status, null, $context),
         };
+    }
+
+    /**
+     * Retry-After as whole seconds from now (RFC 9110, section 10.2.3): either
+     * delay-seconds or an HTTP-date. Null when the header is absent or
+     * unreadable, so a caller can tell "no advice" apart from "retry now".
+     */
+    private static function parseRetryAfter(ResponseInterface $response): ?int
+    {
+        $value = trim($response->getHeaderLine('Retry-After'));
+        if ($value === '') {
+            return null;
+        }
+        if (ctype_digit($value)) {
+            return (int) $value;
+        }
+        $date = DateTimeImmutable::createFromFormat(DATE_RFC7231, $value, new DateTimeZone('GMT'));
+        if ($date === false) {
+            return null;
+        }
+
+        return max(0, $date->getTimestamp() - time());
     }
 
     private static function truncateBody(string $body): string

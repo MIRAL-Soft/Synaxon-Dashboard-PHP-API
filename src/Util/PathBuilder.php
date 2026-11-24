@@ -39,6 +39,18 @@ final class PathBuilder
                         $template
                     ));
                 }
+                // rawurlencode() leaves "." untouched, and URI resolution
+                // removes dot segments (RFC 3986, section 5.2.4). An id of
+                // ".." would silently retarget the request to the parent
+                // path, for example a DELETE on a sub-resource becoming a
+                // DELETE on the collection. Such a value is never a valid id.
+                if ($value === '.' || $value === '..') {
+                    throw new InvalidArgumentException(sprintf(
+                        'Path parameter "%s" must not be a dot segment (template "%s")',
+                        $name,
+                        $template
+                    ));
+                }
 
                 return rawurlencode($value);
             },

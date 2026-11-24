@@ -13,7 +13,7 @@ class CustomerResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class CustomerResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class CustomerResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class CustomerResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -53,7 +53,7 @@ class CustomerResponseDto extends AbstractDto
      */
     public function getCustomerNumber(): string
     {
-        return (string) $this->data['customerNumber'];
+        return (string) $this->required('customerNumber');
     }
 
     /**
@@ -63,7 +63,7 @@ class CustomerResponseDto extends AbstractDto
      */
     public function getCorporateCustomer(): bool
     {
-        return (bool) $this->data['corporateCustomer'];
+        return (bool) $this->required('corporateCustomer');
     }
 
     /**
@@ -84,7 +84,7 @@ class CustomerResponseDto extends AbstractDto
      */
     public function getSalutation(): string
     {
-        return (string) $this->data['salutation'];
+        return (string) $this->required('salutation');
     }
 
     /**
@@ -94,7 +94,7 @@ class CustomerResponseDto extends AbstractDto
      */
     public function getStreet(): string
     {
-        return (string) $this->data['street'];
+        return (string) $this->required('street');
     }
 
     /**
@@ -104,7 +104,7 @@ class CustomerResponseDto extends AbstractDto
      */
     public function getPostalCode(): string
     {
-        return (string) $this->data['postalCode'];
+        return (string) $this->required('postalCode');
     }
 
     /**
@@ -114,7 +114,7 @@ class CustomerResponseDto extends AbstractDto
      */
     public function getCity(): string
     {
-        return (string) $this->data['city'];
+        return (string) $this->required('city');
     }
 
     /**
@@ -124,7 +124,7 @@ class CustomerResponseDto extends AbstractDto
      */
     public function getCountry(): string
     {
-        return (string) $this->data['country'];
+        return (string) $this->required('country');
     }
 
     /**

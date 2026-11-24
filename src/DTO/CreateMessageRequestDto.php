@@ -13,7 +13,7 @@ class CreateMessageRequestDto extends AbstractDto
      */
     public function getMessageDe(): string
     {
-        return (string) $this->data['messageDe'];
+        return (string) $this->required('messageDe');
     }
 
     /**
@@ -56,7 +56,7 @@ class CreateMessageRequestDto extends AbstractDto
      */
     public function getSubject(): string
     {
-        return (string) $this->data['subject'];
+        return (string) $this->required('subject');
     }
 
     /**
@@ -141,7 +141,7 @@ class CreateMessageRequestDto extends AbstractDto
      */
     public function getTargetType(): string
     {
-        return (string) $this->data['targetType'];
+        return (string) $this->required('targetType');
     }
 
     /**

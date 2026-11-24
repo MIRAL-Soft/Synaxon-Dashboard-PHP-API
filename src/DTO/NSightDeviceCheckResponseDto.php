@@ -13,7 +13,7 @@ class NSightDeviceCheckResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class NSightDeviceCheckResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class NSightDeviceCheckResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class NSightDeviceCheckResponseDto extends AbstractDto
      */
     public function getDeviceId(): string
     {
-        return (string) $this->data['deviceId'];
+        return (string) $this->required('deviceId');
     }
 
     /**
@@ -75,7 +75,7 @@ class NSightDeviceCheckResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -85,7 +85,7 @@ class NSightDeviceCheckResponseDto extends AbstractDto
      */
     public function getSiteId(): string
     {
-        return (string) $this->data['siteId'];
+        return (string) $this->required('siteId');
     }
 
     /**
@@ -95,7 +95,7 @@ class NSightDeviceCheckResponseDto extends AbstractDto
      */
     public function getVendorId(): float
     {
-        return (float) $this->data['vendorId'];
+        return (float) $this->required('vendorId');
     }
 
     /**
@@ -116,7 +116,7 @@ class NSightDeviceCheckResponseDto extends AbstractDto
      */
     public function getStatus(): string
     {
-        return (string) $this->data['status'];
+        return (string) $this->required('status');
     }
 
     /**
@@ -137,7 +137,7 @@ class NSightDeviceCheckResponseDto extends AbstractDto
      */
     public function getCheckType(): float
     {
-        return (float) $this->data['checkType'];
+        return (float) $this->required('checkType');
     }
 
     /**
@@ -147,7 +147,7 @@ class NSightDeviceCheckResponseDto extends AbstractDto
      */
     public function getConsecutiveFails(): float
     {
-        return (float) $this->data['consecutiveFails'];
+        return (float) $this->required('consecutiveFails');
     }
 
     /**
@@ -157,7 +157,7 @@ class NSightDeviceCheckResponseDto extends AbstractDto
      */
     public function getDsc247(): float
     {
-        return (float) $this->data['dsc247'];
+        return (float) $this->required('dsc247');
     }
 
     /**

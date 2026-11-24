@@ -222,13 +222,21 @@ function renderMethod(string $name, array $op, string $semantic): string
     $description = (string) ($op['description'] ?? '');
 
     $pathParams = [];
+    $strayParams = [];
     $queryParams = [];
     foreach ((array) $op['parameters'] as $p) {
         if (!is_array($p)) {
             continue;
         }
         if (($p['in'] ?? '') === 'path') {
-            $pathParams[] = $p;
+            // A path parameter the template has no placeholder for would be
+            // accepted and silently dropped. Upstream declares one such case
+            // (scope on the EGIS callback); it is sent as a query parameter.
+            if (str_contains($path, '{' . (string) ($p['name'] ?? '') . '}')) {
+                $pathParams[] = $p;
+            } else {
+                $strayParams[] = $p;
+            }
         }
         if (($p['in'] ?? '') === 'query') {
             $queryParams[] = $p;
@@ -244,7 +252,25 @@ function renderMethod(string $name, array $op, string $semantic): string
         $phpdocParams[] = "@param string \${$pname} Path parameter from the upstream spec.";
     }
 
+    foreach ($strayParams as $p) {
+        $pname = (string) $p['name'];
+        $args[] = ['type' => 'string', 'name' => $pname, 'default' => null, 'source' => 'stray'];
+        $phpdocParams[] = "@param string \${$pname} Declared as a path parameter upstream, sent as a query parameter.";
+    }
+
     $hasBody = isset($op['requestBody']) && is_array($op['requestBody']);
+    $bodyFormat = 'json';
+    if ($hasBody) {
+        $contentTypes = array_keys((array) ($op['requestBody']['content'] ?? []));
+        if (in_array('multipart/form-data', $contentTypes, true)) {
+            $bodyFormat = 'multipart';
+        } elseif (in_array('application/x-www-form-urlencoded', $contentTypes, true)) {
+            $bodyFormat = 'form';
+        }
+    }
+    if ($hasBody && in_array(strtolower($method), ['get', 'delete'], true)) {
+        throw new RuntimeException("{$method} {$path} declares a request body; the HTTP helpers cannot send one.");
+    }
     if ($hasBody) {
         $args[] = ['type' => '?array', 'name' => 'body', 'default' => 'null', 'source' => 'body'];
         $phpdocParams[] = '@param array<string, mixed>|null $body Request body.';
@@ -277,18 +303,32 @@ function renderMethod(string $name, array $op, string $semantic): string
 
     $httpMethod = strtolower($method);
 
+    $strayQuery = [];
+    foreach ($strayParams as $p) {
+        $pname = (string) $p['name'];
+        $strayQuery[] = "'{$pname}' => \${$pname}";
+    }
+    $queryExpr = null;
+    if ($strayQuery !== []) {
+        $queryExpr = '[' . implode(', ', $strayQuery) . ']' . ($queryParams !== [] ? ' + $query' : '');
+    } elseif ($queryParams !== []) {
+        $queryExpr = '$query';
+    }
+
     $callArgs = [$callPath];
     if ($hasBody) {
         $callArgs[] = '$body';
-    } else {
-        if (in_array($httpMethod, ['post', 'put', 'patch'], true)) {
-            $callArgs[] = 'null';
-        }
+    } elseif (in_array($httpMethod, ['post', 'put', 'patch'], true)) {
+        $callArgs[] = 'null';
     }
-    if ($queryParams !== []) {
-        $callArgs[] = '$query';
-    } elseif ($hasBody || in_array($httpMethod, ['get', 'delete'], true)) {
-        // no query
+    if ($queryExpr !== null) {
+        $callArgs[] = $queryExpr;
+    }
+    if ($bodyFormat !== 'json') {
+        if ($queryExpr === null) {
+            $callArgs[] = '[]';
+        }
+        $callArgs[] = var_export($bodyFormat, true);
     }
 
     $invocation = '$this->http' . ucfirst($httpMethod) . '(' . implode(', ', $callArgs) . ')';

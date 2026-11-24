@@ -13,7 +13,7 @@ class MailstoreCustomerStatsItemDto extends AbstractDto
      */
     public function getCustomerId(): float
     {
-        return (float) $this->data['customerId'];
+        return (float) $this->required('customerId');
     }
 
     /**
@@ -23,7 +23,7 @@ class MailstoreCustomerStatsItemDto extends AbstractDto
      */
     public function getCustomerName(): string
     {
-        return (string) $this->data['customerName'];
+        return (string) $this->required('customerName');
     }
 
     /**
@@ -33,7 +33,7 @@ class MailstoreCustomerStatsItemDto extends AbstractDto
      */
     public function getTotal(): float
     {
-        return (float) $this->data['total'];
+        return (float) $this->required('total');
     }
 
     /**
@@ -43,6 +43,6 @@ class MailstoreCustomerStatsItemDto extends AbstractDto
      */
     public function getErrors(): float
     {
-        return (float) $this->data['errors'];
+        return (float) $this->required('errors');
     }
 }

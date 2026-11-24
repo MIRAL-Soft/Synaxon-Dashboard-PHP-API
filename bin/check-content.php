@@ -32,7 +32,7 @@ const EMDASH = "\u{2014}";
 /** Secret patterns, case-insensitive. */
 const SECRET_PATTERNS = [
     'private key block' => '/-----BEGIN [A-Z ]*PRIVATE KEY-----/',
-    'credential assignment' => '/(api[_-]?key|secret|token)["\' ]*[:=]["\' ]*[A-Za-z0-9_\-]{16,}/i',
+    'credential assignment' => '/(api[_-]?key|secret|token|passw(or)?d|_pass)["\' ]*[:=]["\' ]*[A-Za-z0-9_\-]{16,}/i',
 ];
 
 /**
@@ -59,6 +59,9 @@ $probes = [
     ['planted ' . EMDASH . ' here', ['em-dash']],
     [implode(' ', ['-----BEGIN', 'RSA', 'PRIVATE', 'KEY-----']), ['private key block']],
     [sprintf('%s_%s = "%s"', 'api', 'key', 'abcdefghij1234567890'), ['credential assignment']],
+    [sprintf('SYNAXON_BASIC_%s=%s', 'PASS', 'abcdefghij1234567890abcdef'), ['credential assignment']],
+    [sprintf('%s: "%s"', 'password', 'abcdefghij1234567890'), ['credential assignment']],
+    ['basicPass: $secrets->get("synaxon.client_secret"),', []],
     ['a clean line, with commas (and parentheses)', []],
     ['the api key is mentioned in ordinary prose', []],
     ['$token = $this->config->getBearerToken();', []],

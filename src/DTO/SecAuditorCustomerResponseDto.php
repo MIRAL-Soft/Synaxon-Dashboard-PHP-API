@@ -13,7 +13,7 @@ class SecAuditorCustomerResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class SecAuditorCustomerResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class SecAuditorCustomerResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class SecAuditorCustomerResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -53,7 +53,7 @@ class SecAuditorCustomerResponseDto extends AbstractDto
      */
     public function getVendorId(): string
     {
-        return (string) $this->data['vendorId'];
+        return (string) $this->required('vendorId');
     }
 
     /**
@@ -63,7 +63,7 @@ class SecAuditorCustomerResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -73,7 +73,7 @@ class SecAuditorCustomerResponseDto extends AbstractDto
      */
     public function getCustomerId(): float
     {
-        return (float) $this->data['customerId'];
+        return (float) $this->required('customerId');
     }
 
     /**
@@ -83,7 +83,7 @@ class SecAuditorCustomerResponseDto extends AbstractDto
      */
     public function getEmployees(): float
     {
-        return (float) $this->data['employees'];
+        return (float) $this->required('employees');
     }
 
     /**
@@ -93,7 +93,7 @@ class SecAuditorCustomerResponseDto extends AbstractDto
      */
     public function getParentId(): string
     {
-        return (string) $this->data['parentId'];
+        return (string) $this->required('parentId');
     }
 
     /**
@@ -103,7 +103,7 @@ class SecAuditorCustomerResponseDto extends AbstractDto
      */
     public function getCreationStatus(): string
     {
-        return (string) $this->data['creationStatus'];
+        return (string) $this->required('creationStatus');
     }
 
     /**
@@ -113,7 +113,7 @@ class SecAuditorCustomerResponseDto extends AbstractDto
      */
     public function getMode(): string
     {
-        return (string) $this->data['mode'];
+        return (string) $this->required('mode');
     }
 
     /**
@@ -123,7 +123,7 @@ class SecAuditorCustomerResponseDto extends AbstractDto
      */
     public function getBillingCycle(): string
     {
-        return (string) $this->data['billingCycle'];
+        return (string) $this->required('billingCycle');
     }
 
     /**
@@ -133,6 +133,6 @@ class SecAuditorCustomerResponseDto extends AbstractDto
      */
     public function getNfr(): bool
     {
-        return (bool) $this->data['nfr'];
+        return (bool) $this->required('nfr');
     }
 }

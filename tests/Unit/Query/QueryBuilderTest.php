@@ -28,6 +28,28 @@ final class QueryBuilderTest extends TestCase
         self::assertSame(['status=eq:open', 'id=in:1,2,3'], $arr['filter']);
     }
 
+    public function testBuildsTheParametersTheApiDeclares(): void
+    {
+        $arr = (new QueryBuilder())
+            ->page(0)
+            ->limit(100)
+            ->search('acme')
+            ->with('status', ['active', 'trial'])
+            ->with('isOnline', true)
+            ->toArray();
+
+        self::assertSame(
+            ['page' => 0, 'limit' => 100, 'search' => 'acme', 'status' => ['active', 'trial'], 'isOnline' => true],
+            $arr
+        );
+    }
+
+    public function testDeprecatedWhereSerialisesBooleansAsWords(): void
+    {
+        $arr = (new QueryBuilder())->where('read', FilterOperator::EQ, false)->toArray();
+        self::assertSame(['read=eq:false'], $arr['filter']);
+    }
+
     public function testUnknownOrderDirectionFallsBackToAsc(): void
     {
         $q = (new QueryBuilder())->orderBy('id', 'sideways');

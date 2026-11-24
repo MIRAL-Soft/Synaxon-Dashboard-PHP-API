@@ -13,7 +13,7 @@ class EsetDeviceResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class EsetDeviceResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class EsetDeviceResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class EsetDeviceResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -53,7 +53,7 @@ class EsetDeviceResponseDto extends AbstractDto
      */
     public function getParentId(): string
     {
-        return (string) $this->data['parentId'];
+        return (string) $this->required('parentId');
     }
 
     /**
@@ -63,7 +63,7 @@ class EsetDeviceResponseDto extends AbstractDto
      */
     public function getVendorId(): string
     {
-        return (string) $this->data['vendorId'];
+        return (string) $this->required('vendorId');
     }
 
     /**
@@ -73,7 +73,7 @@ class EsetDeviceResponseDto extends AbstractDto
      */
     public function getDetections(): float
     {
-        return (float) $this->data['detections'];
+        return (float) $this->required('detections');
     }
 
     /**
@@ -83,7 +83,7 @@ class EsetDeviceResponseDto extends AbstractDto
      */
     public function getSecurityProductName(): string
     {
-        return (string) $this->data['securityProductName'];
+        return (string) $this->required('securityProductName');
     }
 
     /**
@@ -93,7 +93,7 @@ class EsetDeviceResponseDto extends AbstractDto
      */
     public function getSecurityProductVersion(): string
     {
-        return (string) $this->data['securityProductVersion'];
+        return (string) $this->required('securityProductVersion');
     }
 
     /**
@@ -103,7 +103,7 @@ class EsetDeviceResponseDto extends AbstractDto
      */
     public function getModuleStatus(): string
     {
-        return (string) $this->data['moduleStatus'];
+        return (string) $this->required('moduleStatus');
     }
 
     /**
@@ -113,7 +113,7 @@ class EsetDeviceResponseDto extends AbstractDto
      */
     public function getOsName(): string
     {
-        return (string) $this->data['osName'];
+        return (string) $this->required('osName');
     }
 
     /**
@@ -123,7 +123,7 @@ class EsetDeviceResponseDto extends AbstractDto
      */
     public function getOsVersion(): string
     {
-        return (string) $this->data['osVersion'];
+        return (string) $this->required('osVersion');
     }
 
     /**
@@ -133,7 +133,7 @@ class EsetDeviceResponseDto extends AbstractDto
      */
     public function getOsBuildNumber(): string
     {
-        return (string) $this->data['osBuildNumber'];
+        return (string) $this->required('osBuildNumber');
     }
 
     /**
@@ -143,7 +143,7 @@ class EsetDeviceResponseDto extends AbstractDto
      */
     public function getDatabaseDate(): string
     {
-        return (string) $this->data['databaseDate'];
+        return (string) $this->required('databaseDate');
     }
 
     /**
@@ -153,7 +153,7 @@ class EsetDeviceResponseDto extends AbstractDto
      */
     public function getStatus(): string
     {
-        return (string) $this->data['status'];
+        return (string) $this->required('status');
     }
 
     /**
@@ -163,6 +163,6 @@ class EsetDeviceResponseDto extends AbstractDto
      */
     public function getLicensePublicId(): string
     {
-        return (string) $this->data['licensePublicId'];
+        return (string) $this->required('licensePublicId');
     }
 }

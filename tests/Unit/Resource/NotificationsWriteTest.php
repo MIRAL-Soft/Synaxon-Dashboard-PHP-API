@@ -34,6 +34,7 @@ final class NotificationsWriteTest extends TestCase
         self::assertSame('POST', $req['method']);
         self::assertSame('/v1/notifications/setAllRead', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -46,13 +47,14 @@ final class NotificationsWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new NotificationsResource($http);
 
-        $resource->update('sample-id-1', ['field' => 'value']);
+        $resource->update('sample id/1', ['field' => 'value']);
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('PATCH', $req['method']);
-        self::assertSame('/v1/notifications/sample-id-1', $req['path']);
+        self::assertSame('/v1/notifications/sample%20id%2F1', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -72,6 +74,7 @@ final class NotificationsWriteTest extends TestCase
         self::assertSame('PATCH', $req['method']);
         self::assertSame('/v1/notifications/bulk', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -84,11 +87,11 @@ final class NotificationsWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new NotificationsResource($http);
 
-        $resource->setRead('sample-id-1');
+        $resource->setRead('sample id/1');
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('POST', $req['method']);
-        self::assertSame('/v1/notifications/sample-id-1/setRead', $req['path']);
+        self::assertSame('/v1/notifications/sample%20id%2F1/setRead', $req['path']);
     }
 }

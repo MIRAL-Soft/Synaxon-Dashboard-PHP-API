@@ -13,7 +13,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -53,7 +53,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getVendorId(): float
     {
-        return (float) $this->data['vendorId'];
+        return (float) $this->required('vendorId');
     }
 
     /**
@@ -63,7 +63,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 
     /**
@@ -73,7 +73,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getTenantId(): string
     {
-        return (string) $this->data['tenantId'];
+        return (string) $this->required('tenantId');
     }
 
     /**
@@ -83,7 +83,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getDashboardId(): string
     {
-        return (string) $this->data['dashboardId'];
+        return (string) $this->required('dashboardId');
     }
 
     /**
@@ -93,7 +93,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getSiteId(): string
     {
-        return (string) $this->data['siteId'];
+        return (string) $this->required('siteId');
     }
 
     /**
@@ -103,7 +103,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getDescription(): string
     {
-        return (string) $this->data['description'];
+        return (string) $this->required('description');
     }
 
     /**
@@ -113,7 +113,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getAgentVersion(): string
     {
-        return (string) $this->data['agentVersion'];
+        return (string) $this->required('agentVersion');
     }
 
     /**
@@ -123,7 +123,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getIsOnline(): bool
     {
-        return (bool) $this->data['isOnline'];
+        return (bool) $this->required('isOnline');
     }
 
     /**
@@ -133,7 +133,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getUsername(): string
     {
-        return (string) $this->data['username'];
+        return (string) $this->required('username');
     }
 
     /**
@@ -143,7 +143,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getManufacturer(): string
     {
-        return (string) $this->data['manufacturer'];
+        return (string) $this->required('manufacturer');
     }
 
     /**
@@ -153,7 +153,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getModel(): string
     {
-        return (string) $this->data['model'];
+        return (string) $this->required('model');
     }
 
     /**
@@ -163,7 +163,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getSerial(): string
     {
-        return (string) $this->data['serial'];
+        return (string) $this->required('serial');
     }
 
     /**
@@ -173,7 +173,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getProcessorCount(): float
     {
-        return (float) $this->data['processorCount'];
+        return (float) $this->required('processorCount');
     }
 
     /**
@@ -183,7 +183,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getTotalMemory(): float
     {
-        return (float) $this->data['totalMemory'];
+        return (float) $this->required('totalMemory');
     }
 
     /**
@@ -193,7 +193,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getOperatingSystem(): string
     {
-        return (string) $this->data['operatingSystem'];
+        return (string) $this->required('operatingSystem');
     }
 
     /**
@@ -203,7 +203,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getMac1(): string
     {
-        return (string) $this->data['mac1'];
+        return (string) $this->required('mac1');
     }
 
     /**
@@ -213,7 +213,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getMac2(): string
     {
-        return (string) $this->data['mac2'];
+        return (string) $this->required('mac2');
     }
 
     /**
@@ -223,7 +223,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getMac3(): string
     {
-        return (string) $this->data['mac3'];
+        return (string) $this->required('mac3');
     }
 
     /**
@@ -233,7 +233,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getCpu(): string
     {
-        return (string) $this->data['cpu'];
+        return (string) $this->required('cpu');
     }
 
     /**
@@ -243,7 +243,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getCpuEOL(): string
     {
-        return (string) $this->data['cpuEOL'];
+        return (string) $this->required('cpuEOL');
     }
 
     /**
@@ -253,7 +253,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getCpuRelease(): string
     {
-        return (string) $this->data['cpuRelease'];
+        return (string) $this->required('cpuRelease');
     }
 
     /**
@@ -263,7 +263,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getOsEOL(): string
     {
-        return (string) $this->data['osEOL'];
+        return (string) $this->required('osEOL');
     }
 
     /**
@@ -273,7 +273,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getMsoffice(): string
     {
-        return (string) $this->data['msoffice'];
+        return (string) $this->required('msoffice');
     }
 
     /**
@@ -283,7 +283,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getMsofficeEOL(): string
     {
-        return (string) $this->data['msofficeEOL'];
+        return (string) $this->required('msofficeEOL');
     }
 
     /**
@@ -401,7 +401,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getTakeControl(): bool
     {
-        return (bool) $this->data['takeControl'];
+        return (bool) $this->required('takeControl');
     }
 
     /**
@@ -411,7 +411,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getPatchManagement(): bool
     {
-        return (bool) $this->data['patchManagement'];
+        return (bool) $this->required('patchManagement');
     }
 
     /**
@@ -421,7 +421,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getMav(): bool
     {
-        return (bool) $this->data['mav'];
+        return (bool) $this->required('mav');
     }
 
     /**
@@ -441,7 +441,7 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getLastSeen(): string
     {
-        return (string) $this->data['lastSeen'];
+        return (string) $this->required('lastSeen');
     }
 
     /**
@@ -451,6 +451,6 @@ class NSightDeviceResponseDto extends AbstractDto
      */
     public function getDeletedAt(): string
     {
-        return (string) $this->data['deletedAt'];
+        return (string) $this->required('deletedAt');
     }
 }

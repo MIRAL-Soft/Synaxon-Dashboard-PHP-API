@@ -13,7 +13,7 @@ class MessageTemplateResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class MessageTemplateResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class MessageTemplateResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class MessageTemplateResponseDto extends AbstractDto
      */
     public function getMessage(): string
     {
-        return (string) $this->data['message'];
+        return (string) $this->required('message');
     }
 
     /**
@@ -64,7 +64,7 @@ class MessageTemplateResponseDto extends AbstractDto
      */
     public function getSubject(): string
     {
-        return (string) $this->data['subject'];
+        return (string) $this->required('subject');
     }
 
     /**
@@ -105,7 +105,7 @@ class MessageTemplateResponseDto extends AbstractDto
      */
     public function getTargetType(): string
     {
-        return (string) $this->data['targetType'];
+        return (string) $this->required('targetType');
     }
 
     /**
@@ -126,7 +126,7 @@ class MessageTemplateResponseDto extends AbstractDto
      */
     public function getIsSent(): bool
     {
-        return (bool) $this->data['isSent'];
+        return (bool) $this->required('isSent');
     }
 
     /**
@@ -136,7 +136,7 @@ class MessageTemplateResponseDto extends AbstractDto
      */
     public function getMarkedAsRead(): bool
     {
-        return (bool) $this->data['markedAsRead'];
+        return (bool) $this->required('markedAsRead');
     }
 
     /**

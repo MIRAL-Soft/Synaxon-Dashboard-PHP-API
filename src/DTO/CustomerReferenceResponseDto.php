@@ -13,7 +13,7 @@ class CustomerReferenceResponseDto extends AbstractDto
      */
     public function getId(): string
     {
-        return (string) $this->data['id'];
+        return (string) $this->required('id');
     }
 
     /**
@@ -23,7 +23,7 @@ class CustomerReferenceResponseDto extends AbstractDto
      */
     public function getCreatedAt(): string
     {
-        return (string) $this->data['createdAt'];
+        return (string) $this->required('createdAt');
     }
 
     /**
@@ -33,7 +33,7 @@ class CustomerReferenceResponseDto extends AbstractDto
      */
     public function getUpdatedAt(): string
     {
-        return (string) $this->data['updatedAt'];
+        return (string) $this->required('updatedAt');
     }
 
     /**
@@ -43,7 +43,7 @@ class CustomerReferenceResponseDto extends AbstractDto
      */
     public function getCustomerId(): float
     {
-        return (float) $this->data['customerId'];
+        return (float) $this->required('customerId');
     }
 
     /**
@@ -53,7 +53,7 @@ class CustomerReferenceResponseDto extends AbstractDto
      */
     public function getReferenceId(): string
     {
-        return (string) $this->data['referenceId'];
+        return (string) $this->required('referenceId');
     }
 
     /**
@@ -63,6 +63,6 @@ class CustomerReferenceResponseDto extends AbstractDto
      */
     public function getSystem(): string
     {
-        return (string) $this->data['system'];
+        return (string) $this->required('system');
     }
 }

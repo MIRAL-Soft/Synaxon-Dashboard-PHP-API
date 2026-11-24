@@ -27,13 +27,14 @@ final class UsersWriteTest extends TestCase
         $http = (new MockHttpClient())->queue([]);
         $resource = new UsersResource($http);
 
-        $resource->update('sample-id-1', ['field' => 'value']);
+        $resource->update('sample id/1', ['field' => 'value']);
 
         $req = $http->lastRequest();
         self::assertNotNull($req);
         self::assertSame('PATCH', $req['method']);
-        self::assertSame('/v1/users/sample-id-1', $req['path']);
+        self::assertSame('/v1/users/sample%20id%2F1', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 
     /**
@@ -53,5 +54,6 @@ final class UsersWriteTest extends TestCase
         self::assertSame('POST', $req['method']);
         self::assertSame('/v1/users/terms/accept', $req['path']);
         self::assertSame(['field' => 'value'], $req['options']['body'] ?? null);
+        self::assertSame('json', $req['options']['bodyFormat'] ?? 'json');
     }
 }

@@ -13,7 +13,7 @@ class SalesOpportunityRecommendationStatsDto extends AbstractDto
      */
     public function getRecommendation(): string
     {
-        return (string) $this->data['recommendation'];
+        return (string) $this->required('recommendation');
     }
 
     /**
@@ -23,6 +23,6 @@ class SalesOpportunityRecommendationStatsDto extends AbstractDto
      */
     public function getCount(): float
     {
-        return (float) $this->data['count'];
+        return (float) $this->required('count');
     }
 }

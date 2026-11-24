@@ -35,7 +35,7 @@ class CreateDashboardLayoutRequestDto extends AbstractDto
      */
     public function getName(): string
     {
-        return (string) $this->data['name'];
+        return (string) $this->required('name');
     }
 
     /**
@@ -222,7 +222,7 @@ class CreateDashboardLayoutRequestDto extends AbstractDto
      */
     public function getType(): string
     {
-        return (string) $this->data['type'];
+        return (string) $this->required('type');
     }
 
     /**

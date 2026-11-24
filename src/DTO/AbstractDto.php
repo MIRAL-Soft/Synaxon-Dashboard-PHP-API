@@ -6,6 +6,7 @@ namespace miralsoft\synaxon\api\DTO;
 
 use JsonException;
 use JsonSerializable;
+use miralsoft\synaxon\api\Exception\UnexpectedResponseException;
 
 /**
  * Shared behaviour for all request/response DTOs.
@@ -54,6 +55,29 @@ abstract class AbstractDto implements JsonSerializable
     public function jsonSerialize(): array
     {
         return $this->data;
+    }
+
+    /**
+     * Value of a field the specification declares as required.
+     *
+     * Used by the generated getters of required scalar fields. A missing or
+     * null value is reported instead of being cast to an empty string, 0 or
+     * false, which would be indistinguishable from real data.
+     *
+     * @throws UnexpectedResponseException
+     */
+    protected function required(string $field): mixed
+    {
+        $value = $this->data[$field] ?? null;
+        if ($value === null) {
+            throw new UnexpectedResponseException(sprintf(
+                'Required field "%s" is missing in %s',
+                $field,
+                static::class
+            ));
+        }
+
+        return $value;
     }
 
     public function getRaw(string $field): mixed

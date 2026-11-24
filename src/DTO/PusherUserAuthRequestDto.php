@@ -13,7 +13,7 @@ class PusherUserAuthRequestDto extends AbstractDto
      */
     public function getSocketId(): string
     {
-        return (string) $this->data['socket_id'];
+        return (string) $this->required('socket_id');
     }
 
     /**
