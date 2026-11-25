@@ -42,4 +42,16 @@ class SynaxonApiException extends RuntimeException
 
         return is_string($value) && $value !== '' ? $value : null;
     }
+
+    /**
+     * The API's machine-readable error code, for example "GENERIC.NOT_FOUND"
+     * or "GENERIC.VALIDATION_ERROR". Stable across languages, unlike the
+     * message, so it is what calling code should branch on.
+     */
+    public function getErrorCode(): ?string
+    {
+        $value = $this->context['error_code'] ?? null;
+
+        return is_string($value) && $value !== '' ? $value : null;
+    }
 }

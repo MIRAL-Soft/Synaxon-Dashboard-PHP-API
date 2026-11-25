@@ -289,6 +289,12 @@ try {
 }
 ```
 
+Every `SynaxonApiException` also exposes `getErrorCode(): ?string`, the
+API's machine-readable code such as `GENERIC.VALIDATION_ERROR`; branch on it
+rather than on the message. `ValidationException::getErrors()` returns the
+API's sub-errors, one readable line per rejected field (for example
+`limit must not be greater than 100`).
+
 Every `SynaxonApiException` exposes `getCorrelationId(): ?string`. The
 library extracts it from the `correlationId` field in the API's error
 JSON body and (as a fallback) from the `X-Correlation-Id` /

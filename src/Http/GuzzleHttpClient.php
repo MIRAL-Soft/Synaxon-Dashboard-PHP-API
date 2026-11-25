@@ -417,6 +417,9 @@ final class GuzzleHttpClient implements HttpClientInterface
             'status' => $status,
             'body' => $bodyForContext,
             'correlation_id' => self::extractCorrelationId($response, $decoded),
+            // The API's machine-readable code, for example GENERIC.NOT_FOUND
+            // or GENERIC.VALIDATION_ERROR (ApiErrorResponse.error in the spec).
+            'error_code' => isset($decoded['error']) && is_string($decoded['error']) ? $decoded['error'] : null,
         ];
 
         return match (true) {
@@ -426,11 +429,31 @@ final class GuzzleHttpClient implements HttpClientInterface
                 'retry_after' => self::parseRetryAfter($response),
             ])),
             $status === 400 || $status === 422 => new ValidationException($message, $status, null, array_merge($context, [
-                'errors' => $decoded['errors'] ?? $decoded['error'] ?? [],
+                // ApiErrorResponse.subErrors: one human-readable line per
+                // rejected field, as measured on the live API.
+                'errors' => self::validationErrors($decoded),
             ])),
             $status >= 500 && $status < 600 => new ServerException($message, $status, null, $context),
             default => new SynaxonApiException($message, $status, null, $context),
         };
+    }
+
+    /**
+     * @param array<string, mixed> $decoded
+     *
+     * @return list<string>
+     */
+    private static function validationErrors(array $decoded): array
+    {
+        $errors = $decoded['subErrors'] ?? $decoded['errors'] ?? [];
+        if (!is_array($errors)) {
+            return [];
+        }
+
+        return array_values(array_map(
+            static fn (mixed $e): string => is_string($e) ? $e : (string) json_encode($e),
+            $errors
+        ));
     }
 
     /**
