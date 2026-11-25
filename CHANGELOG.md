@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-11-25
+
 ### Breaking
 - **PHP 8.4 is the minimum** (was 8.3). CI runs on PHP 8.4 and 8.5.
 - **Generated from the current SYNAXON spec** (186 operations, 341 schemas;
@@ -356,6 +358,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Authentication is the responsibility of the consuming application;
   this library never acquires tokens on its own.
 
-[Unreleased]: https://github.com/MIRAL-Soft/Synaxon-Dashboard-PHP-API/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/MIRAL-Soft/Synaxon-Dashboard-PHP-API/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/MIRAL-Soft/Synaxon-Dashboard-PHP-API/compare/v1.1.0...v2.0.0
 [1.1.0]: https://github.com/MIRAL-Soft/Synaxon-Dashboard-PHP-API/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/MIRAL-Soft/Synaxon-Dashboard-PHP-API/releases/tag/v1.0.0
