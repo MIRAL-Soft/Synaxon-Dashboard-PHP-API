@@ -25,6 +25,7 @@ $finder = (new PhpCsFixer\Finder())
     ->notPath('#^DTO/(?!AbstractDto\.php$)#')
     ->notPath('#^Resource/(?!AbstractResource)[A-Za-z0-9]+Resource\.php$#')
     ->notPath('Client/SynaxonClient.php')
+    ->notPath('Compat/ApiSurface.php')
     ->notPath('#^Integration/ReadOnly/.+ReadTest\.php$#')
     ->notPath('#^Unit/Resource/.+WriteTest\.php$#');
 

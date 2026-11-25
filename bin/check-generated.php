@@ -41,6 +41,7 @@ $generatedGlobs = [
     'src/DTO/*.php',
     'src/Resource/*.php',
     'src/Client/*.php',
+    'src/Compat/ApiSurface.php',
     'config/generated-endpoints.json',
     'tests/Unit/Resource/*.php',
     'tests/Integration/ReadOnly/*.php',

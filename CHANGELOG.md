@@ -31,6 +31,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `GET /v1/notifications/unread` no longer takes `providerId` upstream.
 
 ### Added
+- **`Compat\ApiCompatibility`**: applications can check whether the installed
+  library still covers the SYNAXON API. `compare()` fetches the public spec
+  (only when called; no credentials, no background activity) and returns a
+  `CompatibilityReport` with missing and removed operations and schemas,
+  `isCompatible()` and `hasBreakingDrift()`. `compareSpec()` works offline on
+  a spec you already have. The implemented surface comes from the generated
+  `Compat\ApiSurface` constants, not from docblocks, so it also works with
+  `opcache.save_comments=0`. `bin/check-api-compat.php`, `composer
+  update-spec` and the live test use the same class.
 - `SynaxonApiException::getErrorCode()`: the API's machine-readable error
   code, for example `GENERIC.VALIDATION_ERROR`.
 - Seven new resources: `billing()`, `cloudally()`, `cove()`,

@@ -3,22 +3,24 @@
 declare(strict_types=1);
 
 /**
- * SYNAXON API compatibility checker.
+ * SYNAXON API compatibility checker, the maintainer's command-line view of
+ * Compat\ApiCompatibility, which applications can call themselves.
  *
- * Diffs the implemented surface (everything tagged @synaxon-endpoint in
- * src/Resource/*) against either the local spec (docs/openapi.json) or the
- * live spec (extracted from the upstream Swagger UI bundle).
+ * Compares the surface this library implements (Compat\ApiSurface) with
+ * either the committed spec (docs/openapi.json) or the live spec.
  *
  * Usage:
- *   php bin/check-api-compat.php                # offline check against local spec
- *   php bin/check-api-compat.php --live         # online check against live spec
- *   php bin/check-api-compat.php --snapshot     # write JSON report to build/
- *   php bin/check-api-compat.php --live --snapshot
+ *   php bin/check-api-compat.php                # offline, against docs/openapi.json
+ *   php bin/check-api-compat.php --live         # against the live spec
+ *   php bin/check-api-compat.php --snapshot     # also write the report to build/
  *
- * Exit codes: 0 = compatible, 1 = drift detected, 2 = spec unreachable.
+ * Exit codes: 0 = compatible, 1 = drift detected, 2 = spec unavailable.
  */
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+use miralsoft\synaxon\api\Compat\ApiCompatibility;
+use miralsoft\synaxon\api\Compat\CompatibilityReport;
 
 $config = require dirname(__DIR__) . '/config/api-compat.php';
 
@@ -28,201 +30,63 @@ if (isset($opts['help'])) {
     exit(0);
 }
 
-$useLive = array_key_exists('live', $opts);
-$snapshot = array_key_exists('snapshot', $opts);
+$live = array_key_exists('live', $opts);
 
 try {
-    $spec = $useLive ? loadLiveSpec($config['live_url']) : loadLocalSpec($config['local_spec']);
+    if ($live) {
+        $checker = new ApiCompatibility((string) $config['live_url']);
+        $source = $checker->getSpecUrl();
+        $report = $checker->compare();
+    } else {
+        $source = (string) $config['local_spec'];
+        if (!is_file($source)) {
+            throw new RuntimeException("Local spec not found: {$source}");
+        }
+        /** @var array<string, mixed> $spec */
+        $spec = json_decode((string) file_get_contents($source), true, 512, JSON_THROW_ON_ERROR);
+        $report = ApiCompatibility::compareSpec($spec);
+    }
 } catch (Throwable $e) {
     fwrite(STDERR, 'Failed to load spec: ' . $e->getMessage() . "\n");
     exit(2);
 }
 
-$expectedEndpoints = collectSpecEndpoints((array) ($spec['paths'] ?? []));
-$implementedEndpoints = collectImplementedEndpoints((string) $config['resource_dir']);
+render($report, $live ? 'live' : 'local', $source);
 
-$expectedSchemas = array_keys((array) ($spec['components']['schemas'] ?? []));
-$implementedSchemas = collectImplementedSchemas(dirname(__DIR__) . '/src/DTO');
-
-$missingEndpoints = array_values(array_diff($expectedEndpoints, $implementedEndpoints));
-$orphanedEndpoints = array_values(array_diff($implementedEndpoints, $expectedEndpoints));
-$missingSchemas = array_values(array_diff($expectedSchemas, $implementedSchemas));
-$orphanedSchemas = array_values(array_diff($implementedSchemas, $expectedSchemas));
-
-renderReport($spec, [
-    'mode' => $useLive ? 'live' : 'local',
-    'expected' => count($expectedEndpoints),
-    'implemented' => count($implementedEndpoints),
-    'missing_endpoints' => $missingEndpoints,
-    'orphaned_endpoints' => $orphanedEndpoints,
-    'expected_schemas' => count($expectedSchemas),
-    'implemented_schemas' => count($implementedSchemas),
-    'missing_schemas' => $missingSchemas,
-    'orphaned_schemas' => $orphanedSchemas,
-]);
-
-if ($snapshot) {
+if (array_key_exists('snapshot', $opts)) {
     $path = (string) $config['snapshot_path'];
-    $dir = dirname($path);
-    if (!is_dir($dir)) {
-        mkdir($dir, 0o755, true);
+    if (!is_dir(dirname($path))) {
+        mkdir(dirname($path), 0o755, true);
     }
-    file_put_contents($path, json_encode([
-        'generated_at' => date(DATE_ATOM),
-        'mode' => $useLive ? 'live' : 'local',
-        'spec_title' => $spec['info']['title'] ?? null,
-        'spec_version' => $spec['info']['version'] ?? null,
-        'expected_endpoints' => $expectedEndpoints,
-        'implemented_endpoints' => $implementedEndpoints,
-        'missing_endpoints' => $missingEndpoints,
-        'orphaned_endpoints' => $orphanedEndpoints,
-        'expected_schemas' => $expectedSchemas,
-        'implemented_schemas' => $implementedSchemas,
-        'missing_schemas' => $missingSchemas,
-        'orphaned_schemas' => $orphanedSchemas,
-    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    file_put_contents($path, json_encode(
+        ['generated_at' => date(DATE_ATOM), 'mode' => $live ? 'live' : 'local', 'source' => $source] + $report->toArray(),
+        JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+    ));
     fwrite(STDOUT, "Snapshot written to: {$path}\n");
 }
 
-if ($missingEndpoints !== [] || $orphanedEndpoints !== [] || $missingSchemas !== [] || $orphanedSchemas !== []) {
-    exit(1);
-}
-exit(0);
+exit($report->isCompatible() ? 0 : 1);
 
-/* ---------------------------------------------------------------- helpers */
-
-/**
- * @return array<string, mixed>
- */
-function loadLocalSpec(string $path): array
+function render(CompatibilityReport $report, string $mode, string $source): void
 {
-    if (!is_file($path)) {
-        throw new RuntimeException("Local spec not found: {$path}");
-    }
-    /** @var array<string, mixed> $decoded */
-    $decoded = json_decode((string) file_get_contents($path), true, 512, JSON_THROW_ON_ERROR);
-    return $decoded;
-}
+    fwrite(STDOUT, "\n=== SYNAXON API compatibility report ({$mode}) ===\n");
+    fwrite(STDOUT, "Spec: {$source}" . ($report->specVersion !== null ? " (version {$report->specVersion})" : '') . "\n");
+    fwrite(STDOUT, sprintf("Endpoints: %d implemented / %d expected\n", $report->implementedOperationCount, $report->specOperationCount));
+    fwrite(STDOUT, sprintf("Schemas:   %d implemented / %d expected\n", $report->implementedSchemaCount, $report->specSchemaCount));
 
-/**
- * @return array<string, mixed>
- */
-function loadLiveSpec(string $url): array
-{
-    return miralsoft\synaxon\api\Tests\Support\LiveSpec::fetch($url);
-}
+    section('Missing endpoint implementations', $report->missingOperations);
+    section('Endpoints removed upstream (calls will fail)', $report->removedOperations);
+    section('Missing schema DTOs', $report->missingSchemas);
+    section('Schemas removed upstream', $report->removedSchemas);
 
-/**
- * @param array<string, mixed> $paths
- *
- * @return list<string>
- */
-function collectSpecEndpoints(array $paths): array
-{
-    $out = [];
-    foreach ($paths as $path => $obj) {
-        if (!is_string($path) || !is_array($obj)) {
-            continue;
-        }
-        foreach (['get','post','put','patch','delete','head','options'] as $m) {
-            if (isset($obj[$m]) && is_array($obj[$m])) {
-                $out[] = strtoupper($m) . ' ' . $path;
-            }
-        }
-    }
-    sort($out);
-    return $out;
-}
-
-/**
- * @return list<string>
- */
-function collectImplementedEndpoints(string $dir): array
-{
-    $files = glob($dir . '/*.php') ?: [];
-    $out = [];
-    foreach ($files as $file) {
-        $base = basename($file, '.php');
-        if ($base === 'AbstractResource') {
-            continue;
-        }
-        $class = 'miralsoft\\synaxon\\api\\Resource\\' . $base;
-        if (!class_exists($class)) {
-            continue;
-        }
-        $ref = new ReflectionClass($class);
-        foreach ($ref->getMethods(ReflectionMethod::IS_PUBLIC) as $m) {
-            if ($m->class !== $class) {
-                continue;
-            }
-            $doc = $m->getDocComment();
-            if ($doc === false) {
-                continue;
-            }
-            if (preg_match('/@synaxon-endpoint\s+(\S+)\s+(\S+)/', $doc, $match) === 1) {
-                $out[] = strtoupper($match[1]) . ' ' . $match[2];
-            }
-        }
-    }
-    sort($out);
-    return $out;
-}
-
-/**
- * @return list<string>
- */
-function collectImplementedSchemas(string $dir): array
-{
-    $files = glob($dir . '/*.php') ?: [];
-    $out = [];
-    foreach ($files as $file) {
-        $base = basename($file, '.php');
-        if ($base === 'AbstractDto') {
-            continue;
-        }
-        $out[] = $base;
-    }
-    sort($out);
-    return $out;
-}
-
-/**
- * @param array<string, mixed> $spec
- * @param array<string, mixed> $report
- */
-function renderReport(array $spec, array $report): void
-{
-    $title = (string) ($spec['info']['title'] ?? 'unknown');
-    $version = (string) ($spec['info']['version'] ?? 'unknown');
-
-    fwrite(STDOUT, "\n=== SYNAXON API compatibility report ({$report['mode']}) ===\n");
-    fwrite(STDOUT, sprintf("Spec: %s v%s\n", $title, $version));
-    fwrite(STDOUT, sprintf("Endpoints: %d implemented / %d expected\n", $report['implemented'], $report['expected']));
-    fwrite(STDOUT, sprintf("Schemas:   %d implemented / %d expected\n", $report['implemented_schemas'], $report['expected_schemas']));
-
-    renderSection('Missing endpoint implementations', $report['missing_endpoints']);
-    renderSection('Orphaned endpoint methods (no longer in spec)', $report['orphaned_endpoints']);
-    renderSection('Missing schema DTOs', $report['missing_schemas']);
-    renderSection('Orphaned schema DTOs', $report['orphaned_schemas']);
-
-    $ok = $report['missing_endpoints'] === []
-       && $report['orphaned_endpoints'] === []
-       && $report['missing_schemas'] === []
-       && $report['orphaned_schemas'] === [];
-    fwrite(STDOUT, $ok ? "\nResult: OK\n" : "\nResult: DRIFT DETECTED\n");
+    fwrite(STDOUT, $report->isCompatible() ? "\nResult: OK\n" : "\nResult: DRIFT DETECTED\n");
 }
 
 /**
  * @param list<string> $items
  */
-function renderSection(string $heading, array $items): void
+function section(string $heading, array $items): void
 {
     fwrite(STDOUT, "\n--- {$heading} (" . count($items) . ") ---\n");
-    if ($items === []) {
-        fwrite(STDOUT, "(none)\n");
-        return;
-    }
-    foreach ($items as $item) {
-        fwrite(STDOUT, "  - {$item}\n");
-    }
+    fwrite(STDOUT, $items === [] ? "(none)\n" : '  - ' . implode("\n  - ", $items) . "\n");
 }
