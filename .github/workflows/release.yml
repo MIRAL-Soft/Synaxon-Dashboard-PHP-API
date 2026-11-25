@@ -21,6 +21,19 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Only reviewed code is released: the tagged commit must be on main,
+      # which only accepts changes through a pull request with green checks.
+      # A tag on a commit of a working branch is refused here.
+      - name: Verify the tagged commit is on main
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+            echo "Tag ${GITHUB_REF_NAME} points at ${GITHUB_SHA}, which is not on main." >&2
+            echo "Merge the change into main first, then tag the merged commit." >&2
+            exit 1
+          fi
+
       # Nothing is published unless the tag, the version in the code and the
       # changelog agree. A tag pushed before the version was raised fails here
       # instead of producing a release whose User-Agent names another version.

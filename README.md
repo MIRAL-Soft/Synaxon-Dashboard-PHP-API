@@ -587,6 +587,9 @@ tests/                               # see "Testing" above
 
 ## Security
 
+Found a vulnerability? Please report it privately as described in
+[SECURITY.md](SECURITY.md), not in a public issue.
+
 * `declare(strict_types=1);` in every source file.
 * DTOs and config objects are immutable (`readonly` properties).
 * TLS verification is always on (cannot be disabled by public API).
