@@ -30,6 +30,19 @@ final class LiveSpec
      */
     public static function fetch(string $url = self::DEFAULT_URL): array
     {
+        /** @var array<string, mixed> */
+        return json_decode(self::fetchJson($url), true, 512, JSON_THROW_ON_ERROR);
+    }
+
+    /**
+     * The validated document as the server sent it. Use this to store the
+     * spec: decoding into PHP arrays turns empty JSON objects `{}` into `[]`,
+     * which is no longer valid OpenAPI.
+     *
+     * @throws RuntimeException when the URL does not serve an OpenAPI document
+     */
+    public static function fetchJson(string $url = self::DEFAULT_URL): string
+    {
         $response = new Client(['timeout' => 30, 'http_errors' => false])->request('GET', $url);
 
         $status = $response->getStatusCode();
@@ -46,8 +59,9 @@ final class LiveSpec
             ));
         }
 
+        $body = (string) $response->getBody();
         try {
-            $decoded = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            $decoded = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
             throw new RuntimeException('Live spec is not valid JSON: ' . $e->getMessage(), 0, $e);
         }
@@ -56,7 +70,6 @@ final class LiveSpec
             throw new RuntimeException(sprintf('Response from %s is JSON but not an OpenAPI document.', $url));
         }
 
-        /** @var array<string, mixed> $decoded */
-        return $decoded;
+        return $body;
     }
 }

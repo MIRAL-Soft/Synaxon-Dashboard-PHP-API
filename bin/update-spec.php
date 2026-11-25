@@ -21,14 +21,20 @@ $url = $argv[1] ?? LiveSpec::DEFAULT_URL;
 $target = dirname(__DIR__) . '/docs/openapi.json';
 
 try {
-    $spec = LiveSpec::fetch($url);
+    $raw = LiveSpec::fetchJson($url);
 } catch (Throwable $e) {
     fwrite(STDERR, 'Could not load the live spec: ' . $e->getMessage() . "\n");
     exit(2);
 }
 
-$json = json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+// Decoded as objects, not arrays, so empty objects stay `{}` and the file
+// remains valid OpenAPI; only the indentation changes.
+$json = json_encode(
+    json_decode($raw, false, 512, JSON_THROW_ON_ERROR),
+    JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR
+);
 file_put_contents($target, $json . "\n");
+$spec = json_decode($raw, true, 512, JSON_THROW_ON_ERROR);
 
 $operations = 0;
 foreach ((array) $spec['paths'] as $item) {

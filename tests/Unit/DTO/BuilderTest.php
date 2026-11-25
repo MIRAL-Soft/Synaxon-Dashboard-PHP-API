@@ -29,7 +29,7 @@ final class BuilderTest extends TestCase
 
     public function testFluentChainingAccumulatesFields(): void
     {
-        $dto = (new CreateAcronisCustomerRequestDto())
+        $dto = new CreateAcronisCustomerRequestDto()
             ->withEmail('a@b.test')
             ->withCustomerId(42.0);
 
@@ -41,20 +41,20 @@ final class BuilderTest extends TestCase
 
     public function testWithAllMergesFields(): void
     {
-        $dto = (new CreateCustomerRequestDto())->withAll([
-            'name'           => 'Acme GmbH',
+        $dto = new CreateCustomerRequestDto()->withAll([
+            'name' => 'Acme GmbH',
             'customerNumber' => '12345',
-            'city'           => 'Weingarten',
+            'city' => 'Weingarten',
         ]);
 
         self::assertSame('Acme GmbH', $dto->toArray()['name']);
-        self::assertSame('12345',     $dto->toArray()['customerNumber']);
+        self::assertSame('12345', $dto->toArray()['customerNumber']);
         self::assertSame('Weingarten', $dto->toArray()['city']);
     }
 
     public function testRoundTripsThroughJson(): void
     {
-        $dto = (new CreateAcronisCustomerRequestDto())
+        $dto = new CreateAcronisCustomerRequestDto()
             ->withEmail('round@trip.test');
 
         $rebuilt = CreateAcronisCustomerRequestDto::fromArray(

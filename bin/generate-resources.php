@@ -19,13 +19,15 @@ declare(strict_types=1);
  *   php bin/generate-resources.php
  */
 
+require_once __DIR__ . '/lib/generator-safety.php';
+
 $root = dirname(__DIR__);
 $specPath = $root . '/docs/openapi.json';
 $resDir = $root . '/src/Resource';
 $clientDir = $root . '/src/Client';
 
 /** @var array<string, mixed> $spec */
-$spec = json_decode((string) file_get_contents($specPath), true, 512, JSON_THROW_ON_ERROR);
+$spec = loadSpecForGeneration($specPath);
 $paths = (array) ($spec['paths'] ?? []);
 
 @mkdir($resDir, 0o755, true);

@@ -19,11 +19,12 @@ class AcronisCustomerMetricsResponseDto extends AbstractDto
     /**
      * Timestamp of previous metrics for comparison
      *
-     * @return string
+     * @return string|null
      */
-    public function getPrevTimestamp(): string
+    public function getPrevTimestamp(): ?string
     {
-        return (string) $this->required('prevTimestamp');
+        $v = $this->requiredNullable('prevTimestamp');
+        return $v === null ? null : (string) $v;
     }
 
     /**

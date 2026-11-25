@@ -80,6 +80,25 @@ abstract class AbstractDto implements JsonSerializable
         return $value;
     }
 
+    /**
+     * Value of a field the specification declares as required but nullable:
+     * null is a valid answer ("no previous value"), a missing key is not.
+     *
+     * @throws UnexpectedResponseException
+     */
+    protected function requiredNullable(string $field): mixed
+    {
+        if (!array_key_exists($field, $this->data)) {
+            throw new UnexpectedResponseException(sprintf(
+                'Required field "%s" is missing in %s',
+                $field,
+                static::class
+            ));
+        }
+
+        return $this->data[$field];
+    }
+
     public function getRaw(string $field): mixed
     {
         return $this->data[$field] ?? null;

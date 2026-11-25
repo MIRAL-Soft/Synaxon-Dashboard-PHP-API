@@ -1,0 +1,2573 @@
+Client\SynaxonClient::__construct(SynaxonConfig $config, ?HttpClientInterface $http = NULL, ?Psr\Log\LoggerInterface $logger = NULL)
+Client\SynaxonClient::acronis(): AcronisResource
+Client\SynaxonClient::audit(): AuditResource
+Client\SynaxonClient::auth(): AuthResource
+Client\SynaxonClient::billing(): BillingResource
+Client\SynaxonClient::cloudally(): CloudallyResource
+Client\SynaxonClient::cove(): CoveResource
+Client\SynaxonClient::customers(): CustomersResource
+Client\SynaxonClient::cyansecurity(): CyansecurityResource
+Client\SynaxonClient::downloads(): DownloadsResource
+Client\SynaxonClient::eset(): EsetResource
+Client\SynaxonClient::guardian360(): Guardian360Resource
+Client\SynaxonClient::layout(): LayoutResource
+Client\SynaxonClient::lywand(): LywandResource
+Client\SynaxonClient::mailstore(): MailstoreResource
+Client\SynaxonClient::nSight(): NSightResource
+Client\SynaxonClient::notifications(): NotificationsResource
+Client\SynaxonClient::patches(): PatchesResource
+Client\SynaxonClient::products(): ProductsResource
+Client\SynaxonClient::pusher(): PusherResource
+Client\SynaxonClient::reports(): ReportsResource
+Client\SynaxonClient::rollouter(): RollouterResource
+Client\SynaxonClient::salesOpportunities(): SalesOpportunitiesResource
+Client\SynaxonClient::secAuditor(): SecAuditorResource
+Client\SynaxonClient::smao(): SmaoResource
+Client\SynaxonClient::support(): SupportResource
+Client\SynaxonClient::systemTasks(): SystemTasksResource
+Client\SynaxonClient::tenants(): TenantsResource
+Client\SynaxonClient::users(): UsersResource
+Config\SynaxonConfig::__construct(?string $bearerToken = NULL, ?string $basicUser = NULL, ?string $basicPass = NULL, string $baseUri = 'https://api.synaxon.com/marketplace', int $timeout = 30, int $connectTimeout = 10, int $maxRetries = 3, string $userAgent = 'miralsoft-synaxon-api/2.0.0', ?string $acceptLanguage = NULL)
+Config\SynaxonConfig::__debugInfo(): array
+Config\SynaxonConfig::getAcceptLanguage(): ?string
+Config\SynaxonConfig::getBaseUri(): string
+Config\SynaxonConfig::getBasicPass(): ?string
+Config\SynaxonConfig::getBasicUser(): ?string
+Config\SynaxonConfig::getBearerToken(): ?string
+Config\SynaxonConfig::getConnectTimeout(): int
+Config\SynaxonConfig::getMaxRetries(): int
+Config\SynaxonConfig::getTimeout(): int
+Config\SynaxonConfig::getUserAgent(): string
+Config\SynaxonConfig::hasAuth(): bool
+Config\SynaxonConfig::static fromArray(array $cfg): self
+Config\SynaxonConfig::static fromEnv(): self
+DTO\AbstractDto::__construct(array $data = array (
+))
+DTO\AbstractDto::getAllRaw(): array
+DTO\AbstractDto::getRaw(string $field): mixed
+DTO\AbstractDto::jsonSerialize(): array
+DTO\AbstractDto::static fromArray(array $data): static
+DTO\AbstractDto::toArray(): array
+DTO\AbstractDto::toJson(): string
+DTO\AbstractDto::with(string $field, mixed $value): static
+DTO\AbstractDto::withAll(array $patch): static
+DTO\AcronisCustomerCountDto::getCount(): float
+DTO\AcronisCustomerMetricsResponseDto::getCurrTimestamp(): string
+DTO\AcronisCustomerMetricsResponseDto::getPrevTimestamp(): ?string
+DTO\AcronisCustomerMetricsResponseDto::getValues(): mixed
+DTO\AcronisCustomerPaginatedResponseDto::getData(): array
+DTO\AcronisCustomerPaginatedResponseDto::getLimit(): float
+DTO\AcronisCustomerPaginatedResponseDto::getPage(): float
+DTO\AcronisCustomerPaginatedResponseDto::getTotalItems(): float
+DTO\AcronisCustomerResponseDto::getCreatedAt(): string
+DTO\AcronisCustomerResponseDto::getCustomerId(): float
+DTO\AcronisCustomerResponseDto::getId(): string
+DTO\AcronisCustomerResponseDto::getManagementType(): string
+DTO\AcronisCustomerResponseDto::getMetrics(): mixed
+DTO\AcronisCustomerResponseDto::getName(): string
+DTO\AcronisCustomerResponseDto::getParentId(): string
+DTO\AcronisCustomerResponseDto::getRestrictedAccess(): bool
+DTO\AcronisCustomerResponseDto::getTenantId(): string
+DTO\AcronisCustomerResponseDto::getType(): string
+DTO\AcronisCustomerResponseDto::getUpdatedAt(): string
+DTO\AcronisCustomerResponseDto::getVendorId(): string
+DTO\AcronisCustomerResponseDto::getVendorLegacyId(): ?string
+DTO\AcronisCustomerStatsItemDto::getCustomerId(): ?float
+DTO\AcronisCustomerStatsItemDto::getCustomerName(): string
+DTO\AcronisCustomerStatsItemDto::getErrors(): float
+DTO\AcronisCustomerStatsItemDto::getTotal(): float
+DTO\AcronisDeviceDto::getIsOnline(): bool
+DTO\AcronisDeviceDto::getLastBackup(): ?string
+DTO\AcronisDeviceDto::getName(): string
+DTO\AcronisDeviceDto::getStatus(): string
+DTO\AcronisDeviceDto::getType(): string
+DTO\AcronisDevicePaginatedResponseDto::getData(): array
+DTO\AcronisDevicePaginatedResponseDto::getLimit(): float
+DTO\AcronisDevicePaginatedResponseDto::getPage(): float
+DTO\AcronisDevicePaginatedResponseDto::getTotalItems(): float
+DTO\AcronisDeviceResponseDto::getAcronisPolicies(): array
+DTO\AcronisDeviceResponseDto::getAcronisUsername(): string
+DTO\AcronisDeviceResponseDto::getAgentVersion(): ?string
+DTO\AcronisDeviceResponseDto::getCpu(): array
+DTO\AcronisDeviceResponseDto::getCreatedAt(): string
+DTO\AcronisDeviceResponseDto::getCyberfitScore(): ?float
+DTO\AcronisDeviceResponseDto::getId(): string
+DTO\AcronisDeviceResponseDto::getIpAddresses(): array
+DTO\AcronisDeviceResponseDto::getIsOnline(): bool
+DTO\AcronisDeviceResponseDto::getLastBackup(): ?string
+DTO\AcronisDeviceResponseDto::getLastSuccessfulBackup(): ?string
+DTO\AcronisDeviceResponseDto::getLicense(): string
+DTO\AcronisDeviceResponseDto::getName(): string
+DTO\AcronisDeviceResponseDto::getNextBackup(): ?string
+DTO\AcronisDeviceResponseDto::getOs(): ?string
+DTO\AcronisDeviceResponseDto::getOsType(): ?string
+DTO\AcronisDeviceResponseDto::getParentId(): string
+DTO\AcronisDeviceResponseDto::getRam(): ?float
+DTO\AcronisDeviceResponseDto::getStatus(): string
+DTO\AcronisDeviceResponseDto::getTenantId(): string
+DTO\AcronisDeviceResponseDto::getType(): string
+DTO\AcronisDeviceResponseDto::getUpdatedAt(): string
+DTO\AcronisDeviceResponseDto::getVendorId(): string
+DTO\AcronisEntityMetricsResponseDto::getC2cStorage(): float
+DTO\AcronisEntityMetricsResponseDto::getClass1Storage(): float
+DTO\AcronisEntityMetricsResponseDto::getClass2Storage(): float
+DTO\AcronisEntityMetricsResponseDto::getGoogleDrive(): float
+DTO\AcronisEntityMetricsResponseDto::getGoogleMail(): float
+DTO\AcronisEntityMetricsResponseDto::getGoogleTeamDrive(): float
+DTO\AcronisEntityMetricsResponseDto::getImmutableStorage(): float
+DTO\AcronisEntityMetricsResponseDto::getLocalStorage(): float
+DTO\AcronisEntityMetricsResponseDto::getM365Mailboxes(): float
+DTO\AcronisEntityMetricsResponseDto::getM365Onedrive(): float
+DTO\AcronisEntityMetricsResponseDto::getM365Seats(): float
+DTO\AcronisEntityMetricsResponseDto::getM365SharepointSites(): float
+DTO\AcronisEntityMetricsResponseDto::getM365Teams(): float
+DTO\AcronisEntityMetricsResponseDto::getMailboxStorage(): float
+DTO\AcronisEntityMetricsResponseDto::getNas(): float
+DTO\AcronisEntityMetricsResponseDto::getNasStorage(): float
+DTO\AcronisEntityMetricsResponseDto::getO365TeamsStorage(): float
+DTO\AcronisEntityMetricsResponseDto::getOnedriveStorage(): float
+DTO\AcronisEntityMetricsResponseDto::getPackAdvBackupServers(): float
+DTO\AcronisEntityMetricsResponseDto::getPackAdvBackupVms(): float
+DTO\AcronisEntityMetricsResponseDto::getPackAdvBackupWorkstations(): float
+DTO\AcronisEntityMetricsResponseDto::getPackAdvEmailSecurity(): float
+DTO\AcronisEntityMetricsResponseDto::getPackAdvManagement(): float
+DTO\AcronisEntityMetricsResponseDto::getPackAdvSecurity(): float
+DTO\AcronisEntityMetricsResponseDto::getPackAdvSecurityEdrWorkloads(): float
+DTO\AcronisEntityMetricsResponseDto::getPackAdvSecurityEdrWorkloadsG1(): float
+DTO\AcronisEntityMetricsResponseDto::getPackAdvSecurityM365Seats(): float
+DTO\AcronisEntityMetricsResponseDto::getPackAdvSecurityMdr(): float
+DTO\AcronisEntityMetricsResponseDto::getPackAdvSecurityWithEdr(): float
+DTO\AcronisEntityMetricsResponseDto::getPackAdvSecurityWithoutEdr(): float
+DTO\AcronisEntityMetricsResponseDto::getServerStorage(): float
+DTO\AcronisEntityMetricsResponseDto::getServers(): float
+DTO\AcronisEntityMetricsResponseDto::getStorage(): float
+DTO\AcronisEntityMetricsResponseDto::getStorageTotal(): float
+DTO\AcronisEntityMetricsResponseDto::getVmStorage(): float
+DTO\AcronisEntityMetricsResponseDto::getVms(): float
+DTO\AcronisEntityMetricsResponseDto::getWorkstationStorage(): float
+DTO\AcronisEntityMetricsResponseDto::getWorkstations(): float
+DTO\AcronisErrorDto::getName(): string
+DTO\AcronisErrorDto::getStatus(): string
+DTO\AcronisErrorDto::getType(): string
+DTO\AcronisMetricsDTO::getC2cStorage(): MetricValueDto
+DTO\AcronisMetricsDTO::getClass1Storage(): MetricValueDto
+DTO\AcronisMetricsDTO::getClass2Storage(): MetricValueDto
+DTO\AcronisMetricsDTO::getGoogleDrive(): MetricValueDto
+DTO\AcronisMetricsDTO::getGoogleMail(): MetricValueDto
+DTO\AcronisMetricsDTO::getGoogleTeamDrive(): MetricValueDto
+DTO\AcronisMetricsDTO::getImmutableStorage(): MetricValueDto
+DTO\AcronisMetricsDTO::getLocalStorage(): MetricValueDto
+DTO\AcronisMetricsDTO::getM365Mailboxes(): MetricValueDto
+DTO\AcronisMetricsDTO::getM365Onedrive(): MetricValueDto
+DTO\AcronisMetricsDTO::getM365Seats(): MetricValueDto
+DTO\AcronisMetricsDTO::getM365SharepointSites(): MetricValueDto
+DTO\AcronisMetricsDTO::getM365Teams(): MetricValueDto
+DTO\AcronisMetricsDTO::getMailboxStorage(): MetricValueDto
+DTO\AcronisMetricsDTO::getNas(): MetricValueDto
+DTO\AcronisMetricsDTO::getNasStorage(): MetricValueDto
+DTO\AcronisMetricsDTO::getO365TeamsStorage(): MetricValueDto
+DTO\AcronisMetricsDTO::getOnedriveStorage(): MetricValueDto
+DTO\AcronisMetricsDTO::getPackAdvBackupServers(): MetricValueDto
+DTO\AcronisMetricsDTO::getPackAdvBackupVms(): MetricValueDto
+DTO\AcronisMetricsDTO::getPackAdvBackupWorkstations(): MetricValueDto
+DTO\AcronisMetricsDTO::getPackAdvEmailSecurity(): MetricValueDto
+DTO\AcronisMetricsDTO::getPackAdvManagement(): MetricValueDto
+DTO\AcronisMetricsDTO::getPackAdvSecurity(): MetricValueDto
+DTO\AcronisMetricsDTO::getPackAdvSecurityEdrWorkloads(): MetricValueDto
+DTO\AcronisMetricsDTO::getPackAdvSecurityEdrWorkloadsG1(): MetricValueDto
+DTO\AcronisMetricsDTO::getPackAdvSecurityM365Seats(): MetricValueDto
+DTO\AcronisMetricsDTO::getPackAdvSecurityMdr(): MetricValueDto
+DTO\AcronisMetricsDTO::getPackAdvSecurityWithEdr(): MetricValueDto
+DTO\AcronisMetricsDTO::getPackAdvSecurityWithoutEdr(): MetricValueDto
+DTO\AcronisMetricsDTO::getPolicies(): MetricValueDto
+DTO\AcronisMetricsDTO::getServerStorage(): MetricValueDto
+DTO\AcronisMetricsDTO::getServers(): MetricValueDto
+DTO\AcronisMetricsDTO::getStorage(): MetricValueDto
+DTO\AcronisMetricsDTO::getStorageTotal(): MetricValueDto
+DTO\AcronisMetricsDTO::getVmStorage(): MetricValueDto
+DTO\AcronisMetricsDTO::getVms(): MetricValueDto
+DTO\AcronisMetricsDTO::getWorkstationStorage(): MetricValueDto
+DTO\AcronisMetricsDTO::getWorkstations(): MetricValueDto
+DTO\AcronisPartnerPaginatedResponseDto::getData(): array
+DTO\AcronisPartnerPaginatedResponseDto::getLimit(): float
+DTO\AcronisPartnerPaginatedResponseDto::getPage(): float
+DTO\AcronisPartnerPaginatedResponseDto::getTotalItems(): float
+DTO\AcronisPartnerResponseDto::getCreatedAt(): string
+DTO\AcronisPartnerResponseDto::getId(): string
+DTO\AcronisPartnerResponseDto::getMetrics(): mixed
+DTO\AcronisPartnerResponseDto::getName(): string
+DTO\AcronisPartnerResponseDto::getRestrictedAccess(): bool
+DTO\AcronisPartnerResponseDto::getTenantId(): string
+DTO\AcronisPartnerResponseDto::getType(): string
+DTO\AcronisPartnerResponseDto::getUpdatedAt(): string
+DTO\AcronisPartnerResponseDto::getVendorId(): string
+DTO\AcronisPolicyPaginatedResponseDto::getData(): array
+DTO\AcronisPolicyPaginatedResponseDto::getLimit(): float
+DTO\AcronisPolicyPaginatedResponseDto::getPage(): float
+DTO\AcronisPolicyPaginatedResponseDto::getTotalItems(): float
+DTO\AcronisPolicyResponseDto::getCount(): float
+DTO\AcronisPolicyResponseDto::getCreatedAt(): string
+DTO\AcronisPolicyResponseDto::getId(): string
+DTO\AcronisPolicyResponseDto::getName(): string
+DTO\AcronisPolicyResponseDto::getParentId(): string
+DTO\AcronisPolicyResponseDto::getRetention(): array
+DTO\AcronisPolicyResponseDto::getTenantId(): string
+DTO\AcronisPolicyResponseDto::getUpdatedAt(): string
+DTO\AcronisPolicyResponseDto::getVendorId(): string
+DTO\AcronisReportDataResponseDto::getCustomerCount(): mixed
+DTO\AcronisReportDataResponseDto::getCustomerStats(): array
+DTO\AcronisReportDataResponseDto::getDeviceList(): array
+DTO\AcronisReportDataResponseDto::getFailuresList(): array
+DTO\AcronisReportDataResponseDto::getScore(): mixed
+DTO\AcronisReportDataResponseDto::getStorageUsage(): mixed
+DTO\AcronisScoreDto::getDevicesWithErrors(): float
+DTO\AcronisScoreDto::getScore(): float
+DTO\AcronisScoreDto::getTotalDevices(): float
+DTO\AcronisStorageDto::getLocalStorage(): float
+DTO\AcronisStorageDto::getServers(): float
+DTO\AcronisStorageDto::getStorage(): float
+DTO\AcronisStorageDto::getStorageTotal(): float
+DTO\AcronisStorageDto::getVms(): float
+DTO\AcronisStorageDto::getWorkstations(): float
+DTO\AffectedCustomerResponseDto::getCustomerId(): ?float
+DTO\AffectedCustomerResponseDto::getDeviceCount(): float
+DTO\AffectedCustomerResponseDto::getId(): string
+DTO\AffectedCustomerResponseDto::getName(): ?string
+DTO\AntivirusCheckDeviceDto::getId(): string
+DTO\AntivirusCheckDeviceDto::getName(): string
+DTO\AntivirusCheckDeviceDto::getType(): string
+DTO\ApiAuthResponseDto::getAccessToken(): string
+DTO\ApiAuthResponseDto::getExpiresIn(): float
+DTO\ApiAuthResponseDto::getScope(): string
+DTO\ApiAuthResponseDto::getTokenType(): string
+DTO\ApiErrorResponse::getCorrelationId(): string
+DTO\ApiErrorResponse::getError(): string
+DTO\ApiErrorResponse::getMessage(): string
+DTO\ApiErrorResponse::getStatusCode(): float
+DTO\ApiErrorResponse::getSubErrors(): array
+DTO\ApiTaskResponse::getTaskId(): string
+DTO\ApiTokenPaginatedResponseDto::getData(): array
+DTO\ApiTokenPaginatedResponseDto::getLimit(): float
+DTO\ApiTokenPaginatedResponseDto::getPage(): float
+DTO\ApiTokenPaginatedResponseDto::getTotalItems(): float
+DTO\ApiTokenResponseDto::getClientId(): string
+DTO\ApiTokenResponseDto::getCreatedAt(): string
+DTO\ApiTokenResponseDto::getCreatedBy(): string
+DTO\ApiTokenResponseDto::getExpiresAt(): string
+DTO\ApiTokenResponseDto::getId(): string
+DTO\ApiTokenResponseDto::getLastUsedAt(): ?string
+DTO\ApiTokenResponseDto::getName(): string
+DTO\ApiTokenResponseDto::getStatus(): string
+DTO\ApiTokenResponseDto::getTenantId(): string
+DTO\ApiTokenResponseDto::getUpdatedAt(): string
+DTO\AuditLogPaginatedResponseDto::getData(): array
+DTO\AuditLogPaginatedResponseDto::getLimit(): float
+DTO\AuditLogPaginatedResponseDto::getPage(): float
+DTO\AuditLogPaginatedResponseDto::getTotalItems(): float
+DTO\AuditLogResponseDto::getAction(): string
+DTO\AuditLogResponseDto::getCreatedAt(): string
+DTO\AuditLogResponseDto::getEntityId(): string
+DTO\AuditLogResponseDto::getEntityRaw(): array
+DTO\AuditLogResponseDto::getEntityType(): string
+DTO\AuditLogResponseDto::getId(): string
+DTO\AuditLogResponseDto::getSubAction(): ?string
+DTO\AuditLogResponseDto::getTenantId(): string
+DTO\AuditLogResponseDto::getTenantName(): string
+DTO\AuditLogResponseDto::getUpdatedAt(): string
+DTO\AuditLogResponseDto::getUserId(): string
+DTO\AuditLogResponseDto::getUserName(): string
+DTO\AuditOptionsResponseDto::getEntityNames(): array
+DTO\AuthResponseDto::getAccessToken(): string
+DTO\AuthResponseDto::getExpiresAt(): string
+DTO\AuthResponseDto::getPartnerNo(): string
+DTO\AuthResponseDto::getPermissions(): array
+DTO\AuthResponseDto::getRedirectUrl(): ?string
+DTO\AuthResponseDto::getRefreshToken(): string
+DTO\AuthResponseDto::getTenantId(): string
+DTO\AuthResponseDto::getTokenId(): string
+DTO\AuthResponseDto::getUserId(): string
+DTO\AuthResponseDto::getUserRole(): string
+DTO\BackupCheckDeviceDto::getCheckName(): string
+DTO\BackupCheckDeviceDto::getId(): string
+DTO\BackupCheckDeviceDto::getName(): string
+DTO\BackupCheckTypeDto::getDevices(): array
+DTO\BackupCheckTypeDto::getTotal(): float
+DTO\BackupCheckTypeDto::getWithChecks(): float
+DTO\BackupChecksDto::getServer(): BackupCheckTypeDto
+DTO\BackupChecksDto::getWorkstation(): BackupCheckTypeDto
+DTO\CloudallyCustomerMetricsResponseDto::getCurrTimestamp(): string
+DTO\CloudallyCustomerMetricsResponseDto::getPrevTimestamp(): string
+DTO\CloudallyCustomerMetricsResponseDto::getValues(): array
+DTO\CloudallyCustomerPaginatedResponseDto::getData(): array
+DTO\CloudallyCustomerPaginatedResponseDto::getLimit(): float
+DTO\CloudallyCustomerPaginatedResponseDto::getPage(): float
+DTO\CloudallyCustomerPaginatedResponseDto::getTotalItems(): float
+DTO\CloudallyCustomerResponseDto::getCreatedAt(): string
+DTO\CloudallyCustomerResponseDto::getCustomerId(): float
+DTO\CloudallyCustomerResponseDto::getId(): string
+DTO\CloudallyCustomerResponseDto::getMetrics(): array
+DTO\CloudallyCustomerResponseDto::getName(): string
+DTO\CloudallyCustomerResponseDto::getParentId(): string
+DTO\CloudallyCustomerResponseDto::getTenantId(): string
+DTO\CloudallyCustomerResponseDto::getUpdatedAt(): string
+DTO\CloudallyCustomerResponseDto::getVendorId(): string
+DTO\CloudallyCustomerStatsDto::getCustomerId(): array
+DTO\CloudallyCustomerStatsDto::getCustomerName(): string
+DTO\CloudallyCustomerStatsDto::getErrors(): float
+DTO\CloudallyCustomerStatsDto::getTotal(): float
+DTO\CloudallyErrorDto::getCustomerName(): string
+DTO\CloudallyErrorDto::getName(): string
+DTO\CloudallyErrorDto::getSource(): string
+DTO\CloudallyErrorDto::getStatus(): string
+DTO\CloudallyPartnerMetricsResponseDto::getCurrTimestamp(): string
+DTO\CloudallyPartnerMetricsResponseDto::getPrevTimestamp(): string
+DTO\CloudallyPartnerMetricsResponseDto::getValues(): array
+DTO\CloudallyPartnerPaginatedResponseDto::getData(): array
+DTO\CloudallyPartnerPaginatedResponseDto::getLimit(): float
+DTO\CloudallyPartnerPaginatedResponseDto::getPage(): float
+DTO\CloudallyPartnerPaginatedResponseDto::getTotalItems(): float
+DTO\CloudallyPartnerResponseDto::getCreatedAt(): string
+DTO\CloudallyPartnerResponseDto::getId(): string
+DTO\CloudallyPartnerResponseDto::getMetrics(): array
+DTO\CloudallyPartnerResponseDto::getName(): string
+DTO\CloudallyPartnerResponseDto::getTenantId(): string
+DTO\CloudallyPartnerResponseDto::getUpdatedAt(): string
+DTO\CloudallyPartnerResponseDto::getVendorId(): string
+DTO\CloudallyReportDataResponseDto::getCustomerCount(): array
+DTO\CloudallyReportDataResponseDto::getCustomerStats(): array
+DTO\CloudallyReportDataResponseDto::getErrorList(): array
+DTO\CloudallyReportDataResponseDto::getScore(): ?CloudallyScoreDto
+DTO\CloudallyReportDataResponseDto::getStorage(): ?CloudallyStorageSummaryDto
+DTO\CloudallyReportDataResponseDto::getTaskList(): array
+DTO\CloudallyScoreDto::getScore(): float
+DTO\CloudallyScoreDto::getStatusesWithErrors(): float
+DTO\CloudallyScoreDto::getTotalStatuses(): float
+DTO\CloudallyStatusPaginatedResponseDto::getData(): array
+DTO\CloudallyStatusPaginatedResponseDto::getLimit(): float
+DTO\CloudallyStatusPaginatedResponseDto::getPage(): float
+DTO\CloudallyStatusPaginatedResponseDto::getTotalItems(): float
+DTO\CloudallyStatusResponseDto::getCreatedAt(): string
+DTO\CloudallyStatusResponseDto::getId(): string
+DTO\CloudallyStatusResponseDto::getLastBackup(): ?string
+DTO\CloudallyStatusResponseDto::getName(): string
+DTO\CloudallyStatusResponseDto::getParentId(): string
+DTO\CloudallyStatusResponseDto::getSize(): float
+DTO\CloudallyStatusResponseDto::getSource(): string
+DTO\CloudallyStatusResponseDto::getStatus(): string
+DTO\CloudallyStatusResponseDto::getTaskId(): string
+DTO\CloudallyStatusResponseDto::getTenantId(): string
+DTO\CloudallyStatusResponseDto::getUpdatedAt(): string
+DTO\CloudallyStorageSummaryDto::getDropbox(): float
+DTO\CloudallyStorageSummaryDto::getGoogleSeats(): float
+DTO\CloudallyStorageSummaryDto::getMs365Groups(): float
+DTO\CloudallyStorageSummaryDto::getMs365Seats(): float
+DTO\CloudallyStorageSummaryDto::getOnedrive(): float
+DTO\CloudallyStorageSummaryDto::getSharepointMulti(): float
+DTO\CloudallyTaskListDto::getCustomerName(): string
+DTO\CloudallyTaskListDto::getName(): string
+DTO\CloudallyTaskListDto::getSize(): float
+DTO\CloudallyTaskListDto::getStatus(): string
+DTO\CloudallyTaskListDto::getType(): string
+DTO\CloudallyTaskPaginatedResponseDto::getData(): array
+DTO\CloudallyTaskPaginatedResponseDto::getLimit(): float
+DTO\CloudallyTaskPaginatedResponseDto::getPage(): float
+DTO\CloudallyTaskPaginatedResponseDto::getTotalItems(): float
+DTO\CloudallyTaskResponseDto::getAccount(): string
+DTO\CloudallyTaskResponseDto::getCreatedAt(): string
+DTO\CloudallyTaskResponseDto::getId(): string
+DTO\CloudallyTaskResponseDto::getName(): string
+DTO\CloudallyTaskResponseDto::getNextBackup(): ?string
+DTO\CloudallyTaskResponseDto::getParentId(): string
+DTO\CloudallyTaskResponseDto::getRegion(): ?string
+DTO\CloudallyTaskResponseDto::getSize(): float
+DTO\CloudallyTaskResponseDto::getStatus(): string
+DTO\CloudallyTaskResponseDto::getTenantId(): string
+DTO\CloudallyTaskResponseDto::getType(): string
+DTO\CloudallyTaskResponseDto::getUpdatedAt(): string
+DTO\CloudallyTaskResponseDto::getVendorId(): string
+DTO\CoveCustomerPaginatedResponseDto::getData(): array
+DTO\CoveCustomerPaginatedResponseDto::getLimit(): float
+DTO\CoveCustomerPaginatedResponseDto::getPage(): float
+DTO\CoveCustomerPaginatedResponseDto::getTotalItems(): float
+DTO\CoveCustomerResponseDto::getCreatedAt(): string
+DTO\CoveCustomerResponseDto::getCustomerId(): ?float
+DTO\CoveCustomerResponseDto::getId(): string
+DTO\CoveCustomerResponseDto::getIsTrial(): bool
+DTO\CoveCustomerResponseDto::getName(): string
+DTO\CoveCustomerResponseDto::getParentId(): string
+DTO\CoveCustomerResponseDto::getTenantId(): string
+DTO\CoveCustomerResponseDto::getUpdatedAt(): string
+DTO\CoveCustomerResponseDto::getVendorId(): string
+DTO\CovePartnerPaginatedResponseDto::getData(): array
+DTO\CovePartnerPaginatedResponseDto::getLimit(): float
+DTO\CovePartnerPaginatedResponseDto::getPage(): float
+DTO\CovePartnerPaginatedResponseDto::getTotalItems(): float
+DTO\CovePartnerResponseDto::getCreatedAt(): string
+DTO\CovePartnerResponseDto::getId(): string
+DTO\CovePartnerResponseDto::getIsTrial(): bool
+DTO\CovePartnerResponseDto::getName(): string
+DTO\CovePartnerResponseDto::getTenantId(): string
+DTO\CovePartnerResponseDto::getUpdatedAt(): string
+DTO\CovePartnerResponseDto::getVendorId(): string
+DTO\CreateAcronisCustomerRequestDto::getCustomerId(): ?float
+DTO\CreateAcronisCustomerRequestDto::getEmail(): string
+DTO\CreateAcronisCustomerRequestDto::getName(): string
+DTO\CreateAcronisCustomerRequestDto::getStorage(): string
+DTO\CreateAcronisCustomerRequestDto::getType(): string
+DTO\CreateAcronisCustomerRequestDto::withCustomerId(?float $value): static
+DTO\CreateAcronisCustomerRequestDto::withEmail(?string $value): static
+DTO\CreateAcronisCustomerRequestDto::withName(?string $value): static
+DTO\CreateAcronisCustomerRequestDto::withStorage(?string $value): static
+DTO\CreateAcronisCustomerRequestDto::withType(?string $value): static
+DTO\CreateAcronisPartnerRequestDto::getEmail(): string
+DTO\CreateAcronisPartnerRequestDto::getTenantId(): string
+DTO\CreateAcronisPartnerRequestDto::getType(): string
+DTO\CreateAcronisPartnerRequestDto::withEmail(?string $value): static
+DTO\CreateAcronisPartnerRequestDto::withTenantId(?string $value): static
+DTO\CreateAcronisPartnerRequestDto::withType(?string $value): static
+DTO\CreateApiSessionGbRequestDto::getGrantType(): string
+DTO\CreateApiSessionGbRequestDto::getScope(): string
+DTO\CreateApiSessionGbRequestDto::withGrantType(?string $value): static
+DTO\CreateApiSessionGbRequestDto::withScope(?string $value): static
+DTO\CreateApiSessionRequestDto::getGrantType(): string
+DTO\CreateApiSessionRequestDto::getScope(): string
+DTO\CreateApiSessionRequestDto::withGrantType(?string $value): static
+DTO\CreateApiSessionRequestDto::withScope(?string $value): static
+DTO\CreateApiTokenRequestDto::getExpiresAt(): string
+DTO\CreateApiTokenRequestDto::getName(): string
+DTO\CreateApiTokenRequestDto::withExpiresAt(?string $value): static
+DTO\CreateApiTokenRequestDto::withName(?string $value): static
+DTO\CreateApiTokenResponseDto::getClientId(): string
+DTO\CreateApiTokenResponseDto::getClientSecret(): string
+DTO\CreateApiTokenResponseDto::getCreatedAt(): string
+DTO\CreateApiTokenResponseDto::getCreatedBy(): string
+DTO\CreateApiTokenResponseDto::getExpiresAt(): string
+DTO\CreateApiTokenResponseDto::getId(): string
+DTO\CreateApiTokenResponseDto::getLastUsedAt(): ?string
+DTO\CreateApiTokenResponseDto::getName(): string
+DTO\CreateApiTokenResponseDto::getStatus(): string
+DTO\CreateApiTokenResponseDto::getTenantId(): string
+DTO\CreateApiTokenResponseDto::getUpdatedAt(): string
+DTO\CreateCloudallyCustomerRequestDto::getEmail(): string
+DTO\CreateCloudallyCustomerRequestDto::getName(): string
+DTO\CreateCloudallyCustomerRequestDto::getPassword(): string
+DTO\CreateCloudallyCustomerRequestDto::withEmail(?string $value): static
+DTO\CreateCloudallyCustomerRequestDto::withName(?string $value): static
+DTO\CreateCloudallyCustomerRequestDto::withPassword(?string $value): static
+DTO\CreateCloudallyPartnerRequestDto::getContact(): string
+DTO\CreateCloudallyPartnerRequestDto::getEmail(): string
+DTO\CreateCloudallyPartnerRequestDto::getTenantId(): string
+DTO\CreateCloudallyPartnerRequestDto::withContact(?string $value): static
+DTO\CreateCloudallyPartnerRequestDto::withEmail(?string $value): static
+DTO\CreateCloudallyPartnerRequestDto::withTenantId(?string $value): static
+DTO\CreateCoveCustomerRequestDto::getCustomerId(): ?float
+DTO\CreateCoveCustomerRequestDto::getEmail(): string
+DTO\CreateCoveCustomerRequestDto::getFirstname(): string
+DTO\CreateCoveCustomerRequestDto::getLastname(): string
+DTO\CreateCoveCustomerRequestDto::getName(): string
+DTO\CreateCoveCustomerRequestDto::withCustomerId(?float $value): static
+DTO\CreateCoveCustomerRequestDto::withEmail(?string $value): static
+DTO\CreateCoveCustomerRequestDto::withFirstname(?string $value): static
+DTO\CreateCoveCustomerRequestDto::withLastname(?string $value): static
+DTO\CreateCoveCustomerRequestDto::withName(?string $value): static
+DTO\CreateCovePartnerRequestDto::getEmail(): string
+DTO\CreateCovePartnerRequestDto::getFirstname(): string
+DTO\CreateCovePartnerRequestDto::getLastname(): string
+DTO\CreateCovePartnerRequestDto::getTenantId(): string
+DTO\CreateCovePartnerRequestDto::withEmail(?string $value): static
+DTO\CreateCovePartnerRequestDto::withFirstname(?string $value): static
+DTO\CreateCovePartnerRequestDto::withLastname(?string $value): static
+DTO\CreateCovePartnerRequestDto::withTenantId(?string $value): static
+DTO\CreateCustomerReportSettingRequestDto::getCronExpression(): ?string
+DTO\CreateCustomerReportSettingRequestDto::getCustomDisplayName(): ?string
+DTO\CreateCustomerReportSettingRequestDto::getIntroductionText(): ?string
+DTO\CreateCustomerReportSettingRequestDto::getLanguage(): ?string
+DTO\CreateCustomerReportSettingRequestDto::getModules(): array
+DTO\CreateCustomerReportSettingRequestDto::getRecipients(): array
+DTO\CreateCustomerReportSettingRequestDto::getTimezone(): ?string
+DTO\CreateCustomerReportSettingRequestDto::withCronExpression(?string $value): static
+DTO\CreateCustomerReportSettingRequestDto::withCustomDisplayName(?string $value): static
+DTO\CreateCustomerReportSettingRequestDto::withIntroductionText(?string $value): static
+DTO\CreateCustomerReportSettingRequestDto::withLanguage(?string $value): static
+DTO\CreateCustomerReportSettingRequestDto::withModules(?array $value): static
+DTO\CreateCustomerReportSettingRequestDto::withRecipients(?array $value): static
+DTO\CreateCustomerReportSettingRequestDto::withTimezone(?string $value): static
+DTO\CreateCustomerRequestDto::getCity(): string
+DTO\CreateCustomerRequestDto::getComment(): ?string
+DTO\CreateCustomerRequestDto::getCorporateCustomer(): bool
+DTO\CreateCustomerRequestDto::getCountry(): string
+DTO\CreateCustomerRequestDto::getCustomerNumber(): string
+DTO\CreateCustomerRequestDto::getEmail(): ?string
+DTO\CreateCustomerRequestDto::getFax(): ?string
+DTO\CreateCustomerRequestDto::getMobile(): ?string
+DTO\CreateCustomerRequestDto::getName(): string
+DTO\CreateCustomerRequestDto::getPhone(): ?string
+DTO\CreateCustomerRequestDto::getPostalCode(): string
+DTO\CreateCustomerRequestDto::getSalutation(): string
+DTO\CreateCustomerRequestDto::getStreet(): string
+DTO\CreateCustomerRequestDto::withCity(?string $value): static
+DTO\CreateCustomerRequestDto::withComment(?string $value): static
+DTO\CreateCustomerRequestDto::withCorporateCustomer(?bool $value): static
+DTO\CreateCustomerRequestDto::withCountry(?string $value): static
+DTO\CreateCustomerRequestDto::withCustomerNumber(?string $value): static
+DTO\CreateCustomerRequestDto::withEmail(?string $value): static
+DTO\CreateCustomerRequestDto::withFax(?string $value): static
+DTO\CreateCustomerRequestDto::withMobile(?string $value): static
+DTO\CreateCustomerRequestDto::withName(?string $value): static
+DTO\CreateCustomerRequestDto::withPhone(?string $value): static
+DTO\CreateCustomerRequestDto::withPostalCode(?string $value): static
+DTO\CreateCustomerRequestDto::withSalutation(?string $value): static
+DTO\CreateCustomerRequestDto::withStreet(?string $value): static
+DTO\CreateCyanSecurityCustomerRequestDto::getCustomerId(): ?float
+DTO\CreateCyanSecurityCustomerRequestDto::getEmail(): string
+DTO\CreateCyanSecurityCustomerRequestDto::getName(): string
+DTO\CreateCyanSecurityCustomerRequestDto::getPackageType(): string
+DTO\CreateCyanSecurityCustomerRequestDto::withCustomerId(?float $value): static
+DTO\CreateCyanSecurityCustomerRequestDto::withEmail(?string $value): static
+DTO\CreateCyanSecurityCustomerRequestDto::withName(?string $value): static
+DTO\CreateCyanSecurityCustomerRequestDto::withPackageType(?string $value): static
+DTO\CreateCyanSecurityPartnerRequestDto::getEmail(): string
+DTO\CreateCyanSecurityPartnerRequestDto::getTenantId(): string
+DTO\CreateCyanSecurityPartnerRequestDto::withEmail(?string $value): static
+DTO\CreateCyanSecurityPartnerRequestDto::withTenantId(?string $value): static
+DTO\CreateDashboardLayoutRequestDto::getLayout(): array
+DTO\CreateDashboardLayoutRequestDto::getMbLayout(): array
+DTO\CreateDashboardLayoutRequestDto::getMc2cLayout(): array
+DTO\CreateDashboardLayoutRequestDto::getMeaLayout(): array
+DTO\CreateDashboardLayoutRequestDto::getMesLayout(): array
+DTO\CreateDashboardLayoutRequestDto::getMsaLayout(): array
+DTO\CreateDashboardLayoutRequestDto::getName(): string
+DTO\CreateDashboardLayoutRequestDto::getRmmLayout(): array
+DTO\CreateDashboardLayoutRequestDto::getType(): string
+DTO\CreateDashboardLayoutRequestDto::getUserId(): ?string
+DTO\CreateDashboardLayoutRequestDto::withLayout(?array $value): static
+DTO\CreateDashboardLayoutRequestDto::withMbLayout(?array $value): static
+DTO\CreateDashboardLayoutRequestDto::withMc2cLayout(?array $value): static
+DTO\CreateDashboardLayoutRequestDto::withMeaLayout(?array $value): static
+DTO\CreateDashboardLayoutRequestDto::withMesLayout(?array $value): static
+DTO\CreateDashboardLayoutRequestDto::withMsaLayout(?array $value): static
+DTO\CreateDashboardLayoutRequestDto::withName(?string $value): static
+DTO\CreateDashboardLayoutRequestDto::withRmmLayout(?array $value): static
+DTO\CreateDashboardLayoutRequestDto::withType(?string $value): static
+DTO\CreateDashboardLayoutRequestDto::withUserId(?string $value): static
+DTO\CreateDownloadFileRequestDto::getAvailableUntil(): ?string
+DTO\CreateDownloadFileRequestDto::getFileName(): ?string
+DTO\CreateDownloadFileRequestDto::getHidden(): ?bool
+DTO\CreateDownloadFileRequestDto::getName(): string
+DTO\CreateDownloadFileRequestDto::getPlatform(): ?string
+DTO\CreateDownloadFileRequestDto::getProduct(): ?string
+DTO\CreateDownloadFileRequestDto::getPublic(): bool
+DTO\CreateDownloadFileRequestDto::getTenantId(): ?string
+DTO\CreateDownloadFileRequestDto::getType(): string
+DTO\CreateDownloadFileRequestDto::getUrl(): string
+DTO\CreateDownloadFileRequestDto::withAvailableUntil(?string $value): static
+DTO\CreateDownloadFileRequestDto::withFileName(?string $value): static
+DTO\CreateDownloadFileRequestDto::withHidden(?bool $value): static
+DTO\CreateDownloadFileRequestDto::withName(?string $value): static
+DTO\CreateDownloadFileRequestDto::withPlatform(?string $value): static
+DTO\CreateDownloadFileRequestDto::withProduct(?string $value): static
+DTO\CreateDownloadFileRequestDto::withPublic(?bool $value): static
+DTO\CreateDownloadFileRequestDto::withTenantId(?string $value): static
+DTO\CreateDownloadFileRequestDto::withType(?string $value): static
+DTO\CreateDownloadFileRequestDto::withUrl(?string $value): static
+DTO\CreateEsetCustomerRequestDto::getCustomerId(): ?float
+DTO\CreateEsetCustomerRequestDto::getEmail(): ?string
+DTO\CreateEsetCustomerRequestDto::getName(): string
+DTO\CreateEsetCustomerRequestDto::withCustomerId(?float $value): static
+DTO\CreateEsetCustomerRequestDto::withEmail(?string $value): static
+DTO\CreateEsetCustomerRequestDto::withName(?string $value): static
+DTO\CreateEsetLicenseRequestDto::getCustomerId(): string
+DTO\CreateEsetLicenseRequestDto::getProductCode(): string
+DTO\CreateEsetLicenseRequestDto::getQuantity(): float
+DTO\CreateEsetLicenseRequestDto::withCustomerId(?string $value): static
+DTO\CreateEsetLicenseRequestDto::withProductCode(?string $value): static
+DTO\CreateEsetLicenseRequestDto::withQuantity(?float $value): static
+DTO\CreateEsetPartnerRequestDto::getEmail(): string
+DTO\CreateEsetPartnerRequestDto::getManagementType(): ?string
+DTO\CreateEsetPartnerRequestDto::getTenantId(): string
+DTO\CreateEsetPartnerRequestDto::withEmail(?string $value): static
+DTO\CreateEsetPartnerRequestDto::withManagementType(?string $value): static
+DTO\CreateEsetPartnerRequestDto::withTenantId(?string $value): static
+DTO\CreateGuardian360CustomerRequestDto::getCustomerId(): ?float
+DTO\CreateGuardian360CustomerRequestDto::getEmail(): string
+DTO\CreateGuardian360CustomerRequestDto::getFirstname(): string
+DTO\CreateGuardian360CustomerRequestDto::getLastname(): string
+DTO\CreateGuardian360CustomerRequestDto::getName(): string
+DTO\CreateGuardian360CustomerRequestDto::getPhone(): string
+DTO\CreateGuardian360CustomerRequestDto::withCustomerId(?float $value): static
+DTO\CreateGuardian360CustomerRequestDto::withEmail(?string $value): static
+DTO\CreateGuardian360CustomerRequestDto::withFirstname(?string $value): static
+DTO\CreateGuardian360CustomerRequestDto::withLastname(?string $value): static
+DTO\CreateGuardian360CustomerRequestDto::withName(?string $value): static
+DTO\CreateGuardian360CustomerRequestDto::withPhone(?string $value): static
+DTO\CreateGuardian360PartnerRequestDto::getEmail(): string
+DTO\CreateGuardian360PartnerRequestDto::getFirstname(): string
+DTO\CreateGuardian360PartnerRequestDto::getLastname(): string
+DTO\CreateGuardian360PartnerRequestDto::getPhone(): string
+DTO\CreateGuardian360PartnerRequestDto::getTenantId(): string
+DTO\CreateGuardian360PartnerRequestDto::withEmail(?string $value): static
+DTO\CreateGuardian360PartnerRequestDto::withFirstname(?string $value): static
+DTO\CreateGuardian360PartnerRequestDto::withLastname(?string $value): static
+DTO\CreateGuardian360PartnerRequestDto::withPhone(?string $value): static
+DTO\CreateGuardian360PartnerRequestDto::withTenantId(?string $value): static
+DTO\CreateJournalingMailboxRequestDto::getInstanceId(): string
+DTO\CreateJournalingMailboxRequestDto::withInstanceId(?string $value): static
+DTO\CreateLayoutItemDto::getCols(): float
+DTO\CreateLayoutItemDto::getRows(): float
+DTO\CreateLayoutItemDto::getType(): string
+DTO\CreateLayoutItemDto::getX(): float
+DTO\CreateLayoutItemDto::getY(): float
+DTO\CreateLifecycleInfoRequestDto::getEol(): string
+DTO\CreateLifecycleInfoRequestDto::getName(): string
+DTO\CreateLifecycleInfoRequestDto::getRelease(): string
+DTO\CreateLifecycleInfoRequestDto::getType(): string
+DTO\CreateLifecycleInfoRequestDto::withEol(?string $value): static
+DTO\CreateLifecycleInfoRequestDto::withName(?string $value): static
+DTO\CreateLifecycleInfoRequestDto::withRelease(?string $value): static
+DTO\CreateLifecycleInfoRequestDto::withType(?string $value): static
+DTO\CreateLywandCustomerRequestDto::getCustomerId(): ?float
+DTO\CreateLywandCustomerRequestDto::getName(): string
+DTO\CreateLywandCustomerRequestDto::withCustomerId(?float $value): static
+DTO\CreateLywandCustomerRequestDto::withName(?string $value): static
+DTO\CreateLywandPartnerRequestDto::getEmail(): string
+DTO\CreateLywandPartnerRequestDto::getTenantId(): string
+DTO\CreateLywandPartnerRequestDto::getType(): string
+DTO\CreateLywandPartnerRequestDto::withEmail(?string $value): static
+DTO\CreateLywandPartnerRequestDto::withTenantId(?string $value): static
+DTO\CreateLywandPartnerRequestDto::withType(?string $value): static
+DTO\CreateMailstoreInstanceRequestDto::getAlias(): ?string
+DTO\CreateMailstoreInstanceRequestDto::getCustomerId(): ?float
+DTO\CreateMailstoreInstanceRequestDto::getDisplayName(): string
+DTO\CreateMailstoreInstanceRequestDto::getPassword(): string
+DTO\CreateMailstoreInstanceRequestDto::withAlias(?string $value): static
+DTO\CreateMailstoreInstanceRequestDto::withCustomerId(?float $value): static
+DTO\CreateMailstoreInstanceRequestDto::withDisplayName(?string $value): static
+DTO\CreateMailstoreInstanceRequestDto::withPassword(?string $value): static
+DTO\CreateMessageRequestDto::getIsAdvertisement(): ?bool
+DTO\CreateMessageRequestDto::getLink(): ?string
+DTO\CreateMessageRequestDto::getMessageDe(): string
+DTO\CreateMessageRequestDto::getMessageEn(): ?string
+DTO\CreateMessageRequestDto::getSubject(): string
+DTO\CreateMessageRequestDto::getSubjectEn(): ?string
+DTO\CreateMessageRequestDto::getTags(): array
+DTO\CreateMessageRequestDto::getTarget(): mixed
+DTO\CreateMessageRequestDto::getTargetType(): string
+DTO\CreateMessageRequestDto::withIsAdvertisement(?bool $value): static
+DTO\CreateMessageRequestDto::withLink(?string $value): static
+DTO\CreateMessageRequestDto::withMessageDe(?string $value): static
+DTO\CreateMessageRequestDto::withMessageEn(?string $value): static
+DTO\CreateMessageRequestDto::withSubject(?string $value): static
+DTO\CreateMessageRequestDto::withSubjectEn(?string $value): static
+DTO\CreateMessageRequestDto::withTags(?array $value): static
+DTO\CreateMessageRequestDto::withTarget(mixed $value): static
+DTO\CreateMessageRequestDto::withTargetType(?string $value): static
+DTO\CreateMessageTemplateRequestDto::getIdempotencyKey(): ?string
+DTO\CreateMessageTemplateRequestDto::getIsAdvertisement(): ?bool
+DTO\CreateMessageTemplateRequestDto::getLink(): ?string
+DTO\CreateMessageTemplateRequestDto::getMessageDe(): string
+DTO\CreateMessageTemplateRequestDto::getMessageEn(): ?string
+DTO\CreateMessageTemplateRequestDto::getScheduledAt(): ?string
+DTO\CreateMessageTemplateRequestDto::getSubject(): string
+DTO\CreateMessageTemplateRequestDto::getSubjectEn(): ?string
+DTO\CreateMessageTemplateRequestDto::getTags(): array
+DTO\CreateMessageTemplateRequestDto::getTarget(): mixed
+DTO\CreateMessageTemplateRequestDto::getTargetType(): string
+DTO\CreateMessageTemplateRequestDto::withIdempotencyKey(?string $value): static
+DTO\CreateMessageTemplateRequestDto::withIsAdvertisement(?bool $value): static
+DTO\CreateMessageTemplateRequestDto::withLink(?string $value): static
+DTO\CreateMessageTemplateRequestDto::withMessageDe(?string $value): static
+DTO\CreateMessageTemplateRequestDto::withMessageEn(?string $value): static
+DTO\CreateMessageTemplateRequestDto::withScheduledAt(?string $value): static
+DTO\CreateMessageTemplateRequestDto::withSubject(?string $value): static
+DTO\CreateMessageTemplateRequestDto::withSubjectEn(?string $value): static
+DTO\CreateMessageTemplateRequestDto::withTags(?array $value): static
+DTO\CreateMessageTemplateRequestDto::withTarget(mixed $value): static
+DTO\CreateMessageTemplateRequestDto::withTargetType(?string $value): static
+DTO\CreateNSightClientRequestDto::getName(): ?string
+DTO\CreateNSightClientRequestDto::withName(?string $value): static
+DTO\CreateNSightDashboardRequestDto::getApiKey(): string
+DTO\CreateNSightDashboardRequestDto::getApiKeyNetwork(): string
+DTO\CreateNSightDashboardRequestDto::getDefault(): bool
+DTO\CreateNSightDashboardRequestDto::getName(): string
+DTO\CreateNSightDashboardRequestDto::withApiKey(?string $value): static
+DTO\CreateNSightDashboardRequestDto::withApiKeyNetwork(?string $value): static
+DTO\CreateNSightDashboardRequestDto::withDefault(?bool $value): static
+DTO\CreateNSightDashboardRequestDto::withName(?string $value): static
+DTO\CreateNSightSiteRequestDto::getClientId(): string
+DTO\CreateNSightSiteRequestDto::getCustomerId(): ?float
+DTO\CreateNSightSiteRequestDto::getName(): string
+DTO\CreateNSightSiteRequestDto::withClientId(?string $value): static
+DTO\CreateNSightSiteRequestDto::withCustomerId(?float $value): static
+DTO\CreateNSightSiteRequestDto::withName(?string $value): static
+DTO\CreateNeumeierApiKeyRequestDto::getDurationTime(): string
+DTO\CreateNeumeierApiKeyRequestDto::getTitle(): string
+DTO\CreateNeumeierApiKeyRequestDto::withDurationTime(?string $value): static
+DTO\CreateNeumeierApiKeyRequestDto::withTitle(?string $value): static
+DTO\CreateNeumeierApiKeyResponseDto::getApiKey(): string
+DTO\CreateNeumeierApiKeyResponseDto::getCreatedAt(): string
+DTO\CreateNeumeierApiKeyResponseDto::getExpiresAt(): string
+DTO\CreateNeumeierApiKeyResponseDto::getId(): string
+DTO\CreateNeumeierApiKeyResponseDto::getRevoked(): bool
+DTO\CreateNeumeierApiKeyResponseDto::getTitle(): string
+DTO\CreateNeumeierApiKeyResponseDto::getUpdatedAt(): string
+DTO\CreatePlainAuditLogRequestDto::getAction(): string
+DTO\CreatePlainAuditLogRequestDto::getEntityId(): string
+DTO\CreatePlainAuditLogRequestDto::getEntityRaw(): array
+DTO\CreatePlainAuditLogRequestDto::getEntityType(): string
+DTO\CreatePlainAuditLogRequestDto::getSubAction(): ?string
+DTO\CreatePlainAuditLogRequestDto::withAction(?string $value): static
+DTO\CreatePlainAuditLogRequestDto::withEntityId(?string $value): static
+DTO\CreatePlainAuditLogRequestDto::withEntityRaw(?array $value): static
+DTO\CreatePlainAuditLogRequestDto::withEntityType(?string $value): static
+DTO\CreatePlainAuditLogRequestDto::withSubAction(?string $value): static
+DTO\CreateReportSettingRequestDto::getCronExpression(): ?string
+DTO\CreateReportSettingRequestDto::getCustomDisplayName(): ?string
+DTO\CreateReportSettingRequestDto::getIntroductionText(): ?string
+DTO\CreateReportSettingRequestDto::getLanguage(): ?string
+DTO\CreateReportSettingRequestDto::getModules(): array
+DTO\CreateReportSettingRequestDto::getRecipients(): array
+DTO\CreateReportSettingRequestDto::getTimezone(): ?string
+DTO\CreateReportSettingRequestDto::withCronExpression(?string $value): static
+DTO\CreateReportSettingRequestDto::withCustomDisplayName(?string $value): static
+DTO\CreateReportSettingRequestDto::withIntroductionText(?string $value): static
+DTO\CreateReportSettingRequestDto::withLanguage(?string $value): static
+DTO\CreateReportSettingRequestDto::withModules(?array $value): static
+DTO\CreateReportSettingRequestDto::withRecipients(?array $value): static
+DTO\CreateReportSettingRequestDto::withTimezone(?string $value): static
+DTO\CreateRollouterCustomerRequestDto::getClientLimit(): float
+DTO\CreateRollouterCustomerRequestDto::getCustomerId(): ?float
+DTO\CreateRollouterCustomerRequestDto::getName(): string
+DTO\CreateRollouterCustomerRequestDto::getPlan(): string
+DTO\CreateRollouterCustomerRequestDto::withClientLimit(?float $value): static
+DTO\CreateRollouterCustomerRequestDto::withCustomerId(?float $value): static
+DTO\CreateRollouterCustomerRequestDto::withName(?string $value): static
+DTO\CreateRollouterCustomerRequestDto::withPlan(?string $value): static
+DTO\CreateRollouterPartnerRequestDto::getEmail(): string
+DTO\CreateRollouterPartnerRequestDto::getFirstname(): string
+DTO\CreateRollouterPartnerRequestDto::getLastname(): string
+DTO\CreateRollouterPartnerRequestDto::getPassword(): string
+DTO\CreateRollouterPartnerRequestDto::getTenantId(): string
+DTO\CreateRollouterPartnerRequestDto::withEmail(?string $value): static
+DTO\CreateRollouterPartnerRequestDto::withFirstname(?string $value): static
+DTO\CreateRollouterPartnerRequestDto::withLastname(?string $value): static
+DTO\CreateRollouterPartnerRequestDto::withPassword(?string $value): static
+DTO\CreateRollouterPartnerRequestDto::withTenantId(?string $value): static
+DTO\CreateScheduleRequestDto::getCronExpression(): string
+DTO\CreateScheduleRequestDto::getDisabled(): bool
+DTO\CreateScheduleRequestDto::getName(): string
+DTO\CreateScheduleRequestDto::getTimeZone(): ?string
+DTO\CreateScheduleRequestDto::withCronExpression(?string $value): static
+DTO\CreateScheduleRequestDto::withDisabled(?bool $value): static
+DTO\CreateScheduleRequestDto::withName(?string $value): static
+DTO\CreateScheduleRequestDto::withTimeZone(?string $value): static
+DTO\CreateSecAuditorCustomerRequestDto::getBillingCycle(): string
+DTO\CreateSecAuditorCustomerRequestDto::getCustomerId(): ?float
+DTO\CreateSecAuditorCustomerRequestDto::getEmployees(): ?float
+DTO\CreateSecAuditorCustomerRequestDto::getMode(): string
+DTO\CreateSecAuditorCustomerRequestDto::getName(): string
+DTO\CreateSecAuditorCustomerRequestDto::withBillingCycle(?string $value): static
+DTO\CreateSecAuditorCustomerRequestDto::withCustomerId(?float $value): static
+DTO\CreateSecAuditorCustomerRequestDto::withEmployees(?float $value): static
+DTO\CreateSecAuditorCustomerRequestDto::withMode(?string $value): static
+DTO\CreateSecAuditorCustomerRequestDto::withName(?string $value): static
+DTO\CreateSecAuditorPartnerRequestDto::getEmail(): string
+DTO\CreateSecAuditorPartnerRequestDto::getFirstname(): string
+DTO\CreateSecAuditorPartnerRequestDto::getLastname(): string
+DTO\CreateSecAuditorPartnerRequestDto::getTenantId(): string
+DTO\CreateSecAuditorPartnerRequestDto::getType(): string
+DTO\CreateSecAuditorPartnerRequestDto::withEmail(?string $value): static
+DTO\CreateSecAuditorPartnerRequestDto::withFirstname(?string $value): static
+DTO\CreateSecAuditorPartnerRequestDto::withLastname(?string $value): static
+DTO\CreateSecAuditorPartnerRequestDto::withTenantId(?string $value): static
+DTO\CreateSecAuditorPartnerRequestDto::withType(?string $value): static
+DTO\CreateSmaoCustomerRequestDto::getCustomerId(): ?float
+DTO\CreateSmaoCustomerRequestDto::getName(): string
+DTO\CreateSmaoCustomerRequestDto::getOwnerEmail(): string
+DTO\CreateSmaoCustomerRequestDto::getOwnerFirstName(): string
+DTO\CreateSmaoCustomerRequestDto::getOwnerLastName(): string
+DTO\CreateSmaoCustomerRequestDto::getPlanCommitment(): string
+DTO\CreateSmaoCustomerRequestDto::getPlanSlug(): string
+DTO\CreateSmaoCustomerRequestDto::withCustomerId(?float $value): static
+DTO\CreateSmaoCustomerRequestDto::withName(?string $value): static
+DTO\CreateSmaoCustomerRequestDto::withOwnerEmail(?string $value): static
+DTO\CreateSmaoCustomerRequestDto::withOwnerFirstName(?string $value): static
+DTO\CreateSmaoCustomerRequestDto::withOwnerLastName(?string $value): static
+DTO\CreateSmaoCustomerRequestDto::withPlanCommitment(?string $value): static
+DTO\CreateSmaoCustomerRequestDto::withPlanSlug(?string $value): static
+DTO\CreateSmaoPartnerRequestDto::getEmail(): string
+DTO\CreateSmaoPartnerRequestDto::getFirstname(): string
+DTO\CreateSmaoPartnerRequestDto::getLastname(): string
+DTO\CreateSmaoPartnerRequestDto::getTenantId(): string
+DTO\CreateSmaoPartnerRequestDto::withEmail(?string $value): static
+DTO\CreateSmaoPartnerRequestDto::withFirstname(?string $value): static
+DTO\CreateSmaoPartnerRequestDto::withLastname(?string $value): static
+DTO\CreateSmaoPartnerRequestDto::withTenantId(?string $value): static
+DTO\CreateSmtpConfigRequestDto::getEncryption(): string
+DTO\CreateSmtpConfigRequestDto::getFromAddress(): string
+DTO\CreateSmtpConfigRequestDto::getFromDisplayName(): ?string
+DTO\CreateSmtpConfigRequestDto::getHost(): string
+DTO\CreateSmtpConfigRequestDto::getPassword(): string
+DTO\CreateSmtpConfigRequestDto::getPort(): float
+DTO\CreateSmtpConfigRequestDto::getUsername(): string
+DTO\CreateSmtpConfigRequestDto::withEncryption(?string $value): static
+DTO\CreateSmtpConfigRequestDto::withFromAddress(?string $value): static
+DTO\CreateSmtpConfigRequestDto::withFromDisplayName(?string $value): static
+DTO\CreateSmtpConfigRequestDto::withHost(?string $value): static
+DTO\CreateSmtpConfigRequestDto::withPassword(?string $value): static
+DTO\CreateSmtpConfigRequestDto::withPort(?float $value): static
+DTO\CreateSmtpConfigRequestDto::withUsername(?string $value): static
+DTO\CreateSupportQueryRequestDto::getQuery(): string
+DTO\CreateSupportQueryRequestDto::getThreadId(): string
+DTO\CreateSupportQueryRequestDto::withQuery(?string $value): static
+DTO\CreateSupportQueryRequestDto::withThreadId(?string $value): static
+DTO\CustomerCountDto::getCount(): float
+DTO\CustomerModuleStatusDto::getErrors(): float
+DTO\CustomerModuleStatusDto::getModule(): string
+DTO\CustomerModuleStatusDto::getScore(): float
+DTO\CustomerModuleStatusDto::getTotal(): float
+DTO\CustomerPaginatedResponseDto::getData(): array
+DTO\CustomerPaginatedResponseDto::getLimit(): float
+DTO\CustomerPaginatedResponseDto::getPage(): float
+DTO\CustomerPaginatedResponseDto::getTotalItems(): float
+DTO\CustomerRankingDto::getCustomers(): array
+DTO\CustomerRankingDto::getTotalCustomers(): float
+DTO\CustomerRankingItemDto::getCustomerId(): ?float
+DTO\CustomerRankingItemDto::getCustomerName(): string
+DTO\CustomerRankingItemDto::getModules(): array
+DTO\CustomerRankingItemDto::getOverallScore(): float
+DTO\CustomerRankingItemDto::getTotalErrors(): float
+DTO\CustomerRankingItemDto::getTotalItems(): float
+DTO\CustomerReferenceResponseDto::getCreatedAt(): string
+DTO\CustomerReferenceResponseDto::getCustomerId(): float
+DTO\CustomerReferenceResponseDto::getId(): string
+DTO\CustomerReferenceResponseDto::getReferenceId(): string
+DTO\CustomerReferenceResponseDto::getSystem(): string
+DTO\CustomerReferenceResponseDto::getUpdatedAt(): string
+DTO\CustomerResponseDto::getCity(): string
+DTO\CustomerResponseDto::getComment(): ?string
+DTO\CustomerResponseDto::getCorporateCustomer(): bool
+DTO\CustomerResponseDto::getCountry(): string
+DTO\CustomerResponseDto::getCreatedAt(): string
+DTO\CustomerResponseDto::getCustomerNumber(): string
+DTO\CustomerResponseDto::getEmail(): ?string
+DTO\CustomerResponseDto::getFax(): ?string
+DTO\CustomerResponseDto::getId(): string
+DTO\CustomerResponseDto::getMobile(): ?string
+DTO\CustomerResponseDto::getName(): string
+DTO\CustomerResponseDto::getPhone(): ?string
+DTO\CustomerResponseDto::getPostalCode(): string
+DTO\CustomerResponseDto::getReferences(): array
+DTO\CustomerResponseDto::getSalutation(): string
+DTO\CustomerResponseDto::getStreet(): string
+DTO\CustomerResponseDto::getUpdatedAt(): string
+DTO\CustomerStatsItemDto::getCustomerId(): ?float
+DTO\CustomerStatsItemDto::getCustomerName(): string
+DTO\CustomerStatsItemDto::getErrors(): float
+DTO\CustomerStatsItemDto::getTotal(): float
+DTO\CustomerSuggestionResponseDto::getCustomer(): CustomerResponseDto
+DTO\CustomerSuggestionResponseDto::getScore(): float
+DTO\CustomerTargetSummaryResponseDto::getCustomerId(): ?float
+DTO\CustomerTargetSummaryResponseDto::getCustomerName(): ?string
+DTO\CustomerTargetSummaryResponseDto::getDeviceCount(): float
+DTO\CustomerTargetSummaryResponseDto::getSites(): array
+DTO\CyanSecurityCustomerPaginatedResponseDto::getData(): array
+DTO\CyanSecurityCustomerPaginatedResponseDto::getLimit(): float
+DTO\CyanSecurityCustomerPaginatedResponseDto::getPage(): float
+DTO\CyanSecurityCustomerPaginatedResponseDto::getTotalItems(): float
+DTO\CyanSecurityCustomerResponseDto::getCreatedAt(): string
+DTO\CyanSecurityCustomerResponseDto::getCustomerId(): ?float
+DTO\CyanSecurityCustomerResponseDto::getId(): string
+DTO\CyanSecurityCustomerResponseDto::getName(): string
+DTO\CyanSecurityCustomerResponseDto::getParentId(): string
+DTO\CyanSecurityCustomerResponseDto::getTenantId(): string
+DTO\CyanSecurityCustomerResponseDto::getUpdatedAt(): string
+DTO\CyanSecurityCustomerResponseDto::getVendorId(): string
+DTO\CyanSecurityPartnerPaginatedResponseDto::getData(): array
+DTO\CyanSecurityPartnerPaginatedResponseDto::getLimit(): float
+DTO\CyanSecurityPartnerPaginatedResponseDto::getPage(): float
+DTO\CyanSecurityPartnerPaginatedResponseDto::getTotalItems(): float
+DTO\CyanSecurityPartnerResponseDto::getCreatedAt(): string
+DTO\CyanSecurityPartnerResponseDto::getId(): string
+DTO\CyanSecurityPartnerResponseDto::getName(): string
+DTO\CyanSecurityPartnerResponseDto::getTenantId(): string
+DTO\CyanSecurityPartnerResponseDto::getUpdatedAt(): string
+DTO\CyanSecurityPartnerResponseDto::getVendorId(): string
+DTO\DashboardLayoutPaginatedResponseDto::getData(): array
+DTO\DashboardLayoutPaginatedResponseDto::getLimit(): float
+DTO\DashboardLayoutPaginatedResponseDto::getPage(): float
+DTO\DashboardLayoutPaginatedResponseDto::getTotalItems(): float
+DTO\DashboardLayoutResponseDto::getCreatedAt(): string
+DTO\DashboardLayoutResponseDto::getDefault(): bool
+DTO\DashboardLayoutResponseDto::getId(): string
+DTO\DashboardLayoutResponseDto::getLayout(): array
+DTO\DashboardLayoutResponseDto::getMbLayout(): array
+DTO\DashboardLayoutResponseDto::getMc2cLayout(): array
+DTO\DashboardLayoutResponseDto::getMeaLayout(): array
+DTO\DashboardLayoutResponseDto::getMesLayout(): array
+DTO\DashboardLayoutResponseDto::getMsaLayout(): array
+DTO\DashboardLayoutResponseDto::getName(): string
+DTO\DashboardLayoutResponseDto::getRmmLayout(): array
+DTO\DashboardLayoutResponseDto::getTenantId(): string
+DTO\DashboardLayoutResponseDto::getType(): string
+DTO\DashboardLayoutResponseDto::getUpdatedAt(): string
+DTO\DashboardLayoutResponseDto::getUserId(): ?string
+DTO\DeleteAuthTokenResponseDto::getRedirectUrl(): ?string
+DTO\DeployPatchesBulkRequestDto::getFilters(): mixed
+DTO\DeployPatchesBulkRequestDto::getPatchIds(): array
+DTO\DeployPatchesBulkRequestDto::getStatus(): string
+DTO\DeployPatchesBulkRequestDto::getTargetScope(): string
+DTO\DeployPatchesBulkRequestDto::withFilters(mixed $value): static
+DTO\DeployPatchesBulkRequestDto::withPatchIds(?array $value): static
+DTO\DeployPatchesBulkRequestDto::withStatus(?string $value): static
+DTO\DeployPatchesBulkRequestDto::withTargetScope(?string $value): static
+DTO\DeployPatchesBulkResponseDto::getAffectedCustomers(): array
+DTO\DeployPatchesBulkResponseDto::getTotalDevicesQueued(): float
+DTO\DeployPatchesRequestDto::getPatchIds(): array
+DTO\DeployPatchesRequestDto::getSiteIds(): array
+DTO\DeployPatchesRequestDto::getStatus(): string
+DTO\DeployPatchesRequestDto::withPatchIds(?array $value): static
+DTO\DeployPatchesRequestDto::withSiteIds(?array $value): static
+DTO\DeployPatchesRequestDto::withStatus(?string $value): static
+DTO\DeviceDto::getId(): string
+DTO\DeviceDto::getName(): string
+DTO\DeviceDto::getOperatingSystem(): ?string
+DTO\DeviceDto::getType(): string
+DTO\DeviceFilterDto::getIn(): array
+DTO\DeviceFilterDto::getNotIn(): array
+DTO\DevicesDto::getDevices(): array
+DTO\DevicesDto::getServers(): float
+DTO\DevicesDto::getWorkstations(): float
+DTO\DiskDto::getDescription(): string
+DTO\DiskDto::getFreeSpace(): float
+DTO\DiskDto::getSize(): float
+DTO\DownloadFilePaginatedResponseDto::getData(): array
+DTO\DownloadFilePaginatedResponseDto::getLimit(): float
+DTO\DownloadFilePaginatedResponseDto::getPage(): float
+DTO\DownloadFilePaginatedResponseDto::getTotalItems(): float
+DTO\DownloadFileResponseDto::getAvailableUntil(): ?string
+DTO\DownloadFileResponseDto::getCreatedAt(): string
+DTO\DownloadFileResponseDto::getDownloads(): ?float
+DTO\DownloadFileResponseDto::getFileName(): ?string
+DTO\DownloadFileResponseDto::getHidden(): ?bool
+DTO\DownloadFileResponseDto::getId(): string
+DTO\DownloadFileResponseDto::getName(): string
+DTO\DownloadFileResponseDto::getPlatform(): ?string
+DTO\DownloadFileResponseDto::getProduct(): ?string
+DTO\DownloadFileResponseDto::getPublic(): bool
+DTO\DownloadFileResponseDto::getTenantId(): ?string
+DTO\DownloadFileResponseDto::getType(): string
+DTO\DownloadFileResponseDto::getUpdatedAt(): string
+DTO\DownloadFileResponseDto::getUrl(): ?string
+DTO\DownloadFileUploadUrlResponseDto::getUrl(): string
+DTO\DownloadFileUrlResponseDto::getFileName(): string
+DTO\DownloadFileUrlResponseDto::getUrl(): string
+DTO\EsetCustomerCountDto::getCount(): float
+DTO\EsetCustomerPaginatedResponseDto::getData(): array
+DTO\EsetCustomerPaginatedResponseDto::getLimit(): float
+DTO\EsetCustomerPaginatedResponseDto::getPage(): float
+DTO\EsetCustomerPaginatedResponseDto::getTotalItems(): float
+DTO\EsetCustomerResponseDto::getCreatedAt(): string
+DTO\EsetCustomerResponseDto::getCustomerId(): ?float
+DTO\EsetCustomerResponseDto::getEmail(): ?string
+DTO\EsetCustomerResponseDto::getId(): string
+DTO\EsetCustomerResponseDto::getLicenses(): array
+DTO\EsetCustomerResponseDto::getManagementType(): string
+DTO\EsetCustomerResponseDto::getName(): string
+DTO\EsetCustomerResponseDto::getParentId(): string
+DTO\EsetCustomerResponseDto::getStatus(): float
+DTO\EsetCustomerResponseDto::getTenantId(): string
+DTO\EsetCustomerResponseDto::getType(): float
+DTO\EsetCustomerResponseDto::getUpdatedAt(): string
+DTO\EsetCustomerResponseDto::getVendorId(): string
+DTO\EsetCustomerStatsItemDto::getCustomerId(): ?float
+DTO\EsetCustomerStatsItemDto::getCustomerName(): string
+DTO\EsetCustomerStatsItemDto::getErrors(): float
+DTO\EsetCustomerStatsItemDto::getTotal(): float
+DTO\EsetDeviceDto::getLicensePublicId(): ?string
+DTO\EsetDeviceDto::getModuleStatus(): string
+DTO\EsetDeviceDto::getName(): string
+DTO\EsetDeviceDto::getOsName(): ?string
+DTO\EsetDeviceDto::getSecurityProductName(): ?string
+DTO\EsetDeviceDto::getSecurityProductVersion(): ?string
+DTO\EsetDeviceDto::getStatus(): string
+DTO\EsetDevicePaginatedResponseDto::getData(): array
+DTO\EsetDevicePaginatedResponseDto::getLimit(): float
+DTO\EsetDevicePaginatedResponseDto::getPage(): float
+DTO\EsetDevicePaginatedResponseDto::getTotalItems(): float
+DTO\EsetDeviceProblemPaginatedResponseDto::getData(): array
+DTO\EsetDeviceProblemPaginatedResponseDto::getLimit(): float
+DTO\EsetDeviceProblemPaginatedResponseDto::getPage(): float
+DTO\EsetDeviceProblemPaginatedResponseDto::getTotalItems(): float
+DTO\EsetDeviceProblemResponseDto::getCreatedAt(): string
+DTO\EsetDeviceProblemResponseDto::getDeviceName(): string
+DTO\EsetDeviceProblemResponseDto::getId(): string
+DTO\EsetDeviceProblemResponseDto::getParentId(): string
+DTO\EsetDeviceProblemResponseDto::getProblem(): string
+DTO\EsetDeviceProblemResponseDto::getProblemDetail(): string
+DTO\EsetDeviceProblemResponseDto::getSeverity(): string
+DTO\EsetDeviceProblemResponseDto::getTenantId(): string
+DTO\EsetDeviceProblemResponseDto::getUpdatedAt(): string
+DTO\EsetDeviceResponseDto::getCreatedAt(): string
+DTO\EsetDeviceResponseDto::getDatabaseDate(): string
+DTO\EsetDeviceResponseDto::getDetections(): float
+DTO\EsetDeviceResponseDto::getId(): string
+DTO\EsetDeviceResponseDto::getLicensePublicId(): string
+DTO\EsetDeviceResponseDto::getModuleStatus(): string
+DTO\EsetDeviceResponseDto::getName(): string
+DTO\EsetDeviceResponseDto::getOsBuildNumber(): string
+DTO\EsetDeviceResponseDto::getOsName(): string
+DTO\EsetDeviceResponseDto::getOsVersion(): string
+DTO\EsetDeviceResponseDto::getParentId(): string
+DTO\EsetDeviceResponseDto::getSecurityProductName(): string
+DTO\EsetDeviceResponseDto::getSecurityProductVersion(): string
+DTO\EsetDeviceResponseDto::getStatus(): string
+DTO\EsetDeviceResponseDto::getUpdatedAt(): string
+DTO\EsetDeviceResponseDto::getVendorId(): string
+DTO\EsetLicenseDto::getActiveLicenses(): float
+DTO\EsetLicenseDto::getProductProtectAdvancedQuantity(): float
+DTO\EsetLicenseDto::getProductProtectAdvancedUsage(): float
+DTO\EsetLicenseDto::getProductProtectCompleteQuantity(): float
+DTO\EsetLicenseDto::getProductProtectCompleteUsage(): float
+DTO\EsetLicenseDto::getProductProtectEntryOnPremQuantity(): float
+DTO\EsetLicenseDto::getProductProtectEntryOnPremUsage(): float
+DTO\EsetLicensePaginatedResponseDto::getData(): array
+DTO\EsetLicensePaginatedResponseDto::getLimit(): float
+DTO\EsetLicensePaginatedResponseDto::getPage(): float
+DTO\EsetLicensePaginatedResponseDto::getTotalItems(): float
+DTO\EsetLicenseResponseDto::getBundleProducts(): array
+DTO\EsetLicenseResponseDto::getCreatedAt(): string
+DTO\EsetLicenseResponseDto::getCustomerId(): string
+DTO\EsetLicenseResponseDto::getCustomerName(): ?string
+DTO\EsetLicenseResponseDto::getId(): string
+DTO\EsetLicenseResponseDto::getParentId(): string
+DTO\EsetLicenseResponseDto::getProductCode(): string
+DTO\EsetLicenseResponseDto::getProductName(): string
+DTO\EsetLicenseResponseDto::getPublicLicenseKey(): string
+DTO\EsetLicenseResponseDto::getQuantity(): float
+DTO\EsetLicenseResponseDto::getState(): float
+DTO\EsetLicenseResponseDto::getTenantId(): string
+DTO\EsetLicenseResponseDto::getTrial(): bool
+DTO\EsetLicenseResponseDto::getTrialExpiration(): ?string
+DTO\EsetLicenseResponseDto::getUpdatedAt(): string
+DTO\EsetLicenseResponseDto::getUsage(): float
+DTO\EsetLicenseStat::getProductCode(): string
+DTO\EsetLicenseStat::getProductName(): string
+DTO\EsetLicenseStat::getQuantity(): float
+DTO\EsetLicenseStat::getUsage(): float
+DTO\EsetMetrics::getActiveLicenses(): MetricValueDto
+DTO\EsetMetrics::getProductProtectAdvancedQuantity(): MetricValueDto
+DTO\EsetMetrics::getProductProtectAdvancedUsage(): MetricValueDto
+DTO\EsetMetrics::getProductProtectCompleteQuantity(): MetricValueDto
+DTO\EsetMetrics::getProductProtectCompleteUsage(): MetricValueDto
+DTO\EsetMetrics::getProductProtectEntryOnPremQuantity(): MetricValueDto
+DTO\EsetMetrics::getProductProtectEntryOnPremUsage(): MetricValueDto
+DTO\EsetMetricsResponseDto::getCurrTimestamp(): string
+DTO\EsetMetricsResponseDto::getPrevTimestamp(): ?string
+DTO\EsetMetricsResponseDto::getValues(): mixed
+DTO\EsetPartnerPaginatedResponseDto::getData(): array
+DTO\EsetPartnerPaginatedResponseDto::getLimit(): float
+DTO\EsetPartnerPaginatedResponseDto::getPage(): float
+DTO\EsetPartnerPaginatedResponseDto::getTotalItems(): float
+DTO\EsetPartnerResponseDto::getCreatedAt(): string
+DTO\EsetPartnerResponseDto::getEmail(): string
+DTO\EsetPartnerResponseDto::getId(): string
+DTO\EsetPartnerResponseDto::getLicenseStats(): array
+DTO\EsetPartnerResponseDto::getManagementType(): string
+DTO\EsetPartnerResponseDto::getName(): string
+DTO\EsetPartnerResponseDto::getProtectRegion(): string
+DTO\EsetPartnerResponseDto::getStatus(): float
+DTO\EsetPartnerResponseDto::getTenantId(): string
+DTO\EsetPartnerResponseDto::getType(): float
+DTO\EsetPartnerResponseDto::getUpdatedAt(): string
+DTO\EsetPartnerResponseDto::getVendorId(): string
+DTO\EsetProductResponseDto::getActivatable(): bool
+DTO\EsetProductResponseDto::getBookable(): bool
+DTO\EsetProductResponseDto::getCode(): string
+DTO\EsetProductResponseDto::getCreatedAt(): string
+DTO\EsetProductResponseDto::getFullService(): bool
+DTO\EsetProductResponseDto::getId(): string
+DTO\EsetProductResponseDto::getName(): string
+DTO\EsetProductResponseDto::getSortPriority(): float
+DTO\EsetProductResponseDto::getUpdatedAt(): string
+DTO\EsetReportDataResponseDto::getCustomerCount(): mixed
+DTO\EsetReportDataResponseDto::getCustomerStats(): array
+DTO\EsetReportDataResponseDto::getDeviceList(): array
+DTO\EsetReportDataResponseDto::getFailuresList(): array
+DTO\EsetReportDataResponseDto::getNoLicenseList(): array
+DTO\EsetReportDataResponseDto::getScore(): mixed
+DTO\EsetReportDataResponseDto::getStorage(): mixed
+DTO\EsetScoreDto::getDevicesWithErrors(): float
+DTO\EsetScoreDto::getScore(): float
+DTO\EsetScoreDto::getTotalDevices(): float
+DTO\ExtendedLywandTargetResponseDto::getCreatedAt(): string
+DTO\ExtendedLywandTargetResponseDto::getHighestRisk(): ?float
+DTO\ExtendedLywandTargetResponseDto::getId(): string
+DTO\ExtendedLywandTargetResponseDto::getInScope(): bool
+DTO\ExtendedLywandTargetResponseDto::getLywandIdentifier(): string
+DTO\ExtendedLywandTargetResponseDto::getName(): string
+DTO\ExtendedLywandTargetResponseDto::getParentId(): string
+DTO\ExtendedLywandTargetResponseDto::getTenantId(): string
+DTO\ExtendedLywandTargetResponseDto::getType(): string
+DTO\ExtendedLywandTargetResponseDto::getUpdatedAt(): string
+DTO\ExtendedLywandTargetResponseDto::getVendorId(): string
+DTO\ExtendedLywandTargetResponseDto::getVulnerabilities(): float
+DTO\FailedLoginDeviceDto::getId(): string
+DTO\FailedLoginDeviceDto::getName(): string
+DTO\FailedLoginDeviceDto::getType(): string
+DTO\FailingCheckDeviceDto::getDeviceId(): string
+DTO\FailingCheckDeviceDto::getDeviceName(): string
+DTO\FailingCheckDeviceDto::getErrors(): array
+DTO\FailingCheckDeviceDto::getSiteName(): string
+DTO\FailingCheckDeviceDto::getType(): string
+DTO\FindMessageTargetsRequestDto::getIsAdvertisement(): ?bool
+DTO\FindMessageTargetsRequestDto::getSendToAllUsersOfTenants(): ?bool
+DTO\FindMessageTargetsRequestDto::getTarget(): mixed
+DTO\FindMessageTargetsRequestDto::getTargetType(): string
+DTO\FindMessageTargetsRequestDto::withIsAdvertisement(?bool $value): static
+DTO\FindMessageTargetsRequestDto::withSendToAllUsersOfTenants(?bool $value): static
+DTO\FindMessageTargetsRequestDto::withTarget(mixed $value): static
+DTO\FindMessageTargetsRequestDto::withTargetType(?string $value): static
+DTO\FindPatchTargetsRequestDto::getFilters(): mixed
+DTO\FindPatchTargetsRequestDto::getTargetScope(): string
+DTO\FindPatchTargetsRequestDto::withFilters(mixed $value): static
+DTO\FindPatchTargetsRequestDto::withTargetScope(?string $value): static
+DTO\FindPatchTargetsResponseDto::getAffectedCustomers(): array
+DTO\FindPatchTargetsResponseDto::getTotalDevices(): float
+DTO\FindTenantsByIdsRequestDto::getIds(): array
+DTO\FindTenantsByIdsRequestDto::withIds(?array $value): static
+DTO\GroupedMetricMetadataDto::getEntityId(): ?string
+DTO\GroupedMetricMetadataDto::getEntityType(): ?string
+DTO\GroupedMetricsResponseDto::getMetadata(): mixed
+DTO\GroupedMetricsResponseDto::getPeriod(): string
+DTO\GroupedMetricsResponseDto::getValue(): array
+DTO\Guardian360CustomerPaginatedResponseDto::getData(): array
+DTO\Guardian360CustomerPaginatedResponseDto::getLimit(): float
+DTO\Guardian360CustomerPaginatedResponseDto::getPage(): float
+DTO\Guardian360CustomerPaginatedResponseDto::getTotalItems(): float
+DTO\Guardian360CustomerResponseDto::getCreatedAt(): string
+DTO\Guardian360CustomerResponseDto::getCustomerId(): ?float
+DTO\Guardian360CustomerResponseDto::getId(): string
+DTO\Guardian360CustomerResponseDto::getName(): string
+DTO\Guardian360CustomerResponseDto::getParentId(): string
+DTO\Guardian360CustomerResponseDto::getTenantId(): string
+DTO\Guardian360CustomerResponseDto::getUpdatedAt(): string
+DTO\Guardian360CustomerResponseDto::getVendorId(): string
+DTO\Guardian360PartnerPaginatedResponseDto::getData(): array
+DTO\Guardian360PartnerPaginatedResponseDto::getLimit(): float
+DTO\Guardian360PartnerPaginatedResponseDto::getPage(): float
+DTO\Guardian360PartnerPaginatedResponseDto::getTotalItems(): float
+DTO\Guardian360PartnerResponseDto::getCreatedAt(): string
+DTO\Guardian360PartnerResponseDto::getId(): string
+DTO\Guardian360PartnerResponseDto::getName(): string
+DTO\Guardian360PartnerResponseDto::getTenantId(): string
+DTO\Guardian360PartnerResponseDto::getUpdatedAt(): string
+DTO\Guardian360PartnerResponseDto::getVendorId(): string
+DTO\ImportCustomersResponseDto::getCreatedCount(): float
+DTO\ImportCustomersResponseDto::getFailedCount(): float
+DTO\ImportCustomersResponseDto::getSkippedCount(): float
+DTO\ImportCustomersResponseDto::getUpdatedCount(): float
+DTO\ImportFromRefreshtokensRequestDto::getRefreshTokensFile(): string
+DTO\ImportFromRefreshtokensRequestDto::withRefreshTokensFile(?string $value): static
+DTO\JournalingMailboxPaginatedResponseDto::getData(): array
+DTO\JournalingMailboxPaginatedResponseDto::getLimit(): float
+DTO\JournalingMailboxPaginatedResponseDto::getPage(): float
+DTO\JournalingMailboxPaginatedResponseDto::getTotalItems(): float
+DTO\JournalingMailboxResponseDto::getCreatedAt(): string
+DTO\JournalingMailboxResponseDto::getCustomerName(): ?string
+DTO\JournalingMailboxResponseDto::getDomain(): string
+DTO\JournalingMailboxResponseDto::getEmail(): string
+DTO\JournalingMailboxResponseDto::getId(): string
+DTO\JournalingMailboxResponseDto::getInstanceId(): string
+DTO\JournalingMailboxResponseDto::getQuota(): float
+DTO\JournalingMailboxResponseDto::getQuotaUsed(): float
+DTO\JournalingMailboxResponseDto::getTenantId(): string
+DTO\JournalingMailboxResponseDto::getUpdatedAt(): string
+DTO\LatestMetricMetadataDto::getEntityId(): string
+DTO\LatestMetricMetadataDto::getEntityType(): string
+DTO\LatestMetricsResponseDto::getMetadata(): mixed
+DTO\LatestMetricsResponseDto::getTimestamp(): string
+DTO\LatestMetricsResponseDto::getValue(): array
+DTO\LayoutItemDto::getCols(): float
+DTO\LayoutItemDto::getRows(): float
+DTO\LayoutItemDto::getType(): string
+DTO\LayoutItemDto::getX(): float
+DTO\LayoutItemDto::getY(): float
+DTO\LifecycleInfoPaginatedResponseDto::getData(): array
+DTO\LifecycleInfoPaginatedResponseDto::getLimit(): float
+DTO\LifecycleInfoPaginatedResponseDto::getPage(): float
+DTO\LifecycleInfoPaginatedResponseDto::getTotalItems(): float
+DTO\LifecycleInfoResponseDto::getCreatedAt(): string
+DTO\LifecycleInfoResponseDto::getEol(): ?string
+DTO\LifecycleInfoResponseDto::getId(): string
+DTO\LifecycleInfoResponseDto::getName(): string
+DTO\LifecycleInfoResponseDto::getRelease(): ?string
+DTO\LifecycleInfoResponseDto::getType(): string
+DTO\LifecycleInfoResponseDto::getUpdatedAt(): string
+DTO\LowDiskCapacityDeviceDto::getDisks(): array
+DTO\LowDiskCapacityDeviceDto::getId(): string
+DTO\LowDiskCapacityDeviceDto::getName(): string
+DTO\LowDiskCapacityDeviceDto::getType(): string
+DTO\LywandCustomerCountDto::getCount(): float
+DTO\LywandCustomerPaginatedResponseDto::getData(): array
+DTO\LywandCustomerPaginatedResponseDto::getLimit(): float
+DTO\LywandCustomerPaginatedResponseDto::getPage(): float
+DTO\LywandCustomerPaginatedResponseDto::getTotalItems(): float
+DTO\LywandCustomerResponseDto::getCreatedAt(): string
+DTO\LywandCustomerResponseDto::getCustomerId(): ?float
+DTO\LywandCustomerResponseDto::getId(): string
+DTO\LywandCustomerResponseDto::getInScope(): mixed
+DTO\LywandCustomerResponseDto::getName(): string
+DTO\LywandCustomerResponseDto::getOutOfScope(): mixed
+DTO\LywandCustomerResponseDto::getRating(): string
+DTO\LywandCustomerResponseDto::getScanCoverage(): float
+DTO\LywandCustomerResponseDto::getScore(): float
+DTO\LywandCustomerResponseDto::getTargets(): float
+DTO\LywandCustomerResponseDto::getType(): string
+DTO\LywandCustomerResponseDto::getUpdatedAt(): string
+DTO\LywandCustomerResponseDto::getVendorId(): string
+DTO\LywandCustomerResponseDto::getVulnerabilities(): mixed
+DTO\LywandCustomerScopeProperties::getDomains(): float
+DTO\LywandCustomerScopeProperties::getEmails(): float
+DTO\LywandCustomerScopeProperties::getEndpoints(): float
+DTO\LywandCustomerScopeProperties::getIpAddresses(): float
+DTO\LywandCustomerStatsItemDto::getCustomerId(): ?float
+DTO\LywandCustomerStatsItemDto::getCustomerName(): string
+DTO\LywandCustomerStatsItemDto::getErrors(): float
+DTO\LywandCustomerStatsItemDto::getTotal(): float
+DTO\LywandCustomerVulnerabilityProperties::getHigh(): float
+DTO\LywandCustomerVulnerabilityProperties::getLow(): float
+DTO\LywandCustomerVulnerabilityProperties::getMedium(): float
+DTO\LywandMetrics::getInScopeDomains(): MetricValueDto
+DTO\LywandMetrics::getInScopeEmails(): MetricValueDto
+DTO\LywandMetrics::getInScopeEndpoints(): MetricValueDto
+DTO\LywandMetrics::getInScopeIpAddresses(): MetricValueDto
+DTO\LywandMetrics::getOutOfScopeDomains(): MetricValueDto
+DTO\LywandMetrics::getOutOfScopeEmails(): MetricValueDto
+DTO\LywandMetrics::getOutOfScopeEndpoints(): MetricValueDto
+DTO\LywandMetrics::getOutOfScopeIpAddresses(): MetricValueDto
+DTO\LywandMetrics::getScore(): MetricValueDto
+DTO\LywandMetrics::getVulnerabilitiesHigh(): MetricValueDto
+DTO\LywandMetrics::getVulnerabilitiesLow(): MetricValueDto
+DTO\LywandMetrics::getVulnerabilitiesMedium(): MetricValueDto
+DTO\LywandMetricsResponseDto::getCurrTimestamp(): string
+DTO\LywandMetricsResponseDto::getPrevTimestamp(): ?string
+DTO\LywandMetricsResponseDto::getValues(): mixed
+DTO\LywandPartnerPaginatedResponseDto::getData(): array
+DTO\LywandPartnerPaginatedResponseDto::getLimit(): float
+DTO\LywandPartnerPaginatedResponseDto::getPage(): float
+DTO\LywandPartnerPaginatedResponseDto::getTotalItems(): float
+DTO\LywandPartnerResponseDto::getCreatedAt(): string
+DTO\LywandPartnerResponseDto::getId(): string
+DTO\LywandPartnerResponseDto::getInScope(): mixed
+DTO\LywandPartnerResponseDto::getName(): string
+DTO\LywandPartnerResponseDto::getOutOfScope(): mixed
+DTO\LywandPartnerResponseDto::getScore(): float
+DTO\LywandPartnerResponseDto::getType(): string
+DTO\LywandPartnerResponseDto::getUpdatedAt(): string
+DTO\LywandPartnerResponseDto::getVendorId(): string
+DTO\LywandPartnerResponseDto::getVulnerabilities(): mixed
+DTO\LywandReportDataResponseDto::getCustomerCount(): mixed
+DTO\LywandReportDataResponseDto::getCustomerStats(): array
+DTO\LywandReportDataResponseDto::getMetrics(): mixed
+DTO\LywandReportDataResponseDto::getScore(): mixed
+DTO\LywandReportDataResponseDto::getTargetList(): array
+DTO\LywandReportDataResponseDto::getVulnerabilitiesHigh(): array
+DTO\LywandReportDataResponseDto::getVulnerabilitiesLow(): array
+DTO\LywandReportDataResponseDto::getVulnerabilitiesMedium(): array
+DTO\LywandScoreDto::getScore(): float
+DTO\LywandScoreDto::getTargetsWithVulnerabilities(): float
+DTO\LywandScoreDto::getTotalTargets(): float
+DTO\LywandStatsDto::getInScopeDomains(): float
+DTO\LywandStatsDto::getInScopeEmails(): float
+DTO\LywandStatsDto::getInScopeEndpoints(): float
+DTO\LywandStatsDto::getInScopeIpAddresses(): float
+DTO\LywandStatsDto::getOutOfScopeDomains(): float
+DTO\LywandStatsDto::getOutOfScopeEmails(): float
+DTO\LywandStatsDto::getOutOfScopeEndpoints(): float
+DTO\LywandStatsDto::getOutOfScopeIpAddresses(): float
+DTO\LywandStatsDto::getScore(): float
+DTO\LywandStatsDto::getVulnerabilitiesHigh(): float
+DTO\LywandStatsDto::getVulnerabilitiesLow(): float
+DTO\LywandStatsDto::getVulnerabilitiesMedium(): float
+DTO\LywandTargetDto::getInScope(): bool
+DTO\LywandTargetDto::getLywandIdentifier(): string
+DTO\LywandTargetDto::getName(): string
+DTO\LywandTargetDto::getType(): string
+DTO\LywandTargetPaginatedResponseDto::getData(): array
+DTO\LywandTargetPaginatedResponseDto::getLimit(): float
+DTO\LywandTargetPaginatedResponseDto::getPage(): float
+DTO\LywandTargetPaginatedResponseDto::getTotalItems(): float
+DTO\LywandTargetResponseDto::getCreatedAt(): string
+DTO\LywandTargetResponseDto::getId(): string
+DTO\LywandTargetResponseDto::getInScope(): bool
+DTO\LywandTargetResponseDto::getLywandIdentifier(): string
+DTO\LywandTargetResponseDto::getName(): string
+DTO\LywandTargetResponseDto::getParentId(): string
+DTO\LywandTargetResponseDto::getTenantId(): string
+DTO\LywandTargetResponseDto::getType(): string
+DTO\LywandTargetResponseDto::getUpdatedAt(): string
+DTO\LywandTargetResponseDto::getVendorId(): string
+DTO\LywandTokenResponseDto::getToken(): string
+DTO\LywandVulnerabilityDto::getName(): string
+DTO\LywandVulnerabilityDto::getProof(): ?string
+DTO\LywandVulnerabilityDto::getRisk(): float
+DTO\LywandVulnerabilityDto::getSummary(): string
+DTO\LywandVulnerabilityDto::getTargetName(): ?string
+DTO\LywandVulnerabilityPaginatedResponseDto::getData(): array
+DTO\LywandVulnerabilityPaginatedResponseDto::getLimit(): float
+DTO\LywandVulnerabilityPaginatedResponseDto::getPage(): float
+DTO\LywandVulnerabilityPaginatedResponseDto::getTotalItems(): float
+DTO\LywandVulnerabilityResponseDto::getCreatedAt(): string
+DTO\LywandVulnerabilityResponseDto::getId(): string
+DTO\LywandVulnerabilityResponseDto::getLywandCustomerId(): string
+DTO\LywandVulnerabilityResponseDto::getName(): string
+DTO\LywandVulnerabilityResponseDto::getParentId(): string
+DTO\LywandVulnerabilityResponseDto::getProof(): ?string
+DTO\LywandVulnerabilityResponseDto::getRisk(): float
+DTO\LywandVulnerabilityResponseDto::getSummary(): string
+DTO\LywandVulnerabilityResponseDto::getTargetName(): string
+DTO\LywandVulnerabilityResponseDto::getTenantId(): string
+DTO\LywandVulnerabilityResponseDto::getUpdatedAt(): string
+DTO\LywandVulnerabilityResponseDto::getVendorId(): string
+DTO\MailstoreArchiveDto::getArchiveName(): string
+DTO\MailstoreArchiveDto::getInstanceName(): string
+DTO\MailstoreArchivePaginatedResponseDto::getData(): array
+DTO\MailstoreArchivePaginatedResponseDto::getLimit(): float
+DTO\MailstoreArchivePaginatedResponseDto::getPage(): float
+DTO\MailstoreArchivePaginatedResponseDto::getTotalItems(): float
+DTO\MailstoreArchiveResponseDto::getMessageCount(): float
+DTO\MailstoreArchiveResponseDto::getName(): string
+DTO\MailstoreArchiveResponseDto::getSize(): float
+DTO\MailstoreConfigurationOptionsResponseDto::getHosts(): array
+DTO\MailstoreConfigurationPlacementRuleDto::getHost(): string
+DTO\MailstoreConfigurationPlacementRuleDto::getTenantId(): string
+DTO\MailstoreConfigurationResponseDto::getAttachmentIndex(): string
+DTO\MailstoreConfigurationResponseDto::getBaseDirectory(): string
+DTO\MailstoreConfigurationResponseDto::getCreatedAt(): string
+DTO\MailstoreConfigurationResponseDto::getDefaultHost(): string
+DTO\MailstoreConfigurationResponseDto::getId(): string
+DTO\MailstoreConfigurationResponseDto::getPlacementRules(): array
+DTO\MailstoreConfigurationResponseDto::getSmtpAuthenticationRequired(): bool
+DTO\MailstoreConfigurationResponseDto::getSmtpFromDisplayName(): string
+DTO\MailstoreConfigurationResponseDto::getSmtpFromEmailAddress(): string
+DTO\MailstoreConfigurationResponseDto::getSmtpHostname(): string
+DTO\MailstoreConfigurationResponseDto::getSmtpIgnoreSslPolicyErrors(): bool
+DTO\MailstoreConfigurationResponseDto::getSmtpPort(): float
+DTO\MailstoreConfigurationResponseDto::getSmtpProtocol(): string
+DTO\MailstoreConfigurationResponseDto::getSmtpRecipientEmailAddress(): string
+DTO\MailstoreConfigurationResponseDto::getSmtpUsername(): string
+DTO\MailstoreConfigurationResponseDto::getUpdatedAt(): string
+DTO\MailstoreCustomerCountDto::getCount(): float
+DTO\MailstoreCustomerStatsItemDto::getCustomerId(): ?float
+DTO\MailstoreCustomerStatsItemDto::getCustomerName(): string
+DTO\MailstoreCustomerStatsItemDto::getErrors(): float
+DTO\MailstoreCustomerStatsItemDto::getTotal(): float
+DTO\MailstoreErrorDto::getDisplayName(): string
+DTO\MailstoreErrorDto::getInstanceId(): string
+DTO\MailstoreErrorDto::getStatus(): string
+DTO\MailstoreInstanceMetrics::getAdditionalStorage(): MetricValueDto
+DTO\MailstoreInstanceMetrics::getAdditionalUsers(): MetricValueDto
+DTO\MailstoreInstanceMetrics::getArchiveCount(): MetricValueDto
+DTO\MailstoreInstanceMetrics::getMessageCount(): MetricValueDto
+DTO\MailstoreInstanceMetrics::getSizeCount(): MetricValueDto
+DTO\MailstoreInstanceMetricsResponseDto::getCurrTimestamp(): string
+DTO\MailstoreInstanceMetricsResponseDto::getPrevTimestamp(): ?string
+DTO\MailstoreInstanceMetricsResponseDto::getValues(): mixed
+DTO\MailstoreInstancePaginatedResponseDto::getData(): array
+DTO\MailstoreInstancePaginatedResponseDto::getLimit(): float
+DTO\MailstoreInstancePaginatedResponseDto::getPage(): float
+DTO\MailstoreInstancePaginatedResponseDto::getTotalItems(): float
+DTO\MailstoreInstanceResponseDto::getAdditionalStorage(): float
+DTO\MailstoreInstanceResponseDto::getAdditionalUsers(): float
+DTO\MailstoreInstanceResponseDto::getAlias(): ?string
+DTO\MailstoreInstanceResponseDto::getArchiveCount(): float
+DTO\MailstoreInstanceResponseDto::getArchives(): array
+DTO\MailstoreInstanceResponseDto::getCreatedAt(): string
+DTO\MailstoreInstanceResponseDto::getCustomerId(): ?float
+DTO\MailstoreInstanceResponseDto::getId(): string
+DTO\MailstoreInstanceResponseDto::getInstanceHost(): string
+DTO\MailstoreInstanceResponseDto::getInstanceId(): string
+DTO\MailstoreInstanceResponseDto::getJournalingMailbox(): mixed
+DTO\MailstoreInstanceResponseDto::getMessageCount(): float
+DTO\MailstoreInstanceResponseDto::getName(): string
+DTO\MailstoreInstanceResponseDto::getSizeCount(): float
+DTO\MailstoreInstanceResponseDto::getStatus(): string
+DTO\MailstoreInstanceResponseDto::getTenantId(): string
+DTO\MailstoreInstanceResponseDto::getUpdatedAt(): string
+DTO\MailstorePartnerMetrics::getAdditionalStorage(): MetricValueDto
+DTO\MailstorePartnerMetrics::getAdditionalUsers(): MetricValueDto
+DTO\MailstorePartnerMetrics::getArchiveCount(): MetricValueDto
+DTO\MailstorePartnerMetrics::getInstanceCount(): MetricValueDto
+DTO\MailstorePartnerMetrics::getMessageCount(): MetricValueDto
+DTO\MailstorePartnerMetrics::getSizeCount(): MetricValueDto
+DTO\MailstorePartnerMetricsResponseDto::getCurrTimestamp(): string
+DTO\MailstorePartnerMetricsResponseDto::getPrevTimestamp(): ?string
+DTO\MailstorePartnerMetricsResponseDto::getValues(): mixed
+DTO\MailstoreProfilePaginatedResponseDto::getData(): array
+DTO\MailstoreProfilePaginatedResponseDto::getLimit(): float
+DTO\MailstoreProfilePaginatedResponseDto::getPage(): float
+DTO\MailstoreProfilePaginatedResponseDto::getTotalItems(): float
+DTO\MailstoreProfileResponseDto::getCreatedAt(): string
+DTO\MailstoreProfileResponseDto::getId(): string
+DTO\MailstoreProfileResponseDto::getInstanceId(): string
+DTO\MailstoreProfileResponseDto::getLastStatus(): string
+DTO\MailstoreProfileResponseDto::getName(): string
+DTO\MailstoreProfileResponseDto::getProfileId(): float
+DTO\MailstoreProfileResponseDto::getTenantId(): string
+DTO\MailstoreProfileResponseDto::getUpdatedAt(): string
+DTO\MailstoreProfileResultPaginatedResponseDto::getData(): array
+DTO\MailstoreProfileResultPaginatedResponseDto::getLimit(): float
+DTO\MailstoreProfileResultPaginatedResponseDto::getPage(): float
+DTO\MailstoreProfileResultPaginatedResponseDto::getTotalItems(): float
+DTO\MailstoreProfileResultResponseDto::getCompletedAt(): ?string
+DTO\MailstoreProfileResultResponseDto::getCreatedAt(): string
+DTO\MailstoreProfileResultResponseDto::getId(): string
+DTO\MailstoreProfileResultResponseDto::getMessagesArchived(): float
+DTO\MailstoreProfileResultResponseDto::getStartedAt(): string
+DTO\MailstoreProfileResultResponseDto::getStatus(): string
+DTO\MailstoreProfileResultResponseDto::getUpdatedAt(): string
+DTO\MailstoreReportDataResponseDto::getArchiveList(): array
+DTO\MailstoreReportDataResponseDto::getCustomerCount(): mixed
+DTO\MailstoreReportDataResponseDto::getCustomerStats(): array
+DTO\MailstoreReportDataResponseDto::getFailuresList(): array
+DTO\MailstoreReportDataResponseDto::getScore(): mixed
+DTO\MailstoreReportDataResponseDto::getStorage(): mixed
+DTO\MailstoreScoreDto::getInstancesWithErrors(): float
+DTO\MailstoreScoreDto::getScore(): float
+DTO\MailstoreScoreDto::getTotalInstances(): float
+DTO\MailstoreStorageDto::getTotalAdditionalStorage(): float
+DTO\MailstoreStorageDto::getTotalAdditionalUsers(): float
+DTO\MailstoreStorageDto::getTotalArchives(): float
+DTO\MailstoreStorageDto::getTotalMessages(): float
+DTO\MailstoreStorageDto::getTotalSize(): float
+DTO\MessageOptionsResponseDto::getTags(): array
+DTO\MessagePaginatedResponseDto::getData(): array
+DTO\MessagePaginatedResponseDto::getLimit(): float
+DTO\MessagePaginatedResponseDto::getPage(): float
+DTO\MessagePaginatedResponseDto::getTotalItems(): float
+DTO\MessageResponseDto::getCreatedAt(): string
+DTO\MessageResponseDto::getDeleted(): bool
+DTO\MessageResponseDto::getId(): string
+DTO\MessageResponseDto::getImportant(): bool
+DTO\MessageResponseDto::getLink(): string
+DTO\MessageResponseDto::getMarkedAsRead(): bool
+DTO\MessageResponseDto::getMessage(): string
+DTO\MessageResponseDto::getStarred(): bool
+DTO\MessageResponseDto::getSubject(): ?string
+DTO\MessageResponseDto::getTags(): array
+DTO\MessageResponseDto::getTargetType(): string
+DTO\MessageResponseDto::getUpdatedAt(): string
+DTO\MessageTemplatePaginatedResponseDto::getData(): array
+DTO\MessageTemplatePaginatedResponseDto::getLimit(): float
+DTO\MessageTemplatePaginatedResponseDto::getPage(): float
+DTO\MessageTemplatePaginatedResponseDto::getTotalItems(): float
+DTO\MessageTemplateResponseDto::getCreatedAt(): string
+DTO\MessageTemplateResponseDto::getDeletedAt(): ?string
+DTO\MessageTemplateResponseDto::getId(): string
+DTO\MessageTemplateResponseDto::getIsAdvertisement(): bool
+DTO\MessageTemplateResponseDto::getIsSent(): bool
+DTO\MessageTemplateResponseDto::getLink(): ?string
+DTO\MessageTemplateResponseDto::getMarkedAsRead(): bool
+DTO\MessageTemplateResponseDto::getMessage(): string
+DTO\MessageTemplateResponseDto::getMessageEn(): ?string
+DTO\MessageTemplateResponseDto::getScheduledAt(): ?string
+DTO\MessageTemplateResponseDto::getSubject(): string
+DTO\MessageTemplateResponseDto::getSubjectEn(): ?string
+DTO\MessageTemplateResponseDto::getTags(): array
+DTO\MessageTemplateResponseDto::getTarget(): array
+DTO\MessageTemplateResponseDto::getTargetType(): string
+DTO\MessageTemplateResponseDto::getUpdatedAt(): string
+DTO\MetricStatisticsDto::getAvg(): float
+DTO\MetricStatisticsDto::getMax(): float
+DTO\MetricStatisticsDto::getMin(): float
+DTO\MetricValueDto::getCurr(): float
+DTO\MetricValueDto::getPrev(): ?float
+DTO\NSightClientMetrics::getFailingChecksCount(): MetricValueDto
+DTO\NSightClientMetrics::getServerCount(): MetricValueDto
+DTO\NSightClientMetrics::getSitesCount(): MetricValueDto
+DTO\NSightClientMetrics::getWorkstationCount(): MetricValueDto
+DTO\NSightClientMetricsResponseDto::getCurrTimestamp(): string
+DTO\NSightClientMetricsResponseDto::getPrevTimestamp(): ?string
+DTO\NSightClientMetricsResponseDto::getValues(): mixed
+DTO\NSightClientPaginatedResponseDto::getData(): array
+DTO\NSightClientPaginatedResponseDto::getLimit(): float
+DTO\NSightClientPaginatedResponseDto::getPage(): float
+DTO\NSightClientPaginatedResponseDto::getTotalItems(): float
+DTO\NSightClientResponseDto::getCreatedAt(): string
+DTO\NSightClientResponseDto::getDashboardId(): string
+DTO\NSightClientResponseDto::getDashboardUsername(): string
+DTO\NSightClientResponseDto::getDeletedAt(): string
+DTO\NSightClientResponseDto::getDeviceCount(): float
+DTO\NSightClientResponseDto::getFailingChecksCount(): float
+DTO\NSightClientResponseDto::getId(): string
+DTO\NSightClientResponseDto::getMobileDeviceCount(): float
+DTO\NSightClientResponseDto::getName(): string
+DTO\NSightClientResponseDto::getServerCount(): float
+DTO\NSightClientResponseDto::getTimezone(): string
+DTO\NSightClientResponseDto::getUpdatedAt(): string
+DTO\NSightClientResponseDto::getVendorId(): float
+DTO\NSightClientResponseDto::getViewDashboard(): string
+DTO\NSightClientResponseDto::getViewWorkstationAssets(): string
+DTO\NSightClientResponseDto::getWorkstationCount(): float
+DTO\NSightDashboardPaginatedResponseDto::getData(): array
+DTO\NSightDashboardPaginatedResponseDto::getLimit(): float
+DTO\NSightDashboardPaginatedResponseDto::getPage(): float
+DTO\NSightDashboardPaginatedResponseDto::getTotalItems(): float
+DTO\NSightDashboardResponseDto::getCreatedAt(): string
+DTO\NSightDashboardResponseDto::getDefault(): bool
+DTO\NSightDashboardResponseDto::getId(): string
+DTO\NSightDashboardResponseDto::getName(): string
+DTO\NSightDashboardResponseDto::getUpdatedAt(): string
+DTO\NSightDeviceAntivirusDto::getLastCheck(): string
+DTO\NSightDeviceAntivirusDto::getName(): string
+DTO\NSightDeviceAntivirusDto::getStatus(): string
+DTO\NSightDeviceAntivirusDto::getVersion(): string
+DTO\NSightDeviceBackupDto::getFormattedOutput(): string
+DTO\NSightDeviceBackupDto::getLastCheck(): string
+DTO\NSightDeviceBackupDto::getName(): string
+DTO\NSightDeviceBackupDto::getStatus(): string
+DTO\NSightDeviceCheckPaginatedResponseDto::getData(): array
+DTO\NSightDeviceCheckPaginatedResponseDto::getLimit(): float
+DTO\NSightDeviceCheckPaginatedResponseDto::getPage(): float
+DTO\NSightDeviceCheckPaginatedResponseDto::getTotalItems(): float
+DTO\NSightDeviceCheckResponseDto::getCheckType(): float
+DTO\NSightDeviceCheckResponseDto::getConsecutiveFails(): float
+DTO\NSightDeviceCheckResponseDto::getCreatedAt(): string
+DTO\NSightDeviceCheckResponseDto::getDescription(): ?string
+DTO\NSightDeviceCheckResponseDto::getDeviceId(): string
+DTO\NSightDeviceCheckResponseDto::getDeviceName(): ?string
+DTO\NSightDeviceCheckResponseDto::getDsc247(): float
+DTO\NSightDeviceCheckResponseDto::getFormattedOutput(): ?string
+DTO\NSightDeviceCheckResponseDto::getId(): string
+DTO\NSightDeviceCheckResponseDto::getSiteId(): string
+DTO\NSightDeviceCheckResponseDto::getSiteName(): ?string
+DTO\NSightDeviceCheckResponseDto::getStatus(): string
+DTO\NSightDeviceCheckResponseDto::getTenantId(): string
+DTO\NSightDeviceCheckResponseDto::getUpdatedAt(): string
+DTO\NSightDeviceCheckResponseDto::getUtcRun(): ?string
+DTO\NSightDeviceCheckResponseDto::getVendorId(): float
+DTO\NSightDeviceDiskDto::getDescription(): string
+DTO\NSightDeviceDiskDto::getFailing(): bool
+DTO\NSightDeviceDiskDto::getFreeSpace(): float
+DTO\NSightDeviceDiskDto::getSize(): float
+DTO\NSightDeviceHardwareDto::getDeleted(): float
+DTO\NSightDeviceHardwareDto::getDetails(): string
+DTO\NSightDeviceHardwareDto::getHardwareId(): float
+DTO\NSightDeviceHardwareDto::getManufacturer(): string
+DTO\NSightDeviceHardwareDto::getModified(): float
+DTO\NSightDeviceHardwareDto::getName(): string
+DTO\NSightDeviceHardwareDto::getStatus(): string
+DTO\NSightDeviceHardwareDto::getType(): float
+DTO\NSightDevicePaginatedResponseDto::getData(): array
+DTO\NSightDevicePaginatedResponseDto::getLimit(): float
+DTO\NSightDevicePaginatedResponseDto::getPage(): float
+DTO\NSightDevicePaginatedResponseDto::getTotalItems(): float
+DTO\NSightDevicePatchDto::getClassification(): string
+DTO\NSightDevicePatchDto::getDeployable(): float
+DTO\NSightDevicePatchDto::getInstallDateText(): string
+DTO\NSightDevicePatchDto::getPatchIcon(): string
+DTO\NSightDevicePatchDto::getPatchId(): float
+DTO\NSightDevicePatchDto::getPatchTitle(): string
+DTO\NSightDevicePatchDto::getPatchUrl(): string
+DTO\NSightDevicePatchDto::getPolicy(): float
+DTO\NSightDevicePatchDto::getPolicyLabel(): string
+DTO\NSightDevicePatchDto::getProduct(): string
+DTO\NSightDevicePatchDto::getReleaseDate(): string
+DTO\NSightDevicePatchDto::getReleaseDateText(): string
+DTO\NSightDevicePatchDto::getSelectPatch(): string
+DTO\NSightDevicePatchDto::getSeverity(): float
+DTO\NSightDevicePatchDto::getSeverityLabel(): string
+DTO\NSightDevicePatchDto::getStatus(): float
+DTO\NSightDevicePatchDto::getStatusLabel(): string
+DTO\NSightDevicePatchDto::getUninstallable(): float
+DTO\NSightDeviceResponseDto::getAgentVersion(): string
+DTO\NSightDeviceResponseDto::getAntivirus(): array
+DTO\NSightDeviceResponseDto::getBackups(): array
+DTO\NSightDeviceResponseDto::getCpu(): string
+DTO\NSightDeviceResponseDto::getCpuEOL(): string
+DTO\NSightDeviceResponseDto::getCpuRelease(): string
+DTO\NSightDeviceResponseDto::getCreatedAt(): string
+DTO\NSightDeviceResponseDto::getDashboardId(): string
+DTO\NSightDeviceResponseDto::getDeletedAt(): string
+DTO\NSightDeviceResponseDto::getDescription(): string
+DTO\NSightDeviceResponseDto::getDisks(): array
+DTO\NSightDeviceResponseDto::getHardware(): array
+DTO\NSightDeviceResponseDto::getId(): string
+DTO\NSightDeviceResponseDto::getIsOnline(): bool
+DTO\NSightDeviceResponseDto::getLastSeen(): string
+DTO\NSightDeviceResponseDto::getMac1(): string
+DTO\NSightDeviceResponseDto::getMac2(): string
+DTO\NSightDeviceResponseDto::getMac3(): string
+DTO\NSightDeviceResponseDto::getManufacturer(): string
+DTO\NSightDeviceResponseDto::getMav(): bool
+DTO\NSightDeviceResponseDto::getMavThreats(): array
+DTO\NSightDeviceResponseDto::getModel(): string
+DTO\NSightDeviceResponseDto::getMsoffice(): string
+DTO\NSightDeviceResponseDto::getMsofficeEOL(): string
+DTO\NSightDeviceResponseDto::getName(): string
+DTO\NSightDeviceResponseDto::getOperatingSystem(): string
+DTO\NSightDeviceResponseDto::getOsEOL(): string
+DTO\NSightDeviceResponseDto::getPatchManagement(): bool
+DTO\NSightDeviceResponseDto::getPatches(): array
+DTO\NSightDeviceResponseDto::getProcessorCount(): float
+DTO\NSightDeviceResponseDto::getSerial(): string
+DTO\NSightDeviceResponseDto::getSiteId(): string
+DTO\NSightDeviceResponseDto::getSoftware(): array
+DTO\NSightDeviceResponseDto::getTakeControl(): bool
+DTO\NSightDeviceResponseDto::getTenantId(): string
+DTO\NSightDeviceResponseDto::getTotalMemory(): float
+DTO\NSightDeviceResponseDto::getType(): string
+DTO\NSightDeviceResponseDto::getUpdatedAt(): string
+DTO\NSightDeviceResponseDto::getUsername(): string
+DTO\NSightDeviceResponseDto::getVendorId(): float
+DTO\NSightDeviceResponseDto::getWebProtection(): bool
+DTO\NSightDeviceSoftwareDto::getDeleted(): float
+DTO\NSightDeviceSoftwareDto::getInstallDate(): string
+DTO\NSightDeviceSoftwareDto::getModified(): float
+DTO\NSightDeviceSoftwareDto::getName(): string
+DTO\NSightDeviceSoftwareDto::getSoftwareId(): float
+DTO\NSightDeviceSoftwareDto::getType(): string
+DTO\NSightDeviceSoftwareDto::getVersion(): string
+DTO\NSightDeviceTakeControlUrlResponseDto::getUrl(): string
+DTO\NSightReportDataResponseDto::getAntivirus(): array
+DTO\NSightReportDataResponseDto::getBackupChecks(): ?BackupChecksDto
+DTO\NSightReportDataResponseDto::getCustomerCount(): ?CustomerCountDto
+DTO\NSightReportDataResponseDto::getCustomerStats(): array
+DTO\NSightReportDataResponseDto::getDevices(): ?DevicesDto
+DTO\NSightReportDataResponseDto::getExecutedChecks(): ?float
+DTO\NSightReportDataResponseDto::getFailedLogins(): array
+DTO\NSightReportDataResponseDto::getFailures(): array
+DTO\NSightReportDataResponseDto::getInstalledPatches(): ?float
+DTO\NSightReportDataResponseDto::getLowStorageDevices(): array
+DTO\NSightReportDataResponseDto::getMissingAntivirusCheck(): array
+DTO\NSightReportDataResponseDto::getOfflineDevices(): ?OfflineDevicesDto
+DTO\NSightReportDataResponseDto::getOutdatedAntivirus(): array
+DTO\NSightReportDataResponseDto::getProblemCount(): ?float
+DTO\NSightReportDataResponseDto::getScore(): ?ScoreDto
+DTO\NSightReportDataResponseDto::getSiteRanking(): array
+DTO\NSightReportDataResponseDto::getSolvedProblems(): ?float
+DTO\NSightReportDataResponseDto::getUnsupportedOperatingSystemDevices(): array
+DTO\NSightSiteInstallerResponseDto::getFileName(): string
+DTO\NSightSiteInstallerResponseDto::getUrl(): string
+DTO\NSightSiteMetrics::getFailingChecksCount(): MetricValueDto
+DTO\NSightSiteMetrics::getServerCount(): MetricValueDto
+DTO\NSightSiteMetrics::getWorkstationCount(): MetricValueDto
+DTO\NSightSiteMetricsResponseDto::getCurrTimestamp(): string
+DTO\NSightSiteMetricsResponseDto::getPrevTimestamp(): ?string
+DTO\NSightSiteMetricsResponseDto::getValues(): mixed
+DTO\NSightSitePaginatedResponseDto::getData(): array
+DTO\NSightSitePaginatedResponseDto::getLimit(): float
+DTO\NSightSitePaginatedResponseDto::getPage(): float
+DTO\NSightSitePaginatedResponseDto::getTotalItems(): float
+DTO\NSightSiteResponseDto::getCreatedAt(): string
+DTO\NSightSiteResponseDto::getCustomerId(): ?float
+DTO\NSightSiteResponseDto::getDeletedAt(): string
+DTO\NSightSiteResponseDto::getFailingChecksCount(): float
+DTO\NSightSiteResponseDto::getId(): string
+DTO\NSightSiteResponseDto::getName(): string
+DTO\NSightSiteResponseDto::getServerCount(): float
+DTO\NSightSiteResponseDto::getUpdatedAt(): string
+DTO\NSightSiteResponseDto::getVendorId(): float
+DTO\NSightSiteResponseDto::getWorkstationCount(): float
+DTO\NeumeierApiKeyResponseDto::getCreatedAt(): string
+DTO\NeumeierApiKeyResponseDto::getExpiresAt(): string
+DTO\NeumeierApiKeyResponseDto::getId(): string
+DTO\NeumeierApiKeyResponseDto::getRevoked(): bool
+DTO\NeumeierApiKeyResponseDto::getTitle(): string
+DTO\NeumeierApiKeyResponseDto::getUpdatedAt(): string
+DTO\OfflineDevicesDto::getServer(): float
+DTO\OfflineDevicesDto::getWorkstation(): float
+DTO\PatchPaginatedResponseDto::getData(): array
+DTO\PatchPaginatedResponseDto::getLimit(): float
+DTO\PatchPaginatedResponseDto::getPage(): float
+DTO\PatchPaginatedResponseDto::getTotalItems(): float
+DTO\PatchResponseDto::getClassification(): ?string
+DTO\PatchResponseDto::getCreatedAt(): string
+DTO\PatchResponseDto::getDeviceType(): string
+DTO\PatchResponseDto::getId(): string
+DTO\PatchResponseDto::getPatchId(): float
+DTO\PatchResponseDto::getPatchTitle(): string
+DTO\PatchResponseDto::getPatchUrl(): ?string
+DTO\PatchResponseDto::getProduct(): string
+DTO\PatchResponseDto::getReason(): ?string
+DTO\PatchResponseDto::getReleaseDate(): ?string
+DTO\PatchResponseDto::getSeverity(): ?string
+DTO\PatchResponseDto::getStatus(): string
+DTO\PatchResponseDto::getUpdatedAt(): string
+DTO\PatchResponseDto::getUrl(): ?string
+DTO\PatchTargetFilterDto::getDeviceIds(): mixed
+DTO\PatchTargetFilterDto::getSiteIds(): mixed
+DTO\PermissionResponseDto::getAccess(): string
+DTO\PermissionResponseDto::getType(): string
+DTO\ProductConfigSetItem::getLabel(): string
+DTO\ProductConfigSetItem::getName(): string
+DTO\ProductConfigSetItem::getRequired(): bool
+DTO\ProductConfigSetItem::getType(): string
+DTO\ProductCountItemDto::getCount(): float
+DTO\ProductCountItemDto::getProduct(): string
+DTO\ProductCountsDto::getCounts(): array
+DTO\ProductCountsDto::getTotalCount(): float
+DTO\ProductResponseDto::getConfigSet(): array
+DTO\ProductResponseDto::getConfirmedBy(): ?string
+DTO\ProductResponseDto::getConfirmedOn(): ?string
+DTO\ProductResponseDto::getGroup(): ?string
+DTO\ProductResponseDto::getId(): string
+DTO\ProductResponseDto::getIllustratedLogo(): ?string
+DTO\ProductResponseDto::getInfoUrl(): ?string
+DTO\ProductResponseDto::getLandingPage(): ?string
+DTO\ProductResponseDto::getManaged(): bool
+DTO\ProductResponseDto::getName(): string
+DTO\ProductResponseDto::getOrderLink(): ?string
+DTO\ProductResponseDto::getOrderText(): ?string
+DTO\ProductResponseDto::getPreviewImages(): array
+DTO\ProductResponseDto::getProductLogo(): ?string
+DTO\ProductResponseDto::getShortDescription(): ?string
+DTO\ProductResponseDto::getStatus(): string
+DTO\ProductResponseDto::getTermsUrl(): string
+DTO\PusherChannelAuthRequestDto::getChannelName(): string
+DTO\PusherChannelAuthRequestDto::getSocketId(): string
+DTO\PusherChannelAuthRequestDto::withChannelName(?string $value): static
+DTO\PusherChannelAuthRequestDto::withSocketId(?string $value): static
+DTO\PusherChannelAuthResponseDto::getAuth(): string
+DTO\PusherUserAuthRequestDto::getSocketId(): string
+DTO\PusherUserAuthRequestDto::withSocketId(?string $value): static
+DTO\QualifyPatchBulkRequestDto::getPatches(): array
+DTO\QualifyPatchBulkRequestDto::getReason(): ?string
+DTO\QualifyPatchBulkRequestDto::getStatus(): string
+DTO\QualifyPatchBulkRequestDto::getUrl(): ?string
+DTO\QualifyPatchBulkRequestDto::withPatches(?array $value): static
+DTO\QualifyPatchBulkRequestDto::withReason(?string $value): static
+DTO\QualifyPatchBulkRequestDto::withStatus(?string $value): static
+DTO\QualifyPatchBulkRequestDto::withUrl(?string $value): static
+DTO\QualifyPatchRequestDto::getReason(): ?string
+DTO\QualifyPatchRequestDto::getStatus(): string
+DTO\QualifyPatchRequestDto::getUrl(): ?string
+DTO\QualifyPatchRequestDto::withReason(?string $value): static
+DTO\QualifyPatchRequestDto::withStatus(?string $value): static
+DTO\QualifyPatchRequestDto::withUrl(?string $value): static
+DTO\RefreshAuthTokenRequestDto::getRefreshToken(): string
+DTO\RefreshAuthTokenRequestDto::withRefreshToken(?string $value): static
+DTO\ReportSettingResponseDto::getCreatedAt(): string
+DTO\ReportSettingResponseDto::getCronExpression(): ?string
+DTO\ReportSettingResponseDto::getCustomDisplayName(): ?string
+DTO\ReportSettingResponseDto::getCustomerId(): ?string
+DTO\ReportSettingResponseDto::getId(): string
+DTO\ReportSettingResponseDto::getIntroductionText(): ?string
+DTO\ReportSettingResponseDto::getLanguage(): string
+DTO\ReportSettingResponseDto::getModules(): array
+DTO\ReportSettingResponseDto::getRecipients(): array
+DTO\ReportSettingResponseDto::getTenantId(): string
+DTO\ReportSettingResponseDto::getTimezone(): string
+DTO\ReportSettingResponseDto::getType(): string
+DTO\ReportSettingResponseDto::getUpdatedAt(): string
+DTO\ReportingReportDataResponseDto::getCustomerRanking(): mixed
+DTO\ReportingReportDataResponseDto::getProductOverview(): mixed
+DTO\RollouterCustomerPaginatedResponseDto::getData(): array
+DTO\RollouterCustomerPaginatedResponseDto::getLimit(): float
+DTO\RollouterCustomerPaginatedResponseDto::getPage(): float
+DTO\RollouterCustomerPaginatedResponseDto::getTotalItems(): float
+DTO\RollouterCustomerResponseDto::getClientLimit(): float
+DTO\RollouterCustomerResponseDto::getCreatedAt(): string
+DTO\RollouterCustomerResponseDto::getCustomerId(): ?float
+DTO\RollouterCustomerResponseDto::getId(): string
+DTO\RollouterCustomerResponseDto::getIdentifier(): string
+DTO\RollouterCustomerResponseDto::getIsActivated(): bool
+DTO\RollouterCustomerResponseDto::getName(): string
+DTO\RollouterCustomerResponseDto::getParentId(): string
+DTO\RollouterCustomerResponseDto::getPlan(): float
+DTO\RollouterCustomerResponseDto::getTenantId(): string
+DTO\RollouterCustomerResponseDto::getUpdatedAt(): string
+DTO\RollouterCustomerResponseDto::getVendorId(): string
+DTO\RollouterPartnerPaginatedResponseDto::getData(): array
+DTO\RollouterPartnerPaginatedResponseDto::getLimit(): float
+DTO\RollouterPartnerPaginatedResponseDto::getPage(): float
+DTO\RollouterPartnerPaginatedResponseDto::getTotalItems(): float
+DTO\RollouterPartnerResponseDto::getCreatedAt(): string
+DTO\RollouterPartnerResponseDto::getId(): string
+DTO\RollouterPartnerResponseDto::getName(): string
+DTO\RollouterPartnerResponseDto::getTenantId(): string
+DTO\RollouterPartnerResponseDto::getUpdatedAt(): string
+DTO\RollouterPartnerResponseDto::getVendorId(): string
+DTO\SalesOpportunitiesPaginatedResponseDto::getData(): array
+DTO\SalesOpportunitiesPaginatedResponseDto::getLimit(): float
+DTO\SalesOpportunitiesPaginatedResponseDto::getPage(): float
+DTO\SalesOpportunitiesPaginatedResponseDto::getRecommendationStats(): array
+DTO\SalesOpportunitiesPaginatedResponseDto::getTotalItems(): float
+DTO\SalesOpportunitiesRecommendationStatsDto::getCount(): float
+DTO\SalesOpportunitiesRecommendationStatsDto::getRecommendation(): string
+DTO\SalesOpportunitiesResponseDto::getCpu(): ?string
+DTO\SalesOpportunitiesResponseDto::getCpuEOL(): ?string
+DTO\SalesOpportunitiesResponseDto::getCpuRelease(): ?string
+DTO\SalesOpportunitiesResponseDto::getDisks(): array
+DTO\SalesOpportunitiesResponseDto::getMsoffice(): ?string
+DTO\SalesOpportunitiesResponseDto::getMsofficeEOL(): ?string
+DTO\SalesOpportunitiesResponseDto::getName(): string
+DTO\SalesOpportunitiesResponseDto::getOperatingSystem(): ?string
+DTO\SalesOpportunitiesResponseDto::getOsEOL(): string
+DTO\SalesOpportunitiesResponseDto::getRecommendations(): array
+DTO\SalesOpportunitiesResponseDto::getSiteName(): string
+DTO\SalesOpportunitiesResponseDto::getTotalMemory(): ?string
+DTO\SalesOpportunitiesResponseDto::getUsername(): ?string
+DTO\ScheduleResponseDto::getCreatedAt(): string
+DTO\ScheduleResponseDto::getCronExpression(): string
+DTO\ScheduleResponseDto::getDisabled(): bool
+DTO\ScheduleResponseDto::getId(): string
+DTO\ScheduleResponseDto::getName(): string
+DTO\ScheduleResponseDto::getTimeZone(): ?string
+DTO\ScheduleResponseDto::getUpdatedAt(): string
+DTO\ScoreDto::getDevicesWithErrors(): float
+DTO\ScoreDto::getScore(): float
+DTO\ScoreDto::getTotalDevices(): float
+DTO\SecAuditorCustomerPaginatedResponseDto::getData(): array
+DTO\SecAuditorCustomerPaginatedResponseDto::getLimit(): float
+DTO\SecAuditorCustomerPaginatedResponseDto::getPage(): float
+DTO\SecAuditorCustomerPaginatedResponseDto::getTotalItems(): float
+DTO\SecAuditorCustomerResponseDto::getBillingCycle(): string
+DTO\SecAuditorCustomerResponseDto::getCreatedAt(): string
+DTO\SecAuditorCustomerResponseDto::getCreationStatus(): string
+DTO\SecAuditorCustomerResponseDto::getCustomerId(): float
+DTO\SecAuditorCustomerResponseDto::getEmployees(): float
+DTO\SecAuditorCustomerResponseDto::getId(): string
+DTO\SecAuditorCustomerResponseDto::getMode(): string
+DTO\SecAuditorCustomerResponseDto::getName(): string
+DTO\SecAuditorCustomerResponseDto::getNfr(): bool
+DTO\SecAuditorCustomerResponseDto::getParentId(): string
+DTO\SecAuditorCustomerResponseDto::getTenantId(): string
+DTO\SecAuditorCustomerResponseDto::getUpdatedAt(): string
+DTO\SecAuditorCustomerResponseDto::getVendorId(): string
+DTO\SecAuditorPartnerPaginatedResponseDto::getData(): array
+DTO\SecAuditorPartnerPaginatedResponseDto::getLimit(): float
+DTO\SecAuditorPartnerPaginatedResponseDto::getPage(): float
+DTO\SecAuditorPartnerPaginatedResponseDto::getTotalItems(): float
+DTO\SecAuditorPartnerResponseDto::getCreatedAt(): string
+DTO\SecAuditorPartnerResponseDto::getId(): string
+DTO\SecAuditorPartnerResponseDto::getName(): string
+DTO\SecAuditorPartnerResponseDto::getTenantId(): string
+DTO\SecAuditorPartnerResponseDto::getType(): string
+DTO\SecAuditorPartnerResponseDto::getUpdatedAt(): string
+DTO\SecAuditorPartnerResponseDto::getVendorId(): string
+DTO\SendSmtpConfigTestEmailRequestDto::getEncryption(): ?string
+DTO\SendSmtpConfigTestEmailRequestDto::getFromAddress(): ?string
+DTO\SendSmtpConfigTestEmailRequestDto::getFromDisplayName(): ?string
+DTO\SendSmtpConfigTestEmailRequestDto::getHost(): ?string
+DTO\SendSmtpConfigTestEmailRequestDto::getPassword(): ?string
+DTO\SendSmtpConfigTestEmailRequestDto::getPort(): ?float
+DTO\SendSmtpConfigTestEmailRequestDto::getUsername(): ?string
+DTO\SendSmtpConfigTestEmailRequestDto::withEncryption(?string $value): static
+DTO\SendSmtpConfigTestEmailRequestDto::withFromAddress(?string $value): static
+DTO\SendSmtpConfigTestEmailRequestDto::withFromDisplayName(?string $value): static
+DTO\SendSmtpConfigTestEmailRequestDto::withHost(?string $value): static
+DTO\SendSmtpConfigTestEmailRequestDto::withPassword(?string $value): static
+DTO\SendSmtpConfigTestEmailRequestDto::withPort(?float $value): static
+DTO\SendSmtpConfigTestEmailRequestDto::withUsername(?string $value): static
+DTO\SetAllReadMessageRequestDto::getMessageTargetType(): ?string
+DTO\SetAllReadMessageRequestDto::withMessageTargetType(?string $value): static
+DTO\SetMailstorePartnerApiKeyRequestDto::getApiKey(): ?string
+DTO\SetMailstorePartnerApiKeyRequestDto::withApiKey(?string $value): static
+DTO\SetMailstorePartnerApiKeyResponseDto::getApiKey(): string
+DTO\SetNSightClientApiTokenRequestDto::getApiToken(): ?string
+DTO\SetNSightClientApiTokenRequestDto::withApiToken(?string $value): static
+DTO\SetNSightClientApiTokenResponseDto::getApiToken(): string
+DTO\SiteFilterDto::getIn(): array
+DTO\SiteFilterDto::getNotIn(): array
+DTO\SiteRankingItemDto::getRank(): float
+DTO\SiteRankingItemDto::getScore(): float
+DTO\SiteRankingItemDto::getSiteId(): string
+DTO\SiteRankingItemDto::getSiteName(): string
+DTO\SiteTargetSummaryResponseDto::getDeviceCount(): float
+DTO\SiteTargetSummaryResponseDto::getSiteId(): string
+DTO\SiteTargetSummaryResponseDto::getSiteName(): string
+DTO\SmaoCustomerPaginatedResponseDto::getData(): array
+DTO\SmaoCustomerPaginatedResponseDto::getLimit(): float
+DTO\SmaoCustomerPaginatedResponseDto::getPage(): float
+DTO\SmaoCustomerPaginatedResponseDto::getTotalItems(): float
+DTO\SmaoCustomerResponseDto::getCreatedAt(): string
+DTO\SmaoCustomerResponseDto::getCustomerId(): float
+DTO\SmaoCustomerResponseDto::getId(): string
+DTO\SmaoCustomerResponseDto::getName(): string
+DTO\SmaoCustomerResponseDto::getParentId(): string
+DTO\SmaoCustomerResponseDto::getTenantId(): string
+DTO\SmaoCustomerResponseDto::getUpdatedAt(): string
+DTO\SmaoCustomerResponseDto::getVendorId(): string
+DTO\SmaoPartnerPaginatedResponseDto::getData(): array
+DTO\SmaoPartnerPaginatedResponseDto::getLimit(): float
+DTO\SmaoPartnerPaginatedResponseDto::getPage(): float
+DTO\SmaoPartnerPaginatedResponseDto::getTotalItems(): float
+DTO\SmaoPartnerResponseDto::getCreatedAt(): string
+DTO\SmaoPartnerResponseDto::getId(): string
+DTO\SmaoPartnerResponseDto::getName(): string
+DTO\SmaoPartnerResponseDto::getOrganizationId(): string
+DTO\SmaoPartnerResponseDto::getTenantId(): string
+DTO\SmaoPartnerResponseDto::getUpdatedAt(): string
+DTO\SmaoPartnerResponseDto::getVendorId(): string
+DTO\SmtpConfigResponseDto::getCreatedAt(): string
+DTO\SmtpConfigResponseDto::getEncryption(): string
+DTO\SmtpConfigResponseDto::getFromAddress(): string
+DTO\SmtpConfigResponseDto::getFromDisplayName(): ?string
+DTO\SmtpConfigResponseDto::getHost(): string
+DTO\SmtpConfigResponseDto::getId(): string
+DTO\SmtpConfigResponseDto::getLastError(): ?string
+DTO\SmtpConfigResponseDto::getPort(): float
+DTO\SmtpConfigResponseDto::getStatus(): string
+DTO\SmtpConfigResponseDto::getTenantId(): string
+DTO\SmtpConfigResponseDto::getUpdatedAt(): string
+DTO\SmtpConfigResponseDto::getUsername(): string
+DTO\SupportChatListItemResponseDto::getQuery(): string
+DTO\SupportChatListItemResponseDto::getThreadId(): string
+DTO\SupportChatListPaginatedResponseDto::getData(): array
+DTO\SupportChatListPaginatedResponseDto::getLimit(): float
+DTO\SupportChatListPaginatedResponseDto::getPage(): float
+DTO\SupportChatListPaginatedResponseDto::getTotalItems(): float
+DTO\SupportQueryPaginatedResponseDto::getData(): array
+DTO\SupportQueryPaginatedResponseDto::getLimit(): float
+DTO\SupportQueryPaginatedResponseDto::getPage(): float
+DTO\SupportQueryPaginatedResponseDto::getTotalItems(): float
+DTO\SupportQueryResponseDto::getCreatedAt(): string
+DTO\SupportQueryResponseDto::getId(): string
+DTO\SupportQueryResponseDto::getQuery(): string
+DTO\SupportQueryResponseDto::getQueryTime(): float
+DTO\SupportQueryResponseDto::getRating(): ?string
+DTO\SupportQueryResponseDto::getRatingComment(): ?string
+DTO\SupportQueryResponseDto::getRatingReason(): ?string
+DTO\SupportQueryResponseDto::getResponse(): string
+DTO\SupportQueryResponseDto::getResponseMarkdown(): string
+DTO\SupportQueryResponseDto::getThreadId(): string
+DTO\SupportQueryResponseDto::getUpdatedAt(): string
+DTO\SupportQueryResponseDto::getUserId(): string
+DTO\SyncEsetProtectLicensesRequestDto::getForce(): ?bool
+DTO\SyncEsetProtectLicensesRequestDto::getRegion(): string
+DTO\SyncEsetProtectLicensesRequestDto::withForce(?bool $value): static
+DTO\SyncEsetProtectLicensesRequestDto::withRegion(?string $value): static
+DTO\SystemTaskPaginatedResponseDto::getData(): array
+DTO\SystemTaskPaginatedResponseDto::getLimit(): float
+DTO\SystemTaskPaginatedResponseDto::getPage(): float
+DTO\SystemTaskPaginatedResponseDto::getTotalItems(): float
+DTO\SystemTaskResponseDto::getCreatedAt(): string
+DTO\SystemTaskResponseDto::getId(): string
+DTO\SystemTaskResponseDto::getLabel(): string
+DTO\SystemTaskResponseDto::getResult(): array
+DTO\SystemTaskResponseDto::getStatus(): string
+DTO\SystemTaskResponseDto::getUpdatedAt(): string
+DTO\TenantPaginatedResponseDto::getData(): array
+DTO\TenantPaginatedResponseDto::getLimit(): float
+DTO\TenantPaginatedResponseDto::getPage(): float
+DTO\TenantPaginatedResponseDto::getTotalItems(): float
+DTO\TenantResponseDto::getAlertEmail(): string
+DTO\TenantResponseDto::getCreatedAt(): string
+DTO\TenantResponseDto::getDisplayName(): string
+DTO\TenantResponseDto::getId(): string
+DTO\TenantResponseDto::getName(): string
+DTO\TenantResponseDto::getPartnerNumber(): string
+DTO\TenantResponseDto::getRegion(): string
+DTO\TenantResponseDto::getSupportEmail(): string
+DTO\TenantResponseDto::getSupportPhone(): string
+DTO\TenantResponseDto::getSupportUrl(): string
+DTO\TenantResponseDto::getUpdatedAt(): string
+DTO\UnsupportedOSDeviceDto::getId(): string
+DTO\UnsupportedOSDeviceDto::getName(): string
+DTO\UnsupportedOSDeviceDto::getOperatingSystem(): string
+DTO\UnsupportedOSDeviceDto::getType(): string
+DTO\UpdateAcronisCustomerRequestDto::getCustomerId(): ?float
+DTO\UpdateAcronisCustomerRequestDto::withCustomerId(?float $value): static
+DTO\UpdateCloudallyCustomerRequestDto::getCustomerId(): ?float
+DTO\UpdateCloudallyCustomerRequestDto::withCustomerId(?float $value): static
+DTO\UpdateCoveCustomerRequestDto::getCustomerId(): ?float
+DTO\UpdateCoveCustomerRequestDto::withCustomerId(?float $value): static
+DTO\UpdateCustomerReportSettingRequestDto::getCronExpression(): ?string
+DTO\UpdateCustomerReportSettingRequestDto::getCustomDisplayName(): ?string
+DTO\UpdateCustomerReportSettingRequestDto::getIntroductionText(): ?string
+DTO\UpdateCustomerReportSettingRequestDto::getLanguage(): ?string
+DTO\UpdateCustomerReportSettingRequestDto::getModules(): array
+DTO\UpdateCustomerReportSettingRequestDto::getRecipients(): array
+DTO\UpdateCustomerReportSettingRequestDto::getTimezone(): ?string
+DTO\UpdateCustomerReportSettingRequestDto::withCronExpression(?string $value): static
+DTO\UpdateCustomerReportSettingRequestDto::withCustomDisplayName(?string $value): static
+DTO\UpdateCustomerReportSettingRequestDto::withIntroductionText(?string $value): static
+DTO\UpdateCustomerReportSettingRequestDto::withLanguage(?string $value): static
+DTO\UpdateCustomerReportSettingRequestDto::withModules(?array $value): static
+DTO\UpdateCustomerReportSettingRequestDto::withRecipients(?array $value): static
+DTO\UpdateCustomerReportSettingRequestDto::withTimezone(?string $value): static
+DTO\UpdateCustomerRequestDto::getCity(): ?string
+DTO\UpdateCustomerRequestDto::getComment(): ?string
+DTO\UpdateCustomerRequestDto::getCorporateCustomer(): ?bool
+DTO\UpdateCustomerRequestDto::getCountry(): ?string
+DTO\UpdateCustomerRequestDto::getCustomerNumber(): ?string
+DTO\UpdateCustomerRequestDto::getEmail(): ?string
+DTO\UpdateCustomerRequestDto::getFax(): ?string
+DTO\UpdateCustomerRequestDto::getMobile(): ?string
+DTO\UpdateCustomerRequestDto::getName(): ?string
+DTO\UpdateCustomerRequestDto::getPhone(): ?string
+DTO\UpdateCustomerRequestDto::getPostalCode(): ?string
+DTO\UpdateCustomerRequestDto::getSalutation(): ?string
+DTO\UpdateCustomerRequestDto::getStreet(): ?string
+DTO\UpdateCustomerRequestDto::withCity(?string $value): static
+DTO\UpdateCustomerRequestDto::withComment(?string $value): static
+DTO\UpdateCustomerRequestDto::withCorporateCustomer(?bool $value): static
+DTO\UpdateCustomerRequestDto::withCountry(?string $value): static
+DTO\UpdateCustomerRequestDto::withCustomerNumber(?string $value): static
+DTO\UpdateCustomerRequestDto::withEmail(?string $value): static
+DTO\UpdateCustomerRequestDto::withFax(?string $value): static
+DTO\UpdateCustomerRequestDto::withMobile(?string $value): static
+DTO\UpdateCustomerRequestDto::withName(?string $value): static
+DTO\UpdateCustomerRequestDto::withPhone(?string $value): static
+DTO\UpdateCustomerRequestDto::withPostalCode(?string $value): static
+DTO\UpdateCustomerRequestDto::withSalutation(?string $value): static
+DTO\UpdateCustomerRequestDto::withStreet(?string $value): static
+DTO\UpdateDashboardLayoutRequestDto::getLayout(): array
+DTO\UpdateDashboardLayoutRequestDto::getMbLayout(): array
+DTO\UpdateDashboardLayoutRequestDto::getMc2cLayout(): array
+DTO\UpdateDashboardLayoutRequestDto::getMeaLayout(): array
+DTO\UpdateDashboardLayoutRequestDto::getMesLayout(): array
+DTO\UpdateDashboardLayoutRequestDto::getMsaLayout(): array
+DTO\UpdateDashboardLayoutRequestDto::getName(): ?string
+DTO\UpdateDashboardLayoutRequestDto::getRmmLayout(): array
+DTO\UpdateDashboardLayoutRequestDto::getType(): ?string
+DTO\UpdateDashboardLayoutRequestDto::getUserId(): ?string
+DTO\UpdateDashboardLayoutRequestDto::withLayout(?array $value): static
+DTO\UpdateDashboardLayoutRequestDto::withMbLayout(?array $value): static
+DTO\UpdateDashboardLayoutRequestDto::withMc2cLayout(?array $value): static
+DTO\UpdateDashboardLayoutRequestDto::withMeaLayout(?array $value): static
+DTO\UpdateDashboardLayoutRequestDto::withMesLayout(?array $value): static
+DTO\UpdateDashboardLayoutRequestDto::withMsaLayout(?array $value): static
+DTO\UpdateDashboardLayoutRequestDto::withName(?string $value): static
+DTO\UpdateDashboardLayoutRequestDto::withRmmLayout(?array $value): static
+DTO\UpdateDashboardLayoutRequestDto::withType(?string $value): static
+DTO\UpdateDashboardLayoutRequestDto::withUserId(?string $value): static
+DTO\UpdateDownloadFileRequestDto::getAvailableUntil(): ?string
+DTO\UpdateDownloadFileRequestDto::getCount(): ?float
+DTO\UpdateDownloadFileRequestDto::getFileName(): ?string
+DTO\UpdateDownloadFileRequestDto::getHidden(): ?bool
+DTO\UpdateDownloadFileRequestDto::getName(): ?string
+DTO\UpdateDownloadFileRequestDto::getPlatform(): ?string
+DTO\UpdateDownloadFileRequestDto::getProduct(): ?string
+DTO\UpdateDownloadFileRequestDto::getPublic(): ?bool
+DTO\UpdateDownloadFileRequestDto::getTenantId(): ?string
+DTO\UpdateDownloadFileRequestDto::getType(): ?string
+DTO\UpdateDownloadFileRequestDto::getUrl(): ?string
+DTO\UpdateDownloadFileRequestDto::withAvailableUntil(?string $value): static
+DTO\UpdateDownloadFileRequestDto::withCount(?float $value): static
+DTO\UpdateDownloadFileRequestDto::withFileName(?string $value): static
+DTO\UpdateDownloadFileRequestDto::withHidden(?bool $value): static
+DTO\UpdateDownloadFileRequestDto::withName(?string $value): static
+DTO\UpdateDownloadFileRequestDto::withPlatform(?string $value): static
+DTO\UpdateDownloadFileRequestDto::withProduct(?string $value): static
+DTO\UpdateDownloadFileRequestDto::withPublic(?bool $value): static
+DTO\UpdateDownloadFileRequestDto::withTenantId(?string $value): static
+DTO\UpdateDownloadFileRequestDto::withType(?string $value): static
+DTO\UpdateDownloadFileRequestDto::withUrl(?string $value): static
+DTO\UpdateEsetCustomerRequestDto::getCustomerId(): ?float
+DTO\UpdateEsetCustomerRequestDto::withCustomerId(?float $value): static
+DTO\UpdateEsetLicenseRequestDto::getQuantity(): float
+DTO\UpdateEsetLicenseRequestDto::withQuantity(?float $value): static
+DTO\UpdateEsetPartnerRequestDto::getManagementType(): ?string
+DTO\UpdateEsetPartnerRequestDto::getProtectRegion(): ?string
+DTO\UpdateEsetPartnerRequestDto::withManagementType(?string $value): static
+DTO\UpdateEsetPartnerRequestDto::withProtectRegion(?string $value): static
+DTO\UpdateEsetProductRequestDto::getActivatable(): ?bool
+DTO\UpdateEsetProductRequestDto::getBookable(): ?bool
+DTO\UpdateEsetProductRequestDto::getFullService(): ?bool
+DTO\UpdateEsetProductRequestDto::getSortPriority(): ?float
+DTO\UpdateEsetProductRequestDto::withActivatable(?bool $value): static
+DTO\UpdateEsetProductRequestDto::withBookable(?bool $value): static
+DTO\UpdateEsetProductRequestDto::withFullService(?bool $value): static
+DTO\UpdateEsetProductRequestDto::withSortPriority(?float $value): static
+DTO\UpdateGuardian360CustomerRequestDto::getCustomerId(): ?float
+DTO\UpdateGuardian360CustomerRequestDto::withCustomerId(?float $value): static
+DTO\UpdateLayoutItemDto::getCols(): float
+DTO\UpdateLayoutItemDto::getRows(): float
+DTO\UpdateLayoutItemDto::getType(): string
+DTO\UpdateLayoutItemDto::getX(): float
+DTO\UpdateLayoutItemDto::getY(): float
+DTO\UpdateLifecycleInfoRequestDto::getEol(): ?string
+DTO\UpdateLifecycleInfoRequestDto::getName(): ?string
+DTO\UpdateLifecycleInfoRequestDto::getRelease(): ?string
+DTO\UpdateLifecycleInfoRequestDto::getType(): ?string
+DTO\UpdateLifecycleInfoRequestDto::withEol(?string $value): static
+DTO\UpdateLifecycleInfoRequestDto::withName(?string $value): static
+DTO\UpdateLifecycleInfoRequestDto::withRelease(?string $value): static
+DTO\UpdateLifecycleInfoRequestDto::withType(?string $value): static
+DTO\UpdateLywandCustomerRequestDto::getCustomerId(): ?float
+DTO\UpdateLywandCustomerRequestDto::getName(): ?string
+DTO\UpdateLywandCustomerRequestDto::withCustomerId(?float $value): static
+DTO\UpdateLywandCustomerRequestDto::withName(?string $value): static
+DTO\UpdateLywandPartnerRequestDto::getName(): ?string
+DTO\UpdateLywandPartnerRequestDto::withName(?string $value): static
+DTO\UpdateMailstoreConfigurationRequestDto::getAttachmentIndex(): string
+DTO\UpdateMailstoreConfigurationRequestDto::getBaseDirectory(): string
+DTO\UpdateMailstoreConfigurationRequestDto::getDefaultHost(): string
+DTO\UpdateMailstoreConfigurationRequestDto::getPlacementRules(): array
+DTO\UpdateMailstoreConfigurationRequestDto::getSmtpAuthenticationRequired(): bool
+DTO\UpdateMailstoreConfigurationRequestDto::getSmtpFromDisplayName(): string
+DTO\UpdateMailstoreConfigurationRequestDto::getSmtpFromEmailAddress(): string
+DTO\UpdateMailstoreConfigurationRequestDto::getSmtpHostname(): string
+DTO\UpdateMailstoreConfigurationRequestDto::getSmtpIgnoreSslPolicyErrors(): bool
+DTO\UpdateMailstoreConfigurationRequestDto::getSmtpPassword(): ?string
+DTO\UpdateMailstoreConfigurationRequestDto::getSmtpPort(): float
+DTO\UpdateMailstoreConfigurationRequestDto::getSmtpProtocol(): string
+DTO\UpdateMailstoreConfigurationRequestDto::getSmtpRecipientEmailAddress(): string
+DTO\UpdateMailstoreConfigurationRequestDto::getSmtpUsername(): string
+DTO\UpdateMailstoreConfigurationRequestDto::withAttachmentIndex(?string $value): static
+DTO\UpdateMailstoreConfigurationRequestDto::withBaseDirectory(?string $value): static
+DTO\UpdateMailstoreConfigurationRequestDto::withDefaultHost(?string $value): static
+DTO\UpdateMailstoreConfigurationRequestDto::withPlacementRules(?array $value): static
+DTO\UpdateMailstoreConfigurationRequestDto::withSmtpAuthenticationRequired(?bool $value): static
+DTO\UpdateMailstoreConfigurationRequestDto::withSmtpFromDisplayName(?string $value): static
+DTO\UpdateMailstoreConfigurationRequestDto::withSmtpFromEmailAddress(?string $value): static
+DTO\UpdateMailstoreConfigurationRequestDto::withSmtpHostname(?string $value): static
+DTO\UpdateMailstoreConfigurationRequestDto::withSmtpIgnoreSslPolicyErrors(?bool $value): static
+DTO\UpdateMailstoreConfigurationRequestDto::withSmtpPassword(?string $value): static
+DTO\UpdateMailstoreConfigurationRequestDto::withSmtpPort(?float $value): static
+DTO\UpdateMailstoreConfigurationRequestDto::withSmtpProtocol(?string $value): static
+DTO\UpdateMailstoreConfigurationRequestDto::withSmtpRecipientEmailAddress(?string $value): static
+DTO\UpdateMailstoreConfigurationRequestDto::withSmtpUsername(?string $value): static
+DTO\UpdateMailstoreInstanceRequestDto::getAlias(): ?string
+DTO\UpdateMailstoreInstanceRequestDto::getCustomerId(): ?float
+DTO\UpdateMailstoreInstanceRequestDto::getDisplayName(): ?string
+DTO\UpdateMailstoreInstanceRequestDto::getPassword(): ?string
+DTO\UpdateMailstoreInstanceRequestDto::withAlias(?string $value): static
+DTO\UpdateMailstoreInstanceRequestDto::withCustomerId(?float $value): static
+DTO\UpdateMailstoreInstanceRequestDto::withDisplayName(?string $value): static
+DTO\UpdateMailstoreInstanceRequestDto::withPassword(?string $value): static
+DTO\UpdateMessageBulkRequestDto::getDeleted(): ?bool
+DTO\UpdateMessageBulkRequestDto::getIds(): array
+DTO\UpdateMessageBulkRequestDto::getImportant(): ?bool
+DTO\UpdateMessageBulkRequestDto::getMarkedAsRead(): ?bool
+DTO\UpdateMessageBulkRequestDto::getStarred(): ?bool
+DTO\UpdateMessageBulkRequestDto::withDeleted(?bool $value): static
+DTO\UpdateMessageBulkRequestDto::withIds(?array $value): static
+DTO\UpdateMessageBulkRequestDto::withImportant(?bool $value): static
+DTO\UpdateMessageBulkRequestDto::withMarkedAsRead(?bool $value): static
+DTO\UpdateMessageBulkRequestDto::withStarred(?bool $value): static
+DTO\UpdateMessageRequestDto::getDeleted(): ?bool
+DTO\UpdateMessageRequestDto::getImportant(): ?bool
+DTO\UpdateMessageRequestDto::getMarkedAsRead(): ?bool
+DTO\UpdateMessageRequestDto::getStarred(): ?bool
+DTO\UpdateMessageRequestDto::withDeleted(?bool $value): static
+DTO\UpdateMessageRequestDto::withImportant(?bool $value): static
+DTO\UpdateMessageRequestDto::withMarkedAsRead(?bool $value): static
+DTO\UpdateMessageRequestDto::withStarred(?bool $value): static
+DTO\UpdateMessageTemplateRequestDto::getIsAdvertisement(): ?bool
+DTO\UpdateMessageTemplateRequestDto::getLink(): ?string
+DTO\UpdateMessageTemplateRequestDto::getMessageDe(): ?string
+DTO\UpdateMessageTemplateRequestDto::getMessageEn(): ?string
+DTO\UpdateMessageTemplateRequestDto::getName(): ?string
+DTO\UpdateMessageTemplateRequestDto::getScheduledAt(): ?string
+DTO\UpdateMessageTemplateRequestDto::getSubject(): ?string
+DTO\UpdateMessageTemplateRequestDto::getSubjectEn(): ?string
+DTO\UpdateMessageTemplateRequestDto::getTags(): array
+DTO\UpdateMessageTemplateRequestDto::getTarget(): mixed
+DTO\UpdateMessageTemplateRequestDto::getTargetType(): ?string
+DTO\UpdateMessageTemplateRequestDto::withIsAdvertisement(?bool $value): static
+DTO\UpdateMessageTemplateRequestDto::withLink(?string $value): static
+DTO\UpdateMessageTemplateRequestDto::withMessageDe(?string $value): static
+DTO\UpdateMessageTemplateRequestDto::withMessageEn(?string $value): static
+DTO\UpdateMessageTemplateRequestDto::withName(?string $value): static
+DTO\UpdateMessageTemplateRequestDto::withScheduledAt(?string $value): static
+DTO\UpdateMessageTemplateRequestDto::withSubject(?string $value): static
+DTO\UpdateMessageTemplateRequestDto::withSubjectEn(?string $value): static
+DTO\UpdateMessageTemplateRequestDto::withTags(?array $value): static
+DTO\UpdateMessageTemplateRequestDto::withTarget(mixed $value): static
+DTO\UpdateMessageTemplateRequestDto::withTargetType(?string $value): static
+DTO\UpdateNSightDashboardRequestDto::getApiKey(): ?string
+DTO\UpdateNSightDashboardRequestDto::getApiKeyNetwork(): ?string
+DTO\UpdateNSightDashboardRequestDto::getDefault(): ?bool
+DTO\UpdateNSightDashboardRequestDto::getName(): ?string
+DTO\UpdateNSightDashboardRequestDto::withApiKey(?string $value): static
+DTO\UpdateNSightDashboardRequestDto::withApiKeyNetwork(?string $value): static
+DTO\UpdateNSightDashboardRequestDto::withDefault(?bool $value): static
+DTO\UpdateNSightDashboardRequestDto::withName(?string $value): static
+DTO\UpdateNSightSiteRequestDto::getCustomerId(): ?float
+DTO\UpdateNSightSiteRequestDto::withCustomerId(?float $value): static
+DTO\UpdateReportSettingRequestDto::getCronExpression(): ?string
+DTO\UpdateReportSettingRequestDto::getCustomDisplayName(): ?string
+DTO\UpdateReportSettingRequestDto::getIntroductionText(): ?string
+DTO\UpdateReportSettingRequestDto::getLanguage(): ?string
+DTO\UpdateReportSettingRequestDto::getModules(): array
+DTO\UpdateReportSettingRequestDto::getRecipients(): array
+DTO\UpdateReportSettingRequestDto::getTimezone(): ?string
+DTO\UpdateReportSettingRequestDto::withCronExpression(?string $value): static
+DTO\UpdateReportSettingRequestDto::withCustomDisplayName(?string $value): static
+DTO\UpdateReportSettingRequestDto::withIntroductionText(?string $value): static
+DTO\UpdateReportSettingRequestDto::withLanguage(?string $value): static
+DTO\UpdateReportSettingRequestDto::withModules(?array $value): static
+DTO\UpdateReportSettingRequestDto::withRecipients(?array $value): static
+DTO\UpdateReportSettingRequestDto::withTimezone(?string $value): static
+DTO\UpdateRollouterCustomerRequestDto::getCustomerId(): ?float
+DTO\UpdateRollouterCustomerRequestDto::withCustomerId(?float $value): static
+DTO\UpdateScheduleRequestDto::getCronExpression(): ?string
+DTO\UpdateScheduleRequestDto::getDisabled(): ?bool
+DTO\UpdateScheduleRequestDto::getName(): ?string
+DTO\UpdateScheduleRequestDto::getTimeZone(): ?string
+DTO\UpdateScheduleRequestDto::withCronExpression(?string $value): static
+DTO\UpdateScheduleRequestDto::withDisabled(?bool $value): static
+DTO\UpdateScheduleRequestDto::withName(?string $value): static
+DTO\UpdateScheduleRequestDto::withTimeZone(?string $value): static
+DTO\UpdateSecAuditorCustomerRequestDto::getCustomerId(): ?float
+DTO\UpdateSecAuditorCustomerRequestDto::withCustomerId(?float $value): static
+DTO\UpdateSmaoCustomerRequestDto::getCustomerId(): ?float
+DTO\UpdateSmaoCustomerRequestDto::withCustomerId(?float $value): static
+DTO\UpdateSmtpConfigRequestDto::getEncryption(): ?string
+DTO\UpdateSmtpConfigRequestDto::getFromAddress(): ?string
+DTO\UpdateSmtpConfigRequestDto::getFromDisplayName(): ?string
+DTO\UpdateSmtpConfigRequestDto::getHost(): ?string
+DTO\UpdateSmtpConfigRequestDto::getPassword(): ?string
+DTO\UpdateSmtpConfigRequestDto::getPort(): ?float
+DTO\UpdateSmtpConfigRequestDto::getUsername(): ?string
+DTO\UpdateSmtpConfigRequestDto::withEncryption(?string $value): static
+DTO\UpdateSmtpConfigRequestDto::withFromAddress(?string $value): static
+DTO\UpdateSmtpConfigRequestDto::withFromDisplayName(?string $value): static
+DTO\UpdateSmtpConfigRequestDto::withHost(?string $value): static
+DTO\UpdateSmtpConfigRequestDto::withPassword(?string $value): static
+DTO\UpdateSmtpConfigRequestDto::withPort(?float $value): static
+DTO\UpdateSmtpConfigRequestDto::withUsername(?string $value): static
+DTO\UpdateSupportQueryRequestDto::getRating(): ?string
+DTO\UpdateSupportQueryRequestDto::getRatingComment(): ?string
+DTO\UpdateSupportQueryRequestDto::getRatingReason(): ?string
+DTO\UpdateSupportQueryRequestDto::withRating(?string $value): static
+DTO\UpdateSupportQueryRequestDto::withRatingComment(?string $value): static
+DTO\UpdateSupportQueryRequestDto::withRatingReason(?string $value): static
+DTO\UpdateTenantLogoRequestDto::getLogo(): string
+DTO\UpdateTenantLogoRequestDto::withLogo(?string $value): static
+DTO\UpdateTenantRequestDto::getAlertEmail(): ?string
+DTO\UpdateTenantRequestDto::getDisplayName(): ?string
+DTO\UpdateTenantRequestDto::getSupportEmail(): ?string
+DTO\UpdateTenantRequestDto::getSupportPhone(): ?string
+DTO\UpdateTenantRequestDto::getSupportUrl(): ?string
+DTO\UpdateTenantRequestDto::withAlertEmail(?string $value): static
+DTO\UpdateTenantRequestDto::withDisplayName(?string $value): static
+DTO\UpdateTenantRequestDto::withSupportEmail(?string $value): static
+DTO\UpdateTenantRequestDto::withSupportPhone(?string $value): static
+DTO\UpdateTenantRequestDto::withSupportUrl(?string $value): static
+DTO\UpdateUserPermissions::getAccess(): string
+DTO\UpdateUserPermissions::getType(): string
+DTO\UpdateUserRequestDto::getCompletedTours(): array
+DTO\UpdateUserRequestDto::getEmailNotification(): ?string
+DTO\UpdateUserRequestDto::getLanguage(): ?string
+DTO\UpdateUserRequestDto::getPermissions(): array
+DTO\UpdateUserRequestDto::getRole(): ?string
+DTO\UpdateUserRequestDto::getWeeklyDigestDay(): ?string
+DTO\UpdateUserRequestDto::withCompletedTours(?array $value): static
+DTO\UpdateUserRequestDto::withEmailNotification(?string $value): static
+DTO\UpdateUserRequestDto::withLanguage(?string $value): static
+DTO\UpdateUserRequestDto::withPermissions(?array $value): static
+DTO\UpdateUserRequestDto::withRole(?string $value): static
+DTO\UpdateUserRequestDto::withWeeklyDigestDay(?string $value): static
+DTO\UploadLifecycleInfoRequestDto::getLifecycleInfo(): string
+DTO\UploadLifecycleInfoRequestDto::withLifecycleInfo(?string $value): static
+DTO\UsedAntivirusDeviceDto::getId(): string
+DTO\UsedAntivirusDeviceDto::getName(): string
+DTO\UsedAntivirusDeviceDto::getType(): string
+DTO\UsedAntivirusDto::getCount(): float
+DTO\UsedAntivirusDto::getDevices(): array
+DTO\UsedAntivirusDto::getName(): string
+DTO\UserPaginatedResponseDto::getData(): array
+DTO\UserPaginatedResponseDto::getLimit(): float
+DTO\UserPaginatedResponseDto::getPage(): float
+DTO\UserPaginatedResponseDto::getTotalItems(): float
+DTO\UserResponseDto::getBlockedAt(): ?string
+DTO\UserResponseDto::getCompletedTours(): array
+DTO\UserResponseDto::getCreatedAt(): string
+DTO\UserResponseDto::getEmail(): ?string
+DTO\UserResponseDto::getEmailNotification(): ?string
+DTO\UserResponseDto::getFamilyName(): string
+DTO\UserResponseDto::getGivenName(): ?string
+DTO\UserResponseDto::getId(): string
+DTO\UserResponseDto::getLanguage(): string
+DTO\UserResponseDto::getLastLogin(): ?string
+DTO\UserResponseDto::getPartnerNo(): string
+DTO\UserResponseDto::getPermissions(): array
+DTO\UserResponseDto::getPhoneNumber(): ?string
+DTO\UserResponseDto::getProvider(): string
+DTO\UserResponseDto::getProviderId(): string
+DTO\UserResponseDto::getReceivesAdvertisementEmails(): bool
+DTO\UserResponseDto::getRole(): string
+DTO\UserResponseDto::getTenantId(): string
+DTO\UserResponseDto::getUpdatedAt(): string
+DTO\UserResponseDto::getUsername(): ?string
+DTO\UserResponseDto::getWeeklyDigestDay(): ?string
+DTO\VerifyMailstoreStoreRequestDto::getIncludeIndexes(): bool
+DTO\VerifyMailstoreStoreRequestDto::getInstanceId(): string
+DTO\VerifyMailstoreStoreRequestDto::getStoreId(): string
+DTO\VerifyMailstoreStoreRequestDto::withIncludeIndexes(?bool $value): static
+DTO\VerifyMailstoreStoreRequestDto::withInstanceId(?string $value): static
+DTO\VerifyMailstoreStoreRequestDto::withStoreId(?string $value): static
+Exception\RateLimitException::getRetryAfter(): ?int
+Exception\SynaxonApiException::__construct(string $message, int $code = 0, ?Throwable $previous = NULL, array $context = array (
+))
+Exception\SynaxonApiException::getContext(): array
+Exception\SynaxonApiException::getCorrelationId(): ?string
+Exception\SynaxonApiException::getErrorCode(): ?string
+Exception\ValidationException::getErrors(): array
+Http\GuzzleHttpClient::__construct(SynaxonConfig $config, ?GuzzleHttp\ClientInterface $client = NULL, ?Psr\Log\LoggerInterface $logger = NULL)
+Http\GuzzleHttpClient::request(string $method, string $path, array $options = array (
+)): ?array
+Http\GuzzleHttpClient::static redactHeaders(array $headers): array
+Http\HttpClientInterface::request(string $method, string $path, array $options = array (
+)): ?array
+Query\FilterOperator::static cases(): array
+Query\FilterOperator::static from(string|int $value): static
+Query\FilterOperator::static tryFrom(string|int $value): ?static
+Query\QueryBuilder::limit(int $limit): self
+Query\QueryBuilder::offset(int $offset): self
+Query\QueryBuilder::orderBy(string $field, string $direction = 'asc'): self
+Query\QueryBuilder::page(int $page): self
+Query\QueryBuilder::search(string $term): self
+Query\QueryBuilder::toArray(): array
+Query\QueryBuilder::where(string $field, FilterOperator $op, array|string|int|float|bool $value): self
+Query\QueryBuilder::with(string $key, array|string|int|float|bool $value): self
+Resource\AbstractResource::__construct(HttpClientInterface $http)
+Resource\AcronisResource::createAcronisCustomer(?array $body = NULL): ?array
+Resource\AcronisResource::getAcronisCustomer(string $id): ?array
+Resource\AcronisResource::getAcronisCustomerMetrics(string $id, array $query = array (
+)): ?array
+Resource\AcronisResource::getAcronisDevice(string $id): ?array
+Resource\AcronisResource::getAcronisPartnerFromContext(): ?array
+Resource\AcronisResource::getAcronisPartnerMetrics(string $id, array $query = array (
+)): ?array
+Resource\AcronisResource::getAcronisPolicy(string $id): ?array
+Resource\AcronisResource::listAcronisCustomers(array $query = array (
+)): ?array
+Resource\AcronisResource::listAcronisDevices(array $query = array (
+)): ?array
+Resource\AcronisResource::listAcronisPolicies(array $query = array (
+)): ?array
+Resource\AcronisResource::updateAcronisCustomer(string $id, ?array $body = NULL): ?array
+Resource\AuditResource::findAuditLogOptions(): ?array
+Resource\AuditResource::listAuditLogs(array $query = array (
+)): ?array
+Resource\AuthResource::auth(array $query = array (
+)): ?array
+Resource\AuthResource::authGb(array $query = array (
+)): ?array
+Resource\AuthResource::callback(string $scope, array $query = array (
+)): ?array
+Resource\AuthResource::callbackGb(string $scope, array $query = array (
+)): ?array
+Resource\AuthResource::createApiSession(?array $body = NULL): ?array
+Resource\AuthResource::createApiSessionGb(?array $body = NULL): ?array
+Resource\AuthResource::createApiToken(?array $body = NULL): ?array
+Resource\AuthResource::listApiTokens(array $query = array (
+)): ?array
+Resource\AuthResource::logout(): ?array
+Resource\AuthResource::refresh(?array $body = NULL): ?array
+Resource\AuthResource::revokeApiToken(string $id): ?array
+Resource\AuthResource::whoAmI(): ?array
+Resource\BillingResource::createNeumeierApiKey(?array $body = NULL): ?array
+Resource\BillingResource::listNeumeierApiKeys(): ?array
+Resource\BillingResource::revokeNeumeierApiKey(string $id): ?array
+Resource\CloudallyResource::createCloudallyCustomer(?array $body = NULL): ?array
+Resource\CloudallyResource::getCloudallyCustomer(string $id): ?array
+Resource\CloudallyResource::getCloudallyCustomerMetrics(string $id, array $query = array (
+)): ?array
+Resource\CloudallyResource::getCloudallyPartner(string $id): ?array
+Resource\CloudallyResource::getCloudallyPartnerFromContext(): ?array
+Resource\CloudallyResource::getCloudallyPartnerMetrics(string $id, array $query = array (
+)): ?array
+Resource\CloudallyResource::getCloudallyReportData(array $query = array (
+)): ?array
+Resource\CloudallyResource::listCloudallyCustomers(array $query = array (
+)): ?array
+Resource\CloudallyResource::listCloudallyStatuses(array $query = array (
+)): ?array
+Resource\CloudallyResource::listCloudallyTasks(array $query = array (
+)): ?array
+Resource\CloudallyResource::updateCloudallyCustomer(string $id, ?array $body = NULL): ?array
+Resource\CoveResource::createCoveCustomer(?array $body = NULL): ?array
+Resource\CoveResource::getCoveCustomer(string $id): ?array
+Resource\CoveResource::listCoveCustomers(array $query = array (
+)): ?array
+Resource\CoveResource::updateCoveCustomer(string $id, ?array $body = NULL): ?array
+Resource\CustomersResource::create(?array $body = NULL): ?array
+Resource\CustomersResource::createCustomerReportSetting(string $id, ?array $body = NULL): ?array
+Resource\CustomersResource::delete(string $id): ?array
+Resource\CustomersResource::find(string $id): ?array
+Resource\CustomersResource::generateCustomerReport(string $id): ?array
+Resource\CustomersResource::getCustomerReportSetting(string $customerId): ?array
+Resource\CustomersResource::getCustomerSuggestion(array $query = array (
+)): ?array
+Resource\CustomersResource::importCustomers(?array $body = NULL): ?array
+Resource\CustomersResource::list(array $query = array (
+)): ?array
+Resource\CustomersResource::listReferences(string $id): ?array
+Resource\CustomersResource::removeCustomerReportSetting(string $id): ?array
+Resource\CustomersResource::update(string $id, ?array $body = NULL): ?array
+Resource\CustomersResource::updateCustomerReportSetting(string $id, ?array $body = NULL): ?array
+Resource\CyansecurityResource::createCustomer(?array $body = NULL): ?array
+Resource\CyansecurityResource::getCustomer(string $id): ?array
+Resource\CyansecurityResource::listCustomers(array $query = array (
+)): ?array
+Resource\DownloadsResource::find(string $id): ?array
+Resource\DownloadsResource::getDownloadUrl(string $id): ?array
+Resource\DownloadsResource::list(array $query = array (
+)): ?array
+Resource\EsetResource::createEsetCustomer(?array $body = NULL): ?array
+Resource\EsetResource::createEsetLicense(?array $body = NULL): ?array
+Resource\EsetResource::createEsetPartner(?array $body = NULL): ?array
+Resource\EsetResource::getEsetCustomer(string $id): ?array
+Resource\EsetResource::getEsetCustomerMetrics(string $id, array $query = array (
+)): ?array
+Resource\EsetResource::getEsetLicense(string $id): ?array
+Resource\EsetResource::getEsetPartnerFromContext(): ?array
+Resource\EsetResource::getEsetPartnerMetrics(string $id, array $query = array (
+)): ?array
+Resource\EsetResource::listDeviceProblems(array $query = array (
+)): ?array
+Resource\EsetResource::listEsetCustomers(array $query = array (
+)): ?array
+Resource\EsetResource::listEsetDevices(array $query = array (
+)): ?array
+Resource\EsetResource::listEsetLicenses(array $query = array (
+)): ?array
+Resource\EsetResource::listEsetPartners(array $query = array (
+)): ?array
+Resource\EsetResource::listEsetProducts(array $query = array (
+)): ?array
+Resource\EsetResource::updateEsetCustomer(string $id, ?array $body = NULL): ?array
+Resource\EsetResource::updateEsetLicense(string $id, ?array $body = NULL): ?array
+Resource\Guardian360Resource::createGuardian360Customer(?array $body = NULL): ?array
+Resource\Guardian360Resource::getGuardian360Customer(string $id): ?array
+Resource\Guardian360Resource::listGuardian360Customers(array $query = array (
+)): ?array
+Resource\Guardian360Resource::updateGuardian360Customer(string $id, ?array $body = NULL): ?array
+Resource\LayoutResource::createDashboardLayout(?array $body = NULL): ?array
+Resource\LayoutResource::getDashboardLayout(string $id): ?array
+Resource\LayoutResource::listDashboardLayouts(array $query = array (
+)): ?array
+Resource\LayoutResource::removeDashboardLayout(string $id): ?array
+Resource\LayoutResource::updateDashboardLayout(string $id, ?array $body = NULL): ?array
+Resource\LywandResource::createLywandCustomer(?array $body = NULL): ?array
+Resource\LywandResource::getLywandCustomer(string $id): ?array
+Resource\LywandResource::getLywandCustomerMetrics(string $id, array $query = array (
+)): ?array
+Resource\LywandResource::getLywandInstallationToken(string $id): ?array
+Resource\LywandResource::getLywandPartnerFromContext(): ?array
+Resource\LywandResource::getLywandPartnerMetrics(string $id, array $query = array (
+)): ?array
+Resource\LywandResource::getLywandTarget(string $id): ?array
+Resource\LywandResource::getLywandVulnerabilities(array $query = array (
+)): ?array
+Resource\LywandResource::indexLywandCustomer(string $id): ?array
+Resource\LywandResource::indexLywandCustomerTargets(string $id): ?array
+Resource\LywandResource::indexLywandCustomerVulnerabilities(string $id): ?array
+Resource\LywandResource::indexLywandPartner(string $id): ?array
+Resource\LywandResource::listLywandCustomers(array $query = array (
+)): ?array
+Resource\LywandResource::listLywandTargets(array $query = array (
+)): ?array
+Resource\LywandResource::removeLywandCustomer(string $id): ?array
+Resource\LywandResource::updateLywandCustomer(string $id, ?array $body = NULL): ?array
+Resource\MailstoreResource::checkAliasAvailability(array $query = array (
+)): ?array
+Resource\MailstoreResource::createJournalingMailbox(?array $body = NULL): ?array
+Resource\MailstoreResource::createMailstoreInstance(?array $body = NULL): ?array
+Resource\MailstoreResource::getInstanceById(string $id): ?array
+Resource\MailstoreResource::getMailboxById(string $id): ?array
+Resource\MailstoreResource::getMailstoreInstanceMetrics(string $id, array $query = array (
+)): ?array
+Resource\MailstoreResource::getMailstorePartnerMetrics(array $query = array (
+)): ?array
+Resource\MailstoreResource::getProfileById(string $id): ?array
+Resource\MailstoreResource::invokeRawApi(array $query = array (
+)): ?array
+Resource\MailstoreResource::listArchives(array $query = array (
+)): ?array
+Resource\MailstoreResource::listInstances(array $query = array (
+)): ?array
+Resource\MailstoreResource::listMailboxes(array $query = array (
+)): ?array
+Resource\MailstoreResource::listProfileResults(string $id, array $query = array (
+)): ?array
+Resource\MailstoreResource::listProfiles(array $query = array (
+)): ?array
+Resource\MailstoreResource::removeJournalingMailbox(string $id): ?array
+Resource\MailstoreResource::removeMailstoreInstance(string $id): ?array
+Resource\MailstoreResource::updateJournalingMailboxPassword(string $id): ?array
+Resource\MailstoreResource::updateMailstoreInstance(string $id, ?array $body = NULL): ?array
+Resource\NSightResource::createNSightSite(?array $body = NULL): ?array
+Resource\NSightResource::getNSightClientMetrics(string $id, array $query = array (
+)): ?array
+Resource\NSightResource::getNSightDevice(string $id): ?array
+Resource\NSightResource::getNSightSite(string $id): ?array
+Resource\NSightResource::getNSightSiteInstaller(string $id, array $query = array (
+)): ?array
+Resource\NSightResource::getNSightSiteMetrics(string $id, array $query = array (
+)): ?array
+Resource\NSightResource::getNSightTakeControlUrl(string $id): ?array
+Resource\NSightResource::invokeRawApi(array $query = array (
+)): ?array
+Resource\NSightResource::listNSightDeviceChecks(array $query = array (
+)): ?array
+Resource\NSightResource::listNSightDevices(array $query = array (
+)): ?array
+Resource\NSightResource::listNSightSites(array $query = array (
+)): ?array
+Resource\NSightResource::updateNSightSite(string $id, ?array $body = NULL): ?array
+Resource\NotificationsResource::find(string $id): ?array
+Resource\NotificationsResource::getMessageOptions(): ?array
+Resource\NotificationsResource::list(array $query = array (
+)): ?array
+Resource\NotificationsResource::listUnreadMessages(): ?array
+Resource\NotificationsResource::setAllRead(?array $body = NULL): ?array
+Resource\NotificationsResource::setRead(string $id): ?array
+Resource\NotificationsResource::update(string $id, ?array $body = NULL): ?array
+Resource\NotificationsResource::updateMessageBulk(?array $body = NULL): ?array
+Resource\PatchesResource::deployPatches(?array $body = NULL): ?array
+Resource\PatchesResource::deployPatchesBulk(?array $body = NULL): ?array
+Resource\PatchesResource::getPatchTargets(?array $body = NULL): ?array
+Resource\PatchesResource::list(array $query = array (
+)): ?array
+Resource\ProductsResource::getAvailable(): ?array
+Resource\PusherResource::pusherChannelAuth(?array $body = NULL): ?array
+Resource\PusherResource::pusherUserAuth(?array $body = NULL): ?array
+Resource\ReportsResource::createReportSetting(?array $body = NULL): ?array
+Resource\ReportsResource::generatePartnerReport(): ?array
+Resource\ReportsResource::getPartnerReportSetting(): ?array
+Resource\ReportsResource::removeReportSetting(): ?array
+Resource\ReportsResource::updateReportSetting(?array $body = NULL): ?array
+Resource\RollouterResource::createRollouterCustomer(?array $body = NULL): ?array
+Resource\RollouterResource::getRollouterCustomer(string $id): ?array
+Resource\RollouterResource::listRollouterCustomers(array $query = array (
+)): ?array
+Resource\RollouterResource::updateRollouterCustomer(string $id, ?array $body = NULL): ?array
+Resource\SalesOpportunitiesResource::exportNSightSalesOpportunitiesCSV(array $query = array (
+)): ?array
+Resource\SalesOpportunitiesResource::exportNSightSalesOpportunitiesPDF(array $query = array (
+)): ?array
+Resource\SalesOpportunitiesResource::list(array $query = array (
+)): ?array
+Resource\SecAuditorResource::createSecAuditorCustomer(?array $body = NULL): ?array
+Resource\SecAuditorResource::createSecAuditorInstaller(string $id): ?array
+Resource\SecAuditorResource::getSecAuditorCustomer(string $id): ?array
+Resource\SecAuditorResource::listSecAuditorCustomers(array $query = array (
+)): ?array
+Resource\SecAuditorResource::updateSecAuditorCustomer(string $id, ?array $body = NULL): ?array
+Resource\SmaoResource::createSmaoCustomer(?array $body = NULL): ?array
+Resource\SmaoResource::getSmaoCustomer(string $id): ?array
+Resource\SmaoResource::listSmaoCustomers(array $query = array (
+)): ?array
+Resource\SmaoResource::updateSmaoCustomer(string $id, ?array $body = NULL): ?array
+Resource\SupportResource::createSupportQuery(?array $body = NULL): ?array
+Resource\SupportResource::listSupportChats(array $query = array (
+)): ?array
+Resource\SupportResource::listSupportQueries(array $query = array (
+)): ?array
+Resource\SupportResource::removeSupportChat(string $threadId): ?array
+Resource\SupportResource::updateSupportQuery(string $id, ?array $body = NULL): ?array
+Resource\SystemTasksResource::find(string $id): ?array
+Resource\TenantsResource::createSmtpConfig(?array $body = NULL): ?array
+Resource\TenantsResource::deleteSmtpConfig(): ?array
+Resource\TenantsResource::getLogo(string $id): ?array
+Resource\TenantsResource::getSmtpConfig(): ?array
+Resource\TenantsResource::getTenantFromContext(): ?array
+Resource\TenantsResource::removeLogo(string $id): ?array
+Resource\TenantsResource::sendTestEmail(?array $body = NULL): ?array
+Resource\TenantsResource::update(string $id, ?array $body = NULL): ?array
+Resource\TenantsResource::updateLogo(string $id, ?array $body = NULL): ?array
+Resource\TenantsResource::updateSmtpConfig(?array $body = NULL): ?array
+Resource\UsersResource::update(string $id, ?array $body = NULL): ?array
+Util\DtoHydrator::static hydrate(string $class, array $data): AbstractDto
+Util\DtoHydrator::static hydrateMany(string $class, array $items): array
+Util\PaginationIterator::__construct(mixed $fetch, int $limit = 100, int $startPage = 0)
+Util\PaginationIterator::getIterator(): Generator
+Util\PathBuilder::static expand(string $template, array $params = array (
+)): string

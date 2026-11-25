@@ -9,11 +9,12 @@ class AcronisCustomerStatsItemDto extends AbstractDto
     /**
      * Customer ID (null if not linked)
      *
-     * @return float
+     * @return float|null
      */
-    public function getCustomerId(): float
+    public function getCustomerId(): ?float
     {
-        return (float) $this->required('customerId');
+        $v = $this->requiredNullable('customerId');
+        return $v === null ? null : (float) $v;
     }
 
     /**

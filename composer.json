@@ -56,7 +56,8 @@
             "@check:generated",
             "@composer audit"
         ],
-        "update-spec": "@php bin/update-spec.php"
+        "update-spec": "@php bin/update-spec.php",
+        "public-api": "@php bin/approve-public-api.php"
     },
     "config": {
         "sort-packages": true,
@@ -69,6 +70,7 @@
         "check:generated": "Regenerate all generated code and fail if it differs from what is committed.",
         "generate": "Regenerate DTOs, resources, the client and the generated tests from docs/openapi.json.",
         "ci": "Run every gate CI runs.",
-        "update-spec": "Fetch the live SYNAXON OpenAPI document into docs/openapi.json."
+        "update-spec": "Fetch the live SYNAXON OpenAPI document into docs/openapi.json.",
+        "public-api": "Approve the current public API surface (tests/Fixtures/public-api.txt) after an intended change."
     }
 }
