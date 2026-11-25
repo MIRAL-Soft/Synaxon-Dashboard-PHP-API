@@ -1,0 +1,26 @@
+# Keeps the pinned GitHub Actions digests and the Composer lock file current.
+# Security updates arrive as soon as an advisory is published; version updates
+# are grouped weekly so they do not turn into a stream of single pull requests.
+# Dependabot opens its pull requests against API-v1, the working branch.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: API-v1
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ['*']
+
+  - package-ecosystem: composer
+    directory: /
+    target-branch: API-v1
+    schedule:
+      interval: weekly
+    versioning-strategy: lockfile-only
+    groups:
+      dev-tools:
+        dependency-type: development
+      runtime:
+        dependency-type: production

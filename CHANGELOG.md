@@ -58,6 +58,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   failing.
 - `docs/swagger-ui-init.js` removed: SYNAXON no longer publishes the spec
   that way.
+- The release workflow refuses a tag whose commit is not on `main`, so only
+  reviewed code can be released. Release tags are protected against moving
+  and deletion, and releases are immutable once published.
+- `SECURITY.md` and private vulnerability reporting; Dependabot keeps the
+  pinned Actions and the lock file current (`.github/dependabot.yml`).
 - `bin/check-content.php` applies the same secret patterns as the local
   pre-commit hook, including the password pattern. `docs/openapi.json`, the
   upstream spec whose schema fields are called `password`, is left out of the
