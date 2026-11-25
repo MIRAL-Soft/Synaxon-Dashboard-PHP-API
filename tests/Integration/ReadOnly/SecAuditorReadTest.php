@@ -54,6 +54,6 @@ final class SecAuditorReadTest extends IntegrationTestCase
     public function testCreateSecAuditorInstallerHttpControllerCreateSecAuditorInstaller(): void
     {
         $this->assertReadOnly('GET');
-        self::markTestSkipped('Returns installer binary + requires OS query parameter.');
+        self::markTestSkipped('Creates an installer upstream; possible side effect, not called by the read-only suite.');
     }
 }

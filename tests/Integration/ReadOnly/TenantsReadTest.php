@@ -44,6 +44,9 @@ final class TenantsReadTest extends IntegrationTestCase
         );
         $response = $this->client->tenants()->getLogo($id);
         self::assertNotNull($response, 'Expected a non-null response from GET /v1/tenants/{id}/logo');
+        self::assertIsArray($response);
+        self::assertArrayHasKey('_raw', $response, 'a file response arrives as _raw/_contentType');
+        self::assertStringNotContainsString('json', (string) $response['_contentType']);
     }
 
     /**

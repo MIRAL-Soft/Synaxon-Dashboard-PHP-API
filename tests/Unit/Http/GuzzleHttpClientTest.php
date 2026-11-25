@@ -460,6 +460,27 @@ final class GuzzleHttpClientTest extends TestCase
         self::assertSame(1, $attempts);
     }
 
+    /**
+     * Measured on the live API: a CSV export without rows answers 200
+     * text/csv with no bytes. That is an empty file, not "no content".
+     */
+    public function testEmptyFileIsReturnedAsFile(): void
+    {
+        $history = [];
+        $client = $this->buildClient([new Response(200, ['Content-Type' => 'text/csv'], '')], $history);
+
+        self::assertSame(['_raw' => '', '_contentType' => 'text/csv'], $client->request('GET', '/v1/sales-opportunities/csv'));
+    }
+
+    public function testNoContentIsNull(): void
+    {
+        $history = [];
+        $client = $this->buildClient([new Response(204), new Response(200, ['Content-Type' => 'application/json'], '')], $history);
+
+        self::assertNull($client->request('DELETE', '/v1/x'));
+        self::assertNull($client->request('GET', '/v1/y'));
+    }
+
     public function testSendsConfiguredAcceptLanguage(): void
     {
         $history = [];

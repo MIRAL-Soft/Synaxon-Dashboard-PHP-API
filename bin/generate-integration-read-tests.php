@@ -74,17 +74,27 @@ $knownBrokenUpstream = [
 ];
 
 /**
- * Endpoints whose response is not JSON (CSV, PDF …). They require query
- * parameters and target-specific IDs that are not represented in the spec,
- * so we skip them from the automated smoke suite with a clear note.
+ * Endpoints left out of the live suite. The installers are GET operations
+ * whose summary says they create an installer, so a call may have side
+ * effects in the tenant; a read-only suite does not make it.
  */
 $nonJsonEndpoints = [
-    'GET /v1/sales-opportunities/csv' => 'Returns CSV; requires targeted test fixture rather than a smoke call.',
-    'GET /v1/sales-opportunities/pdf' => 'Returns PDF; requires targeted test fixture rather than a smoke call.',
-    'GET /v1/reports/pdf' => 'Returns PDF; requires targeted test fixture rather than a smoke call.',
-    'GET /v1/customers/{id}/report/pdf' => 'Returns PDF; requires targeted test fixture rather than a smoke call.',
-    'GET /v1/n-sight/sites/{id}/installer' => 'Returns installer binary + requires OS query parameter.',
-    'GET /v1/sec-auditor/customers/{id}/installer' => 'Returns installer binary + requires OS query parameter.',
+    'GET /v1/n-sight/sites/{id}/installer' => 'Creates an installer upstream; possible side effect, not called by the read-only suite.',
+    'GET /v1/sec-auditor/customers/{id}/installer' => 'Creates an installer upstream; possible side effect, not called by the read-only suite.',
+    // GET, but each call starts a report generation task upstream (the
+    // response is an ApiTaskResponse with a taskId), so it is not read-only.
+    'GET /v1/reports/pdf' => 'Starts a report generation task upstream; not called by the read-only suite.',
+    'GET /v1/customers/{id}/report/pdf' => 'Starts a report generation task upstream; not called by the read-only suite.',
+];
+
+/**
+ * Endpoints that answer with a file. They are called like any other, and the
+ * test checks that the file arrives as ['_raw' => ..., '_contentType' => ...].
+ */
+$fileEndpoints = [
+    'GET /v1/sales-opportunities/csv',
+    'GET /v1/sales-opportunities/pdf',
+    'GET /v1/tenants/{id}/logo',
 ];
 
 /** @var array<string, mixed> $spec */
@@ -188,6 +198,7 @@ foreach ($groups as $group => $ops) {
             $optionalEndpoints,
             $knownBrokenUpstream,
             $nonJsonEndpoints,
+            $fileEndpoints,
         );
         $totalTests++;
     }
@@ -363,6 +374,7 @@ function renderTest(
     array $optionalEndpoints,
     array $knownBrokenUpstream,
     array $nonJsonEndpoints,
+    array $fileEndpoints = [],
 ): string {
     $endpointKey = 'GET ' . $op['path'];
     $testName = 'test' . studly($op['opId'] !== '' ? $op['opId'] : ($op['path'] . 'Get'));
@@ -435,6 +447,11 @@ function renderTest(
     $invocation = "\$this->client->{$resourceMethod}()->{$callMethod}({$callArgs})";
 
     $callBlock = renderInvocationBlock($invocation, $op['path'], $brokenReason, $optional);
+    if (in_array($endpointKey, $fileEndpoints, true)) {
+        $callBlock .= "        self::assertIsArray(\$response);\n"
+                    . "        self::assertArrayHasKey('_raw', \$response, 'a file response arrives as _raw/_contentType');\n"
+                    . "        self::assertStringNotContainsString('json', (string) \$response['_contentType']);\n";
+    }
 
     if ($pathParams === []) {
         return $doc
