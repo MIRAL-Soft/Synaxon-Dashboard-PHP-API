@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
+use miralsoft\synaxon\api\Compat\ApiCompatibility;
+
 /**
  * Configuration for bin/check-api-compat.php.
- *
- * Adjust paths and the live spec URL here if the upstream layout changes.
  */
 
 return [
@@ -18,13 +18,7 @@ return [
      * Live URL of the OpenAPI document the Swagger UI loads. Until November
      * 2026 it was embedded in swagger-ui-init.js; that file now answers HTML.
      */
-    'live_url'   => \miralsoft\synaxon\api\Tests\Support\LiveSpec::DEFAULT_URL,
-
-    /*
-     * Where to scan for implemented endpoint methods. Public methods carrying
-     * a @synaxon-endpoint <METHOD> <PATH> phpdoc tag are counted.
-     */
-    'resource_dir' => dirname(__DIR__) . '/src/Resource',
+    'live_url'   => ApiCompatibility::DEFAULT_SPEC_URL,
 
     /*
      * Default snapshot output location for `--snapshot`.

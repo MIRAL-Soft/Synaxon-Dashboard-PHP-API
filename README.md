@@ -377,8 +377,37 @@ $client->customers()->create($payload->toArray());
 
 ## API compatibility checking
 
-`bin/check-api-compat.php` diffs the implemented surface against either the
-local spec or the live spec.
+SYNAXON extends its API from time to time. Your application can ask whether
+the installed library still covers it:
+
+```php
+use miralsoft\synaxon\api\Compat\ApiCompatibility;
+
+$report = ApiCompatibility::fromConfig($config)->compare();
+
+if ($report->hasBreakingDrift()) {
+    // Operations or schemas this library uses were removed upstream:
+    // $report->removedOperations, $report->removedSchemas
+} elseif (!$report->isCompatible()) {
+    // The API offers more than this version supports (nothing breaks):
+    // $report->missingOperations, $report->missingSchemas
+}
+```
+
+The library never runs this on its own. It fetches the spec, which is public
+and needs no credentials, only when you call `compare()` or
+`fetchSpecJson()`. When and how often to check, and who is told about a
+difference, is up to your application: for example a weekly job in your
+monitoring. `ApiCompatibility::compareSpec($decodedSpec)` compares a spec you
+already have, without any network access. `$report->toArray()` gives the full
+result for logging or alerts.
+
+The document is accepted only when it is served as JSON and contains an
+OpenAPI `paths` object, because the Swagger UI answers `200` with HTML for
+unknown paths. Otherwise an `UnexpectedResponseException` is thrown; network
+errors raise a `TransportException`.
+
+For maintainers, `bin/check-api-compat.php` prints the same comparison:
 
 ```bash
 # Offline check (uses docs/openapi.json)
@@ -394,18 +423,17 @@ php bin/check-api-compat.php --live --snapshot
 
 Exit codes: `0` compatible, `1` drift, `2` spec unreachable.
 
-The live document is accepted only when it is served as JSON and contains an
-OpenAPI `paths` object, because the Swagger UI answers `200` with HTML for
-unknown paths. The same logic is mirrored in two PHPUnit tests:
-
-* `tests/Unit/ApiCompatibilityTest.php` runs offline by default
-* `tests/Integration/LiveCompatibilityTest.php` runs only when integration
-  tests are enabled (see below)
+`tests/Unit/ApiCompatibilityTest.php` checks offline that the committed spec
+is fully covered and that `Compat\ApiSurface` matches the real resource
+methods; `tests/Integration/LiveCompatibilityTest.php` runs the live
+comparison when integration tests are enabled (see below).
 
 ## What this library does not do
 
-* **No telemetry.** The library contacts only the configured `baseUri`. It
-  sends nothing to MIRAL Soft or anyone else.
+* **No telemetry, no background activity.** The library contacts only the
+  configured `baseUri`, and only when you call it. It sends nothing to
+  MIRAL Soft or anyone else. The compatibility check, too, runs only when
+  your code calls it.
 * **No login, token refresh or credential storage.** It takes a bearer token
   or a basic pair from you and sends it as the `Authorization` header. It never
   writes credentials to disk, caches tokens or runs an OAuth flow.
@@ -549,7 +577,8 @@ tests/
 │       ├── EndpointSamplingTrait.php  # fetches sample IDs from list endpoints
 │       └── {Resource}ReadTest.php     # one test per GET endpoint (110 total)
 ├── Support/
-│   ├── LiveSpec.php                 # fetches and validates the live OpenAPI document
+│   ├── PublicApi.php                # renders the public API surface for PublicApiTest
+│   ├── ReadOnlyHttpClient.php       # refuses non-GET requests in the live suite
 │   ├── MockHttpClient.php           # in-memory HTTP stub
 │   └── TokenCache.php               # Basic → Bearer exchange with on-disk cache
 ├── bootstrap.php                    # loads vendor + tests/.env.test
@@ -564,6 +593,7 @@ tests/
 ```
 src/
 ├── Client/SynaxonClient.php
+├── Compat/                          # ApiCompatibility, CompatibilityReport, generated ApiSurface
 ├── Config/SynaxonConfig.php
 ├── DTO/                             # 341 generated DTOs + AbstractDto
 ├── Exception/                       # typed exception hierarchy

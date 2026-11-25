@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Refresh docs/openapi.json from the live SYNAXON OpenAPI document.
  *
- * The document is fetched and validated by tests/Support/LiveSpec (JSON with
+ * The document is fetched and validated by Compat\ApiCompatibility (JSON with
  * an OpenAPI `paths` object) and written pretty-printed, so a spec change is
  * a readable diff. Run `composer generate` and `composer ci` afterwards.
  *
@@ -15,13 +15,13 @@ declare(strict_types=1);
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-use miralsoft\synaxon\api\Tests\Support\LiveSpec;
+use miralsoft\synaxon\api\Compat\ApiCompatibility;
 
-$url = $argv[1] ?? LiveSpec::DEFAULT_URL;
+$url = $argv[1] ?? ApiCompatibility::DEFAULT_SPEC_URL;
 $target = dirname(__DIR__) . '/docs/openapi.json';
 
 try {
-    $raw = LiveSpec::fetchJson($url);
+    $raw = new ApiCompatibility($url)->fetchSpecJson();
 } catch (Throwable $e) {
     fwrite(STDERR, 'Could not load the live spec: ' . $e->getMessage() . "\n");
     exit(2);

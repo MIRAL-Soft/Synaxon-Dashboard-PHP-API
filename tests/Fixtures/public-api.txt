@@ -27,6 +27,16 @@ Client\SynaxonClient::support(): SupportResource
 Client\SynaxonClient::systemTasks(): SystemTasksResource
 Client\SynaxonClient::tenants(): TenantsResource
 Client\SynaxonClient::users(): UsersResource
+Compat\ApiCompatibility::__construct(string $specUrl = 'https://api.synaxon.com/marketplace/swagger/marketplace-openapi.json', ?GuzzleHttp\ClientInterface $http = NULL, int $timeout = 30)
+Compat\ApiCompatibility::compare(): CompatibilityReport
+Compat\ApiCompatibility::fetchSpecJson(): string
+Compat\ApiCompatibility::getSpecUrl(): string
+Compat\ApiCompatibility::static compareSpec(array $spec): CompatibilityReport
+Compat\ApiCompatibility::static fromConfig(SynaxonConfig $config, ?GuzzleHttp\ClientInterface $http = NULL): self
+Compat\CompatibilityReport::__construct(int $specOperationCount, int $implementedOperationCount, int $specSchemaCount, int $implementedSchemaCount, array $missingOperations, array $removedOperations, array $missingSchemas, array $removedSchemas, ?string $specVersion = NULL)
+Compat\CompatibilityReport::hasBreakingDrift(): bool
+Compat\CompatibilityReport::isCompatible(): bool
+Compat\CompatibilityReport::toArray(): array
 Config\SynaxonConfig::__construct(?string $bearerToken = NULL, ?string $basicUser = NULL, ?string $basicPass = NULL, string $baseUri = 'https://api.synaxon.com/marketplace', int $timeout = 30, int $connectTimeout = 10, int $maxRetries = 3, string $userAgent = 'miralsoft-synaxon-api/2.0.0', ?string $acceptLanguage = NULL)
 Config\SynaxonConfig::__debugInfo(): array
 Config\SynaxonConfig::getAcceptLanguage(): ?string

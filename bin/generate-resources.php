@@ -81,6 +81,21 @@ foreach ($groups as $group => $ops) {
 
 file_put_contents($clientDir . '/SynaxonClient.php', renderClient(array_keys($groups)));
 
+// The implemented surface as constants, read by Compat\ApiCompatibility. A
+// class rather than reflection on docblocks, which production setups with
+// opcache.save_comments=0 strip.
+$operations = [];
+foreach ($groups as $ops) {
+    foreach ($ops as $op) {
+        $operations[] = $op['method'] . ' ' . $op['path'];
+    }
+}
+sort($operations, SORT_STRING);
+$schemaNames = array_map('strval', array_keys((array) ($spec['components']['schemas'] ?? [])));
+sort($schemaNames, SORT_STRING);
+@mkdir($root . '/src/Compat', 0o755, true);
+file_put_contents($root . '/src/Compat/ApiSurface.php', renderApiSurface($operations, $schemaNames));
+
 // Emit a JSON index for the compatibility tool.
 file_put_contents(
     $root . '/config/generated-endpoints.json',
@@ -90,6 +105,43 @@ file_put_contents(
         'empty_paths' => $emptyPaths,
     ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
 );
+
+/**
+ * @param list<string> $operations
+ * @param list<string> $schemas
+ */
+function renderApiSurface(array $operations, array $schemas): string
+{
+    $list = static fn (array $items): string => implode('', array_map(
+        static fn (string $i): string => '        ' . var_export($i, true) . ",\n",
+        $items
+    ));
+
+    return "<?php\n\n"
+        . "declare(strict_types=1);\n\n"
+        . "namespace miralsoft\synaxon\api\Compat;\n\n"
+        . "/**\n"
+        . " * The API surface this library version implements: every operation as\n"
+        . " * \"METHOD /path\" and every schema that has a DTO class.\n"
+        . " *\n"
+        . " * This class is generated from the OpenAPI specification by\n"
+        . " * bin/generate-resources.php. Do not edit it by hand.\n"
+        . " */\n"
+        . "final class ApiSurface\n"
+        . "{\n"
+        . "    /** @var list<string> */\n"
+        . "    public const OPERATIONS = [\n"
+        . $list($operations)
+        . "    ];\n\n"
+        . "    /** @var list<string> */\n"
+        . "    public const SCHEMAS = [\n"
+        . $list($schemas)
+        . "    ];\n\n"
+        . "    private function __construct()\n"
+        . "    {\n"
+        . "    }\n"
+        . "}\n";
+}
 
 fwrite(STDOUT, sprintf(
     "Generated %d resource classes, %d operations, %d empty/placeholder paths skipped.\n",
