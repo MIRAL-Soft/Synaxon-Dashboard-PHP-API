@@ -380,21 +380,24 @@ final class GuzzleHttpClient implements HttpClientInterface
     private function decodeBody(ResponseInterface $response): array|null
     {
         $body = (string) $response->getBody();
-        if ($body === '') {
-            return null;
-        }
 
         // Content-Type-based fallback: for binary / textual non-JSON payloads
         // (CSV exports, PDF documents, etc.) we wrap the raw body into an
         // array so the resource methods keep returning array|null. Callers
         // that expect binary output can access $result['_raw'] and
-        // $result['_contentType'].
+        // $result['_contentType']. An empty file is still a file: a CSV
+        // export without rows arrives as 200 text/csv with no bytes, and is
+        // returned as such rather than as "no content".
         $contentType = strtolower(trim(explode(';', $response->getHeaderLine('Content-Type'))[0] ?? ''));
-        if ($contentType !== '' && !str_contains($contentType, 'json')) {
+        if ($response->getStatusCode() !== 204 && $contentType !== '' && !str_contains($contentType, 'json')) {
             return [
                 '_raw' => $body,
                 '_contentType' => $contentType,
             ];
+        }
+
+        if ($body === '') {
+            return null;
         }
 
         try {

@@ -36,7 +36,11 @@ final class SalesOpportunitiesReadTest extends IntegrationTestCase
     public function testGetSalesOpportunitiesExportHttpControllerExportNSightSalesOpportunitiesCSV(): void
     {
         $this->assertReadOnly('GET');
-        self::markTestSkipped('Returns CSV; requires targeted test fixture rather than a smoke call.');
+        $response = $this->client->salesOpportunities()->exportNSightSalesOpportunitiesCSV([]);
+        self::assertNotNull($response, 'Expected a non-null response from GET /v1/sales-opportunities/csv');
+        self::assertIsArray($response);
+        self::assertArrayHasKey('_raw', $response, 'a file response arrives as _raw/_contentType');
+        self::assertStringNotContainsString('json', (string) $response['_contentType']);
     }
 
     /**
@@ -47,6 +51,10 @@ final class SalesOpportunitiesReadTest extends IntegrationTestCase
     public function testGetSalesOpportunitiesExportHttpControllerExportNSightSalesOpportunitiesPDF(): void
     {
         $this->assertReadOnly('GET');
-        self::markTestSkipped('Returns PDF; requires targeted test fixture rather than a smoke call.');
+        $response = $this->client->salesOpportunities()->exportNSightSalesOpportunitiesPDF([]);
+        self::assertNotNull($response, 'Expected a non-null response from GET /v1/sales-opportunities/pdf');
+        self::assertIsArray($response);
+        self::assertArrayHasKey('_raw', $response, 'a file response arrives as _raw/_contentType');
+        self::assertStringNotContainsString('json', (string) $response['_contentType']);
     }
 }

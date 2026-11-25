@@ -13,16 +13,16 @@ of the SYNAXON Marketplace PHP API client.
 
 ## How to run
 
-All scripts read credentials from environment variables:
+The scripts read a bearer token from the environment:
 
 ```bash
-export SYNAXON_BEARER_TOKEN=...           # preferred
-# or
-export SYNAXON_BASIC_USER=...
-export SYNAXON_BASIC_PASS=...
-
+export SYNAXON_BEARER_TOKEN=...
 php examples/01-quickstart.php
 ```
+
+The API accepts your client ID and secret only at the token endpoint; how to
+exchange them for a bearer token is shown in the main README under
+"Authentication". All scripts only read data.
 
 The `05-builder-pattern.php` script does no network call, so it can be
 run without any credentials.

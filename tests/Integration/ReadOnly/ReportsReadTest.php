@@ -36,6 +36,6 @@ final class ReportsReadTest extends IntegrationTestCase
     public function testGenerateReportHttpControllerGeneratePartnerReport(): void
     {
         $this->assertReadOnly('GET');
-        self::markTestSkipped('Returns PDF; requires targeted test fixture rather than a smoke call.');
+        self::markTestSkipped('Starts a report generation task upstream; not called by the read-only suite.');
     }
 }

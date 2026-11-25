@@ -69,6 +69,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   failing.
 - `docs/swagger-ui-init.js` removed: SYNAXON no longer publishes the spec
   that way.
+- README rewritten for people who find the package: what the API covers per
+  resource, how to obtain a bearer token (client credentials work only at
+  the token endpoint, verified on the live API), return values, file
+  downloads and uploads, asynchronous operations (report generation answers
+  with a task ID), the full exception set, and upgrading from 1.x. Every
+  read-only example was run against the live API.
+- The live suite checks file endpoints (CSV, PDF, tenant logo) for a file
+  response, and no longer calls the report-generation GETs, which start a
+  task upstream on every call.
 - The generators load the spec through one guard: descriptions cannot end a
   docblock (`*/`), and schema names, operationIds, paths and path parameters
   must be valid before any code is written.
@@ -163,6 +172,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   values are rejected instead of losing their keys.
 - `redactHeaders()` also masks `Proxy-Authorization`, `Set-Cookie`,
   `X-Auth-Token` and any header named like a token, key or secret.
+- An empty file (for example a CSV export without rows, which the API sends
+  as `200 text/csv` with no bytes) is returned as
+  `['_raw' => '', '_contentType' => 'text/csv']` instead of `null`; `null`
+  stays for responses without content.
 - `ValidationException::getErrors()` returns the API's `subErrors` (one line
   per rejected field). It read keys the API does not send and was always
   empty.
