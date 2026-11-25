@@ -56,6 +56,12 @@ trait EndpointSamplingTrait
         if ($response === null) {
             return null;
         }
+        // A single entity, as a .../fromContext endpoint returns it.
+        $ownId = $response['id'] ?? null;
+        if (!isset($response['data']) && (is_string($ownId) || is_int($ownId)) && (string) $ownId !== '') {
+            return (string) $ownId;
+        }
+
         $items = $response;
         if (isset($response['data']) && is_array($response['data'])) {
             $items = $response['data'];

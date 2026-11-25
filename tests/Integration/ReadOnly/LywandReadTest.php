@@ -38,7 +38,12 @@ final class LywandReadTest extends IntegrationTestCase
     public function testGetLywandPartnerMetricsHttpControllerGetLywandPartnerMetrics(): void
     {
         $this->assertReadOnly('GET');
-        self::markTestSkipped('No list endpoint available in this resource to sample an ID from.');
+        $id = $this->sampleId(
+            'lywand:/v1/lywand/partners/fromContext',
+            fn () => $this->client->lywand()->getLywandPartnerFromContext(['limit' => 1]),
+        );
+        $response = $this->client->lywand()->getLywandPartnerMetrics($id, []);
+        self::assertNotNull($response, 'Expected a non-null response from GET /v1/lywand/partners/{id}/metrics');
     }
 
     /**

@@ -13,10 +13,12 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use miralsoft\synaxon\api\Config\SynaxonConfig;
 use miralsoft\synaxon\api\Exception\AuthenticationException;
+use miralsoft\synaxon\api\Exception\NotFoundException;
 use miralsoft\synaxon\api\Exception\RateLimitException;
 use miralsoft\synaxon\api\Exception\ServerException;
 use miralsoft\synaxon\api\Exception\SynaxonApiException;
 use miralsoft\synaxon\api\Exception\TransportException;
+use miralsoft\synaxon\api\Exception\ValidationException;
 use miralsoft\synaxon\api\Http\GuzzleHttpClient;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -295,6 +297,43 @@ final class GuzzleHttpClientTest extends TestCase
         $client->request('GET', '/v1/x', ['query' => ['status' => ['a', 'b c'], 'isOnline' => false, 'page' => 2]]);
 
         self::assertSame('status=a&status=b%20c&isOnline=false&page=2', $history[0]['request']->getUri()->getQuery());
+    }
+
+    /**
+     * The body is the ApiErrorResponse example from docs/openapi.json, the
+     * same shape the live API returned on 2026-11-25 for limit=1000.
+     */
+    public function testValidationExceptionExposesSubErrorsAndCode(): void
+    {
+        $history = [];
+        $body = '{"statusCode":400,"message":"Validation error","error":"GENERIC.VALIDATION_ERROR",'
+            . '"correlationId":"DMyg0Zzu7kjGdX2Ai0UtX",'
+            . '"subErrors":["refreshToken must be longer than or equal to 10 characters."]}';
+        $client = $this->buildClient([new Response(400, ['Content-Type' => 'application/json'], $body)], $history);
+
+        try {
+            $client->request('POST', '/v1/auth/refresh', ['body' => ['refreshToken' => 'x']]);
+            self::fail('expected exception');
+        } catch (ValidationException $e) {
+            self::assertSame(['refreshToken must be longer than or equal to 10 characters.'], $e->getErrors());
+            self::assertSame('GENERIC.VALIDATION_ERROR', $e->getErrorCode());
+            self::assertSame('DMyg0Zzu7kjGdX2Ai0UtX', $e->getCorrelationId());
+        }
+    }
+
+    public function testNotFoundExposesErrorCode(): void
+    {
+        $history = [];
+        $body = '{"statusCode":404,"message":"Not found","error":"GENERIC.NOT_FOUND"}';
+        $client = $this->buildClient([new Response(404, ['Content-Type' => 'application/json'], $body)], $history);
+
+        try {
+            $client->request('GET', '/v1/customers/1');
+            self::fail('expected exception');
+        } catch (NotFoundException $e) {
+            self::assertSame('GENERIC.NOT_FOUND', $e->getErrorCode());
+            self::assertSame([], $e->getContext()['errors'] ?? []);
+        }
     }
 
     public function testSendsConfiguredAcceptLanguage(): void

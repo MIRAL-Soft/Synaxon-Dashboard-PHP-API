@@ -82,7 +82,12 @@ final class AcronisReadTest extends IntegrationTestCase
     public function testGetAcronisPartnerMetricsHttpControllerGetAcronisPartnerMetrics(): void
     {
         $this->assertReadOnly('GET');
-        self::markTestSkipped('No list endpoint available in this resource to sample an ID from.');
+        $id = $this->sampleId(
+            'acronis:/v1/acronis/partners/fromContext',
+            fn () => $this->client->acronis()->getAcronisPartnerFromContext(['limit' => 1]),
+        );
+        $response = $this->client->acronis()->getAcronisPartnerMetrics($id, []);
+        self::assertNotNull($response, 'Expected a non-null response from GET /v1/acronis/partners/{id}/metrics');
     }
 
     /**

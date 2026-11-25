@@ -86,10 +86,13 @@ jobs:
           version="${{ steps.version.outputs.version }}"
 
           # The section between "## [<version>]" and the next "## [" header.
-          notes=$(awk -v v="$version" '
-            $0 ~ "^## \\[" v "\\]"  { capture = 1; next }
-            capture && /^## \[/      { exit }
-            capture                  { print }
+          # Plain prefix comparison with index() rather than a regex: escaped
+          # brackets in a dynamic awk regex are read differently by gawk and
+          # mawk, and the regex version matched nothing.
+          notes=$(awk -v head="## [${version}]" '
+            index($0, head) == 1      { capture = 1; next }
+            capture && index($0, "## [") == 1 { exit }
+            capture                   { print }
           ' CHANGELOG.md)
 
           if [ -z "$(printf '%s' "$notes" | tr -d '[:space:]')" ]; then

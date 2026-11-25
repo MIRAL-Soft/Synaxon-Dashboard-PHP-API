@@ -10,12 +10,18 @@ namespace miralsoft\synaxon\api\Exception;
 class ValidationException extends SynaxonApiException
 {
     /**
-     * @return array<string, mixed> Field-level errors as returned by the API, when available.
+     * The API's sub-errors, one readable line per rejected field, for example
+     * "limit must not be greater than 100". Empty when the API sent none.
+     *
+     * @return list<string>
      */
     public function getErrors(): array
     {
         $errors = $this->context['errors'] ?? [];
+        if (!is_array($errors)) {
+            return [];
+        }
 
-        return is_array($errors) ? $errors : [];
+        return array_values(array_filter($errors, is_string(...)));
     }
 }

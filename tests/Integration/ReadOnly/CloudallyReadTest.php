@@ -54,7 +54,12 @@ final class CloudallyReadTest extends IntegrationTestCase
     public function testFindCloudallyPartnerByIdHttpControllerGetCloudallyPartner(): void
     {
         $this->assertReadOnly('GET');
-        self::markTestSkipped('No list endpoint available in this resource to sample an ID from.');
+        $id = $this->sampleId(
+            'cloudally:/v1/cloudally/partners/fromContext',
+            fn () => $this->client->cloudally()->getCloudallyPartnerFromContext(['limit' => 1]),
+        );
+        $response = $this->client->cloudally()->getCloudallyPartner($id);
+        self::assertNotNull($response, 'Expected a non-null response from GET /v1/cloudally/partners/{id}');
     }
 
     /**
@@ -113,7 +118,12 @@ final class CloudallyReadTest extends IntegrationTestCase
     public function testGetCloudallyPartnerMetricsHttpControllerGetCloudallyPartnerMetrics(): void
     {
         $this->assertReadOnly('GET');
-        self::markTestSkipped('No list endpoint available in this resource to sample an ID from.');
+        $id = $this->sampleId(
+            'cloudally:/v1/cloudally/partners/fromContext',
+            fn () => $this->client->cloudally()->getCloudallyPartnerFromContext(['limit' => 1]),
+        );
+        $response = $this->client->cloudally()->getCloudallyPartnerMetrics($id, []);
+        self::assertNotNull($response, 'Expected a non-null response from GET /v1/cloudally/partners/{id}/metrics');
     }
 
     /**

@@ -31,6 +31,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `GET /v1/notifications/unread` no longer takes `providerId` upstream.
 
 ### Added
+- `SynaxonApiException::getErrorCode()`: the API's machine-readable error
+  code, for example `GENERIC.VALIDATION_ERROR`.
 - Seven new resources: `billing()`, `cloudally()`, `cove()`,
   `cyansecurity()`, `guardian360()`, `rollouter()`, `smao()`.
 - New operations on existing resources: API tokens and the GB sign-in flow
@@ -58,6 +60,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   failing.
 - `docs/swagger-ui-init.js` removed: SYNAXON no longer publishes the spec
   that way.
+- The release workflow extracts the release notes with a plain prefix match;
+  the previous awk regex matched no section, so a release would have been
+  published with the fallback text (and, with the new empty-section check,
+  refused).
+- Integration tests sample ids from `.../fromContext` where no list endpoint
+  exists, so partner metrics, the CloudAlly partner and the tenant logo are
+  read live instead of skipped.
 - The release workflow refuses a tag whose commit is not on `main`, so only
   reviewed code can be released. Release tags are protected against moving
   and deletion, and releases are immutable once published.
@@ -119,6 +128,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   logo upload is possible at all. An empty JSON body is sent as `{}`, not `[]`.
 - `AuthResource::callback()` sends `scope` as a query parameter; it was
   accepted and silently dropped.
+- `ValidationException::getErrors()` returns the API's `subErrors` (one line
+  per rejected field). It read keys the API does not send and was always
+  empty.
 - `RateLimitException::getRetryAfter()` returns `null` when the server sent
   no usable `Retry-After`, instead of `0` (which read as "retry now"), and
   understands the HTTP-date form.

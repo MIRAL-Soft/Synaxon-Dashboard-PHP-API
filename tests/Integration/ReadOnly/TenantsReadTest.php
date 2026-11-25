@@ -38,7 +38,12 @@ final class TenantsReadTest extends IntegrationTestCase
     public function testGetTenantLogoHttpControllerGetLogo(): void
     {
         $this->assertReadOnly('GET');
-        self::markTestSkipped('No list endpoint available in this resource to sample an ID from.');
+        $id = $this->sampleId(
+            'tenants:/v1/tenants/fromContext',
+            fn () => $this->client->tenants()->getTenantFromContext(['limit' => 1]),
+        );
+        $response = $this->client->tenants()->getLogo($id);
+        self::assertNotNull($response, 'Expected a non-null response from GET /v1/tenants/{id}/logo');
     }
 
     /**

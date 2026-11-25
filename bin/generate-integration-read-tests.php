@@ -275,6 +275,13 @@ function resolveListEndpointFor(string $path, array $listByParent): ?array
         return $listByParent[$parent];
     }
 
+    // No list, but the caller's own entity: /v1/acronis/partners/fromContext
+    // returns the partner the credentials belong to, a valid id for
+    // /v1/acronis/partners/{id}/metrics.
+    if (isset($listByParent[$parent . '/fromContext'])) {
+        return $listByParent[$parent . '/fromContext'];
+    }
+
     // Fall back to any ancestor (e.g. if the direct parent isn't listable,
     // try /v1/eset/customers/{id}/foo → /v1/eset/customers → /v1/eset).
     $segments = explode('/', $parent);
