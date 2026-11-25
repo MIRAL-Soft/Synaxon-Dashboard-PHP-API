@@ -22,7 +22,7 @@ $finder = (new PhpCsFixer\Finder())
     // generators are the only writers, and bin/check-generated.php verifies that
     // regenerating reproduces the committed files byte for byte. Paths are
     // relative to each directory passed to in().
-    ->exclude(['DTO'])
+    ->notPath('#^DTO/(?!AbstractDto\.php$)#')
     ->notPath('#^Resource/(?!AbstractResource)[A-Za-z0-9]+Resource\.php$#')
     ->notPath('Client/SynaxonClient.php')
     ->notPath('#^Integration/ReadOnly/.+ReadTest\.php$#')

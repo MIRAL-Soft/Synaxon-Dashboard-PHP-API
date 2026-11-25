@@ -69,7 +69,12 @@ final class HydrationTest extends TestCase
                 // Non-nullable getters require concrete data, skip in smoke test.
                 continue;
             }
-            $m->invoke($instance);
+            try {
+                $m->invoke($instance);
+            } catch (UnexpectedResponseException) {
+                // A required-but-nullable field reports its missing key,
+                // which an empty payload legitimately lacks.
+            }
         }
         $this->addToAssertionCount(1);
     }
@@ -80,11 +85,24 @@ final class HydrationTest extends TestCase
      *
      * @param class-string<AbstractDto> $class
      */
+    /**
+     * MetricValueDto.prev is required and nullable in the spec ("null if no
+     * previous data"): null is a valid answer, a missing key is not.
+     */
+    public function testRequiredNullableFieldAcceptsNullAndRejectsMissingKey(): void
+    {
+        self::assertNull(\miralsoft\synaxon\api\DTO\MetricValueDto::fromArray(['current' => 1, 'prev' => null])->getPrev());
+        self::assertSame(2.5, \miralsoft\synaxon\api\DTO\MetricValueDto::fromArray(['current' => 1, 'prev' => 2.5])->getPrev());
+
+        $this->expectException(UnexpectedResponseException::class);
+        \miralsoft\synaxon\api\DTO\MetricValueDto::fromArray(['current' => 1])->getPrev();
+    }
+
     #[DataProvider('dtoProvider')]
     public function testRequiredScalarGettersReportMissingFields(string $class): void
     {
         $instance = $class::fromArray([]);
-        foreach ((new ReflectionClass($class))->getMethods(ReflectionMethod::IS_PUBLIC) as $m) {
+        foreach (new ReflectionClass($class)->getMethods(ReflectionMethod::IS_PUBLIC) as $m) {
             $type = $m->getReturnType();
             if ($m->class === AbstractDto::class
                 || !str_starts_with($m->getName(), 'get')

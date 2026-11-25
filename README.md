@@ -463,7 +463,14 @@ composer check:generated       # fail if regenerating changes any committed file
 composer check:content         # fail on em-dashes in prose or secret-like strings
 composer ci                    # every gate CI runs, in one command
 composer update-spec           # fetch the live OpenAPI document into docs/openapi.json
+composer public-api            # approve an intended change of the public API surface
 ```
+
+`tests/Unit/PublicApiTest.php` compares every public method signature with
+the approved list in `tests/Fixtures/public-api.txt`. When an upstream rename
+or a change here alters the surface, the test lists what was removed and
+added; approve it with `composer public-api` only after noting it in the
+CHANGELOG (a removal is a major version).
 
 When SYNAXON changes its API: `composer update-spec`, then `composer generate`,
 then `composer ci`, and `composer check-compat -- --live` to confirm there is no

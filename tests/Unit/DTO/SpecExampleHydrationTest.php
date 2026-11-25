@@ -110,7 +110,7 @@ final class SpecExampleHydrationTest extends TestCase
         self::assertSame($payload, $dto->toArray(), 'hydration must preserve the payload unchanged');
 
         $getters = [];
-        foreach ((new ReflectionClass($class))->getMethods(ReflectionMethod::IS_PUBLIC) as $m) {
+        foreach (new ReflectionClass($class)->getMethods(ReflectionMethod::IS_PUBLIC) as $m) {
             $getters[strtolower($m->getName())] = $m;
         }
 

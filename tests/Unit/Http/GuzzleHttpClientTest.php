@@ -283,6 +283,70 @@ final class GuzzleHttpClientTest extends TestCase
         yield 'date in the past' => [['Retry-After' => gmdate(DATE_RFC7231, time() - 60)], 0, 0];
         yield 'garbage' => [['Retry-After' => 'soon'], null, null];
         yield 'fraction is not delay-seconds' => [['Retry-After' => '1.5'], null, null];
+        // RFC 9110 requires accepting the obsolete date forms too.
+        yield 'rfc 850 date' => [['Retry-After' => gmdate('l, d-M-y H:i:s', time() + 60) . ' GMT'], 55, 60];
+        yield 'asctime date' => [['Retry-After' => gmdate('D M j H:i:s Y', time() + 60)], 55, 60];
+    }
+
+    /**
+     * Waiting longer than the backoff cap would block the caller for minutes
+     * and fail anyway, so the advice is passed on at once.
+     */
+    public function testRetryAfterBeyondTheCapIsNotWaitedFor(): void
+    {
+        $history = [];
+        $client = $this->buildClient(
+            [new Response(429, ['Retry-After' => '3600']), new Response(200, [], '{}')],
+            $history,
+            retries: 5
+        );
+
+        try {
+            $client->request('GET', '/v1/ping');
+            self::fail('expected exception');
+        } catch (RateLimitException $e) {
+            self::assertSame(3600, $e->getRetryAfter());
+        }
+        self::assertCount(1, $history);
+    }
+
+    /**
+     * A caller may inject its own Guzzle client; error mapping must not
+     * depend on how that client was configured.
+     */
+    public function testInjectedClientWithDefaultOptionsStillMapsErrors(): void
+    {
+        $guzzle = new Guzzle([
+            'handler' => HandlerStack::create(new MockHandler([new Response(404, [], '{"error":"GENERIC.NOT_FOUND"}')])),
+            'base_uri' => 'https://example.test/api/',
+        ]);
+        $client = new GuzzleHttpClient(new SynaxonConfig(bearerToken: 't', baseUri: 'https://example.test/api'), $guzzle);
+
+        try {
+            $client->request('GET', '/v1/missing');
+            self::fail('expected exception');
+        } catch (NotFoundException $e) {
+            self::assertSame('GENERIC.NOT_FOUND', $e->getErrorCode());
+        }
+    }
+
+    public function testRejectsKeyedArraysInQuery(): void
+    {
+        $history = [];
+        $client = $this->buildClient([new Response(200, [], '{}')], $history);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $client->request('GET', '/v1/x', ['query' => ['status' => ['a' => 'x', 'b' => 'y']]]);
+    }
+
+    public function testEncodesFloatsExactlyAndWithoutExponent(): void
+    {
+        $history = [];
+        $client = $this->buildClient([new Response(200, [], '{}')], $history);
+
+        $client->request('GET', '/v1/x', ['query' => ['a' => 0.1 + 0.2, 'b' => 1e20, 'c' => 2.5]]);
+
+        self::assertSame('a=0.30000000000000004&b=100000000000000000000&c=2.5', $history[0]['request']->getUri()->getQuery());
     }
 
     /**
@@ -334,6 +398,66 @@ final class GuzzleHttpClientTest extends TestCase
             self::assertSame('GENERIC.NOT_FOUND', $e->getErrorCode());
             self::assertSame([], $e->getContext()['errors'] ?? []);
         }
+    }
+
+    /**
+     * A retried upload must send the file again. The handler reads the body
+     * as a real transport does, which consumes the stream.
+     */
+    public function testRetriedMultipartUploadSendsTheFileAgain(): void
+    {
+        $sent = [];
+        $handler = static function ($request) use (&$sent) {
+            $sent[] = $request->getBody()->getContents();
+
+            return \GuzzleHttp\Promise\Create::promiseFor(
+                count($sent) === 1 ? new Response(503) : new Response(200, [], '{}')
+            );
+        };
+        $client = new GuzzleHttpClient(
+            new SynaxonConfig(bearerToken: 't', baseUri: 'https://example.test/api', maxRetries: 1),
+            new Guzzle(['handler' => $handler, 'base_uri' => 'https://example.test/api/', 'http_errors' => false]),
+        );
+        $file = fopen('php://temp', 'w+');
+        self::assertNotFalse($file);
+        fwrite($file, 'PNGDATA');
+        rewind($file);
+
+        $client->request('PUT', '/v1/tenants/1/logo', [
+            'body' => ['file' => ['contents' => $file, 'filename' => 'logo.png']],
+            'bodyFormat' => GuzzleHttpClient::BODY_MULTIPART,
+        ]);
+
+        self::assertCount(2, $sent);
+        self::assertStringContainsString('PNGDATA', $sent[0]);
+        self::assertStringContainsString('PNGDATA', $sent[1]);
+    }
+
+    public function testUploadFromNonSeekableStreamIsNotRetried(): void
+    {
+        $attempts = 0;
+        $handler = static function ($request) use (&$attempts) {
+            $attempts++;
+            $request->getBody()->getContents();
+
+            return \GuzzleHttp\Promise\Create::promiseFor(new Response(503));
+        };
+        $client = new GuzzleHttpClient(
+            new SynaxonConfig(bearerToken: 't', baseUri: 'https://example.test/api', maxRetries: 3),
+            new Guzzle(['handler' => $handler, 'base_uri' => 'https://example.test/api/', 'http_errors' => false]),
+        );
+        $stream = new \GuzzleHttp\Psr7\NoSeekStream(\GuzzleHttp\Psr7\Utils::streamFor('PNGDATA'));
+
+        try {
+            $client->request('PUT', '/v1/tenants/1/logo', [
+                'body' => ['file' => ['contents' => $stream, 'filename' => 'logo.png']],
+                'bodyFormat' => GuzzleHttpClient::BODY_MULTIPART,
+            ]);
+            self::fail('expected exception');
+        } catch (ServerException) {
+            // expected: the original server error, not a broken retry
+        }
+        self::assertSame(1, $attempts);
     }
 
     public function testSendsConfiguredAcceptLanguage(): void
@@ -461,8 +585,14 @@ final class GuzzleHttpClientTest extends TestCase
             'Authorization' => 'Bearer secret',
             'Cookie' => 'session=xyz',
             'X-API-Key' => 'abc',
+            'Proxy-Authorization' => 'Basic abc',
+            'Set-Cookie' => 'session=xyz',
+            'X-Auth-Token' => 'abc',
             'Accept' => 'application/json',
         ]);
+        self::assertSame('***', $redacted['Proxy-Authorization']);
+        self::assertSame('***', $redacted['Set-Cookie']);
+        self::assertSame('***', $redacted['X-Auth-Token']);
 
         self::assertSame('***', $redacted['Authorization']);
         self::assertSame('***', $redacted['Cookie']);

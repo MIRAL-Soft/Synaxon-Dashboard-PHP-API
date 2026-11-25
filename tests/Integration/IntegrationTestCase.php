@@ -6,6 +6,8 @@ namespace miralsoft\synaxon\api\Tests\Integration;
 
 use miralsoft\synaxon\api\Client\SynaxonClient;
 use miralsoft\synaxon\api\Config\SynaxonConfig;
+use miralsoft\synaxon\api\Http\GuzzleHttpClient;
+use miralsoft\synaxon\api\Tests\Support\ReadOnlyHttpClient;
 use miralsoft\synaxon\api\Tests\testConfig;
 use PHPUnit\Framework\TestCase;
 
@@ -17,10 +19,10 @@ use PHPUnit\Framework\TestCase;
  * switch is required: if no credentials are configured, nothing talks to
  * the live API.
  *
- * Tests are strictly read-only: the base class records a flag at setUp
- * time and subclasses must invoke assertReadOnly($method) before issuing
- * any non-GET request. Failing to do so raises a hard assertion error
- * rather than silently mutating live data.
+ * Tests are strictly read-only. The client's transport is wrapped in
+ * ReadOnlyHttpClient, which refuses every request other than GET or HEAD
+ * before it is sent; that is the guard. assertReadOnly() in the generated
+ * tests only documents the intent.
  */
 abstract class IntegrationTestCase extends TestCase
 {
@@ -42,7 +44,7 @@ abstract class IntegrationTestCase extends TestCase
         }
 
         $this->config = $config;
-        $this->client = new SynaxonClient($config);
+        $this->client = new SynaxonClient($config, new ReadOnlyHttpClient(new GuzzleHttpClient($config)));
     }
 
     /**

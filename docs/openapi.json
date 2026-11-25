@@ -4,7 +4,7 @@
         "title": "SYNAXON Marketplace API",
         "description": "This is the SYNAXON Marketplace API.",
         "version": "",
-        "contact": []
+        "contact": {}
     },
     "tags": [],
     "servers": [
@@ -14,7 +14,7 @@
         }
     ],
     "paths": {
-        "/v1/audit/plain": [],
+        "/v1/audit/plain": {},
         "/v1/audit/logs": {
             "get": {
                 "operationId": "FindAuditLogsHttpController_listAuditLogs",
@@ -98,7 +98,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -212,7 +212,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -316,8 +316,8 @@
                 ]
             }
         },
-        "/v1/audit/logs/all": [],
-        "/v1/acronis/dashboard/index": [],
+        "/v1/audit/logs/all": {},
+        "/v1/acronis/dashboard/index": {},
         "/v1/acronis/customers": {
             "post": {
                 "operationId": "CreateAcronisCustomerHttpController_createAcronisCustomer",
@@ -327,7 +327,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -528,7 +528,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -649,7 +649,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -768,7 +768,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -911,7 +911,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -1005,7 +1005,7 @@
                 ]
             }
         },
-        "/v1/acronis/partners": [],
+        "/v1/acronis/partners": {},
         "/v1/acronis/partners/fromContext": {
             "get": {
                 "operationId": "FindAcronisPartnerFromContextHttpController_getAcronisPartnerFromContext",
@@ -1015,7 +1015,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -1119,7 +1119,7 @@
                 ]
             }
         },
-        "/v1/acronis/partners/{id}": [],
+        "/v1/acronis/partners/{id}": {},
         "/v1/acronis/partners/{id}/metrics": {
             "get": {
                 "description": "Retrieves current real-time metrics for an Acronis partner and compares them with the most recent historical metric. Optionally specify a date to compare against a specific historical point.",
@@ -1149,7 +1149,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -1243,9 +1243,9 @@
                 ]
             }
         },
-        "/v1/acronis/partners/{id}/index": [],
-        "/v1/acronis/partners/sync-offering-items": [],
-        "/v1/acronis/customers/{id}/index": [],
+        "/v1/acronis/partners/{id}/index": {},
+        "/v1/acronis/partners/sync-offering-items": {},
+        "/v1/acronis/customers/{id}/index": {},
         "/v1/acronis/devices": {
             "get": {
                 "operationId": "FindAcronisDevicesHttpController_listAcronisDevices",
@@ -1397,7 +1397,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -1518,7 +1518,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -1622,7 +1622,7 @@
                 ]
             }
         },
-        "/v1/acronis/report-data": [],
+        "/v1/acronis/report-data": {},
         "/v1/acronis/policies": {
             "get": {
                 "operationId": "FindAcronisPoliciesHttpController_listAcronisPolicies",
@@ -1699,7 +1699,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -1820,7 +1820,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -1924,10 +1924,10 @@
                 ]
             }
         },
-        "/.well-known/jwks.json": [],
-        "/.well-known/openid-configuration": [],
-        "/.well-known/oauth-authorization-server": [],
-        "/.well-known/oauth-authorization-server/{path}": [],
+        "/.well-known/jwks.json": {},
+        "/.well-known/openid-configuration": {},
+        "/.well-known/oauth-authorization-server": {},
+        "/.well-known/oauth-authorization-server/{path}": {},
         "/v1/auth/egis": {
             "get": {
                 "operationId": "EgisAuthFlowHttpController_auth",
@@ -1957,7 +1957,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -2088,7 +2088,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -2216,7 +2216,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -2347,7 +2347,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -2455,7 +2455,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -2568,7 +2568,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -2691,7 +2691,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -2814,7 +2814,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -2928,7 +2928,7 @@
                 ]
             }
         },
-        "/v1/users": [],
+        "/v1/users": {},
         "/v1/users/{id}": {
             "patch": {
                 "operationId": "UpdateUserHttpController_updateUser",
@@ -2946,7 +2946,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -3059,7 +3059,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -3172,7 +3172,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -3295,7 +3295,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -3409,7 +3409,7 @@
                 ]
             }
         },
-        "/v1/users/{id}/sync-permissions": [],
+        "/v1/users/{id}/sync-permissions": {},
         "/v1/auth/api-tokens": {
             "post": {
                 "operationId": "CreateApiTokenHttpController_createApiToken",
@@ -3419,7 +3419,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -3605,7 +3605,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -3716,7 +3716,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -3790,10 +3790,10 @@
                 ]
             }
         },
-        "/v1/auth/api-tokens/all": [],
-        "/v1/tenants": [],
-        "/v1/tenants/all": [],
-        "/v1/tenants/by-ids": [],
+        "/v1/auth/api-tokens/all": {},
+        "/v1/tenants": {},
+        "/v1/tenants/all": {},
+        "/v1/tenants/by-ids": {},
         "/v1/tenants/fromContext": {
             "get": {
                 "operationId": "FindTenantHttpController_getTenantFromContext",
@@ -3803,7 +3803,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -3924,7 +3924,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -4047,7 +4047,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -4171,7 +4171,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -4291,7 +4291,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -4413,7 +4413,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -4519,7 +4519,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -4640,7 +4640,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -4761,7 +4761,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -4865,7 +4865,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -4978,7 +4978,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -5097,7 +5097,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -5276,7 +5276,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -5423,7 +5423,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -5550,7 +5550,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -5669,7 +5669,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -5798,7 +5798,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -5912,7 +5912,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -6028,7 +6028,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -6142,9 +6142,9 @@
                 ]
             }
         },
-        "/v1/lifecycleinfos": [],
-        "/v1/lifecycleinfos/{id}": [],
-        "/v1/lifecycleinfos/import": [],
+        "/v1/lifecycleinfos": {},
+        "/v1/lifecycleinfos/{id}": {},
+        "/v1/lifecycleinfos/import": {},
         "/v1/reports/setting": {
             "post": {
                 "operationId": "CreateReportSettingHttpController_createReportSetting",
@@ -6154,7 +6154,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -6275,7 +6275,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -6396,7 +6396,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -6500,7 +6500,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -6621,7 +6621,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -6750,7 +6750,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -6879,7 +6879,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -6976,7 +6976,7 @@
                 ]
             }
         },
-        "/v1/reports/data": [],
+        "/v1/reports/data": {},
         "/v1/customers/{customerId}/report": {
             "get": {
                 "operationId": "FindCustomerReportSettingHttpController_getCustomerReportSetting",
@@ -6994,7 +6994,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -7107,7 +7107,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -7228,7 +7228,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -7456,7 +7456,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -7569,7 +7569,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -7683,7 +7683,7 @@
                 ]
             }
         },
-        "/v1/patches/qualify": [],
+        "/v1/patches/qualify": {},
         "/v1/patches/deploy": {
             "post": {
                 "operationId": "DeployPatchesHttpController_deployPatches",
@@ -7693,7 +7693,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -7806,7 +7806,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -7914,15 +7914,15 @@
                 ]
             }
         },
-        "/v1/patches/{id}/qualify": [],
-        "/v1/n-sight/dashboards": [],
-        "/v1/n-sight/dashboards/{id}/index": [],
-        "/v1/n-sight/dashboards/{id}": [],
-        "/v1/n-sight/clients": [],
-        "/v1/n-sight/clients/{id}/index": [],
-        "/v1/n-sight/clients/{id}/index-device-modules": [],
-        "/v1/n-sight/clients/all": [],
-        "/v1/n-sight/clients/{id}": [],
+        "/v1/patches/{id}/qualify": {},
+        "/v1/n-sight/dashboards": {},
+        "/v1/n-sight/dashboards/{id}/index": {},
+        "/v1/n-sight/dashboards/{id}": {},
+        "/v1/n-sight/clients": {},
+        "/v1/n-sight/clients/{id}/index": {},
+        "/v1/n-sight/clients/{id}/index-device-modules": {},
+        "/v1/n-sight/clients/all": {},
+        "/v1/n-sight/clients/{id}": {},
         "/v1/n-sight/clients/{id}/metrics": {
             "get": {
                 "description": "Retrieves current real-time metrics for a client and compares them with the most recent historical metric. Optionally specify a date to compare against a specific historical point.",
@@ -7952,7 +7952,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -8046,7 +8046,7 @@
                 ]
             }
         },
-        "/v1/n-sight/clients/{id}/failing-checks/index": [],
+        "/v1/n-sight/clients/{id}/failing-checks/index": {},
         "/v1/n-sight/sites": {
             "post": {
                 "operationId": "CreateNSightSiteHttpController_createNSightSite",
@@ -8056,7 +8056,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -8236,7 +8236,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -8357,7 +8357,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -8486,7 +8486,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -8590,7 +8590,7 @@
                 ]
             }
         },
-        "/v1/n-sight/sites/{id}/index": [],
+        "/v1/n-sight/sites/{id}/index": {},
         "/v1/n-sight/sites/{id}/installer": {
             "get": {
                 "operationId": "CreateNSightSiteInstallerHttpController_getNSightSiteInstaller",
@@ -8637,7 +8637,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -8760,7 +8760,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -8854,11 +8854,11 @@
                 ]
             }
         },
-        "/v1/n-sight/devices/{id}/index": [],
-        "/v1/n-sight/devices/{id}/check": [],
-        "/v1/n-sight/devices/{id}/patch": [],
-        "/v1/n-sight/devices/{id}/mav": [],
-        "/v1/n-sight/devices/{id}/index-device-monitoring-details": [],
+        "/v1/n-sight/devices/{id}/index": {},
+        "/v1/n-sight/devices/{id}/check": {},
+        "/v1/n-sight/devices/{id}/patch": {},
+        "/v1/n-sight/devices/{id}/mav": {},
+        "/v1/n-sight/devices/{id}/index-device-monitoring-details": {},
         "/v1/n-sight/devices": {
             "get": {
                 "operationId": "FindNSightDevicesHttpController_listNSightDevices",
@@ -8946,7 +8946,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -9067,7 +9067,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -9281,7 +9281,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -9402,7 +9402,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -9506,7 +9506,7 @@
                 ]
             }
         },
-        "/v1/n-sight/report-data": [],
+        "/v1/n-sight/report-data": {},
         "/v1/sales-opportunities": {
             "get": {
                 "operationId": "GetSalesOpportunitiesHttpController_listNSightSalesOpportunities",
@@ -9625,7 +9625,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -9785,14 +9785,14 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "List of sales opportunities for tenant as csv",
                         "content": {
-                            "text/csv": []
+                            "text/csv": {}
                         }
                     },
                     "400": {
@@ -9941,7 +9941,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -10046,7 +10046,7 @@
                 ]
             }
         },
-        "/v1/n-sight/clients/{id}/api-token": [],
+        "/v1/n-sight/clients/{id}/api-token": {},
         "/v1/n-sight/raw": {
             "get": {
                 "operationId": "InvokeNSightRawApiHttpController_invokeRawApi",
@@ -10128,7 +10128,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -10220,8 +10220,8 @@
                 ]
             }
         },
-        "/v1/lywand/dashboard/index": [],
-        "/v1/lywand/partners": [],
+        "/v1/lywand/dashboard/index": {},
+        "/v1/lywand/partners": {},
         "/v1/lywand/partners/fromContext": {
             "get": {
                 "operationId": "GetLywandPartnerFromContextHttpController_getLywandPartnerFromContext",
@@ -10231,7 +10231,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -10335,7 +10335,7 @@
                 ]
             }
         },
-        "/v1/lywand/partners/{id}": [],
+        "/v1/lywand/partners/{id}": {},
         "/v1/lywand/partners/{id}/metrics": {
             "get": {
                 "description": "Retrieves current real-time metrics for a partner and compares them with the most recent historical metric. Optionally specify a date to compare against a specific historical point.",
@@ -10365,7 +10365,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -10476,7 +10476,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -10582,7 +10582,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -10793,7 +10793,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -10914,7 +10914,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -11033,7 +11033,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -11142,7 +11142,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -11285,7 +11285,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -11396,7 +11396,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -11517,7 +11517,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -11631,7 +11631,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -11745,7 +11745,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -11941,7 +11941,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -12062,7 +12062,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -12252,7 +12252,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -12356,7 +12356,7 @@
                 ]
             }
         },
-        "/v1/lywand/report-data": [],
+        "/v1/lywand/report-data": {},
         "/v1/layout/dashboards": {
             "post": {
                 "operationId": "CreateDashboardLayoutHttpController_createDashboardLayout",
@@ -12366,7 +12366,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -12558,7 +12558,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -12679,7 +12679,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -12808,7 +12808,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -12927,7 +12927,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -13033,7 +13033,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -13154,7 +13154,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -13278,7 +13278,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -13553,7 +13553,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -13656,7 +13656,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -13772,7 +13772,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -13876,7 +13876,7 @@
                 ]
             }
         },
-        "/v1/notifications/targets": [],
+        "/v1/notifications/targets": {},
         "/v1/notifications/setAllRead": {
             "post": {
                 "operationId": "SetAllReadMessageHttpController_setAllRead",
@@ -13886,7 +13886,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -14010,7 +14010,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -14109,7 +14109,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -14232,7 +14232,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -14367,7 +14367,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -14444,9 +14444,9 @@
                 ]
             }
         },
-        "/v1/templates": [],
-        "/v1/templates/{id}": [],
-        "/v1/templates/{id}/setRead": [],
+        "/v1/templates": {},
+        "/v1/templates/{id}": {},
+        "/v1/templates/{id}/setRead": {},
         "/v1/mailstore/journaling/mailboxes": {
             "post": {
                 "operationId": "CreateJournalingMailboxHttpController_createJournalingMailbox",
@@ -14456,7 +14456,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -14614,7 +14614,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -14716,7 +14716,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -14805,7 +14805,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -14899,7 +14899,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -14966,9 +14966,9 @@
                 ]
             }
         },
-        "/v1/mailstore/journaling/mailboxes/index": [],
-        "/v1/mailstore/configuration": [],
-        "/v1/mailstore/configuration/options": [],
+        "/v1/mailstore/journaling/mailboxes/index": {},
+        "/v1/mailstore/configuration": {},
+        "/v1/mailstore/configuration/options": {},
         "/v1/mailstore/instances": {
             "post": {
                 "operationId": "CreateMailstoreInstanceHttpController_createMailstoreInstance",
@@ -14978,7 +14978,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -15142,7 +15142,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -15256,7 +15256,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -15358,7 +15358,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -15447,7 +15447,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -15546,7 +15546,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -15652,7 +15652,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -15767,7 +15767,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -15871,8 +15871,8 @@
                 ]
             }
         },
-        "/v1/mailstore/instances/index": [],
-        "/v1/mailstore/instances/{id}/index": [],
+        "/v1/mailstore/instances/index": {},
+        "/v1/mailstore/instances/{id}/index": {},
         "/v1/mailstore/archives": {
             "get": {
                 "operationId": "FindMailstoreArchivesHttpController_listArchives",
@@ -15950,7 +15950,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -16132,7 +16132,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -16254,7 +16254,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -16447,7 +16447,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -16551,8 +16551,8 @@
                 ]
             }
         },
-        "/v1/mailstore/report-data": [],
-        "/v1/mailstore/verify-store": [],
+        "/v1/mailstore/report-data": {},
+        "/v1/mailstore/verify-store": {},
         "/v1/mailstore/raw": {
             "get": {
                 "operationId": "InvokeMailstoreRawApiHttpController_invokeRawApi",
@@ -16610,7 +16610,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -16682,10 +16682,10 @@
                 ]
             }
         },
-        "/v1/mailstore/partners/{tenantId}/api-key": [],
-        "/v1/schedules": [],
-        "/v1/schedules/{id}": [],
-        "/v1/schedules/{id}/execute": [],
+        "/v1/mailstore/partners/{tenantId}/api-key": {},
+        "/v1/schedules": {},
+        "/v1/schedules/{id}": {},
+        "/v1/schedules/{id}/execute": {},
         "/v1/eset/products": {
             "get": {
                 "operationId": "FindEsetProductsHttpController_listEsetProducts",
@@ -16775,7 +16775,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -16882,10 +16882,10 @@
                 ]
             }
         },
-        "/v1/eset/products/{id}": [],
-        "/v1/eset/products/sync": [],
-        "/v1/eset/dashboard/index": [],
-        "/v1/eset/protect/sync": [],
+        "/v1/eset/products/{id}": {},
+        "/v1/eset/products/sync": {},
+        "/v1/eset/dashboard/index": {},
+        "/v1/eset/protect/sync": {},
         "/v1/eset/partners": {
             "post": {
                 "operationId": "CreateEsetPartnerHttpController_createEsetPartner",
@@ -16895,7 +16895,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -17059,7 +17059,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -17152,7 +17152,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -17256,7 +17256,7 @@
                 ]
             }
         },
-        "/v1/eset/partners/{id}": [],
+        "/v1/eset/partners/{id}": {},
         "/v1/eset/partners/{id}/metrics": {
             "get": {
                 "description": "Retrieves current real-time metrics for an ESET partner (aggregated across all customers) and compares them with the most recent historical metric. Optionally specify a date to compare against a specific historical point.",
@@ -17286,7 +17286,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -17380,8 +17380,8 @@
                 ]
             }
         },
-        "/v1/eset/partners/{id}/index": [],
-        "/v1/eset/partners/{id}/configure": [],
+        "/v1/eset/partners/{id}/index": {},
+        "/v1/eset/partners/{id}/configure": {},
         "/v1/eset/customers": {
             "post": {
                 "operationId": "CreateEsetCustomerHttpController_createEsetCustomer",
@@ -17391,7 +17391,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -17592,7 +17592,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -17693,7 +17693,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -17792,7 +17792,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -17935,7 +17935,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -18029,7 +18029,7 @@
                 ]
             }
         },
-        "/v1/eset/customers/{id}/index": [],
+        "/v1/eset/customers/{id}/index": {},
         "/v1/eset/licenses": {
             "get": {
                 "operationId": "FindEsetLicensesHttpController_listEsetLicenses",
@@ -18137,7 +18137,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -18248,7 +18248,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -18372,7 +18372,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -18491,7 +18491,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -18710,7 +18710,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -18814,7 +18814,7 @@
                 ]
             }
         },
-        "/v1/eset/report-data": [],
+        "/v1/eset/report-data": {},
         "/v1/eset/device-problems": {
             "get": {
                 "operationId": "FindEsetDeviceProblemsHttpController_listDeviceProblems",
@@ -18904,7 +18904,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -19142,7 +19142,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -19263,7 +19263,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -19364,7 +19364,7 @@
                 ]
             }
         },
-        "/v1/downloads/all": [],
+        "/v1/downloads/all": {},
         "/v1/downloads/{id}/url": {
             "get": {
                 "operationId": "GetDownloadFileUrlHttpController_getDownloadUrl",
@@ -19384,7 +19384,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -19482,8 +19482,8 @@
                 ]
             }
         },
-        "/v1/downloads/{id}/upload": [],
-        "/v1/sec-auditor/partners": [],
+        "/v1/downloads/{id}/upload": {},
+        "/v1/sec-auditor/partners": {},
         "/v1/sec-auditor/customers": {
             "post": {
                 "operationId": "CreateSecAuditorCustomerHttpController_createSecAuditorCustomer",
@@ -19493,7 +19493,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -19671,7 +19671,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -19792,7 +19792,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -19911,7 +19911,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -20042,7 +20042,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -20146,8 +20146,8 @@
                 ]
             }
         },
-        "/v1/metrics/grouped": [],
-        "/v1/metrics/latest": [],
+        "/v1/metrics/grouped": {},
+        "/v1/metrics/latest": {},
         "/v1/support/queries": {
             "post": {
                 "operationId": "CreateSupportQueryHttpController_createSupportQuery",
@@ -20157,7 +20157,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -20339,7 +20339,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -20460,7 +20460,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -20574,7 +20574,7 @@
                 ]
             }
         },
-        "/v1/support/queries/all": [],
+        "/v1/support/queries/all": {},
         "/v1/support/chats": {
             "get": {
                 "operationId": "FindSupportChatListHttpController_listSupportChats",
@@ -20637,7 +20637,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -20758,7 +20758,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -20869,7 +20869,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -20973,7 +20973,7 @@
                 ]
             }
         },
-        "/v1/admin/system-tasks": [],
+        "/v1/admin/system-tasks": {},
         "/v1/cloudally/customers": {
             "post": {
                 "operationId": "CreateCloudallyCustomerHttpController_createCloudallyCustomer",
@@ -20983,7 +20983,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -21171,7 +21171,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -21292,7 +21292,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -21421,7 +21421,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -21525,7 +21525,7 @@
                 ]
             }
         },
-        "/v1/cloudally/partners": [],
+        "/v1/cloudally/partners": {},
         "/v1/cloudally/partners/{id}": {
             "get": {
                 "operationId": "FindCloudallyPartnerByIdHttpController_getCloudallyPartner",
@@ -21543,7 +21543,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -21656,7 +21656,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -21886,7 +21886,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -22144,7 +22144,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -22286,7 +22286,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -22418,7 +22418,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -22540,7 +22540,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -22634,14 +22634,14 @@
                 ]
             }
         },
-        "/v1/cloudally/import-from-refreshtokens": [],
-        "/v1/cloudally/dashboard/index": [],
-        "/v1/cloudally/partners/{id}/index": [],
-        "/v1/cloudally/partners/{id}/index/tasks": [],
-        "/v1/cloudally/partners/{id}/index/statuses": [],
-        "/v1/cloudally/partners/{id}/index/metrics": [],
-        "/v1/cove/partners": [],
-        "/v1/cove/dashboard/index": [],
+        "/v1/cloudally/import-from-refreshtokens": {},
+        "/v1/cloudally/dashboard/index": {},
+        "/v1/cloudally/partners/{id}/index": {},
+        "/v1/cloudally/partners/{id}/index/tasks": {},
+        "/v1/cloudally/partners/{id}/index/statuses": {},
+        "/v1/cloudally/partners/{id}/index/metrics": {},
+        "/v1/cove/partners": {},
+        "/v1/cove/dashboard/index": {},
         "/v1/cove/customers": {
             "post": {
                 "operationId": "CreateCoveCustomerHttpController_createCoveCustomer",
@@ -22651,7 +22651,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -22828,7 +22828,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -22949,7 +22949,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -23078,7 +23078,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -23182,9 +23182,9 @@
                 ]
             }
         },
-        "/v1/cyansecurity/partners": [],
-        "/v1/cyansecurity/dashboard/index": [],
-        "/v1/cyansecurity/partners/{id}/index": [],
+        "/v1/cyansecurity/partners": {},
+        "/v1/cyansecurity/dashboard/index": {},
+        "/v1/cyansecurity/partners/{id}/index": {},
         "/v1/cyansecurity/customers": {
             "post": {
                 "operationId": "CreateCyanSecurityCustomerHttpController_createCustomer",
@@ -23194,7 +23194,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -23377,7 +23377,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -23498,7 +23498,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -23602,12 +23602,12 @@
                 ]
             }
         },
-        "/v1/adv-core/schedules": [],
-        "/v1/adv-core/schedules/{id}": [],
-        "/v1/adv-core/schedules/{id}/execute": [],
-        "/v1/smao/partners": [],
-        "/v1/smao/partners/{id}/index": [],
-        "/v1/smao/dashboard/index": [],
+        "/v1/adv-core/schedules": {},
+        "/v1/adv-core/schedules/{id}": {},
+        "/v1/adv-core/schedules/{id}/execute": {},
+        "/v1/smao/partners": {},
+        "/v1/smao/partners/{id}/index": {},
+        "/v1/smao/dashboard/index": {},
         "/v1/smao/customers": {
             "post": {
                 "operationId": "CreateSmaoCustomerHttpController_createSmaoCustomer",
@@ -23617,7 +23617,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -23801,7 +23801,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -23922,7 +23922,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -24051,7 +24051,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -24155,7 +24155,7 @@
                 ]
             }
         },
-        "/v1/guardian360/partners": [],
+        "/v1/guardian360/partners": {},
         "/v1/guardian360/customers": {
             "post": {
                 "operationId": "CreateGuardian360CustomerHttpController_createGuardian360Customer",
@@ -24165,7 +24165,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -24342,7 +24342,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -24463,7 +24463,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -24592,7 +24592,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -24696,9 +24696,9 @@
                 ]
             }
         },
-        "/v1/guardian360/dashboard/index": [],
-        "/v1/rollouter/partners": [],
-        "/v1/rollouter/partners/{id}/index": [],
+        "/v1/guardian360/dashboard/index": {},
+        "/v1/rollouter/partners": {},
+        "/v1/rollouter/partners/{id}/index": {},
         "/v1/rollouter/customers": {
             "post": {
                 "operationId": "CreateRollouterCustomerHttpController_createRollouterCustomer",
@@ -24708,7 +24708,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -24891,7 +24891,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -25012,7 +25012,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "requestBody": {
@@ -25134,7 +25134,7 @@
                         "in": "header",
                         "required": false,
                         "description": "Language code",
-                        "schema": []
+                        "schema": {}
                     }
                 ],
                 "responses": {
@@ -25368,7 +25368,7 @@
                     "entityRaw": {
                         "type": "object",
                         "description": "The entity raw",
-                        "example": []
+                        "example": {}
                     },
                     "tenantId": {
                         "type": "string",
@@ -27296,7 +27296,7 @@
             },
             "PusherUserAuthResponseDto": {
                 "type": "object",
-                "properties": []
+                "properties": {}
             },
             "PusherChannelAuthRequestDto": {
                 "type": "object",
@@ -28500,7 +28500,7 @@
             },
             "ImportCustomersRequestDto": {
                 "type": "object",
-                "properties": []
+                "properties": {}
             },
             "ImportCustomersResponseDto": {
                 "type": "object",
@@ -34130,7 +34130,7 @@
             },
             "NotFoundException": {
                 "type": "object",
-                "properties": []
+                "properties": {}
             },
             "MessageResponseDto": {
                 "type": "object",
@@ -38013,7 +38013,7 @@
             },
             "SecAuditorInstallerResponseDto": {
                 "type": "object",
-                "properties": []
+                "properties": {}
             },
             "UpdateSecAuditorCustomerRequestDto": {
                 "type": "object",
@@ -38253,11 +38253,11 @@
             },
             "ArgumentInvalidException": {
                 "type": "object",
-                "properties": []
+                "properties": {}
             },
             "InternalServerErrorException": {
                 "type": "object",
-                "properties": []
+                "properties": {}
             },
             "UpdateSupportQueryRequestDto": {
                 "type": "object",
@@ -38413,7 +38413,7 @@
                     "result": {
                         "type": "object",
                         "description": "The result of the system task",
-                        "example": []
+                        "example": {}
                     }
                 },
                 "required": [

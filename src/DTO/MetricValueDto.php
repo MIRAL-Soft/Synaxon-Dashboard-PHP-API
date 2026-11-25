@@ -19,10 +19,11 @@ class MetricValueDto extends AbstractDto
     /**
      * Previous value of the metric (null if no previous data)
      *
-     * @return float
+     * @return float|null
      */
-    public function getPrev(): float
+    public function getPrev(): ?float
     {
-        return (float) $this->required('prev');
+        $v = $this->requiredNullable('prev');
+        return $v === null ? null : (float) $v;
     }
 }

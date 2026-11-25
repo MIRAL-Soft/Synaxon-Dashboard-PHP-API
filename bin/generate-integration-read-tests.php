@@ -22,6 +22,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+require_once __DIR__ . '/lib/generator-safety.php';
+
 $root = dirname(__DIR__);
 $specPath = $root . '/docs/openapi.json';
 $outDir = $root . '/tests/Integration/ReadOnly';
@@ -86,7 +88,7 @@ $nonJsonEndpoints = [
 ];
 
 /** @var array<string, mixed> $spec */
-$spec = json_decode((string) file_get_contents($specPath), true, 512, JSON_THROW_ON_ERROR);
+$spec = loadSpecForGeneration($specPath);
 
 // Build an index: "METHOD /path" => [className, methodName, phpSignature]
 $endpointToMethod = [];

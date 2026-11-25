@@ -20,6 +20,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+require_once __DIR__ . '/lib/generator-safety.php';
+
 $root = dirname(__DIR__);
 $specPath = $root . '/docs/openapi.json';
 $resDir = $root . '/src/Resource';
@@ -28,7 +30,7 @@ $outDir = $root . '/tests/Unit/Resource';
 @mkdir($outDir, 0o755, true);
 
 /** @var array<string, mixed> $spec */
-$spec = json_decode((string) file_get_contents($specPath), true, 512, JSON_THROW_ON_ERROR);
+$spec = loadSpecForGeneration($specPath);
 
 // Build endpoint -> PHP method map by reflecting Resource classes.
 $endpointToMethod = [];

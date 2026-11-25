@@ -13,6 +13,8 @@ declare(strict_types=1);
  *   php bin/generate-dtos.php
  */
 
+require_once __DIR__ . '/lib/generator-safety.php';
+
 $root = dirname(__DIR__);
 $specPath = $root . '/docs/openapi.json';
 $outDir = $root . '/src/DTO';
@@ -23,7 +25,7 @@ if (!is_file($specPath)) {
 }
 
 /** @var array<string, mixed> $spec */
-$spec = json_decode((string) file_get_contents($specPath), true, 512, JSON_THROW_ON_ERROR);
+$spec = loadSpecForGeneration($specPath);
 $schemas = $spec['components']['schemas'] ?? [];
 
 if (!is_dir($outDir)) {
@@ -65,7 +67,12 @@ function renderDto(string $name, array $schema): string
             continue;
         }
         $isRequired = isset($required[$propName]);
-        [$phpType, $docType] = mapType($propSchema, $isRequired);
+        // Required and nullable: the key is always there, its value may be
+        // null ("null if no previous data"). The type is nullable, and only
+        // a missing key is an error.
+        $isNullable = !empty($propSchema['nullable'])
+            || (is_array($propSchema['type'] ?? null) && in_array('null', $propSchema['type'], true));
+        [$phpType, $docType] = mapType($propSchema, $isRequired && !$isNullable);
 
         $getter = 'get' . studly($propName);
         $comment = '';
@@ -80,7 +87,7 @@ function renderDto(string $name, array $schema): string
         $docBlock .= "     * @return {$docType}\n";
         $docBlock .= "     */\n";
 
-        $body = renderAccessorBody($propName, $propSchema, $isRequired, $phpType);
+        $body = renderAccessorBody($propName, $propSchema, $isRequired && !$isNullable, $phpType, $isRequired && $isNullable);
 
         $methods[] = $docBlock
             . "    public function {$getter}(): {$phpType}\n"
@@ -170,9 +177,16 @@ function mapType(array $schema, bool $required): array
 /**
  * @param array<string, mixed> $schema
  */
-function renderAccessorBody(string $propName, array $schema, bool $required, string $phpType): string
+function renderAccessorBody(string $propName, array $schema, bool $required, string $phpType, bool $requiredNullable = false): string
 {
     $key = var_export($propName, true);
+
+    if ($requiredNullable && in_array($phpType, ['?string', '?int', '?float', '?bool'], true)) {
+        $cast = substr($phpType, 1);
+
+        return "        \$v = \$this->requiredNullable({$key});\n"
+             . "        return \$v === null ? null : ({$cast}) \$v;\n";
+    }
 
     if (isset($schema['$ref']) && is_string($schema['$ref'])) {
         $ref = refName($schema['$ref']);

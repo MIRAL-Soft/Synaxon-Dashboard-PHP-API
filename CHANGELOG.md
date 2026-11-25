@@ -60,6 +60,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   failing.
 - `docs/swagger-ui-init.js` removed: SYNAXON no longer publishes the spec
   that way.
+- The generators load the spec through one guard: descriptions cannot end a
+  docblock (`*/`), and schema names, operationIds, paths and path parameters
+  must be valid before any code is written.
+- `composer update-spec` keeps empty JSON objects as `{}`; it wrote `[]`,
+  which is not valid OpenAPI.
+- The live integration suite sends every request through a read-only
+  transport that refuses anything but GET and HEAD before it is sent.
+- `tests/Unit/PublicApiTest` compares the public API with the approved list
+  in `tests/Fixtures/public-api.txt` (`composer public-api` to approve).
+- PHP-CS-Fixer also checks `AbstractDto` and the DTO tests.
 - The release workflow extracts the release notes with a plain prefix match;
   the previous awk regex matched no section, so a release would have been
   published with the fallback text (and, with the new empty-section check,
@@ -128,6 +138,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   logo upload is possible at all. An empty JSON body is sent as `{}`, not `[]`.
 - `AuthResource::callback()` sends `scope` as a query parameter; it was
   accepted and silently dropped.
+- Fields the spec declares as required **and** nullable (for example
+  `MetricValueDto::getPrev()`, "null if no previous data", and the
+  `customerId` of the stats items) return `null` instead of throwing; only a
+  missing key raises `UnexpectedResponseException`.
+- A retried multipart upload sends the file again; it failed on the second
+  attempt because the stream was already consumed. Uploads from streams that
+  cannot be rewound are not retried.
+- An injected Guzzle client no longer bypasses error mapping and retries;
+  `http_errors` is disabled per request.
+- A `429` whose `Retry-After` exceeds the 30-second backoff cap is reported
+  at once instead of blocking for minutes and failing anyway. `Retry-After`
+  also accepts the RFC 850 and asctime date forms.
+- Query floats keep full precision without E-notation; keyed arrays as query
+  values are rejected instead of losing their keys.
+- `redactHeaders()` also masks `Proxy-Authorization`, `Set-Cookie`,
+  `X-Auth-Token` and any header named like a token, key or secret.
 - `ValidationException::getErrors()` returns the API's `subErrors` (one line
   per rejected field). It read keys the API does not send and was always
   empty.

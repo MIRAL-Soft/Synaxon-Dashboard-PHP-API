@@ -11,6 +11,7 @@ use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Query;
+use GuzzleHttp\Psr7\Utils;
 use InvalidArgumentException;
 use JsonException;
 use miralsoft\synaxon\api\Config\SynaxonConfig;
@@ -43,7 +44,11 @@ use Throwable;
 final class GuzzleHttpClient implements HttpClientInterface
 {
     /** @var list<string> */
-    private const REDACTED_HEADERS = ['authorization', 'cookie', 'x-api-key', 'x-api-token'];
+    /**
+     * Header names whose values are credentials. Matched as a pattern so
+     * Proxy-Authorization, Set-Cookie, X-Auth-Token and the like are covered.
+     */
+    private const REDACTED_HEADER_PATTERN = '/(auth|cookie|token|secret|password|api-?key|session)/i';
 
     /**
      * Headers a caller is never allowed to override via the request options.
@@ -121,7 +126,10 @@ final class GuzzleHttpClient implements HttpClientInterface
             }
         }
 
-        $requestOptions = ['headers' => $headers];
+        // Set per request, not only on the client the library builds itself:
+        // an injected Guzzle client would otherwise throw its own exceptions
+        // for 4xx/5xx, and error mapping and retries would never run.
+        $requestOptions = ['headers' => $headers, 'http_errors' => false];
 
         if (isset($options['query']) && is_array($options['query']) && $options['query'] !== []) {
             $requestOptions['query'] = self::buildQuery($options['query']);
@@ -136,8 +144,23 @@ final class GuzzleHttpClient implements HttpClientInterface
         $attempt = 0;
         $maxAttempts = $this->config->getMaxRetries() + 1;
 
+        // A body with file streams can only be sent again if every stream can
+        // be rewound; otherwise the first attempt is the only one.
+        $bodyStreams = self::bodyStreams($requestOptions);
+        foreach ($bodyStreams as $stream) {
+            if (!$stream->isSeekable()) {
+                $maxAttempts = 1;
+                break;
+            }
+        }
+
         while (true) {
             $attempt++;
+            if ($attempt > 1) {
+                foreach ($bodyStreams as $stream) {
+                    $stream->rewind();
+                }
+            }
             try {
                 $response = $this->client->request($method, $uri, $requestOptions);
             } catch (ConnectException $e) {
@@ -180,7 +203,13 @@ final class GuzzleHttpClient implements HttpClientInterface
                 return $this->decodeBody($response);
             }
 
-            if ($this->isRetryable($status, $method) && $attempt < $maxAttempts) {
+            // A server that asks to wait longer than the backoff cap is told
+            // so right away: sleeping the cap repeatedly and failing anyway
+            // only blocks the caller. The exception carries retry_after.
+            $waitTooLong = $status === 429
+                && (self::parseRetryAfter($response) ?? 0) > self::MAX_BACKOFF_SECONDS;
+
+            if (!$waitTooLong && $this->isRetryable($status, $method) && $attempt < $maxAttempts) {
                 $this->sleepBackoff($attempt, $response);
                 continue;
             }
@@ -204,8 +233,14 @@ final class GuzzleHttpClient implements HttpClientInterface
             if ($value === null) {
                 continue;
             }
+            if (is_array($value) && !array_is_list($value)) {
+                throw new InvalidArgumentException(sprintf(
+                    'Query parameter "%s" must be a scalar or a list of scalars; keyed arrays are not part of the API',
+                    $key
+                ));
+            }
             $normalised[(string) $key] = is_array($value)
-                ? array_values(array_map(self::queryScalar(...), $value))
+                ? array_map(self::queryScalar(...), $value)
                 : self::queryScalar($value);
         }
 
@@ -216,6 +251,15 @@ final class GuzzleHttpClient implements HttpClientInterface
     {
         if (is_bool($value)) {
             return $value ? 'true' : 'false';
+        }
+        if (is_float($value)) {
+            // (string) rounds to 14 digits and switches to E-notation for
+            // large values; json_encode keeps the shortest exact form.
+            if (!is_finite($value)) {
+                throw new InvalidArgumentException('Query floats must be finite');
+            }
+
+            return abs($value) < 1e15 ? (string) json_encode($value) : sprintf('%.0F', $value);
         }
         if (is_scalar($value) || $value instanceof \Stringable) {
             return (string) $value;
@@ -259,18 +303,43 @@ final class GuzzleHttpClient implements HttpClientInterface
     {
         $parts = [];
         foreach ($body as $name => $value) {
+            // Files become one PSR-7 stream each, kept for the whole call, so
+            // a retry can rewind the very stream the first attempt consumed.
             if (is_array($value) && array_key_exists('contents', $value)) {
-                $parts[] = ['name' => (string) $name] + $value;
+                $part = ['name' => (string) $name] + $value;
+                if (is_resource($part['contents'])) {
+                    $part['contents'] = Utils::streamFor($part['contents']);
+                }
+                $parts[] = $part;
                 continue;
             }
             if (is_resource($value) || $value instanceof StreamInterface) {
-                $parts[] = ['name' => (string) $name, 'contents' => $value];
+                $parts[] = ['name' => (string) $name, 'contents' => Utils::streamFor($value)];
                 continue;
             }
             $parts[] = ['name' => (string) $name, 'contents' => self::queryScalar($value)];
         }
 
         return $parts;
+    }
+
+    /**
+     * The file streams of a multipart body.
+     *
+     * @param array<string, mixed> $requestOptions
+     *
+     * @return list<StreamInterface>
+     */
+    private static function bodyStreams(array $requestOptions): array
+    {
+        $streams = [];
+        foreach ((array) ($requestOptions['multipart'] ?? []) as $part) {
+            if (is_array($part) && ($part['contents'] ?? null) instanceof StreamInterface) {
+                $streams[] = $part['contents'];
+            }
+        }
+
+        return $streams;
     }
 
     /**
@@ -470,12 +539,21 @@ final class GuzzleHttpClient implements HttpClientInterface
         if (ctype_digit($value)) {
             return (int) $value;
         }
+        // HTTP-date: IMF-fixdate is preferred, but RFC 9110 (section 5.6.7)
+        // requires recipients to accept the obsolete RFC 850 and asctime
+        // forms as well. A value without letters is not a date at all.
         $date = DateTimeImmutable::createFromFormat(DATE_RFC7231, $value, new DateTimeZone('GMT'));
-        if ($date === false) {
-            return null;
+        if ($date !== false) {
+            return max(0, $date->getTimestamp() - time());
+        }
+        if (preg_match('/[A-Za-z]{3}/', $value) === 1) {
+            $timestamp = strtotime($value . (str_contains($value, 'GMT') ? '' : ' GMT'));
+            if ($timestamp !== false) {
+                return max(0, $timestamp - time());
+            }
         }
 
-        return max(0, $date->getTimestamp() - time());
+        return null;
     }
 
     private static function truncateBody(string $body): string
@@ -548,7 +626,7 @@ final class GuzzleHttpClient implements HttpClientInterface
     {
         $out = [];
         foreach ($headers as $name => $value) {
-            $out[$name] = in_array(strtolower($name), self::REDACTED_HEADERS, true) ? '***' : $value;
+            $out[$name] = preg_match(self::REDACTED_HEADER_PATTERN, (string) $name) === 1 ? '***' : $value;
         }
 
         return $out;
