@@ -87,6 +87,12 @@ final class GuzzleHttpClient implements HttpClientInterface
      */
     private const MAX_ERROR_BODY_BYTES = 4096;
 
+    /**
+     * IMF-fixdate (RFC 9110, section 5.6.7), e.g. "Sun, 06 Nov 1994 08:49:37 GMT".
+     * Spelled out rather than DATE_RFC7231, which PHP 8.5 deprecates.
+     */
+    private const IMF_FIXDATE = 'D, d M Y H:i:s \G\M\T';
+
     private readonly GuzzleClientInterface $client;
 
     private readonly LoggerInterface $logger;
@@ -545,7 +551,7 @@ final class GuzzleHttpClient implements HttpClientInterface
         // HTTP-date: IMF-fixdate is preferred, but RFC 9110 (section 5.6.7)
         // requires recipients to accept the obsolete RFC 850 and asctime
         // forms as well. A value without letters is not a date at all.
-        $date = DateTimeImmutable::createFromFormat(DATE_RFC7231, $value, new DateTimeZone('GMT'));
+        $date = DateTimeImmutable::createFromFormat(self::IMF_FIXDATE, $value, new DateTimeZone('GMT'));
         if ($date !== false) {
             return max(0, $date->getTimestamp() - time());
         }

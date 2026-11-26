@@ -48,8 +48,8 @@ final class PublicApi
                     substr($class, strlen('miralsoft\\synaxon\\api\\')),
                     $method->isStatic() ? 'static ' : '',
                     $method->getName(),
-                    implode(', ', array_map(self::parameter(...), $method->getParameters())),
-                    $method->hasReturnType() ? ': ' . self::type($method->getReturnType()) : '',
+                    implode(', ', array_map(static fn (ReflectionParameter $p): string => self::parameter($p, $class), $method->getParameters())),
+                    $method->hasReturnType() ? ': ' . self::type($method->getReturnType(), $class) : '',
                 );
             }
         }
@@ -58,9 +58,9 @@ final class PublicApi
         return implode("\n", $lines) . "\n";
     }
 
-    private static function parameter(ReflectionParameter $p): string
+    private static function parameter(ReflectionParameter $p, string $class): string
     {
-        $out = ($p->hasType() ? self::type($p->getType()) . ' ' : '') . ($p->isVariadic() ? '...' : '') . '$' . $p->getName();
+        $out = ($p->hasType() ? self::type($p->getType(), $class) . ' ' : '') . ($p->isVariadic() ? '...' : '') . '$' . $p->getName();
         if ($p->isDefaultValueAvailable()) {
             $out .= ' = ' . var_export($p->getDefaultValue(), true);
         }
@@ -68,10 +68,18 @@ final class PublicApi
         return $out;
     }
 
-    private static function type(?ReflectionType $type): string
+    /**
+     * The type as written, independent of the PHP version: PHP 8.4 reports
+     * `self` as "self", PHP 8.5 as the resolved class name, so `self` is
+     * always rendered as the class it means.
+     */
+    private static function type(?ReflectionType $type, string $class): string
     {
         if ($type instanceof ReflectionNamedType) {
             $name = $type->getName();
+            if (strtolower($name) === 'self') {
+                $name = $class;
+            }
             $short = str_starts_with($name, 'miralsoft\\synaxon\\api\\') ? substr($name, strrpos($name, '\\') + 1) : $name;
 
             return ($type->allowsNull() && $name !== 'mixed' && $name !== 'null' ? '?' : '') . $short;

@@ -32,7 +32,7 @@ Compat\ApiCompatibility::compare(): CompatibilityReport
 Compat\ApiCompatibility::fetchSpecJson(): string
 Compat\ApiCompatibility::getSpecUrl(): string
 Compat\ApiCompatibility::static compareSpec(array $spec): CompatibilityReport
-Compat\ApiCompatibility::static fromConfig(SynaxonConfig $config, ?GuzzleHttp\ClientInterface $http = NULL): self
+Compat\ApiCompatibility::static fromConfig(SynaxonConfig $config, ?GuzzleHttp\ClientInterface $http = NULL): ApiCompatibility
 Compat\CompatibilityReport::__construct(int $specOperationCount, int $implementedOperationCount, int $specSchemaCount, int $implementedSchemaCount, array $missingOperations, array $removedOperations, array $missingSchemas, array $removedSchemas, ?string $specVersion = NULL)
 Compat\CompatibilityReport::hasBreakingDrift(): bool
 Compat\CompatibilityReport::isCompatible(): bool
@@ -49,8 +49,8 @@ Config\SynaxonConfig::getMaxRetries(): int
 Config\SynaxonConfig::getTimeout(): int
 Config\SynaxonConfig::getUserAgent(): string
 Config\SynaxonConfig::hasAuth(): bool
-Config\SynaxonConfig::static fromArray(array $cfg): self
-Config\SynaxonConfig::static fromEnv(): self
+Config\SynaxonConfig::static fromArray(array $cfg): SynaxonConfig
+Config\SynaxonConfig::static fromEnv(): SynaxonConfig
 DTO\AbstractDto::__construct(array $data = array (
 ))
 DTO\AbstractDto::getAllRaw(): array
@@ -2317,14 +2317,14 @@ Http\HttpClientInterface::request(string $method, string $path, array $options =
 Query\FilterOperator::static cases(): array
 Query\FilterOperator::static from(string|int $value): static
 Query\FilterOperator::static tryFrom(string|int $value): ?static
-Query\QueryBuilder::limit(int $limit): self
-Query\QueryBuilder::offset(int $offset): self
-Query\QueryBuilder::orderBy(string $field, string $direction = 'asc'): self
-Query\QueryBuilder::page(int $page): self
-Query\QueryBuilder::search(string $term): self
+Query\QueryBuilder::limit(int $limit): QueryBuilder
+Query\QueryBuilder::offset(int $offset): QueryBuilder
+Query\QueryBuilder::orderBy(string $field, string $direction = 'asc'): QueryBuilder
+Query\QueryBuilder::page(int $page): QueryBuilder
+Query\QueryBuilder::search(string $term): QueryBuilder
 Query\QueryBuilder::toArray(): array
-Query\QueryBuilder::where(string $field, FilterOperator $op, array|string|int|float|bool $value): self
-Query\QueryBuilder::with(string $key, array|string|int|float|bool $value): self
+Query\QueryBuilder::where(string $field, FilterOperator $op, array|string|int|float|bool $value): QueryBuilder
+Query\QueryBuilder::with(string $key, array|string|int|float|bool $value): QueryBuilder
 Resource\AbstractResource::__construct(HttpClientInterface $http)
 Resource\AcronisResource::createAcronisCustomer(?array $body = NULL): ?array
 Resource\AcronisResource::getAcronisCustomer(string $id): ?array

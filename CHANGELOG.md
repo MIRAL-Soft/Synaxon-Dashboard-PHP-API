@@ -86,7 +86,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The live integration suite sends every request through a read-only
   transport that refuses anything but GET and HEAD before it is sent.
 - `tests/Unit/PublicApiTest` compares the public API with the approved list
-  in `tests/Fixtures/public-api.txt` (`composer public-api` to approve).
+  in `tests/Fixtures/public-api.txt` (`composer public-api` to approve). A
+  `self` type is written as the class name, so PHP 8.4 and 8.5 (which
+  resolves `self` in reflection) produce the same list.
+- No use of `DATE_RFC7231`, which PHP 8.5 deprecates; PHPUnit shows the
+  source of any deprecation in its output.
 - PHP-CS-Fixer also checks `AbstractDto` and the DTO tests.
 - The release workflow extracts the release notes with a plain prefix match;
   the previous awk regex matched no section, so a release would have been
