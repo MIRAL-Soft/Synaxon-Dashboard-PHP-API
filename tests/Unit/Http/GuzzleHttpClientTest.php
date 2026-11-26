@@ -279,8 +279,9 @@ final class GuzzleHttpClientTest extends TestCase
     {
         yield 'absent' => [[], null, null];
         yield 'delay seconds' => [['Retry-After' => '7'], 7, 7];
-        yield 'http date' => [['Retry-After' => gmdate(DATE_RFC7231, time() + 60)], 55, 60];
-        yield 'date in the past' => [['Retry-After' => gmdate(DATE_RFC7231, time() - 60)], 0, 0];
+        // IMF-fixdate, written out: DATE_RFC7231 is deprecated in PHP 8.5.
+        yield 'http date' => [['Retry-After' => gmdate('D, d M Y H:i:s', time() + 60) . ' GMT'], 55, 60];
+        yield 'date in the past' => [['Retry-After' => gmdate('D, d M Y H:i:s', time() - 60) . ' GMT'], 0, 0];
         yield 'garbage' => [['Retry-After' => 'soon'], null, null];
         yield 'fraction is not delay-seconds' => [['Retry-After' => '1.5'], null, null];
         // RFC 9110 requires accepting the obsolete date forms too.
